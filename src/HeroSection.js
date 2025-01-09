@@ -4,16 +4,16 @@ const HeroSection = () => {
   // Define items with associated GIF URLs
   const items = [
     {
-      text: "Essay Help",
-      gif: "https://www.cheapestessay.com/how-it-work/writer.gif",
+      text: "Essay Help.",
+      gif: "",
     },
     {
-      text: "Unlimited Resources",
-      gif: "https://media.giphy.com/media/26AHONQ79FdWZhAI0/giphy.gif",
+      text: "Unlimited Resources.",
+      gif: "",
     },
     {
-      text: "Contacts",
-      gif: "https://media.giphy.com/media/xUPGcdhiQ7PIfJdTBC/giphy.gif",
+      text: "Contacts.",
+      gif: "",
     },
   ];
 
