@@ -2,7 +2,7 @@ import React from "react";
 
 const Testimonials = () => {
   return (
-    <div className="bg-gradient-to-b from-black via-gray-900 to-purple-900 text-white py-16">
+    <div className="bg-gradient-to-b from-black via-gray-900 to-black text-white py-16">
       <div className="container mx-auto px-6">
         {/* Top section with logos */}
         <div className="flex flex-col items-center space-y-4">
