@@ -13,33 +13,29 @@ const Testimonials = () => {
             <img
               src="https://www.turbolearn.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstanford.57682cbd.png&w=1920&q=75"
               alt="Stanford"
-              className="h-8 opacity-75"
+              className="h-20 opacity-75"
             />
             <img
               src="https://calbridge.org/wp-content/uploads/2024/05/Seal_of_the_California_Institute_of_Technology-svg.png"
               alt="Caltech"
-              className="h-8 opacity-75"
+              className="h-20 opacity-75"
             />
             <img
-              src="https://upload.wikimedia.org/wikipedia/commons/4/44/MIT_Seal.svg"
-              alt="MIT"
-              className="h-8 opacity-75"
+              src="https://seeklogo.com/images/H/harvard-university-logo-D7CC65EE30-seeklogo.com.png"
+              alt="Harvard"
+              className="h-20 opacity-75"
             />
             <img
-              src="https://upload.wikimedia.org/wikipedia/commons/a/a8/University_of_Texas_seal.svg"
-              alt="Texas"
-              className="h-8 opacity-75"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/UCLA_Bruins_logo.svg/1280px-UCLA_Bruins_logo.svg.png"
+              alt="UCLA"
+              className="h-20 opacity-75"
             />
             <img
-              src="https://upload.wikimedia.org/wikipedia/commons/3/31/Duke_University_seal.svg"
-              alt="Duke"
-              className="h-8 opacity-75"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Seal_of_University_of_California%2C_Berkeley.svg/1200px-Seal_of_University_of_California%2C_Berkeley.svg.png"
+              alt="UC Berkley"
+              className="h-20 opacity-75"
             />
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/d/d4/Princeton_shield.svg"
-              alt="Princeton"
-              className="h-8 opacity-75"
-            />
+            
           </div>
         </div>
 
