@@ -1,13 +1,14 @@
 import React from 'react';
-
+import logo from './assets/logo123.png'; // Adjust the path
 const HeroSection = () => {
   return (
     <section className="hero-section bg-black text-white min-h-screen flex flex-col items-center justify-center">
       {/* Header */}
       <header className="absolute top-0 left-0 w-full p-4 flex justify-between items-center">
         <div className="logo flex items-center text-lg font-bold">
-          <img src="/path-to-logo.png" alt="Logo" className="h-8 mr-2" />
-          <span>CollegePath</span>
+          
+          <img src={logo} alt="Logo" className="h-8 mr-2" />
+          <span>ARENA</span>
         </div>
         <nav className="text-sm space-x-8">
           <a href="#services" className="hover:underline">Services</a>
@@ -30,7 +31,8 @@ const HeroSection = () => {
       {/* Hero Content */}
       <div className="flex flex-col items-center text-center px-4">
         <div className="neon-logo mb-8">
-          <img src="/path-to-neon-logo.png" alt="Neon Logo" className="h-32" />
+        
+        <img src={logo} alt="Logo" className="h-48" />
         </div>
         <h1 className="text-4xl md:text-6xl font-bold leading-snug">
           Your Path to College Starts Here!
