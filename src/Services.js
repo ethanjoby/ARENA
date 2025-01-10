@@ -5,7 +5,7 @@ const CollegeCounselingServices = () => {
     {
       title: "Personalized college selection guidance.",
       icon: "https://www.pngall.com/wp-content/uploads/8/College-PNG-Pic.png",
-      gradient: "bg-black border-white from-blue-600 to-blue-900",
+      gradient: "bg-gradient-to-r from-blue-600 to-blue-900",
     },
     {
       title: "Application essay review and feedback.",

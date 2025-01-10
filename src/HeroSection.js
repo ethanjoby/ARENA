@@ -15,9 +15,16 @@ const HeroSection = () => {
           <a href="#register" className="hover:underline">Register</a>
           <a href="#contact" className="hover:underline">Contact</a>
         </nav>
-        <a href="#get-started" className="bg-gradient-to-r from-blue-500 to-green-500 px-4 py-2 rounded-full text-black text-sm">
-          Get Started
-        </a>
+        <div class="relative inline-flex group">
+    <div
+        class="absolute transition-all duration-1000 opacity-70 -inset-px bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] rounded-full blur-md group-hover:opacity-100 group-hover:-inset-0.5 group-hover:duration-200 animate-tilt">
+    </div>
+    <a href="#" title="Get quote now"
+        class="relative inline-flex items-center justify-center px-6 py-3 text-md font-semibold text-white transition-all duration-200 bg-black font-pj rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
+        role="button">Get Started
+    </a>
+</div>
+
       </header>
 
       {/* Hero Content */}
@@ -31,9 +38,15 @@ const HeroSection = () => {
         <p className="text-gray-400 mt-4 max-w-2xl">
           Expert college counseling to help you find your dream school. From applications to essays, we guide you every step of the way!
         </p>
-        <button className="mt-8 bg-gradient-to-r from-blue-500 to-green-500 px-6 py-3 text-black font-medium rounded-full text-lg shadow-lg hover:opacity-90">
-          Register Now →
-        </button>
+    <div class="relative inline-flex group mt-10">
+    <div
+        class="absolute transition-all duration-1000 opacity-70 -inset-px bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] rounded-full blur-md group-hover:opacity-100 group-hover:-inset-0.5 group-hover:duration-200 animate-tilt">
+    </div>
+    <a href="#" title="Get quote now"
+        class="relative inline-flex items-center justify-center px-6 py-3 text-md font-semibold text-white transition-all duration-200 bg-black font-pj rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
+        role="button">Register Now →
+    </a>
+</div>
       </div>
     </section>
   );
