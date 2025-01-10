@@ -7,7 +7,7 @@ const Testimonials = () => {
         {/* Top section with logos */}
         <div className="flex flex-col items-center space-y-4">
           <h2 className="text-sm uppercase text-gray-400">
-            Trusted by students at 3,000+ colleges
+            Get Help From Students Who Made It
           </h2>
           <div className="flex flex-wrap justify-center gap-6">
             <img
@@ -41,7 +41,7 @@ const Testimonials = () => {
 
         {/* Heading */}
         <h2 className="text-3xl font-bold text-center mt-12">
-          Join 500,000+ students.
+          Don't listen to us. Listen to our students.
         </h2>
 
         {/* Testimonials */}

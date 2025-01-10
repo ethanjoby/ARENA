@@ -36,3 +36,9 @@
     transform: rotate(360deg);
   }
 }
+.text-gradient {
+  background: linear-gradient(to right, #00f, #0f0);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
