@@ -14,7 +14,6 @@ const HeroSection = () => {
           <a href="#services" className="hover:underline">Services</a>
           <a href="#testimonials" className="hover:underline">Testimonials</a>
           <a href="#register" className="hover:underline">Register</a>
-          <a href="#contact" className="hover:underline">Contact</a>
         </nav>
         <div class="relative inline-flex group">
     <div

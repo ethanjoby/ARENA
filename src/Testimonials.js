@@ -51,37 +51,37 @@ const Testimonials = () => {
             {
               name: "Sheryl Berge",
               role: "Physics Major at MIT",
-              logo: "https://upload.wikimedia.org/wikipedia/commons/4/44/MIT_Seal.svg",
+              logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/MIT_logo.svg/1280px-MIT_logo.svg.png",
               text: "I can focus on understanding concepts, not just jotting down notes. It's like having a personal study assistant.",
             },
             {
               name: "Kiehn Po",
               role: "Princeton Student",
-              logo: "https://upload.wikimedia.org/wikipedia/commons/d/d4/Princeton_shield.svg",
+              logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Princeton_Tigers_logo.svg/1200px-Princeton_Tigers_logo.svg.png",
               text: "Love how it generates quizzes from my lectures. Makes revising so much more efficient and less stressful.",
             },
             {
               name: "Peter Renolds",
               role: "Political Science Major",
-              logo: "https://upload.wikimedia.org/wikipedia/commons/4/4a/Stanford_University_seal_2003.svg",
+              logo: "https://seeklogo.com/images/H/harvard-university-logo-D7CC65EE30-seeklogo.com.png",
               text: "I love how it can take an article and break it into bite-sized materials. Reading academic articles feels less daunting now.",
             },
             {
               name: "Yash Sharma",
               role: "Public Policy Student at Duke",
-              logo: "https://upload.wikimedia.org/wikipedia/commons/3/31/Duke_University_seal.svg",
+              logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Duke_Athletics_logo.svg/1200px-Duke_Athletics_logo.svg.png",
               text: "The flashcards created are tailored to my learning style. It's like the AI knows exactly what I need to study.",
             },
             {
               name: "Presley Burghardt",
               role: "Premed student at Stanford",
-              logo: "https://upload.wikimedia.org/wikipedia/commons/4/4a/Stanford_University_seal_2003.svg",
+              logo: "https://identity.stanford.edu/wp-content/uploads/sites/3/2020/07/block-s-right.png",
               text: "It turns my YouTube binges into productive study sessions. It's a game-changer.",
             },
             {
               name: "Rithik Duvva",
               role: "Economics Major at Duke",
-              logo: "https://upload.wikimedia.org/wikipedia/commons/3/31/Duke_University_seal.svg",
+              logo: "https://upload.wikimedia.org/wikipedia/commons/a/a1/Seal_of_University_of_California%2C_Berkeley.svg",
               text: "I feel like I'm studying smarter, not harder. It's a boon for anyone who values efficiency.",
             },
           ].map((testimonial, index) => (
