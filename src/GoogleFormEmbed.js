@@ -6,7 +6,7 @@ const GoogleFormEmbed = ({ src, width = "1000", height = "100%" }) => {
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#000",
-    height: "100vh",
+    height: "420px",
     margin: 0,
   };
 
