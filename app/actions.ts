@@ -1,10 +1,10 @@
-"use server";
+"use server"
 
-import { users } from "./schema";
-import { db } from "./index"
+import { users } from "@/db/schema";
+import { db } from "@/db";
 import { InferInsertModel } from "drizzle-orm";
 
-type UserInsert = InferInsertModel<typeof users>;
+type UserInsert = InferInsertModel<typeof users>;  
 
 const seedUsers: UserInsert[] = [
   {
@@ -42,15 +42,15 @@ const seedUsers: UserInsert[] = [
   },
 ];
 
-async function seedDatabase() {
+export async function seedDatabase() {
   try {
     for (const user of seedUsers) {
       await db.insert(users).values(user).execute();
     }
-    console.log("Database seeded successfully!");
+    return { success: true }
   } catch (error) {
-    console.error("Error seeding the database:", error);
+    return { success: false }
   }
 }
 
-seedDatabase(); 
+await seedDatabase(); 
