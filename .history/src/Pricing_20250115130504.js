@@ -13,7 +13,7 @@ const Pricing = () => {
             <h3 className="mb-4 text-2xl font-semibold">Starter</h3>
             <div className="flex justify-center items-baseline my-8">
               <span className="mr-2 text-5xl font-extrabold">$30</span>
-              <span className="text-gray-500 dark:text-gray-400">/Program</span>
+              <span className="text-gray-500 dark:text-gray-400">/program</span>
             </div>
             {/* List */}
             <ul role="list" className="mb-8 space-y-4 text-left">

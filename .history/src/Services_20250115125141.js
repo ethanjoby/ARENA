@@ -13,7 +13,7 @@ const CollegeCounselingServices = () => {
       gradient: "bg-gradient-to-r from-purple-500 to-pink-600",
     },
     {
-      title: "Finding and connecting with professors.",
+      title: "inding and connecting with professors.",
       icon: "https://cdn1.iconfinder.com/data/icons/file-format-22/64/File_Format_Glyph-29-512.png",
       gradient: "bg-gradient-to-r from-green-500 to-teal-500",
     },

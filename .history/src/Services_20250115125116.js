@@ -3,7 +3,7 @@ import React from "react";
 const CollegeCounselingServices = () => {
   const services = [
     {
-      title: "Finding programs that are right for you.",
+      title: "Help finding programs that are right for you.",
       icon: "https://www.pngall.com/wp-content/uploads/8/College-PNG-Pic.png",
       gradient: "bg-gradient-to-r from-blue-600 to-blue-900",
     },
@@ -13,12 +13,12 @@ const CollegeCounselingServices = () => {
       gradient: "bg-gradient-to-r from-purple-500 to-pink-600",
     },
     {
-      title: "Finding and connecting with professors.",
+      title: "Help finding and connecting with professors.",
       icon: "https://cdn1.iconfinder.com/data/icons/file-format-22/64/File_Format_Glyph-29-512.png",
       gradient: "bg-gradient-to-r from-green-500 to-teal-500",
     },
     {
-      title: "Guidance on what path is best for you.",
+      title: "Guidance on what path is .",
       icon: "https://static.thenounproject.com/png/768328-200.png",
       gradient: "bg-gradient-to-r from-orange-500 to-red-500",
     },
