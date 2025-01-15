@@ -7,7 +7,7 @@ const Testimonials = () => {
         {/* Top section with logos */}
         <div className="flex flex-col items-center space-y-4">
           <h2 className="text-sm uppercase text-gray-400">
-            Our team has been accepted to programs  and done research with professors at top universities:
+            Our 
           </h2>
           <div className="flex flex-wrap justify-center gap-6">
             <img
@@ -35,7 +35,7 @@ const Testimonials = () => {
               alt="UC Berkley"
               className="h-20 opacity-75"
             />
-
+            
           </div>
         </div>
 

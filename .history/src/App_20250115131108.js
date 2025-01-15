@@ -22,7 +22,7 @@ function App() {
       <div id="pricing">
         <Pricing />
       </div>
-      <div id="register">
+      <div id="regi">
         <GoogleFormEmbed src="https://docs.google.com/forms/d/e/1FAIpQLSciJRfEmMTLYZY-JO_WyPwC_TPgECcYyKGSBWeuR1_F-Eyo_w/viewform?embedded=true" />
       </div>
       <Footer />

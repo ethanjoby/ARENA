@@ -37,7 +37,12 @@ const HeroSection = () => {
           >
             Pricing
           </button>
-
+          <button
+            onClick={() => scrollToSection('register')}
+            className="hover:underline"
+          >
+            Register
+          </button>
         </nav>
         <div className="relative inline-flex group">
           <div
