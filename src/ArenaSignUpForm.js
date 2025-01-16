@@ -10,11 +10,14 @@ function ArenaSignUpForm() {
   return (
     <div className="min-h-screen bg-black flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-5xl px-8">
-      <h1 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r 
-    from-blue-500 via-purple-500 via-pink-500 to-red-500 text-center mb-8 
-    leading-tight lg:leading-none px-4 md:px-0">
+      <h1
+  className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r 
+    from-blue-500 via-purple-500 via-pink-500 to-red-500 text-center mb-2 
+    leading-normal lg:leading-relaxed px-4 md:px-0"
+>
   ARENA - Sign Up
 </h1>
+
 
         <p className="text-gray-400 text-center mb-8 text-lg tracking-wide leading-relaxed">
         Thank you for your interest in ARENA. Fill out this form so we can learn about you and your interest in our program.
