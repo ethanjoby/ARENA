@@ -2,7 +2,6 @@ import './App.css';
 import Testimonials from './Testimonials';
 import HeroSection from './HeroSection';
 import Services from './Services';
-import GoogleFormEmbed from './GoogleFormEmbed';
 import Footer from './Footer';
 import Pricing from './Pricing';
 import ArenaSignUpForm from './ArenaSignUpForm';
@@ -26,9 +25,8 @@ function HomePage() {
         <Pricing />
       </div>
       <div id="register">
-        <GoogleFormEmbed src="https://docs.google.com/forms/d/e/1FAIpQLSciJRfEmMTLYZY-JO_WyPwC_TPgECcYyKGSBWeuR1_F-Eyo_w/viewform?embedded=true" />
+        <ArenaSignUpForm/>
       </div>
-      <ArenaSignUpForm/>
       <Footer />
     </div>
   );
