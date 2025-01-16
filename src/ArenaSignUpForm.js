@@ -103,7 +103,7 @@ function ArenaSignUpForm() {
             <button
               type="submit"
               className="w-full py-3 px-6 text-lg font-bold text-white bg-gradient-to-r 
-              from-blue-500 via-purple-500 via-pink-500 to-red-500 rounded-lg hover:from-indigo-600 hover:via-purple-600 hover:to-pink-600 transition-transform transform hover:scale-105 shadow-lg"
+              from-blue-500 via-purple-500 via-pink-500 to-red-500 rounded-lg hover:scale-105 shadow-lg"
             >
               Submit
             </button>
