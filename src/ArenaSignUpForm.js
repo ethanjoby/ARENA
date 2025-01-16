@@ -7,10 +7,12 @@ function ArenaSignUpForm() {
   const [editingValue, setEditingValue] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [showHelperMessage, setShowHelperMessage] = useState(false);
 
   const handleProgramAdd = () => {
     const newProgram = `Program ${programs.length + 1}`;
     setPrograms((prev) => [...prev, newProgram]);
+    setShowHelperMessage(true); // Show the helper message when a program is added
   };
 
   const handleProgramSelect = (program) => {
@@ -31,6 +33,12 @@ function ArenaSignUpForm() {
     updatedPrograms[index] = editingValue;
     setPrograms(updatedPrograms);
     setEditingIndex(null);
+  };
+
+  const handleDeleteProgram = (index) => {
+    const programToDelete = programs[index];
+    setPrograms((prev) => prev.filter((_, i) => i !== index));
+    setSelectedPrograms((prev) => prev.filter((item) => item !== programToDelete));
   };
 
   const calculateTotalPrice = () => {
@@ -82,10 +90,6 @@ function ArenaSignUpForm() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="w-full px-4 py-3 text-gray-300 bg-gray-700 rounded-lg focus:ring-4 focus:ring-indigo-500 autofill:bg-gray-700"
-                style={{
-                  WebkitTextFillColor: "inherit",
-                  WebkitBoxShadow: "0 0 0px 1000px #3b3b3b inset",
-                }}
               />
             </div>
             <div className="group">
@@ -98,10 +102,6 @@ function ArenaSignUpForm() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-3 text-gray-300 bg-gray-700 rounded-lg focus:ring-4 focus:ring-indigo-500 autofill:bg-gray-700"
-                style={{
-                  WebkitTextFillColor: "inherit",
-                  WebkitBoxShadow: "0 0 0px 1000px #3b3b3b inset",
-                }}
               />
             </div>
           </div>
@@ -129,10 +129,15 @@ function ArenaSignUpForm() {
                 + Add Program
               </button>
             </div>
+            {showHelperMessage && (
+              <p className="text-gray-500 text-sm mt-2 italic">
+                Double-click a program or click the pencil icon to edit its name.
+              </p>
+            )}
             {programs.map((program, index) => (
               <div
                 key={index}
-                className="flex items-center bg-gray-700 p-3 my-2 rounded-lg shadow-lg hover:shadow-purple-500 transition-all"
+                className="flex items-center bg-gray-700 p-3 my-2 rounded-lg shadow-lg"
               >
                 <input
                   type="checkbox"
@@ -147,27 +152,40 @@ function ArenaSignUpForm() {
                       type="text"
                       value={editingValue}
                       onChange={(e) => setEditingValue(e.target.value)}
-                      className="flex-1 px-2 py-1 text-gray-300 bg-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-indigo-500"
+                      className="flex-1 px-4 py-2 text-gray-300 bg-gray-600 rounded-lg focus:ring focus:ring-indigo-500"
+                      placeholder="Edit program name"
                     />
                     <button
                       type="button"
                       onClick={() => handleEditSubmit(index)}
-                      className="ml-2 px-2 py-1 bg-green-500 rounded-lg text-white hover:bg-green-600"
+                      className="ml-3 px-4 py-2 bg-gradient-to-r from-green-500 to-teal-500 text-white font-bold rounded-lg hover:from-teal-500 hover:to-green-500 transition-all shadow-lg"
                     >
                       Save
                     </button>
                   </div>
                 ) : (
-                  <div
-                    className="flex items-center justify-between w-full"
-                    onClick={() => handleEditProgram(index)}
-                  >
+                  <div className="flex items-center justify-between w-full">
                     <label htmlFor={program} className="text-gray-300 cursor-pointer">
                       {program}
                     </label>
-                    <span className="text-gray-400 cursor-pointer ml-4">
-                      ✏️
-                    </span>
+                    <div className="flex items-center gap-4">
+                      <button
+                        type="button"
+                        onClick={() => handleEditProgram(index)}
+                        className="text-gray-400 hover:text-blue-400 transition-all"
+                        aria-label="Edit Program Name"
+                      >
+                        ✏️
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteProgram(index)}
+                        className="text-red-500 hover:text-red-700 transition-all"
+                        aria-label="Delete Program"
+                      >
+                        🗑️
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>
@@ -175,7 +193,7 @@ function ArenaSignUpForm() {
           </div>
 
           {/* Total Price Display */}
-          <div className="mt-6 text-gray-300 text-lg font-bold bg-gray-800 p-4 rounded-lg shadow-lg hover:shadow-purple-500 transition-all">
+          <div className="mt-6 text-gray-300 text-lg font-bold bg-gray-800 p-4 rounded-lg shadow-lg">
             Total Price: ${calculateTotalPrice()}
           </div>
 
@@ -186,7 +204,7 @@ function ArenaSignUpForm() {
               className="w-full py-3 px-6 text-lg font-bold text-white bg-gradient-to-r 
               from-blue-500 to-pink-500 rounded-lg hover:scale-105 transform transition-all"
             >
-              Continue To Payment
+              Join the Arena
             </button>
           </div>
         </form>
