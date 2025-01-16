@@ -47,7 +47,7 @@ const HeroSection = () => {
             onClick={() => scrollToSection('register')}
             className="relative inline-flex items-center justify-center px-6 py-3 text-md font-semibold text-white transition-all duration-200 bg-black font-pj rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
           >
-            Get Started
+            Register
           </button>
         </div>
       </header>
