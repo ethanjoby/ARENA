@@ -3,8 +3,8 @@ import Testimonials from './Testimonials';
 import HeroSection from './HeroSection';
 import Services from './Services';
 import Footer from './Footer';
-import Pricing from './Pricing';
 import ArenaSignUpForm from './ArenaSignUpForm';
+import FAQs from './FAQs';
 
 function HomePage() {
   return (
@@ -21,8 +21,8 @@ function HomePage() {
       <div id="testimonials">
         <Testimonials />
       </div>
-      <div id="pricing">
-        <Pricing />
+      <div id="faq">
+        <FAQs/>
       </div>
       <div id="register">
         <ArenaSignUpForm/>

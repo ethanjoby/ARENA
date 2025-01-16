@@ -32,10 +32,10 @@ const HeroSection = () => {
             Testimonials
           </button>
           <button
-            onClick={() => scrollToSection('pricing')}
+            onClick={() => scrollToSection('faq')}
             className="hover:underline"
           >
-            Pricing
+            FAQs
           </button>
 
         </nav>
