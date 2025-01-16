@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const AdminPage = () => {
   // Preset login credentials
@@ -10,6 +10,19 @@ const AdminPage = () => {
   const [password, setPassword] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [error, setError] = useState("");
+
+  // State for form responses
+  const [responses, setResponses] = useState([]);
+
+  // Fetch responses from localStorage on login
+useEffect(() => {
+  if (isLoggedIn) {
+    const storedResponses = JSON.parse(localStorage.getItem("arenaSignUps")) || []; // Use the correct key
+    setResponses(storedResponses);
+  }
+}, [isLoggedIn]);
+
+  
 
   // Handle login submission
   const handleLogin = (e) => {
@@ -25,15 +38,44 @@ const AdminPage = () => {
   // Admin dashboard
   if (isLoggedIn) {
     return (
-      <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to the Admin Dashboard</h1>
-        <p className="text-lg">You are successfully logged in.</p>
+      <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6">
+        <h1 className="text-4xl font-bold mb-4">Admin Dashboard</h1>
         <button
           onClick={() => setIsLoggedIn(false)}
-          className="mt-6 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+          className="mb-6 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
         >
           Logout
         </button>
+
+        {responses.length > 0 ? (
+          <table className="w-full max-w-4xl bg-white rounded-lg shadow-lg overflow-hidden">
+            <thead>
+              <tr className="bg-gray-200 text-gray-700 text-left">
+                <th className="py-3 px-4">Name</th>
+                <th className="py-3 px-4">Email</th>
+                <th className="py-3 px-4">Plan</th>
+                <th className="py-3 px-4">Comments</th>
+              </tr>
+            </thead>
+            <tbody>
+              {responses.map((response, index) => (
+                <tr
+                  key={index}
+                  className={`${
+                    index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                  } text-gray-700`}
+                >
+                  <td className="py-3 px-4">{response.name}</td>
+                  <td className="py-3 px-4">{response.email}</td>
+                  <td className="py-3 px-4">{response.plan}</td>
+                  <td className="py-3 px-4">{response.comments}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p className="text-gray-700">No responses available.</p>
+        )}
       </div>
     );
   }
@@ -46,9 +88,7 @@ const AdminPage = () => {
         className="bg-white shadow-lg rounded-lg p-8 max-w-sm w-full"
       >
         <h1 className="text-2xl font-bold mb-6 text-center">Admin Login</h1>
-        {error && (
-          <div className="text-red-500 text-center mb-4">{error}</div>
-        )}
+        {error && <div className="text-red-500 text-center mb-4">{error}</div>}
         <div className="mb-4">
           <label className="block text-gray-700 font-semibold mb-2">
             Username
