@@ -15,14 +15,14 @@ const AdminPage = () => {
   const [responses, setResponses] = useState([]);
 
   // Fetch responses from localStorage on login
-useEffect(() => {
-  if (isLoggedIn) {
-    const storedResponses = JSON.parse(localStorage.getItem("arenaSignUps")) || []; // Use the correct key
-    setResponses(storedResponses);
-  }
-}, [isLoggedIn]);
-
-  
+  useEffect(() => {
+    if (isLoggedIn) {
+      const storedResponse = JSON.parse(localStorage.getItem("arenaSignUpData"));
+      if (storedResponse) {
+        setResponses([storedResponse]); // Wrap in an array for table mapping
+      }
+    }
+  }, [isLoggedIn]);
 
   // Handle login submission
   const handleLogin = (e) => {
@@ -53,8 +53,8 @@ useEffect(() => {
               <tr className="bg-gray-200 text-gray-700 text-left">
                 <th className="py-3 px-4">Name</th>
                 <th className="py-3 px-4">Email</th>
-                <th className="py-3 px-4">Plan</th>
-                <th className="py-3 px-4">Comments</th>
+                <th className="py-3 px-4">Selected Programs</th>
+                <th className="py-3 px-4">Total Price</th>
               </tr>
             </thead>
             <tbody>
@@ -67,8 +67,10 @@ useEffect(() => {
                 >
                   <td className="py-3 px-4">{response.name}</td>
                   <td className="py-3 px-4">{response.email}</td>
-                  <td className="py-3 px-4">{response.plan}</td>
-                  <td className="py-3 px-4">{response.comments}</td>
+                  <td className="py-3 px-4">
+                    {response.selectedPrograms.join(", ")}
+                  </td>
+                  <td className="py-3 px-4">${response.totalPrice}</td>
                 </tr>
               ))}
             </tbody>

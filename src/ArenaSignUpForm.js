@@ -5,6 +5,8 @@ function ArenaSignUpForm() {
   const [programs, setPrograms] = useState([]);
   const [editingIndex, setEditingIndex] = useState(null);
   const [editingValue, setEditingValue] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
   const handleProgramAdd = () => {
     const newProgram = `Program ${programs.length + 1}`;
@@ -36,6 +38,20 @@ function ArenaSignUpForm() {
     return 10 + (selectedPrograms.length - 1) * 5;
   };
 
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const formData = {
+      name,
+      email,
+      selectedPrograms,
+      totalPrice: calculateTotalPrice(),
+    };
+
+    // Save to localStorage
+    localStorage.setItem("arenaSignUpData", JSON.stringify(formData));
+    alert("Form data saved to localStorage!");
+  };
+
   return (
     <div className="min-h-screen bg-black flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-5xl px-8">
@@ -50,7 +66,10 @@ function ArenaSignUpForm() {
           Join the ARENA and become part of something extraordinary.
         </p>
 
-        <form className="bg-gradient-to-b from-gray-900 to-gray-800 p-10 rounded-3xl shadow-xl border border-gray-700">
+        <form
+          className="bg-gradient-to-b from-gray-900 to-gray-800 p-10 rounded-3xl shadow-xl border border-gray-700"
+          onSubmit={handleFormSubmit}
+        >
           {/* Name and Email Fields */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-center">
             <div className="group">
@@ -60,8 +79,13 @@ function ArenaSignUpForm() {
               <input
                 type="text"
                 placeholder="Your name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 className="w-full px-4 py-3 text-gray-300 bg-gray-700 rounded-lg focus:ring-4 focus:ring-indigo-500 autofill:bg-gray-700"
-                style={{ WebkitTextFillColor: "inherit", WebkitBoxShadow: "0 0 0px 1000px #3b3b3b inset" }}
+                style={{
+                  WebkitTextFillColor: "inherit",
+                  WebkitBoxShadow: "0 0 0px 1000px #3b3b3b inset",
+                }}
               />
             </div>
             <div className="group">
@@ -71,8 +95,13 @@ function ArenaSignUpForm() {
               <input
                 type="email"
                 placeholder="Your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-3 text-gray-300 bg-gray-700 rounded-lg focus:ring-4 focus:ring-indigo-500 autofill:bg-gray-700"
-                style={{ WebkitTextFillColor: "inherit", WebkitBoxShadow: "0 0 0px 1000px #3b3b3b inset" }}
+                style={{
+                  WebkitTextFillColor: "inherit",
+                  WebkitBoxShadow: "0 0 0px 1000px #3b3b3b inset",
+                }}
               />
             </div>
           </div>
