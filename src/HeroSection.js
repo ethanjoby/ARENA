@@ -18,7 +18,7 @@ const HeroSection = () => {
           <img src={logo} alt="Logo" className="h-8 mr-2" />
           <span>ARENA</span>
         </div>
-        <nav className="text-sm space-x-8">
+        <nav className="hidden lg:flex text-sm space-x-8">
           <button
             onClick={() => scrollToSection('services')}
             className="hover:underline"
