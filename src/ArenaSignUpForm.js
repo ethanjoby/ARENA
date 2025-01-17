@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import emailjs from "emailjs-com";
 function ArenaSignUpForm() {
   const [selectedPrograms, setSelectedPrograms] = useState([]);
   const [programs, setPrograms] = useState([]);
@@ -14,7 +14,7 @@ function ArenaSignUpForm() {
     setPrograms((prev) => [...prev, newProgram]);
     setShowHelperMessage(true); // Show the helper message when a program is added
   };
-
+  
   const handleProgramSelect = (program) => {
     setSelectedPrograms((prev) =>
       prev.includes(program)
@@ -57,12 +57,39 @@ function ArenaSignUpForm() {
 
     // Save to localStorage
     localStorage.setItem("arenaSignUpData", JSON.stringify(formData));
-    alert("Form data saved to localStorage!");
+    const totalPrice = calculateTotalPrice();
+
+    // Create email template data
+    const templateParams = {
+      name,
+      email,
+      selectedPrograms: selectedPrograms.join(", "),
+      totalPrice,
+    };
+
+    // Send email using EmailJS
+    emailjs
+      .send(
+        "service_2wckxjr", // Replace with your EmailJS service ID
+        "template_xugiogj", // Replace with your EmailJS template ID
+        templateParams,
+        "Q1b_pv0uG9JEXJhAl" // Replace with your EmailJS public key
+      )
+      .then(
+        (response) => {
+          console.log("Email sent successfully!", response.status, response.text);
+          alert("Thank you for signing up! A confirmation email has been sent.");
+        },
+        (error) => {
+          console.error("Failed to send email.", error);
+          alert("Oops! Something went wrong. Please try again.");
+        }
+      );
   };
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="w-full max-w-5xl px-8">
+      <div className="w-full max-w-9xl px-8">
         <h1
           className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r 
           from-blue-500 via-purple-500 to-pink-500 text-center mb-4"
@@ -204,7 +231,7 @@ function ArenaSignUpForm() {
               className="w-full py-3 px-6 text-lg font-bold text-white bg-gradient-to-r 
               from-blue-500 to-pink-500 rounded-lg hover:scale-105 transform transition-all"
             >
-              Join the Arena
+              Join the ARENA!
             </button>
           </div>
         </form>

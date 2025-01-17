@@ -3,30 +3,35 @@ import React, { useState } from "react";
 const FAQs = () => {
   const faqData = [
     {
-      question: "What's the best thing about Switzerland?",
-      answer: "I don't know, but the flag is a big plus.",
+      question: "What is the ARENA program?",
+      answer: "ARENA is a program designed to help high school students craft exceptional essays for their summer program applications.",
     },
     {
-      question: "How do you make holy water?",
-      answer: "You boil the hell out of it.",
+      question: "Who is eligible to join the ARENA program?",
+      answer: "The ARENA program is open to all high school students preparing for summer program applications.",
     },
     {
-      question: "What do you call someone with no body and no nose?",
-      answer: "Nobody knows.",
+      question: "What services does ARENA provide?",
+      answer: "We offer personalized essay guidance, expert feedback, and one-on-one mentoring to maximize your chances of getting accepted into top summer programs.",
     },
     {
-      question: "Why do you never see elephants hiding in trees?",
-      answer: "Because they're so good at it.",
+      question: "How much does the ARENA program cost?",
+      answer: "The first program costs $10, and each additional program is $5. Total cost depends on the number of programs selected.",
     },
     {
-      question: "Why can't you hear a pterodactyl go to the bathroom?",
-      answer: "Because the 'P' is silent.",
+      question: "How do I make a payment for ARENA services?",
+      answer: "Payment details will be shared via email after you confirm your interest in our services.",
     },
     {
-      question: "Why did the invisible man turn down the job offer?",
-      answer: "He couldn't see himself doing it.",
+      question: "What is the refund policy for the ARENA program?",
+      answer: "Unfortunately, we do not offer refunds once services have been provided. Please ensure you're fully committed before proceeding.",
+    },
+    {
+      question: "How will ARENA improve my chances of acceptance?",
+      answer: "Our specialists provide tailored advice, essay reviews, and proven strategies to help your application stand out to program admissions teams.",
     },
   ];
+  
 
   const [openIndex, setOpenIndex] = useState(null);
 
