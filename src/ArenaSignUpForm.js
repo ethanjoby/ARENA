@@ -185,7 +185,7 @@ function ArenaSignUpForm() {
                     <button
                       type="button"
                       onClick={() => handleEditSubmit(index)}
-                      className="ml-3 px-4 py-2 bg-gradient-to-r from-green-500 to-teal-500 text-white font-bold rounded-lg hover:from-teal-500 hover:to-green-500 transition-all shadow-lg"
+                      className="hidden lg:flex ml-3 px-4 py-2 bg-gradient-to-r from-green-500 to-teal-500 text-white font-bold rounded-lg hover:from-teal-500 hover:to-green-500 transition-all shadow-lg"
                     >
                       Save
                     </button>
