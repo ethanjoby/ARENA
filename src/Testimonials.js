@@ -21,7 +21,7 @@ const Testimonials = () => {
               className="h-20 opacity-75"
             />
             <img
-              src="https://seeklogo.com/images/H/harvard-university-logo-D7CC65EE30-seeklogo.com.png"
+              src="https://upload.wikimedia.org/wikipedia/commons/2/25/Harvard_University_shield.png"
               alt="Harvard"
               className="h-20 opacity-75"
             />
