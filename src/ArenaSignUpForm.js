@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Select from "react-select";
 import emailjs from "emailjs-com";
 
 function ArenaSignUpForm() {
@@ -8,83 +9,64 @@ function ArenaSignUpForm() {
   const [editingValue, setEditingValue] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [showHelperMessage, setShowHelperMessage] = useState(false);
   const [satOneHourCount, setSatOneHourCount] = useState(0);
+  const [selectedInternshipOptions, setSelectedInternshipOptions] = useState([]);
+  const [selectedResumeOptions, setSelectedResumeOptions] = useState([]);
+  const [selectedSATPrep, setSelectedSATPrep] = useState([]);
 
-  const handleProgramAdd = () => {
-    const newProgram = `Program ${programs.length + 1}`;
-    setPrograms((prev) => [...prev, newProgram]);
-    setShowHelperMessage(true);
-  };
-
-  const additionalOptions = [
-    { name: "General Internship Help", price: 40 },
-    { name: "Guaranteed Internship Placement", price: 150 },
-    { name: "General Professor Internship Help", price: 60 },
-    { name: "Hourly SAT/ACT Prep (10 hours)", price: 149 },
-    { name: "Hourly SAT/ACT Prep (25 hours)", price: 359 },
-    { name: "Hourly SAT/ACT Prep (50 hours)", price: 699 },
-    { name: "Interview Prep", price: 30 },
-    { name: "Resume & Cover Letter Review", price: 25 },
+  const internshipOptions = [
+    { value: "General Internship Help", label: "General Internship Help - $40", price: 40 },
+    { value: "Guaranteed Internship Placement", label: "Guaranteed Internship Placement - $150", price: 150 },
+    { value: "General Professor Internship Help", label: "General Professor Internship Help - $60", price: 60 },
   ];
 
-  const handleProgramSelect = (program) => {
-    setSelectedPrograms((prev) =>
-      prev.includes(program)
-        ? prev.filter((item) => item !== program)
-        : [...prev, program]
-    );
-  };
+  const resumeOptions = [
+    { value: "Resume & Cover Letter Review", label: "Resume & Cover Letter Review - $25", price: 25 },
+    { value: "Interview Prep", label: "Interview Prep - $30", price: 30 },
+  ];
 
-  const handleSatOneHourChange = (operation) => {
-    if (operation === "increment") {
-      setSatOneHourCount(satOneHourCount + 1);
-    } else if (operation === "decrement" && satOneHourCount > 0) {
-      setSatOneHourCount(satOneHourCount - 1);
-    }
-  };
+  const satPrepOptions = [
+    { value: "Hourly SAT/ACT Prep (10 hours)", label: "10 hours - $149", price: 149 },
+    { value: "Hourly SAT/ACT Prep (25 hours)", label: "25 hours - $359", price: 359 },
+    { value: "Hourly SAT/ACT Prep (50 hours)", label: "50 hours - $699", price: 699 },
+  ];
 
-  const handleEditProgram = (index) => {
-    setEditingIndex(index);
-    setEditingValue(programs[index]);
-  };
-
-  const handleEditSubmit = (index) => {
-    const updatedPrograms = [...programs];
-    updatedPrograms[index] = editingValue;
-    setPrograms(updatedPrograms);
-    setEditingIndex(null);
-  };
-
-  const handleDeleteProgram = (index) => {
-    const programToDelete = programs[index];
-    setPrograms((prev) => prev.filter((_, i) => i !== index));
-    setSelectedPrograms((prev) => prev.filter((item) => item !== programToDelete));
+  const handleProgramAdd = () => {
+    const newProgram = "Edit Program Name";
+    setPrograms((prev) => [...prev, newProgram]);
   };
 
   const calculateTotalPrice = () => {
     let total = 0;
 
-    // Base cost for summer programs
+    // Calculate price for selected summer programs
     const summerPrograms = programs.filter((program) =>
       selectedPrograms.includes(program)
     );
-
     if (summerPrograms.length > 0) {
-      total += 10; // $10 for the first summer program
-      total += (summerPrograms.length - 1) * 5; // $5 for each additional summer program
+      total += 10;
+      total += (summerPrograms.length - 1) * 5;
     }
 
-    // Additional options cost
-    const selectedOptions = additionalOptions.filter((option) =>
-      selectedPrograms.includes(option.name)
-    );
-
-    selectedOptions.forEach((option) => {
-      total += option.price;
+    // Calculate price for internships and professor help
+    selectedInternshipOptions.forEach((option) => {
+      const selectedOption = internshipOptions.find((o) => o.value === option);
+      if (selectedOption) total += selectedOption.price;
     });
 
-    // Add SAT 1-hour prep count to total
+    // Calculate price for resume and interview prep
+    selectedResumeOptions.forEach((option) => {
+      const selectedOption = resumeOptions.find((o) => o.value === option);
+      if (selectedOption) total += selectedOption.price;
+    });
+
+    // Calculate price for SAT/ACT prep
+    selectedSATPrep.forEach((option) => {
+      const selectedOption = satPrepOptions.find((o) => o.value === option);
+      if (selectedOption) total += selectedOption.price;
+    });
+
+    // Add hourly SAT/ACT price
     total += satOneHourCount * 22;
 
     return total;
@@ -110,210 +92,159 @@ function ArenaSignUpForm() {
 
     emailjs
       .send(
-        "service_2wckxjr", // Replace with your EmailJS service ID
-        "template_xugiogj", // Replace with your EmailJS template ID
+        "service_2wckxjr",
+        "template_xugiogj",
         templateParams,
-        "Q1b_pv0uG9JEXJhAl" // Replace with your EmailJS public key
+        "Q1b_pv0uG9JEXJhAl"
       )
       .then(
-        (response) => {
-          console.log("Email sent successfully!", response.status, response.text);
-          alert("Thank you for signing up! A confirmation email has been sent.");
-        },
-        (error) => {
-          console.error("Failed to send email.", error);
-          alert("Oops! Something went wrong. Please try again.");
-        }
+        () => alert("Thank you for signing up! A confirmation email has been sent."),
+        () => alert("Oops! Something went wrong. Please try again.")
       );
   };
 
   return (
-    <div className="min-h-screen container mx-auto bg-white flex items-center justify-center ">
-      <div className="w-full max-w-9xl px-8">
-      <h1 className="text-5xl font-extrabold text-transparent bg-clip-text bg-black text-center mb-4 leading-normal">
-
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-6">
+      <div className="w-full max-w-6xl bg-white p-12 rounded-lg shadow-lg">
+        <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
           ARENA - Sign Up
         </h1>
-        <p className="text-gray-400 text-center mb-6">
-          Join the ARENA and become part of something extraordinary.
-        </p>
-
-        <form
-          className="bg-gray-100 p-10 rounded-3xl shadow-xl border "
-          onSubmit={handleFormSubmit}
-        >
-          {/* Name and Email Fields */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-center">
-            <div className="group">
-              <label className="block text-black text-sm font-bold mb-2 text-left">
-                Name
-              </label>
+        <form onSubmit={handleFormSubmit} className="space-y-8">
+          {/* User Info */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-sm font-semibold mb-2 text-gray-700">Name</label>
               <input
                 type="text"
                 placeholder="Your name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-3 text-gray-500 bg-gray-200 rounded-lg focus:ring-4 focus:ring-indigo-500"
+                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-gray-500"
               />
             </div>
-            <div className="group">
-              <label className="block text-black text-sm font-bold mb-2 text-left">
-                Email
-              </label>
+            <div>
+              <label className="block text-sm font-semibold mb-2 text-gray-700">Email</label>
               <input
                 type="email"
                 placeholder="Your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 text-gray-500 bg-gray-200 rounded-lg focus:ring-4 focus:ring-indigo-500"
+                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-gray-500"
               />
             </div>
           </div>
 
-          {/* Summer Programs */}
-          <div className="mt-8">
-            <div className="flex items-center justify-between">
-              <label className="block text-black text-sm font-bold">
-                Selected Summer Programs
-              </label>
-              <button
-                type="button"
-                onClick={handleProgramAdd}
-                className="py-2 px-4 text-sm font-bold text-gray-300 bg-blue-500 rounded-lg hover:bg-blue-600 hover:scale-105 transform transition-all"
-              >
-                + Add Program
-              </button>
-            </div>
-            {showHelperMessage && (
-              <p className="text-gray-500 text-sm mt-2 italic">
-                Double-click a program or click the pencil icon to edit its name.
-              </p>
-            )}
+          {/* Selected Summer Programs */}
+          <div>
+            <h2 className="text-lg font-semibold mb-4 text-gray-800">Selected Summer Programs</h2>
             {programs.map((program, index) => (
-              <div key={index} className="flex items-center bg-gray-200 text-gray-400 p-3 my-2 rounded-lg shadow-lg">
-                <input
-                  type="checkbox"
-                  id={program}
-                  checked={selectedPrograms.includes(program)}
-                  onChange={() => handleProgramSelect(program)}
-                  className="mr-2"
-                />
+              <div key={index} className="flex justify-between items-center mb-3">
                 {editingIndex === index ? (
-                  <div className="flex items-center w-full">
+                  <>
                     <input
                       type="text"
                       value={editingValue}
                       onChange={(e) => setEditingValue(e.target.value)}
-                      className="flex-1 px-4 py-2 text-gray-500 bg-gray-200 rounded-lg"
-                      placeholder="Edit program name"
+                      className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-gray-500 mr-2"
                     />
                     <button
-                      type="button"
-                      onClick={() => handleEditSubmit(index)}
-                      className="ml-3 px-4 py-2 bg-gradient-to-r from-green-500 to-teal-500 text-white font-bold rounded-lg"
+                      onClick={() => {
+                        const updatedPrograms = [...programs];
+                        updatedPrograms[index] = editingValue;
+                        setPrograms(updatedPrograms);
+                        setEditingIndex(null);
+                        setEditingValue("");
+                      }}
+                      className="px-4 py-2 bg-gray-800 text-white rounded-md"
                     >
                       Save
                     </button>
-                  </div>
+                  </>
                 ) : (
-                  <div className="flex items-center justify-between w-full">
-                    <label htmlFor={program} className="text-gray-500 cursor-pointer">
-                      {program}
-                    </label>
-                    <div className="flex items-center gap-4">
+                  <>
+                    <span className="text-gray-700">{program}</span>
+                    <div className="flex items-center gap-2">
                       <button
-                        type="button"
-                        onClick={() => handleEditProgram(index)}
-                        className="text-gray-400 hover:text-blue-400 transition-all"
+                        onClick={() => {
+                          setEditingIndex(index);
+                          setEditingValue(program);
+                        }}
+                        className="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400"
                       >
-                        ✏️
+                        Edit
                       </button>
                       <button
-                        type="button"
-                        onClick={() => handleDeleteProgram(index)}
-                        className="text-red-500 hover:text-red-700 transition-all"
+                        onClick={() =>
+                          setPrograms((prev) => prev.filter((_, i) => i !== index))
+                        }
+                        className="px-4 py-2 bg-red-500 text-white rounded-md"
                       >
-                        🗑️
+                        Delete
                       </button>
                     </div>
-                  </div>
+                  </>
                 )}
               </div>
             ))}
+            <button
+              type="button"
+              onClick={handleProgramAdd}
+              className="w-full py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900"
+            >
+              Add Program
+            </button>
           </div>
 
-          {/* Additional Options - Displaying in rows */}
-          <div className="mt-8">
-            <div className="grid grid-cols-2 gap-6">
-              <div>
-                <label className="block text-black text-left text-sm font-bold">Internship & Professor Help</label>
-                {additionalOptions.slice(0, 3).map((option) => (
-                  <button
-                    key={option.name}
-                    type="button"
-                    onClick={() => handleProgramSelect(option.name)}
-                    className={`block w-full py-3 px-4 mt-3 rounded-lg text-black ${selectedPrograms.includes(option.name)
-                      ? "bg-blue-600"
-                      : "bg-gray-200 hover:bg-blue-500"
-                      }`}
-                  >
-                    {option.name} - ${option.price}
-                  </button>
-                ))}
-              </div>
+          {/* Internship & Professor Help */}
+          <div>
+            <h2 className="text-lg font-semibold mb-4 text-gray-800">Internship & Professor Help</h2>
+            <Select
+              options={internshipOptions}
+              isMulti
+              onChange={(selected) =>
+                setSelectedInternshipOptions(selected.map((item) => item.value))
+              }
+              className="rounded-md"
+            />
+          </div>
 
-              <div>
-                <label className="block text-black text-left text-sm font-bold">SAT Prep</label>
-                {additionalOptions.slice(3, 6).map((option) => (
-                  <button
-                    key={option.name}
-                    type="button"
-                    onClick={() => handleProgramSelect(option.name)}
-                    className={`block w-full py-3 px-4 mt-3 rounded-lg text-black ${selectedPrograms.includes(option.name)
-                      ? "bg-blue-600"
-                      : "bg-gray-200 hover:bg-blue-500"
-                      }`}
-                  >
-                    {option.name} - ${option.price}
-                  </button>
-                ))}
-              </div>
+          {/* Resume & Interview Prep */}
+          <div>
+            <h2 className="text-lg font-semibold mb-4 text-gray-800">Resume & Interview Prep</h2>
+            <Select
+              options={resumeOptions}
+              isMulti
+              onChange={(selected) =>
+                setSelectedResumeOptions(selected.map((item) => item.value))
+              }
+              className="rounded-md"
+            />
+          </div>
 
-              
-            </div>
-            <div className = "mt-10">
-                <label className="block text-black text-left text-sm font-bold">Resume & Interview Prep</label>
-                {additionalOptions.slice(6).map((option) => (
-                  <button
-                    key={option.name}
-                    type="button"
-                    onClick={() => handleProgramSelect(option.name)}
-                    className={`block w-full py-3 px-4 mt-3 rounded-lg text-black ${selectedPrograms.includes(option.name)
-                      ? "bg-blue-600"
-                      : "bg-gray-200 hover:bg-blue-500"
-                      }`}
-                  >
-                    {option.name} - ${option.price}
-                  </button>
-                ))}
-              </div>
-
-            {/* For the SAT 1-hour count */}
-            <div className="flex justify-between items-center mt-8 text-lg text-black">
-              <p>SAT/ACT Prep (1 hour)</p>
+          {/* SAT/ACT Prep */}
+          <div>
+            <h2 className="text-lg font-semibold mb-4 text-gray-800">SAT/ACT Prep</h2>
+            <Select
+              options={satPrepOptions}
+              isMulti
+              onChange={(selected) =>
+                setSelectedSATPrep(selected.map((item) => item.value))
+              }
+              className="rounded-md"
+            />
+            <div className="flex justify-between items-center mt-4">
+              <p className="text-gray-800">Hourly Prep (1 hour):</p>
               <div className="flex items-center">
                 <button
-                  type="button"
-                  onClick={() => handleSatOneHourChange("decrement")}
-                  className="bg-gray-200 text-black px-4 py-2 rounded-lg"
+                  onClick={() => satOneHourCount > 0 && setSatOneHourCount(satOneHourCount - 1)}
+                  className="px-4 py-2 bg-gray-300 rounded-md"
                 >
                   -
                 </button>
-                <p className="mx-4 text-black">{satOneHourCount}</p>
+                <span className="mx-4">{satOneHourCount}</span>
                 <button
-                  type="button"
-                  onClick={() => handleSatOneHourChange("increment")}
-                  className="bg-gray-200 text-black px-4 py-2 rounded-lg"
+                  onClick={() => setSatOneHourCount(satOneHourCount + 1)}
+                  className="px-4 py-2 bg-gray-800 text-white rounded-md"
                 >
                   +
                 </button>
@@ -322,17 +253,15 @@ function ArenaSignUpForm() {
           </div>
 
           {/* Total Price */}
-          <div className="mt-8">
-            <div className="flex justify-between items-center text-lg text-black">
-              <p>Total Price</p>
-              <p className="font-semibold">${calculateTotalPrice()}</p>
-            </div>
+          <div className="text-lg font-semibold flex justify-between items-center text-gray-800">
+            <span>Total Price:</span>
+            <span>${calculateTotalPrice()}</span>
           </div>
 
           {/* Submit Button */}
           <button
             type="submit"
-            className="mt-8 w-full py-3 text-white bg-gradient-to-r from-blue-500 to-teal-500 font-bold rounded-lg hover:bg-gradient-to-l transition-all"
+            className="w-full py-3 text-white bg-gray-800 rounded-md hover:bg-gray-900"
           >
             Sign Up Now
           </button>
