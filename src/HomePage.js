@@ -3,7 +3,7 @@ import Testimonials from './Testimonials';
 import HeroSection from './HeroSection';
 import Services from './Services';
 import Footer from './Footer';
-import FAQs from './FAQs';
+import FAQs from './FAQs'
 
 function HomePage() {
   return (
