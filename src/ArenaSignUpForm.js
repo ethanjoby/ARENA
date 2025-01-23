@@ -12,7 +12,7 @@ function ArenaSignUpForm() {
   const [satOneHourCount, setSatOneHourCount] = useState(0);
   const [selectedInternshipOptions, setSelectedInternshipOptions] = useState([]);
   const [selectedResumeOptions, setSelectedResumeOptions] = useState([]);
-  const [selectedSATPrep, setSelectedSATPrep] = useState([]);
+  const [selectedSATPrep, setSelectedSATPrep] = useState("");
 
   const internshipOptions = [
     { value: "General Internship Help", label: "General Internship Help - $40", price: 40 },
@@ -26,9 +26,9 @@ function ArenaSignUpForm() {
   ];
 
   const satPrepOptions = [
-    { value: "Hourly SAT/ACT Prep (10 hours)", label: "10 hours - $149", price: 149 },
-    { value: "Hourly SAT/ACT Prep (25 hours)", label: "25 hours - $359", price: 359 },
-    { value: "Hourly SAT/ACT Prep (50 hours)", label: "50 hours - $699", price: 699 },
+    { value: "10 Hours", label: "10 Hours - $149", price: 149 },
+    { value: "25 Hours", label: "25 Hours - $359", price: 359 },
+    { value: "50 Hours", label: "50 Hours - $699", price: 699 },
   ];
 
   const handleProgramAdd = () => {
@@ -61,10 +61,10 @@ function ArenaSignUpForm() {
     });
 
     // Calculate price for SAT/ACT prep
-    selectedSATPrep.forEach((option) => {
-      const selectedOption = satPrepOptions.find((o) => o.value === option);
-      if (selectedOption) total += selectedOption.price;
-    });
+    const selectedOption = satPrepOptions.find(
+      (o) => o.value === selectedSATPrep
+    );
+    if (selectedOption) total += selectedOption.price;
 
     // Add hourly SAT/ACT price
     total += satOneHourCount * 22;
@@ -224,26 +224,36 @@ function ArenaSignUpForm() {
           {/* SAT/ACT Prep */}
           <div>
             <h2 className="text-lg font-semibold mb-4 text-gray-800">SAT/ACT Prep</h2>
-            <Select
-              options={satPrepOptions}
-              isMulti
-              onChange={(selected) =>
-                setSelectedSATPrep(selected.map((item) => item.value))
-              }
-              className="rounded-md"
-            />
+            <select
+              value={selectedSATPrep}
+              onChange={(e) => setSelectedSATPrep(e.target.value)}
+              className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-gray-500"
+            >
+              <option value="">Select Hours</option>
+              {satPrepOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
             <div className="flex justify-between items-center mt-4">
               <p className="text-gray-800">Hourly Prep (1 hour):</p>
               <div className="flex items-center">
                 <button
-                  onClick={() => satOneHourCount > 0 && setSatOneHourCount(satOneHourCount - 1)}
+                  onClick={() =>
+                    setSatOneHourCount((prev) => Math.max(0, prev - 1))
+                  }
+                  type="button"
                   className="px-4 py-2 bg-gray-300 rounded-md"
                 >
                   -
                 </button>
                 <span className="mx-4">{satOneHourCount}</span>
                 <button
-                  onClick={() => setSatOneHourCount(satOneHourCount + 1)}
+                  onClick={() =>
+                    setSatOneHourCount((prev) => Math.min(9, prev + 1))
+                  }
+                  type="button"
                   className="px-4 py-2 bg-gray-800 text-white rounded-md"
                 >
                   +
