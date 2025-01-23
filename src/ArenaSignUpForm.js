@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import emailjs from "emailjs-com";
+
 function ArenaSignUpForm() {
   const [selectedPrograms, setSelectedPrograms] = useState([]);
   const [programs, setPrograms] = useState([]);
@@ -8,19 +9,39 @@ function ArenaSignUpForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [showHelperMessage, setShowHelperMessage] = useState(false);
+  const [satOneHourCount, setSatOneHourCount] = useState(0);
 
   const handleProgramAdd = () => {
     const newProgram = `Program ${programs.length + 1}`;
     setPrograms((prev) => [...prev, newProgram]);
-    setShowHelperMessage(true); // Show the helper message when a program is added
+    setShowHelperMessage(true);
   };
-  
+
+  const additionalOptions = [
+    { name: "General Internship Help", price: 40 },
+    { name: "Guaranteed Internship Placement", price: 150 },
+    { name: "General Professor Internship Help", price: 60 },
+    { name: "Hourly SAT/ACT Prep (10 hours)", price: 149 },
+    { name: "Hourly SAT/ACT Prep (25 hours)", price: 359 },
+    { name: "Hourly SAT/ACT Prep (50 hours)", price: 699 },
+    { name: "Interview Prep", price: 30 },
+    { name: "Resume & Cover Letter Review", price: 25 },
+  ];
+
   const handleProgramSelect = (program) => {
     setSelectedPrograms((prev) =>
       prev.includes(program)
         ? prev.filter((item) => item !== program)
         : [...prev, program]
     );
+  };
+
+  const handleSatOneHourChange = (operation) => {
+    if (operation === "increment") {
+      setSatOneHourCount(satOneHourCount + 1);
+    } else if (operation === "decrement" && satOneHourCount > 0) {
+      setSatOneHourCount(satOneHourCount - 1);
+    }
   };
 
   const handleEditProgram = (index) => {
@@ -42,8 +63,31 @@ function ArenaSignUpForm() {
   };
 
   const calculateTotalPrice = () => {
-    if (selectedPrograms.length === 0) return 0;
-    return 10 + (selectedPrograms.length - 1) * 5;
+    let total = 0;
+
+    // Base cost for summer programs
+    const summerPrograms = programs.filter((program) =>
+      selectedPrograms.includes(program)
+    );
+
+    if (summerPrograms.length > 0) {
+      total += 10; // $10 for the first summer program
+      total += (summerPrograms.length - 1) * 5; // $5 for each additional summer program
+    }
+
+    // Additional options cost
+    const selectedOptions = additionalOptions.filter((option) =>
+      selectedPrograms.includes(option.name)
+    );
+
+    selectedOptions.forEach((option) => {
+      total += option.price;
+    });
+
+    // Add SAT 1-hour prep count to total
+    total += satOneHourCount * 22;
+
+    return total;
   };
 
   const handleFormSubmit = (e) => {
@@ -55,19 +99,15 @@ function ArenaSignUpForm() {
       totalPrice: calculateTotalPrice(),
     };
 
-    // Save to localStorage
     localStorage.setItem("arenaSignUpData", JSON.stringify(formData));
-    const totalPrice = calculateTotalPrice();
 
-    // Create email template data
     const templateParams = {
       name,
       email,
       selectedPrograms: selectedPrograms.join(", "),
-      totalPrice,
+      totalPrice: calculateTotalPrice(),
     };
 
-    // Send email using EmailJS
     emailjs
       .send(
         "service_2wckxjr", // Replace with your EmailJS service ID
@@ -90,13 +130,9 @@ function ArenaSignUpForm() {
   return (
     <div className="min-h-screen bg-black flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-9xl px-8">
-        <h1
-          className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r 
-          from-blue-500 via-purple-500 to-pink-500 text-center mb-4"
-        >
+        <h1 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-center mb-4">
           ARENA - Sign Up
         </h1>
-
         <p className="text-gray-400 text-center mb-6">
           Join the ARENA and become part of something extraordinary.
         </p>
@@ -116,7 +152,7 @@ function ArenaSignUpForm() {
                 placeholder="Your name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-3 text-gray-300 bg-gray-700 rounded-lg focus:ring-4 focus:ring-indigo-500 autofill:bg-gray-700"
+                className="w-full px-4 py-3 text-gray-300 bg-gray-700 rounded-lg focus:ring-4 focus:ring-indigo-500"
               />
             </div>
             <div className="group">
@@ -128,21 +164,12 @@ function ArenaSignUpForm() {
                 placeholder="Your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 text-gray-300 bg-gray-700 rounded-lg focus:ring-4 focus:ring-indigo-500 autofill:bg-gray-700"
+                className="w-full px-4 py-3 text-gray-300 bg-gray-700 rounded-lg focus:ring-4 focus:ring-indigo-500"
               />
             </div>
           </div>
 
-          {/* Pricing Description */}
-          <div className="mt-8 bg-gray-800 p-4 rounded-lg border border-gray-700 text-gray-300">
-            <p className="text-lg font-bold">Pricing:</p>
-            <p>
-              The first summer program costs <span className="font-bold">$10</span>.
-              Each additional program costs <span className="font-bold">$5</span>.
-            </p>
-          </div>
-
-          {/* Summer Programs Selection */}
+          {/* Summer Programs */}
           <div className="mt-8">
             <div className="flex items-center justify-between">
               <label className="block text-gray-300 text-sm font-bold">
@@ -162,10 +189,7 @@ function ArenaSignUpForm() {
               </p>
             )}
             {programs.map((program, index) => (
-              <div
-                key={index}
-                className="flex items-center bg-gray-700 p-3 my-2 rounded-lg shadow-lg"
-              >
+              <div key={index} className="flex items-center bg-gray-700 p-3 my-2 rounded-lg shadow-lg">
                 <input
                   type="checkbox"
                   id={program}
@@ -179,13 +203,13 @@ function ArenaSignUpForm() {
                       type="text"
                       value={editingValue}
                       onChange={(e) => setEditingValue(e.target.value)}
-                      className="flex-1 px-4 py-2 text-gray-300 bg-gray-600 rounded-lg focus:ring focus:ring-indigo-500"
+                      className="flex-1 px-4 py-2 text-gray-300 bg-gray-600 rounded-lg"
                       placeholder="Edit program name"
                     />
                     <button
                       type="button"
                       onClick={() => handleEditSubmit(index)}
-                      className="hidden lg:flex ml-3 px-4 py-2 bg-gradient-to-r from-green-500 to-teal-500 text-white font-bold rounded-lg hover:from-teal-500 hover:to-green-500 transition-all shadow-lg"
+                      className="ml-3 px-4 py-2 bg-gradient-to-r from-green-500 to-teal-500 text-white font-bold rounded-lg"
                     >
                       Save
                     </button>
@@ -200,7 +224,6 @@ function ArenaSignUpForm() {
                         type="button"
                         onClick={() => handleEditProgram(index)}
                         className="text-gray-400 hover:text-blue-400 transition-all"
-                        aria-label="Edit Program Name"
                       >
                         ✏️
                       </button>
@@ -208,7 +231,6 @@ function ArenaSignUpForm() {
                         type="button"
                         onClick={() => handleDeleteProgram(index)}
                         className="text-red-500 hover:text-red-700 transition-all"
-                        aria-label="Delete Program"
                       >
                         🗑️
                       </button>
@@ -219,21 +241,100 @@ function ArenaSignUpForm() {
             ))}
           </div>
 
-          {/* Total Price Display */}
-          <div className="mt-6 text-gray-300 text-lg font-bold bg-gray-800 p-4 rounded-lg shadow-lg">
-            Total Price: ${calculateTotalPrice()}
+          {/* Additional Options - Displaying in rows */}
+          <div className="mt-8">
+            <div className="grid grid-cols-2 gap-6">
+              <div>
+                <label className="block text-gray-300 text-sm font-bold">Internship & Professor Help</label>
+                {additionalOptions.slice(0, 3).map((option) => (
+                  <button
+                    key={option.name}
+                    type="button"
+                    onClick={() => handleProgramSelect(option.name)}
+                    className={`block w-full py-3 px-4 mt-3 rounded-lg text-white ${selectedPrograms.includes(option.name)
+                      ? "bg-blue-600"
+                      : "bg-gray-700 hover:bg-blue-500"
+                      }`}
+                  >
+                    {option.name} - ${option.price}
+                  </button>
+                ))}
+              </div>
+
+              <div>
+                <label className="block text-gray-300 text-sm font-bold">SAT Prep</label>
+                {additionalOptions.slice(3, 6).map((option) => (
+                  <button
+                    key={option.name}
+                    type="button"
+                    onClick={() => handleProgramSelect(option.name)}
+                    className={`block w-full py-3 px-4 mt-3 rounded-lg text-white ${selectedPrograms.includes(option.name)
+                      ? "bg-blue-600"
+                      : "bg-gray-700 hover:bg-blue-500"
+                      }`}
+                  >
+                    {option.name} - ${option.price}
+                  </button>
+                ))}
+              </div>
+
+              
+            </div>
+            <div className = "mt-10">
+                <label className="block text-gray-300 text-sm font-bold">Resume & Interview Prep</label>
+                {additionalOptions.slice(6).map((option) => (
+                  <button
+                    key={option.name}
+                    type="button"
+                    onClick={() => handleProgramSelect(option.name)}
+                    className={`block w-full py-3 px-4 mt-3 rounded-lg text-white ${selectedPrograms.includes(option.name)
+                      ? "bg-blue-600"
+                      : "bg-gray-700 hover:bg-blue-500"
+                      }`}
+                  >
+                    {option.name} - ${option.price}
+                  </button>
+                ))}
+              </div>
+
+            {/* For the SAT 1-hour count */}
+            <div className="flex justify-between items-center mt-8 text-lg text-gray-300">
+              <p>SAT/ACT Prep (1 hour)</p>
+              <div className="flex items-center">
+                <button
+                  type="button"
+                  onClick={() => handleSatOneHourChange("decrement")}
+                  className="bg-gray-700 text-white px-4 py-2 rounded-lg"
+                >
+                  -
+                </button>
+                <p className="mx-4 text-white">{satOneHourCount}</p>
+                <button
+                  type="button"
+                  onClick={() => handleSatOneHourChange("increment")}
+                  className="bg-gray-700 text-white px-4 py-2 rounded-lg"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Total Price */}
+          <div className="mt-8">
+            <div className="flex justify-between items-center text-lg text-gray-300">
+              <p>Total Price</p>
+              <p className="font-semibold">${calculateTotalPrice()}</p>
+            </div>
           </div>
 
           {/* Submit Button */}
-          <div className="mt-8">
-            <button
-              type="submit"
-              className="w-full py-3 px-6 text-lg font-bold text-white bg-gradient-to-r 
-              from-blue-500 to-pink-500 rounded-lg hover:scale-105 transform transition-all"
-            >
-              Join the ARENA!
-            </button>
-          </div>
+          <button
+            type="submit"
+            className="mt-8 w-full py-3 text-white bg-gradient-to-r from-blue-500 to-teal-500 font-bold rounded-lg hover:bg-gradient-to-l transition-all"
+          >
+            Sign Up Now
+          </button>
         </form>
       </div>
     </div>
