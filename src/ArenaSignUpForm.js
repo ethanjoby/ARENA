@@ -128,9 +128,10 @@ function ArenaSignUpForm() {
   };
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen container mx-auto bg-white flex items-center justify-center ">
       <div className="w-full max-w-9xl px-8">
-        <h1 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-center mb-4">
+      <h1 className="text-5xl font-extrabold text-transparent bg-clip-text bg-black text-center mb-4 leading-normal">
+
           ARENA - Sign Up
         </h1>
         <p className="text-gray-400 text-center mb-6">
@@ -138,13 +139,13 @@ function ArenaSignUpForm() {
         </p>
 
         <form
-          className="bg-gradient-to-b from-gray-900 to-gray-800 p-10 rounded-3xl shadow-xl border border-gray-700"
+          className="bg-gray-100 p-10 rounded-3xl shadow-xl border "
           onSubmit={handleFormSubmit}
         >
           {/* Name and Email Fields */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-center">
             <div className="group">
-              <label className="block text-gray-300 text-sm font-bold mb-2 text-left">
+              <label className="block text-black text-sm font-bold mb-2 text-left">
                 Name
               </label>
               <input
@@ -152,11 +153,11 @@ function ArenaSignUpForm() {
                 placeholder="Your name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-3 text-gray-300 bg-gray-700 rounded-lg focus:ring-4 focus:ring-indigo-500"
+                className="w-full px-4 py-3 text-gray-500 bg-gray-200 rounded-lg focus:ring-4 focus:ring-indigo-500"
               />
             </div>
             <div className="group">
-              <label className="block text-gray-300 text-sm font-bold mb-2 text-left">
+              <label className="block text-black text-sm font-bold mb-2 text-left">
                 Email
               </label>
               <input
@@ -164,7 +165,7 @@ function ArenaSignUpForm() {
                 placeholder="Your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 text-gray-300 bg-gray-700 rounded-lg focus:ring-4 focus:ring-indigo-500"
+                className="w-full px-4 py-3 text-gray-500 bg-gray-200 rounded-lg focus:ring-4 focus:ring-indigo-500"
               />
             </div>
           </div>
@@ -172,7 +173,7 @@ function ArenaSignUpForm() {
           {/* Summer Programs */}
           <div className="mt-8">
             <div className="flex items-center justify-between">
-              <label className="block text-gray-300 text-sm font-bold">
+              <label className="block text-black text-sm font-bold">
                 Selected Summer Programs
               </label>
               <button
@@ -189,7 +190,7 @@ function ArenaSignUpForm() {
               </p>
             )}
             {programs.map((program, index) => (
-              <div key={index} className="flex items-center bg-gray-700 p-3 my-2 rounded-lg shadow-lg">
+              <div key={index} className="flex items-center bg-gray-200 text-gray-400 p-3 my-2 rounded-lg shadow-lg">
                 <input
                   type="checkbox"
                   id={program}
@@ -203,7 +204,7 @@ function ArenaSignUpForm() {
                       type="text"
                       value={editingValue}
                       onChange={(e) => setEditingValue(e.target.value)}
-                      className="flex-1 px-4 py-2 text-gray-300 bg-gray-600 rounded-lg"
+                      className="flex-1 px-4 py-2 text-gray-500 bg-gray-200 rounded-lg"
                       placeholder="Edit program name"
                     />
                     <button
@@ -216,7 +217,7 @@ function ArenaSignUpForm() {
                   </div>
                 ) : (
                   <div className="flex items-center justify-between w-full">
-                    <label htmlFor={program} className="text-gray-300 cursor-pointer">
+                    <label htmlFor={program} className="text-gray-500 cursor-pointer">
                       {program}
                     </label>
                     <div className="flex items-center gap-4">
@@ -245,15 +246,15 @@ function ArenaSignUpForm() {
           <div className="mt-8">
             <div className="grid grid-cols-2 gap-6">
               <div>
-                <label className="block text-gray-300 text-sm font-bold">Internship & Professor Help</label>
+                <label className="block text-black text-left text-sm font-bold">Internship & Professor Help</label>
                 {additionalOptions.slice(0, 3).map((option) => (
                   <button
                     key={option.name}
                     type="button"
                     onClick={() => handleProgramSelect(option.name)}
-                    className={`block w-full py-3 px-4 mt-3 rounded-lg text-white ${selectedPrograms.includes(option.name)
+                    className={`block w-full py-3 px-4 mt-3 rounded-lg text-black ${selectedPrograms.includes(option.name)
                       ? "bg-blue-600"
-                      : "bg-gray-700 hover:bg-blue-500"
+                      : "bg-gray-200 hover:bg-blue-500"
                       }`}
                   >
                     {option.name} - ${option.price}
@@ -262,15 +263,15 @@ function ArenaSignUpForm() {
               </div>
 
               <div>
-                <label className="block text-gray-300 text-sm font-bold">SAT Prep</label>
+                <label className="block text-black text-left text-sm font-bold">SAT Prep</label>
                 {additionalOptions.slice(3, 6).map((option) => (
                   <button
                     key={option.name}
                     type="button"
                     onClick={() => handleProgramSelect(option.name)}
-                    className={`block w-full py-3 px-4 mt-3 rounded-lg text-white ${selectedPrograms.includes(option.name)
+                    className={`block w-full py-3 px-4 mt-3 rounded-lg text-black ${selectedPrograms.includes(option.name)
                       ? "bg-blue-600"
-                      : "bg-gray-700 hover:bg-blue-500"
+                      : "bg-gray-200 hover:bg-blue-500"
                       }`}
                   >
                     {option.name} - ${option.price}
@@ -281,15 +282,15 @@ function ArenaSignUpForm() {
               
             </div>
             <div className = "mt-10">
-                <label className="block text-gray-300 text-sm font-bold">Resume & Interview Prep</label>
+                <label className="block text-black text-left text-sm font-bold">Resume & Interview Prep</label>
                 {additionalOptions.slice(6).map((option) => (
                   <button
                     key={option.name}
                     type="button"
                     onClick={() => handleProgramSelect(option.name)}
-                    className={`block w-full py-3 px-4 mt-3 rounded-lg text-white ${selectedPrograms.includes(option.name)
+                    className={`block w-full py-3 px-4 mt-3 rounded-lg text-black ${selectedPrograms.includes(option.name)
                       ? "bg-blue-600"
-                      : "bg-gray-700 hover:bg-blue-500"
+                      : "bg-gray-200 hover:bg-blue-500"
                       }`}
                   >
                     {option.name} - ${option.price}
@@ -298,21 +299,21 @@ function ArenaSignUpForm() {
               </div>
 
             {/* For the SAT 1-hour count */}
-            <div className="flex justify-between items-center mt-8 text-lg text-gray-300">
+            <div className="flex justify-between items-center mt-8 text-lg text-black">
               <p>SAT/ACT Prep (1 hour)</p>
               <div className="flex items-center">
                 <button
                   type="button"
                   onClick={() => handleSatOneHourChange("decrement")}
-                  className="bg-gray-700 text-white px-4 py-2 rounded-lg"
+                  className="bg-gray-200 text-black px-4 py-2 rounded-lg"
                 >
                   -
                 </button>
-                <p className="mx-4 text-white">{satOneHourCount}</p>
+                <p className="mx-4 text-black">{satOneHourCount}</p>
                 <button
                   type="button"
                   onClick={() => handleSatOneHourChange("increment")}
-                  className="bg-gray-700 text-white px-4 py-2 rounded-lg"
+                  className="bg-gray-200 text-black px-4 py-2 rounded-lg"
                 >
                   +
                 </button>
@@ -322,7 +323,7 @@ function ArenaSignUpForm() {
 
           {/* Total Price */}
           <div className="mt-8">
-            <div className="flex justify-between items-center text-lg text-gray-300">
+            <div className="flex justify-between items-center text-lg text-black">
               <p>Total Price</p>
               <p className="font-semibold">${calculateTotalPrice()}</p>
             </div>

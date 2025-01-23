@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from './assets/logo123.webp'; // Adjust the path
+import { useNavigate } from 'react-router-dom';
 
 // Smooth scroll function
 const scrollToSection = (sectionId) => {
@@ -10,6 +11,7 @@ const scrollToSection = (sectionId) => {
 };
 
 const HeroSection = () => {
+  const navigate = useNavigate();
   return (
     <section className="hero-section bg-white text-black min-h-screen flex flex-col items-center justify-center">
       {/* Header */}
@@ -44,7 +46,7 @@ const HeroSection = () => {
             className="absolute transition-all duration-1000 opacity-70 -inset-px bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] rounded-full blur-md group-hover:opacity-100 group-hover:-inset-0.5 group-hover:duration-200 animate-tilt"
           ></div>
           <button
-            onClick={() => scrollToSection('register')}
+            onClick={() => navigate('/sign-up')}
             className="relative inline-flex items-center justify-center px-6 py-3 text-md font-semibold text-black transition-all duration-200 bg-white font-pj rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
           >
             Register

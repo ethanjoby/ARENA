@@ -2,38 +2,38 @@ import React from "react";
 
 const Testimonials = () => {
   return (
-    <div className="bg-black text-white py-16">
+    <div className="bg-white text-black py-16">
       <div className="container mx-auto px-6">
         {/* Top section with logos */}
         <div className="flex flex-col items-center space-y-4">
-          <h2 className="text-sm uppercase text-gray-400">
+          <h2 className="text-sm uppercase text-gray-500">
             Our team has been accepted to programs  and done research with professors at top universities:
           </h2>
           <div className="flex flex-wrap justify-center gap-6">
             <img
               src="https://www.turbolearn.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstanford.57682cbd.png&w=1920&q=75"
               alt="Stanford"
-              className="h-20 opacity-75"
+              className="h-20 "
             />
             <img
               src="https://calbridge.org/wp-content/uploads/2024/05/Seal_of_the_California_Institute_of_Technology-svg.png"
               alt="Caltech"
-              className="h-20 opacity-75"
+              className="h-20 "
             />
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/2/25/Harvard_University_shield.png"
               alt="Harvard"
-              className="h-20 opacity-75"
+              className="h-20 "
             />
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/UCLA_Bruins_logo.svg/1280px-UCLA_Bruins_logo.svg.png"
               alt="UCLA"
-              className="h-20 opacity-75"
+              className="h-20 "
             />
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Seal_of_University_of_California%2C_Berkeley.svg/1200px-Seal_of_University_of_California%2C_Berkeley.svg.png"
               alt="UC Berkley"
-              className="h-20 opacity-75"
+              className="h-20 "
             />
 
           </div>
@@ -87,16 +87,16 @@ const Testimonials = () => {
           ].map((testimonial, index) => (
             <div
               key={index}
-              className="bg-gray-800 rounded-lg p-6 shadow-md text-center"
+              className="bg-gray-100 rounded-lg p-6 shadow-md text-center"
             >
               <img
                 src={testimonial.logo}
                 alt={`${testimonial.name} logo`}
                 className="h-10 mx-auto mb-4"
               />
-              <p className="text-gray-300 italic mb-4">"{testimonial.text}"</p>
+              <p className="text-black italic mb-4">"{testimonial.text}"</p>
               <h3 className="text-lg font-semibold">{testimonial.name}</h3>
-              <p className="text-sm text-gray-400">{testimonial.role}</p>
+              <p className="text-sm text-gray-500">{testimonial.role}</p>
             </div>
           ))}
         </div>

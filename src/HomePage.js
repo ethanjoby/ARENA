@@ -3,7 +3,6 @@ import Testimonials from './Testimonials';
 import HeroSection from './HeroSection';
 import Services from './Services';
 import Footer from './Footer';
-import ArenaSignUpForm from './ArenaSignUpForm';
 import FAQs from './FAQs';
 
 function HomePage() {
@@ -23,9 +22,6 @@ function HomePage() {
       </div>
       <div id="faq">
         <FAQs/>
-      </div>
-      <div id="register">
-        <ArenaSignUpForm/>
       </div>
       <Footer />
     </div>
