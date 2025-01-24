@@ -115,7 +115,7 @@ const AdminPage = () => {
         </div>
         <button
           type="submit"
-          className="w-full py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold rounded hover:from-purple-500 hover:to-blue-500 transition duration-300"
+          className="w-full py-2 bg-black text-white font-bold rounded  transition duration-300"
         >
           Login
         </button>
