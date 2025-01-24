@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Select from "react-select";
 import emailjs from "emailjs-com";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 function ArenaSignUpForm() {
   const [selectedPrograms, setSelectedPrograms] = useState([]);
@@ -13,6 +14,8 @@ function ArenaSignUpForm() {
   const [selectedInternshipOptions, setSelectedInternshipOptions] = useState([]);
   const [selectedResumeOptions, setSelectedResumeOptions] = useState([]);
   const [selectedSATPrep, setSelectedSATPrep] = useState("");
+
+  const navigate = useNavigate(); // Initialize navigate
 
   const internshipOptions = [
     { value: "General Internship Help", label: "General Internship Help - $40", price: 40 },
@@ -74,6 +77,7 @@ function ArenaSignUpForm() {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+
     const formData = {
       name,
       email,
@@ -98,7 +102,10 @@ function ArenaSignUpForm() {
         "Q1b_pv0uG9JEXJhAl"
       )
       .then(
-        () => alert("Thank you for signing up! A confirmation email has been sent."),
+        () => {
+          alert("Thank you for signing up! A confirmation email has been sent.");
+          navigate("/"); // Redirect to homepage on success
+        },
         () => alert("Oops! Something went wrong. Please try again.")
       );
   };
