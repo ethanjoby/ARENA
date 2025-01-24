@@ -37,18 +37,16 @@ function ArenaSignUpForm() {
   const handleProgramAdd = () => {
     const newProgram = "Edit Program Name";
     setPrograms((prev) => [...prev, newProgram]);
+    setSelectedPrograms((prev) => [...prev, newProgram]);
   };
 
   const calculateTotalPrice = () => {
     let total = 0;
 
     // Calculate price for selected summer programs
-    const summerPrograms = programs.filter((program) =>
-      selectedPrograms.includes(program)
-    );
-    if (summerPrograms.length > 0) {
-      total += 10;
-      total += (summerPrograms.length - 1) * 5;
+    if (selectedPrograms.length > 0) {
+      total += 35; // First program
+      total += (selectedPrograms.length - 1) * 15; // Subsequent programs
     }
 
     // Calculate price for internships and professor help
@@ -143,7 +141,7 @@ function ArenaSignUpForm() {
 
           {/* Selected Summer Programs */}
           <div>
-            <h2 className="text-lg font-semibold mb-4 text-gray-800">Selected Summer Programs</h2>
+            <h2 className="text-lg font-semibold mb-4 text-gray-800">Selected Summer Programs: $35 for first summer program $15 for each subsequent one</h2>
             {programs.map((program, index) => (
               <div key={index} className="flex justify-between items-center mb-3">
                 {editingIndex === index ? (
