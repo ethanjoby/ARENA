@@ -76,8 +76,7 @@ const Essays = () => {
     );
   }
 
-  // Login form
-  return (
+  return ( // login
     <div className="min-h-screen bg-black flex items-center justify-center">
       <form
         onSubmit={handleLogin}

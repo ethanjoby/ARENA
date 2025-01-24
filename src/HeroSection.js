@@ -9,7 +9,6 @@ const scrollToSection = (sectionId) => {
     section.scrollIntoView({ behavior: 'smooth' });
   }
 };
-
 const HeroSection = () => {
   const navigate = useNavigate();
   return (
@@ -38,6 +37,13 @@ const HeroSection = () => {
             className="hover:underline"
           >
             FAQs
+          </button>
+
+          <button
+            onClick={() => navigate('/essays')}
+            className="hover:underline"
+          >
+            Essays
           </button>
 
         </nav>
@@ -81,5 +87,6 @@ const HeroSection = () => {
     </section>
   );
 };
+
 
 export default HeroSection;
