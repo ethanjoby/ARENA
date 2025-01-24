@@ -104,8 +104,8 @@ function ArenaSignUpForm() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-6">
-      <div className="w-full max-w-6xl bg-white p-12 rounded-lg shadow-lg">
+    <div className="min-h-screen bg-white flex items-center justify-center px-6">
+      <div className="w-full bg-white p-12 rounded-lg ">
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
           ARENA - Sign Up
         </h1>

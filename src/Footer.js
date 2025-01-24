@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -9,9 +10,9 @@ const Footer = () => {
             <p className="text-xs text-gray-500 dark:text-gray-400">
               © Company 2025 ARENA. All rights reserved.
             </p>
-            <a
+            <Link
+              to="/sign-up"
               className="inline-flex border-black items-center gap-2 rounded-full border border-white bg-black px-8 py-3 text-white hover:bg-transparent hover:text-black focus:outline-none focus:ring active:bg-white/90 py-12 px-4 sm:px-6 lg:px-8"
-              href="#"
             >
               <span className="text-sm font-medium">Register</span>
               <svg
@@ -28,7 +29,7 @@ const Footer = () => {
                   d="M17 8l4 4m0 0l-4 4m4-4H3"
                 />
               </svg>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
