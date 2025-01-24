@@ -80,7 +80,7 @@ function ArenaSignUpForm() {
       name,
       email,
       selectedPrograms,
-      totalPrice: calculateTotalPrice(),
+      speculatedPrice: calculateTotalPrice(),
     };
 
     localStorage.setItem("arenaSignUpData", JSON.stringify(formData));
@@ -89,7 +89,7 @@ function ArenaSignUpForm() {
       name,
       email,
       selectedPrograms: selectedPrograms.join(", "),
-      totalPrice: calculateTotalPrice(),
+      speculatedPrice: calculateTotalPrice(),
     };
 
     emailjs
@@ -101,7 +101,7 @@ function ArenaSignUpForm() {
       )
       .then(
         () => {
-          alert("Thank you for signing up! A confirmation email has been sent.");
+          alert("Thank you for testing the pricing! A confirmation email has been sent.");
           navigate("/"); // Redirect to homepage on success
         },
         () => alert("Oops! Something went wrong. Please try again.")
@@ -112,7 +112,7 @@ function ArenaSignUpForm() {
     <div className="min-h-screen bg-white flex items-center justify-center px-6">
       <div className="w-full bg-white p-12 rounded-lg ">
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
-          ARENA - Sign Up
+          ARENA - Test Pricing
         </h1>
         <form onSubmit={handleFormSubmit} className="space-y-8">
           {/* User Info */}
@@ -267,9 +267,9 @@ function ArenaSignUpForm() {
             </div>
           </div>
 
-          {/* Total Price */}
+          {/* Speculated Price */}
           <div className="text-lg font-semibold flex justify-between items-center text-gray-800">
-            <span>Total Price:</span>
+            <span>Speculated Price:</span>
             <span>${calculateTotalPrice()}</span>
           </div>
 
@@ -278,7 +278,7 @@ function ArenaSignUpForm() {
             type="submit"
             className="w-full py-3 text-white bg-gray-800 rounded-md hover:bg-gray-900"
           >
-            Sign Up Now
+            Test Pricing
           </button>
         </form>
       </div>
