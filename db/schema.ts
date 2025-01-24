@@ -6,7 +6,7 @@ interface UserScheduleData {
 }
 
 interface CounselorScheduleData {
-    availability: { day: string; timeSlots: string[] }[];
+    booked: { day: string; timeSlots: { open: boolean, clientname?: string, clientemail?: string, meetinglink?: string }[] }[];
 }
 
 interface ClassData {
@@ -87,7 +87,7 @@ export const userScheduleRelations = relations(userSchedule, ({ one, many }) => 
 export const counselorSchedules = pgTable("counselor_schedules", {
     id: text().notNull().primaryKey(), 
     counselorId: text().references(() => counselors.id), 
-    data: jsonb().default({ availability: [] } as CounselorScheduleData),
+    data: jsonb().default({ booked: [] } as CounselorScheduleData),
     updatedAt: timestamp().notNull().defaultNow(), 
 }); 
 
@@ -117,19 +117,19 @@ export const classesRelations = relations(classes, ({ one, many }) => ({
 
 //MAKE SURE THAT YOU SET userId not as userid, OTHERWISE DRIZZE WILL THINKT HAT YOU ARE TRYTING TO ACCESS users.id AS A PRIMARY KEY 
 export const usersOnClasses = pgTable("users_classes", {
-    userId: text().references(() => users.id), 
-    classesId: text().references(() => classes.id), 
-}, (t) => ({ 
-    pk: primaryKey({ columns: [t.userId, t.classesId] }) 
-})); 
+    fkUserId: text().references(() => users.id),
+    fkClassId: text().references(() => classes.id),
+}, (t) => ({
+    pk: primaryKey({ columns: [t.fkUserId, t.fkClassId] })
+}));
 
 export const usersOnClassesRelations = relations(usersOnClasses, ({ one, many }) => ({
     user: one(users, {
-        fields: [usersOnClasses.userId],
+        fields: [usersOnClasses.fkUserId],
         references: [users.id], 
     }),
     class: one(classes, {
-        fields: [usersOnClasses.classesId],
+        fields: [usersOnClasses.fkClassId],
         references: [classes.id], 
     }),
 })); 

@@ -6,7 +6,7 @@ import { InferInsertModel } from "drizzle-orm";
 
 type UserInsert = InferInsertModel<typeof users>;  
 
-const seedUsers: UserInsert[] = [
+/* const seedUsers: UserInsert[] = [
   {
     id: "userid1",
     fullname: "aaron rathore",
@@ -53,4 +53,4 @@ export async function seedDatabase() {
   }
 }
 
-await seedDatabase(); 
+await seedDatabase(); */
