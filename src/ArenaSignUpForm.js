@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Select from "react-select";
+import CreatableSelect from 'react-select/creatable';
 import emailjs from "emailjs-com";
 import { useNavigate } from "react-router-dom";
 
@@ -228,15 +229,21 @@ function ArenaSignUpForm() {
           </div>
 
           {/* Summer Programs */}
-          <div>
-            <label className="block text-sm font-semibold mb-2">Summer Programs You're Interested In Applying To</label>
-            <Select
-              isMulti
-              options={summerProgramOptions}
-              onChange={(options) => handleMultiSelectChange("selectedPrograms", options)}
-              className="w-full"
-            />
-          </div>
+<div>
+  <label className="block text-sm font-semibold mb-2">
+    Summer Programs You're Interested In Applying To
+  </label>
+  <CreatableSelect
+    isMulti
+    options={summerProgramOptions}
+    onChange={(options) => handleMultiSelectChange("selectedPrograms", options)}
+    className="w-full"
+    placeholder="Type to add your own program or select from the list"
+    formatCreateLabel={(inputValue) => `Select "${inputValue}"`}
+  />
+</div>
+
+
 
           {/* Internship Options */}
           <div>
