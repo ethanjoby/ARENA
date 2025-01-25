@@ -15,6 +15,7 @@ function ArenaSignUpForm() {
     selectedResumeOptions: [],
     selectedSATPrep: "",
     satOneHourCount: 0,
+    additionalInfo: ""
   });
 
   const navigate = useNavigate();
@@ -292,7 +293,29 @@ function ArenaSignUpForm() {
               placeholder="Enter hours"
             />
           </div>
-
+        {/* Additional Info Section */}
+      <div style={{ marginTop: "20px", marginBottom: "20px" }}>
+        <label className="block text-sm font-semibold mb-2">
+          Additional Information:
+        </label>
+        <textarea
+          id="additionalInfo"
+          name="additionalInfo"
+          value={formData.additionalInfo}
+          onChange={handleInputChange}
+          placeholder="Please provide any additional information here..."
+          style={{
+            width: "100%",
+            height: "150px",
+            padding: "10px",
+            borderRadius: "8px",
+            border: "1px solid #ccc",
+            fontSize: "16px",
+            resize: "vertical",
+            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)"
+          }}
+        />
+      </div>
           {/* Submit Button */}
           <button type="submit" className="w-full py-3 bg-black text-white rounded-md">
             Submit
