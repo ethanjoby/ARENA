@@ -3,6 +3,8 @@ import Select from "react-select";
 import CreatableSelect from 'react-select/creatable';
 import emailjs from "emailjs-com";
 import { useNavigate } from "react-router-dom";
+import NAVBAR1 from "./navbar";
+import Footer from "./Footer.js";
 
 function ArenaSignUpForm() {
   const [formData, setFormData] = useState({
@@ -195,12 +197,14 @@ function ArenaSignUpForm() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-6">
-      <div className="w-full max-w-3xl bg-white p-8 rounded-lg shadow-md">
-        <h1 className="text-2xl font-bold text-center mb-8">ARENA Sign-Up Form</h1>
-        <h2 className="text-xl font-medium text-gray-700 mb-6 text-center">
-      Choose your interests to tailor your experience.
-    </h2>
+    <div>
+    <NAVBAR1/>
+    <div className="min-h-screen bg-white flex items-center justify-center px-6 mt-20">
+      <div className="w-full  border-2 border-black bg-white p-8 rounded-lg mb-8 ">
+        
+       <h1 className = "text-5xl font-bold mb-4 ">Sign-Up</h1>
+    <p className="text-sm italic text-gray-700 mb-4">This form is designed to gauge your interest and help us better understand how we can support you. Through this program, we offer a variety of services tailored to meet your goals, including personalized guidance, expert consultations, hands-on resources, and collaborative opportunities to bring your vision to life. Simply select all the options that align with your interests and leave any additional information or details in the space provided below. Once we receive your response, we’ll follow up via email to schedule a meeting where we can dive deeper into your plans, answer your questions, and explore how our program can best assist you.
+</p>
         <form onSubmit={handleFormSubmit} className="space-y-6">
           {/* User Info */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -290,11 +294,24 @@ function ArenaSignUpForm() {
           </div>
 
           {/* Submit Button */}
-          <button type="submit" className="w-full py-3 bg-gray-800 text-white rounded-md">
+          <button type="submit" className="w-full py-3 bg-black text-white rounded-md">
             Submit
           </button>
         </form>
       </div>
+    </div>
+    <footer className="bg-white dark:bg-white">
+      <div className="px-4 pb-8 sm:px-6 lg:px-8">
+        <div className="border-t border-gray-100 pt-8 dark:border-gray-200">
+          <div className="items-center">
+            <p className="text-xs text-center text-gray-500 dark:text-gray-400">
+              © Company 2025 ARENA. All rights reserved.
+            </p>
+            
+          </div>
+        </div>
+      </div>
+    </footer>
     </div>
   );
 }
