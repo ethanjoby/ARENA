@@ -197,6 +197,9 @@ function ArenaSignUpForm() {
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-6">
       <div className="w-full max-w-3xl bg-white p-8 rounded-lg shadow-md">
         <h1 className="text-2xl font-bold text-center mb-8">ARENA Sign-Up Form</h1>
+        <h2 className="text-xl font-medium text-gray-700 mb-6 text-center">
+      Choose your interests to tailor your experience.
+    </h2>
         <form onSubmit={handleFormSubmit} className="space-y-6">
           {/* User Info */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
