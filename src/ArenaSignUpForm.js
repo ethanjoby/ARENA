@@ -199,8 +199,8 @@ function ArenaSignUpForm() {
   return (
     <div>
     <NAVBAR1/>
-    <div className="min-h-screen bg-white flex items-center justify-center px-6 mt-20">
-      <div className="w-full  border-2 border-black bg-white p-8 rounded-lg mb-8 ">
+    <div className=" bg-white flex items-center justify-center  mt-12">
+      <div className="w-full   bg-white p-6 rounded-lg mb-8 ">
         
        <h1 className = "text-5xl font-bold mb-4 ">Sign-Up</h1>
     <p className="text-sm italic text-gray-700 mb-4">This form is designed to gauge your interest and help us better understand how we can support you. Through this program, we offer a variety of services tailored to meet your goals, including personalized guidance, expert consultations, hands-on resources, and collaborative opportunities to bring your vision to life. Simply select all the options that align with your interests and leave any additional information or details in the space provided below. Once we receive your response, we’ll follow up via email to schedule a meeting where we can dive deeper into your plans, answer your questions, and explore how our program can best assist you.
