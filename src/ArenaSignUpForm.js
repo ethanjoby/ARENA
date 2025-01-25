@@ -1,21 +1,20 @@
 import React, { useState } from "react";
 import Select from "react-select";
 import emailjs from "emailjs-com";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 
 function ArenaSignUpForm() {
-  const [selectedPrograms, setSelectedPrograms] = useState([]);
-  const [programs, setPrograms] = useState([]);
-  const [editingIndex, setEditingIndex] = useState(null);
-  const [editingValue, setEditingValue] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [satOneHourCount, setSatOneHourCount] = useState(0);
-  const [selectedInternshipOptions, setSelectedInternshipOptions] = useState([]);
-  const [selectedResumeOptions, setSelectedResumeOptions] = useState([]);
-  const [selectedSATPrep, setSelectedSATPrep] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    selectedPrograms: [],
+    selectedInternshipOptions: [],
+    selectedResumeOptions: [],
+    selectedSATPrep: "",
+    satOneHourCount: 0,
+  });
 
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
 
   const internshipOptions = [
     { value: "General Internship Help", label: "General Internship Help - $40", price: 40 },
@@ -34,251 +33,255 @@ function ArenaSignUpForm() {
     { value: "50 Hours", label: "50 Hours - $699", price: 699 },
   ];
 
-  const handleProgramAdd = () => {
-    const newProgram = "Edit Program Name";
-    setPrograms((prev) => [...prev, newProgram]);
-    setSelectedPrograms((prev) => [...prev, newProgram]);
+  const summerProgramOptions = [
+    { value: "AI4ALL (Bay Area)", label: "AI4ALL (Bay Area)" },
+    { value: "Alameda County 4-H Summer Camp (Bay Area)", label: "Alameda County 4-H Summer Camp (Bay Area)" },
+    { value: "American Conservatory Theater Summer Training Congress (San Francisco)", label: "American Conservatory Theater Summer Training Congress (San Francisco)" },
+    { value: "Amgen Scholars Program (National)", label: "Amgen Scholars Program (National)" },
+    { value: "Art Camp at Richmond Art Center (Bay Area)", label: "Art Camp at Richmond Art Center (Bay Area)" },
+    { value: "AspireIT Summer Camp (Bay Area)", label: "AspireIT Summer Camp (Bay Area)" },
+    { value: "ATDP at UC Berkeley (Bay Area)", label: "ATDP at UC Berkeley (Bay Area)" },
+    { value: "Astronomy Academy at Chabot Space & Science Center (Oakland)", label: "Astronomy Academy at Chabot Space & Science Center (Oakland)" },
+    { value: "Bay Area Writing Project Young Writers Camp (Berkeley)", label: "Bay Area Writing Project Young Writers Camp (Berkeley)" },
+    { value: "Berkeley Lab Summer Student Program (Berkeley)", label: "Berkeley Lab Summer Student Program (Berkeley)" },
+    { value: "Black Girls Code Summer Camp (San Francisco)", label: "Black Girls Code Summer Camp (San Francisco)" },
+    { value: "Brandeis University Precollege Online Program (National)", label: "Brandeis University Precollege Online Program (National)" },
+    { value: "Brookhaven National Lab Summer High School Internship (National)", label: "Brookhaven National Lab Summer High School Internship (National)" },
+    { value: "Camp BizSmart (Silicon Valley)", label: "Camp BizSmart (Silicon Valley)" },
+    { value: "Camp Galileo (Bay Area)", label: "Camp Galileo (Bay Area)" },
+    { value: "Camp Kesem (Stanford) (Bay Area)", label: "Camp Kesem (Stanford) (Bay Area)" },
+    { value: "Camp Unalayee Wilderness (Bay Area)", label: "Camp Unalayee Wilderness (Bay Area)" },
+    { value: "Carnegie Mellon University Pre-College Programs (National)", label: "Carnegie Mellon University Pre-College Programs (National)" },
+    { value: "COSMOS (UC campuses)", label: "COSMOS (UC campuses)" },
+    { value: "Coursera Summer Learning Program (National, online)", label: "Coursera Summer Learning Program (National, online)" },
+    { value: "Davidson THINK Summer Institute (Reno, NV)", label: "Davidson THINK Summer Institute (Reno, NV)" },
+    { value: "Design Quest at The Tech Interactive (San Jose)", label: "Design Quest at The Tech Interactive (San Jose)" },
+    { value: "Discovery Internships (National)", label: "Discovery Internships (National)" },
+    { value: "Earthwatch Institute Teen Expeditions (Bay Area/National)", label: "Earthwatch Institute Teen Expeditions (Bay Area/National)" },
+    { value: "Experiences in Research at Berkeley Labs (Berkeley)", label: "Experiences in Research at Berkeley Labs (Berkeley)" },
+    { value: "Exploring Computer Science at SRI International (Menlo Park)", label: "Exploring Computer Science at SRI International (Menlo Park)" },
+    { value: "EXPLO at Yale Summer Programs (National)", label: "EXPLO at Yale Summer Programs (National)" },
+    { value: "Farm Academy Live Summer Program (Bay Area)", label: "Farm Academy Live Summer Program (Bay Area)" },
+    { value: "Foothill College Summer Programs for High Schoolers (Bay Area)", label: "Foothill College Summer Programs for High Schoolers (Bay Area)" },
+    { value: "Future Stars Summer Camps (Athletics) (Bay Area)", label: "Future Stars Summer Camps (Athletics) (Bay Area)" },
+    { value: "Future Problem Solvers International Conference (National)", label: "Future Problem Solvers International Conference (National)" },
+    { value: "Girls Who Code Summer Immersion Program (Bay Area)", label: "Girls Who Code Summer Immersion Program (Bay Area)" },
+    { value: "Golden Gate National Parks Conservancy Summer Programs (Bay Area)", label: "Golden Gate National Parks Conservancy Summer Programs (Bay Area)" },
+    { value: "Gustavus Adolphus College Summer Speech Institute (National)", label: "Gustavus Adolphus College Summer Speech Institute (National)" },
+    { value: "Harker School Summer Programs (San Jose)", label: "Harker School Summer Programs (San Jose)" },
+    { value: "Haas School of Business Entrepreneurship Program for Youth (Berkeley)", label: "Haas School of Business Entrepreneurship Program for Youth (Berkeley)" },
+    { value: "Head-Royce School Summer Programs (Oakland)", label: "Head-Royce School Summer Programs (Oakland)" },
+    { value: "High School Summer Internship Program at UCSF (San Francisco)", label: "High School Summer Internship Program at UCSF (San Francisco)" },
+    { value: "Humanities Summer Program at Stanford (Stanford)", label: "Humanities Summer Program at Stanford (Stanford)" },
+    { value: "iD Tech Camps (Stanford, UC Berkeley, SF State) (Bay Area)", label: "iD Tech Camps (Stanford, UC Berkeley, SF State) (Bay Area)" },
+    { value: "Internships at NASA Ames Research Center (Mountain View)", label: "Internships at NASA Ames Research Center (Mountain View)" },
+    { value: "International Diplomacy Program by Envision (National)", label: "International Diplomacy Program by Envision (National)" },
+    { value: "Intro to Design Thinking at Stanford D-School (Stanford)", label: "Intro to Design Thinking at Stanford D-School (Stanford)" },
+    { value: "Ivy League Edge Summer Leadership Program (National)", label: "Ivy League Edge Summer Leadership Program (National)" },
+    { value: "Johns Hopkins Center for Talented Youth (CTY) (National)", label: "Johns Hopkins Center for Talented Youth (CTY) (National)" },
+    { value: "Juma Ventures Youth Summer Employment Program (San Francisco)", label: "Juma Ventures Youth Summer Employment Program (San Francisco)" },
+    { value: "Khan Academy Summer Challenge (Online/National)", label: "Khan Academy Summer Challenge (Online/National)" },
+    { value: "KIPP King Summer Leadership Institute (Bay Area)", label: "KIPP King Summer Leadership Institute (Bay Area)" },
+    { value: "Lawrence Hall of Science Summer Camps (Berkeley)", label: "Lawrence Hall of Science Summer Camps (Berkeley)" },
+    { value: "Leadership in Action Program at Stanford Pre-Collegiate Studies (Stanford)", label: "Leadership in Action Program at Stanford Pre-Collegiate Studies (Stanford)" },
+    { value: "Lick-Wilmerding High School Summerbridge (San Francisco)", label: "Lick-Wilmerding High School Summerbridge (San Francisco)" },
+    { value: "Loyola Marymount University Pre-College Summer Programs (National)", label: "Loyola Marymount University Pre-College Summer Programs (National)" },
+    { value: "MIT Research Science Institute (RSI) (National)", label: "MIT Research Science Institute (RSI) (National)" },
+    { value: "Marine Science Institute Summer Camps (Redwood City)", label: "Marine Science Institute Summer Camps (Redwood City)" },
+    { value: "Mills College Summer Arts Program (Oakland)", label: "Mills College Summer Arts Program (Oakland)" },
+    { value: "Monterey Bay Aquarium Teen Internship (Bay Area)", label: "Monterey Bay Aquarium Teen Internship (Bay Area)" },
+    { value: "NASA’s SEES (STEM Enhancement in Earth Science) Summer Program (National)", label: "NASA’s SEES (STEM Enhancement in Earth Science) Summer Program (National)" },
+    { value: "National Student Leadership Conference (National)", label: "National Student Leadership Conference (National)" },
+    { value: "National Youth Leadership Forum: Engineering (National)", label: "National Youth Leadership Forum: Engineering (National)" },
+    { value: "Northwestern University Pre-Collegiate Programs (National)", label: "Northwestern University Pre-Collegiate Programs (National)" },
+    { value: "NSLC on Medicine & Health Care (UC Berkeley) (Berkeley)", label: "NSLC on Medicine & Health Care (UC Berkeley) (Berkeley)" },
+    { value: "Oakland Zoo Teen Wild Guides Summer Program (Oakland)", label: "Oakland Zoo Teen Wild Guides Summer Program (Oakland)" },
+    { value: "Outward Bound California Summer Programs (Bay Area)", label: "Outward Bound California Summer Programs (Bay Area)" },
+    { value: "Pacific Boychoir Academy Summer Camps (Oakland)", label: "Pacific Boychoir Academy Summer Camps (Oakland)" },
+    { value: "Peninsula Youth Theater Summer Program (Mountain View)", label: "Peninsula Youth Theater Summer Program (Mountain View)" },
+    { value: "Pioneers in Engineering (PiE) Summer Robotics Program (Berkeley)", label: "Pioneers in Engineering (PiE) Summer Robotics Program (Berkeley)" },
+    { value: "Princeton University Summer Journalism Program (National)", label: "Princeton University Summer Journalism Program (National)" },
+    { value: "Quantum Computing Summer School by Qubit by Qubit (National, online)", label: "Quantum Computing Summer School by Qubit by Qubit (National, online)" },
+    { value: "Research Science Institute (RSI) by MIT (National)", label: "Research Science Institute (RSI) by MIT (National)" },
+    { value: "Rice University STEM Summer Programs (National)", label: "Rice University STEM Summer Programs (National)" },
+    { value: "Rosetta Institute of Biomedical Research Molecular Medicine Summer Camp (San Francisco)", label: "Rosetta Institute of Biomedical Research Molecular Medicine Summer Camp (San Francisco)" },
+    { value: "Santa Clara University Summer Engineering Seminar (SES) (Bay Area)", label: "Santa Clara University Summer Engineering Seminar (SES) (Bay Area)" },
+    { value: "San Francisco Conservatory of Music Pre-College Program (San Francisco)", label: "San Francisco Conservatory of Music Pre-College Program (San Francisco)" },
+    { value: "San Jose State University Aviation Summer Camp (San Jose)", label: "San Jose State University Aviation Summer Camp (San Jose)" },
+    { value: "Sequoia Teen Entrepreneur Program (Bay Area)", label: "Sequoia Teen Entrepreneur Program (Bay Area)" },
+    { value: "Shakespeare Camp at the California Shakespeare Theater (Bay Area)", label: "Shakespeare Camp at the California Shakespeare Theater (Bay Area)" },
+    { value: "Silicon Valley Youth Climate Action Summer Program (Bay Area)", label: "Silicon Valley Youth Climate Action Summer Program (Bay Area)" },
+    { value: "Smithsonian Summer Camps (National)", label: "Smithsonian Summer Camps (National)" },
+    { value: "Stanford Pre-Collegiate Summer Institutes (Stanford)", label: "Stanford Pre-Collegiate Summer Institutes (Stanford)" },
+    { value: "Stanford University Mathematics Camp (SUMaC) (Stanford)", label: "Stanford University Mathematics Camp (SUMaC) (Stanford)" },
+    { value: "Stevenson School Summer Camps (Pebble Beach)", label: "Stevenson School Summer Camps (Pebble Beach)" },
+    { value: "Summer Discovery Programs (UCLA, UC Berkeley, etc.) (Bay Area)", label: "Summer Discovery Programs (UCLA, UC Berkeley, etc.) (Bay Area)" },
+    { value: "Summer Immersion Program at Columbia University (National)", label: "Summer Immersion Program at Columbia University (National)" },
+    { value: "Summer Research Academy at the Lawrence Berkeley National Lab (Berkeley)", label: "Summer Research Academy at the Lawrence Berkeley National Lab (Berkeley)" },
+    { value: "Summer Science Internship Program at Stanford (Stanford)", label: "Summer Science Internship Program at Stanford (Stanford)" },
+    { value: "Teen Advocates for Science Communication at the California Academy of Sciences (San Francisco)", label: "Teen Advocates for Science Communication at the California Academy of Sciences (San Francisco)" },
+    { value: "The Crucible Industrial Arts Camps (Oakland)", label: "The Crucible Industrial Arts Camps (Oakland)" },
+    { value: "The Harker School STEM Institute (San Jose)", label: "The Harker School STEM Institute (San Jose)" },
+    { value: "UC Davis Young Scholars Program (Davis)", label: "UC Davis Young Scholars Program (Davis)" },
+    { value: "UCLA Pre-College Summer Institute (Los Angeles)", label: "UCLA Pre-College Summer Institute (Los Angeles)" },
+    { value: "UCSF Internships for Teen Scientists (San Francisco)", label: "UCSF Internships for Teen Scientists (San Francisco)" },
+    { value: "USC Summer Programs for High School Students (Los Angeles)", label: "USC Summer Programs for High School Students (Los Angeles)" },
+    { value: "Youth Leadership Summit for Math and Science (National)", label: "Youth Leadership Summit for Math and Science (National)" },
+    { value: "Yosemite Institute High School Programs (Yosemite)", label: "Yosemite Institute High School Programs (Yosemite)" },
+  ];
+  
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleMultiSelectChange = (name, options) => {
+    const values = options ? options.map((option) => option.value) : [];
+    setFormData((prev) => ({ ...prev, [name]: values }));
   };
 
   const calculateTotalPrice = () => {
     let total = 0;
 
-    // Calculate price for selected summer programs
-    if (selectedPrograms.length > 0) {
-      total += 35; // First program
-      total += (selectedPrograms.length - 1) * 15; // Subsequent programs
-    }
+    // Summer programs cost calculation
+    total += formData.selectedPrograms.length > 0 ? 35 + (formData.selectedPrograms.length - 1) * 15 : 0;
 
-    // Calculate price for internships and professor help
-    selectedInternshipOptions.forEach((option) => {
-      const selectedOption = internshipOptions.find((o) => o.value === option);
-      if (selectedOption) total += selectedOption.price;
-    });
+    // Internship options cost
+    total += formData.selectedInternshipOptions.reduce((acc, option) => {
+      const selected = internshipOptions.find((o) => o.value === option);
+      return acc + (selected ? selected.price : 0);
+    }, 0);
 
-    // Calculate price for resume and interview prep
-    selectedResumeOptions.forEach((option) => {
-      const selectedOption = resumeOptions.find((o) => o.value === option);
-      if (selectedOption) total += selectedOption.price;
-    });
+    // Resume options cost
+    total += formData.selectedResumeOptions.reduce((acc, option) => {
+      const selected = resumeOptions.find((o) => o.value === option);
+      return acc + (selected ? selected.price : 0);
+    }, 0);
 
-    // Calculate price for SAT/ACT prep
-    const selectedOption = satPrepOptions.find(
-      (o) => o.value === selectedSATPrep
-    );
-    if (selectedOption) total += selectedOption.price;
+    // SAT/ACT prep cost
+    const selectedSATOption = satPrepOptions.find((o) => o.value === formData.selectedSATPrep);
+    total += selectedSATOption ? selectedSATOption.price : 0;
 
-    // Add hourly SAT/ACT price
-    total += satOneHourCount * 22;
+    // Add per-hour SAT/ACT prep cost
+    total += formData.satOneHourCount * 22;
 
     return total;
   };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    if (!formData.name || !formData.email) {
+      alert("Please fill out all required fields.");
+      return;
+    }
 
-    const formData = {
-      name,
-      email,
-      selectedPrograms,
-      speculatedPrice: calculateTotalPrice(),
-    };
-
-    localStorage.setItem("arenaSignUpData", JSON.stringify(formData));
-
-    const templateParams = {
-      name,
-      email,
-      selectedPrograms: selectedPrograms.join(", "),
+    const emailParams = {
+      ...formData,
+      selectedPrograms: formData.selectedPrograms.join(", "),
       speculatedPrice: calculateTotalPrice(),
     };
 
     emailjs
-      .send(
-        "service_2wckxjr",
-        "template_xugiogj",
-        templateParams,
-        "Q1b_pv0uG9JEXJhAl"
-      )
+      .send("service_2wckxjr", "template_xugiogj", emailParams, "Q1b_pv0uG9JEXJhAl")
       .then(
         () => {
-          alert("Thank you for testing the pricing! A confirmation email has been sent.");
-          navigate("/"); // Redirect to homepage on success
+          alert("Submission successful! A confirmation email has been sent.");
+          navigate("/");
         },
-        () => alert("Oops! Something went wrong. Please try again.")
+        () => alert("Submission failed. Please try again.")
       );
   };
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center px-6">
-      <div className="w-full bg-white p-12 rounded-lg ">
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
-          ARENA - Test Pricing
-        </h1>
-        <form onSubmit={handleFormSubmit} className="space-y-8">
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-6">
+      <div className="w-full max-w-3xl bg-white p-8 rounded-lg shadow-md">
+        <h1 className="text-2xl font-bold text-center mb-8">ARENA Sign-Up Form</h1>
+        <form onSubmit={handleFormSubmit} className="space-y-6">
           {/* User Info */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-semibold mb-2 text-gray-700">Name</label>
+              <label className="block text-sm font-semibold mb-2">Name</label>
               <input
                 type="text"
-                placeholder="Your name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-gray-500"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 border rounded-md"
+                required
               />
             </div>
             <div>
-              <label className="block text-sm font-semibold mb-2 text-gray-700">Email</label>
+              <label className="block text-sm font-semibold mb-2">Email</label>
               <input
                 type="email"
-                placeholder="Your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-gray-500"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 border rounded-md"
+                required
               />
             </div>
           </div>
 
-          {/* Selected Summer Programs */}
+          {/* Summer Programs */}
           <div>
-            <h2 className="text-lg font-semibold mb-4 text-gray-800">Selected Summer Programs: $35 for first summer program $15 for each subsequent one</h2>
-            {programs.map((program, index) => (
-              <div key={index} className="flex justify-between items-center mb-3">
-                {editingIndex === index ? (
-                  <>
-                    <input
-                      type="text"
-                      value={editingValue}
-                      onChange={(e) => setEditingValue(e.target.value)}
-                      className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-gray-500 mr-2"
-                    />
-                    <button
-                      onClick={() => {
-                        const updatedPrograms = [...programs];
-                        updatedPrograms[index] = editingValue;
-                        setPrograms(updatedPrograms);
-                        setEditingIndex(null);
-                        setEditingValue("");
-                      }}
-                      className="px-4 py-2 bg-gray-800 text-white rounded-md"
-                    >
-                      Save
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <span className="text-gray-700">{program}</span>
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => {
-                          setEditingIndex(index);
-                          setEditingValue(program);
-                        }}
-                        className="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() =>
-                          setPrograms((prev) => prev.filter((_, i) => i !== index))
-                        }
-                        className="px-4 py-2 bg-red-500 text-white rounded-md"
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </>
-                )}
-              </div>
-            ))}
-            <button
-              type="button"
-              onClick={handleProgramAdd}
-              className="w-full py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900"
-            >
-              Add Program
-            </button>
-          </div>
-
-          {/* Internship & Professor Help */}
-          <div>
-            <h2 className="text-lg font-semibold mb-4 text-gray-800">Internship & Professor Help</h2>
+            <label className="block text-sm font-semibold mb-2">Summer Programs You're Interested In Applying To</label>
             <Select
-              options={internshipOptions}
               isMulti
-              onChange={(selected) =>
-                setSelectedInternshipOptions(selected.map((item) => item.value))
-              }
-              className="rounded-md"
+              options={summerProgramOptions}
+              onChange={(options) => handleMultiSelectChange("selectedPrograms", options)}
+              className="w-full"
             />
           </div>
 
-          {/* Resume & Interview Prep */}
+          {/* Internship Options */}
           <div>
-            <h2 className="text-lg font-semibold mb-4 text-gray-800">Resume & Interview Prep</h2>
+            <label className="block text-sm font-semibold mb-2">Internship Services You're Interested In</label>
             <Select
-              options={resumeOptions}
               isMulti
-              onChange={(selected) =>
-                setSelectedResumeOptions(selected.map((item) => item.value))
-              }
-              className="rounded-md"
+              options={internshipOptions}
+              onChange={(options) => handleMultiSelectChange("selectedInternshipOptions", options)}
+              className="w-full"
+            />
+          </div>
+
+          {/* Resume Options */}
+          <div>
+            <label className="block text-sm font-semibold mb-2">Resume Services You're Interested In</label>
+            <Select
+              isMulti
+              options={resumeOptions}
+              onChange={(options) => handleMultiSelectChange("selectedResumeOptions", options)}
+              className="w-full"
             />
           </div>
 
           {/* SAT/ACT Prep */}
           <div>
-            <h2 className="text-lg font-semibold mb-4 text-gray-800">SAT/ACT Prep</h2>
-            <select
-              value={selectedSATPrep}
-              onChange={(e) => setSelectedSATPrep(e.target.value)}
-              className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-gray-500"
-            >
-              <option value="">Select Hours</option>
-              {satPrepOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-            <div className="flex justify-between items-center mt-4">
-              <p className="text-gray-800">Hourly Prep (1 hour):</p>
-              <div className="flex items-center">
-                <button
-                  onClick={() =>
-                    setSatOneHourCount((prev) => Math.max(0, prev - 1))
-                  }
-                  type="button"
-                  className="px-4 py-2 bg-gray-300 rounded-md"
-                >
-                  -
-                </button>
-                <span className="mx-4">{satOneHourCount}</span>
-                <button
-                  onClick={() =>
-                    setSatOneHourCount((prev) => Math.min(9, prev + 1))
-                  }
-                  type="button"
-                  className="px-4 py-2 bg-gray-800 text-white rounded-md"
-                >
-                  +
-                </button>
-              </div>
-            </div>
+            <label className="block text-sm font-semibold mb-2">SAT/ACT Prep Options You're Interested In</label>
+            <Select
+              options={satPrepOptions}
+              onChange={(option) => setFormData({ ...formData, selectedSATPrep: option ? option.value : "" })}
+              className="w-full"
+            />
           </div>
 
-          {/* Speculated Price */}
-          <div className="text-lg font-semibold flex justify-between items-center text-gray-800">
-            <span>Speculated Price:</span>
-            <span>${calculateTotalPrice()}</span>
+          <div>
+            <label className="block text-sm font-semibold mb-2">Add Individual SAT/ACT Hours</label>
+            <input
+              type="number"
+              name="satOneHourCount"
+              value={formData.satOneHourCount}
+              onChange={handleInputChange}
+              className="w-full px-4 py-2 border rounded-md"
+              placeholder="Enter hours"
+            />
           </div>
 
           {/* Submit Button */}
-          <button
-            type="submit"
-            className="w-full py-3 text-white bg-gray-800 rounded-md hover:bg-gray-900"
-          >
-            Test Pricing
+          <button type="submit" className="w-full py-3 bg-gray-800 text-white rounded-md">
+            Submit
           </button>
         </form>
       </div>
