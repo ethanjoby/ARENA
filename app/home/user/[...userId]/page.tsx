@@ -2,8 +2,8 @@
 
 import React from 'react'
 
-import UserCalender from '@/components/Islands/UserCalender'
-import CounselorCalendar from '@/components/Islands/CounselorCalendar'
+import UserCalender from '@/components/Other/UserCalender'
+import CounselorCalendar from '@/components/Other/CounselorCalendar'
 
 type Props = {}
 
