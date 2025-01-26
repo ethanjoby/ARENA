@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -10,10 +10,7 @@ const Footer = () => {
             <p className="text-xs text-gray-500 dark:text-gray-400">
               © Company 2025 ARENA. All rights reserved.
             </p>
-            <Link
-              to="/sign-up"
-              className="inline-flex border-black items-center gap-2 rounded-full border  bg-black px-8 py-3 text-white hover:bg-transparent hover:text-black focus:outline-none focus:ring active:bg-white/90 py-12 px-4 sm:px-6 lg:px-8"
-            >
+            <Link href={"/arenasignup"} className="inline-flex border-black items-center gap-2 rounded-full border  bg-black px-8 py-3 text-white hover:bg-transparent hover:text-black focus:outline-none focus:ring active:bg-white/90 py-12 px-4 sm:px-6 lg:px-8">
               <span className="text-sm font-medium">Register</span>
               <svg
                 className="size-5 rtl:rotate-180"

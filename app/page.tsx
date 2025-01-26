@@ -1,10 +1,10 @@
-import '@/components/Sections/src/App.css'; 
-import Testimonials from '@/components/Sections/src/Testimonials'; 
-import HeroSection from '@/components/Sections/src/HeroSection';
-import Services from '@/components/Sections/src/Services';
-import GoogleFormEmbed from '@/components/Sections/src/GoogleFormEmbed';
-import Footer from '@/components/Sections/src/Footer';
-import Pricing from '@/components/Sections/src/Pricing';
+import '@/components/src/App.css'; 
+import Testimonials from '@/components/src/Testimonials'; 
+import HeroSection from '@/components/src/HeroSection';
+import Services from '@/components/src/Services';
+import GoogleFormEmbed from '@/components/src/GoogleFormEmbed';
+import Footer from '@/components/src/Footer';
+import Pricing from '@/components/src/Pricing';
 
 function App() {
 
@@ -14,7 +14,6 @@ function App() {
     <Services/>
     <Testimonials />
     <Pricing/>
-    <GoogleFormEmbed src="https://docs.google.com/forms/d/e/1FAIpQLSciJRfEmMTLYZY-JO_WyPwC_TPgECcYyKGSBWeuR1_F-Eyo_w/viewform?embedded=true" />
     <Footer/>
     </div>
   );
