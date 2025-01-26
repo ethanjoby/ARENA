@@ -1,21 +1,24 @@
 import './App.css';
-import Testimonials from './Testimonials';
-import HeroSection from './HeroSection';
-import Services from './Services';
-import GoogleFormEmbed from './GoogleFormEmbed';
-import Footer from './Footer';
-import Pricing from './Pricing';
+import HomePage from './HomePage';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import AdminPage from './AdminPage';
+import Essays from './Essays';
+
+import ArenaSignUpForm from './ArenaSignUpForm';
 
 function App() {
   return (
-    <div className="App">
-    <HeroSection/>
-    <Services id="services"/>
-    <Testimonials />
-    <Pricing/>
-    <GoogleFormEmbed src="https://docs.google.com/forms/d/e/1FAIpQLSciJRfEmMTLYZY-JO_WyPwC_TPgECcYyKGSBWeuR1_F-Eyo_w/viewform?embedded=true" />
-    <Footer/>
-    </div>
+    
+    <Router>
+      <Routes>
+        {/* Define your routes */}
+        <Route path="/" element={<HomePage />} />
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/sign-up" element={<ArenaSignUpForm />} />
+        <Route path="/essays" element={<Essays />} />
+
+      </Routes>
+    </Router>
   );
 }
 

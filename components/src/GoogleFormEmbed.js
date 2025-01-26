@@ -6,7 +6,7 @@ const GoogleFormEmbed = ({ src, width = "1000", height = "100%" }) => {
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#000",
-    height: "420px",
+    height: "1100px",
     margin: 0,
   };
 
@@ -21,6 +21,7 @@ const GoogleFormEmbed = ({ src, width = "1000", height = "100%" }) => {
       >
         Loading…
       </iframe>
+      
     </div>
   );
 };
