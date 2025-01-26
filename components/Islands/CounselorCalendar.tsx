@@ -1,6 +1,6 @@
 "use client";
 
-import { getCalendarInfo } from '@/app/home/actions';
+import { getCalendarInfo } from '@/app/home/counselor/[...counselorId]/actions';
 import React, { useState, useEffect } from 'react';
 
 type Props = {};
@@ -56,7 +56,7 @@ export default function CounselorCalendar({}: Props) {
   console.log(scheduleData); 
 
   return (
-    <div className="w-full p-4 rounded-lg bg-orange-300">
+  <div className="w-3/4 p-4 rounded-lg bg-orange-300 absolute bottom-0">
   <h2 className="text-center text-xl font-bold mb-4">Counselor Schedule</h2>
   <table className="w-full table-auto border-collapse">
     <thead>

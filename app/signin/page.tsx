@@ -32,7 +32,11 @@ export default function page({}: Props) {
     const response = await signInDb(data); 
     console.log(response);
     if(response.success == true){
-      router.push("/home"); 
+      if(response.counselorid){
+        router.push(`/home/counselor/${response.counselorid}`); 
+      } else {
+        router.push(`/home/user/${response.userId}`); 
+      }
     } else { 
       return <p>yo homie something aint right</p>
     }

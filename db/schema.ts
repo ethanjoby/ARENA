@@ -1,8 +1,8 @@
 import { integer, text, pgTable, jsonb, timestamp, boolean, primaryKey, date } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 
-interface UserScheduleData {
-    events: { title: string; date: string; details?: string }[];
+interface UserCalenderData {
+    events: { day: string, timeslots: { time: string, counselorname: string, counseloremail: string, meetinglink: string }}[]
 }
 
 interface CounselorScheduleData {
@@ -68,7 +68,7 @@ export const counselorRelations = relations(counselors, ({ one, many }) => ({
 export const userSchedule = pgTable("user_schedules", {
     id: text().notNull().primaryKey(), 
     userId: text().references(() => users.id), 
-    data: jsonb().default({ events: [] } as UserScheduleData),
+    data: jsonb().default({ events: [] } as UserCalenderData),
     updatedAt: timestamp().notNull().defaultNow(), 
     counselorId: text().references(() => counselors.id), 
 });

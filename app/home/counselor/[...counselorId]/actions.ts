@@ -58,7 +58,7 @@ export async function getCalendarInfo() {
       }
     }
   
-    return { calendardata: null }
+    return { calenderdata: null }
 }
 
 
