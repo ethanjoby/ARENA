@@ -18,6 +18,19 @@ interface MeetingData {
     notes: { name: string, text: string }[]; 
 }
 
+interface SignUpProfile {
+    profile: {
+        name: string;
+        email: string;
+        selectedPrograms: { value: string; label: string }[];
+        selectedInternshipOptions: { value: string; label: string; price: number }[];
+        selectedResumeOptions: { value: string; label: string; price: number }[];
+        selectedSATPrep: { value: string; label: string; price: number };
+        satOneHourCount: number;
+        additionalInfo: string;
+    }
+}
+
 export const users = pgTable("users", {
     id: text().notNull().primaryKey(),
     fullname: text().notNull(), 
@@ -28,6 +41,7 @@ export const users = pgTable("users", {
     scheduleId: text(),
     meetingId: text(),
     counselorId: text().notNull(), 
+    profileId: text().references(() => initialprofile.id), 
 }); 
 
 export const userRelations = relations(users, ({ one, many }) => ({
@@ -45,6 +59,11 @@ export const userRelations = relations(users, ({ one, many }) => ({
         references: [meetings.userId],
     })
 })); 
+
+export const initialprofile = pgTable("initial_profiles", {
+    id: text().notNull().primaryKey(), 
+    data: jsonb().default({ profile: {} as SignUpProfile }), 
+})
 
 export const counselors = pgTable("counselors", {
     id: text().notNull().primaryKey(),

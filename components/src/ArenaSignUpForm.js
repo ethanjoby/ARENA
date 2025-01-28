@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useState } from "react";
 import Select from "react-select";
 import CreatableSelect from 'react-select/creatable';
@@ -5,6 +7,8 @@ import emailjs from "emailjs-com";
 import { useNavigate } from "react-router-dom";
 import NAVBAR1 from "./navbar";
 import Footer from "./Footer.js";
+
+import 
 
 function ArenaSignUpForm() {
   const [formData, setFormData] = useState({

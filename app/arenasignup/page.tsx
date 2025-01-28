@@ -7,30 +7,36 @@ import emailjs from '@emailjs/browser';
 import Navbar from "@/components/src/navbar"
 import { useRouter } from "next/navigation";
 
+import { createProfile } from "./actions";
+
 type FormDataType = {
-  name: string;
-  email: string;
-  selectedPrograms: { value: string; label: string }[];
-  selectedInternshipOptions: { value: string; label: string; price: number }[];
-  selectedResumeOptions: { value: string; label: string; price: number }[];
-  selectedSATPrep: string;
-  satOneHourCount: number;
-  additionalInfo: string;
+  profile: {
+    name: string;
+    email: string;
+    selectedPrograms: { value: string; label: string }[];
+    selectedInternshipOptions: { value: string; label: string; price: number }[];
+    selectedResumeOptions: { value: string; label: string; price: number }[];
+    selectedSATPrep: { value: string; label: string; price: number };
+    satOneHourCount: number;
+    additionalInfo: string;
+  }
 };
 
-const ArenaSignUpForm: React.FC = () => {
+const ArenaSignUpForm = () => {
 
   const router = useRouter(); 
 
   const [formData, setFormData] = useState<FormDataType>({
-    name: "",
-    email: "",
-    selectedPrograms: [],
-    selectedInternshipOptions: [],
-    selectedResumeOptions: [],
-    selectedSATPrep: "",
-    satOneHourCount: 0,
-    additionalInfo: "",
+    profile: {
+      name: "",
+      email: "",
+      selectedPrograms: [],
+      selectedInternshipOptions: [],
+      selectedResumeOptions: [],
+      selectedSATPrep: { value: "", label: "", price: 0 },
+      satOneHourCount: 0,
+      additionalInfo: "",
+    }
   });
 
   const internshipOptions: { value: string, label: string, price: number }[] = [
@@ -147,52 +153,67 @@ const ArenaSignUpForm: React.FC = () => {
     { value: "Yosemite Institute High School Programs (Yosemite)", label: "Yosemite Institute High School Programs (Yosemite)" },
   ];
 
-  const handleInputChange = (e: { target: { name: any; value: any; }; }) => {
+  const handleInputChange = (e: { target: { name: string; value: any; }; }) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({
+      ...prev,
+      profile: {
+        ...prev.profile,
+        [name]: value
+      }
+    }));
   };
-
-  const handleMultiSelectChange = (name: string, options: MultiValue<{ value: string, label: string }>) => {
-    const values = options ? options.map((option) => ({ value: option.value, label: option.label })) : [];
-    setFormData((prev) => ({ ...prev, [name]: values }));
+  const handleMultiSelectChange = (name: string, options: MultiValue<{ value: string, label: string, price: number }>) => {
+    const values = options ? options.map((option) => ({ value: option.value, label: option.label, price: option.price })) : [];
+    setFormData((prev) => ({ 
+      ...prev, 
+      profile: {
+        ...prev.profile, 
+        [name]: values
+      }
+    }));
   };
 
   const calculateTotalPrice = () => {
-    let total = 0;
+    let total: number = 0;
 
-    total += formData.selectedPrograms.length > 0 ? 35 + (formData.selectedPrograms.length - 1) * 15 : 0;
+    total += formData.profile.selectedPrograms.length > 0 ? 35 + (formData.profile.selectedPrograms.length - 1) * 15 : 0;
 
-    total += formData.selectedInternshipOptions.reduce((acc, option) => {
-      const selected = internshipOptions.find((o) => o.value === option.value);
-      return acc + (selected ? selected.price : 0);
-    }, 0);
+    total += formData.profile.selectedInternshipOptions.reduce((acc, cv) => acc + cv.price, 0);
 
-    total += formData.selectedResumeOptions.reduce((acc, option) => {
-      const selected = resumeOptions.find((o) => o.value === option.value);
-      return acc + (selected ? selected.price : 0);
-    }, 0);
+    formData.profile.selectedResumeOptions.forEach((option) => {
+      total += option.price; 
+    })
+  
+    total += formData.profile.selectedSATPrep.price ? formData.profile.selectedSATPrep.price : 0;
 
-    const selectedSATOption = satPrepOptions.find((o) => o.value === formData.selectedSATPrep);
-    total += selectedSATOption ? selectedSATOption.price : 0;
+    total += formData.profile.satOneHourCount * 22;
 
-    total += formData.satOneHourCount * 22;
-
+    console.log(total); 
     return total;
   };
 
 
-  const handleFormSubmit = (e: { preventDefault: () => void; }) => {
+  const handleFormSubmit = async(e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    if (!formData.name || !formData.email) {
+    if (!formData.profile.name || !formData.profile.email) {
       alert("Please fill out all required fields.");
       return;
     }
 
     const emailParams = {
-      ...formData,
-      selectedPrograms: formData.selectedPrograms.join(", "),
+      ...formData.profile,
+      selectedPrograms: formData.profile.selectedPrograms.join(", "),
       speculatedPrice: calculateTotalPrice(),
     };
+
+    let response = await createProfile(formData); 
+
+    if(response.success == true){
+      console.log("horray"); 
+    } else {
+      console.log("anirudh ramakrishna is baheind htind."); 
+    }
 
 
     emailjs
@@ -227,7 +248,7 @@ const ArenaSignUpForm: React.FC = () => {
                 <input
                   type="text"
                   name="name"
-                  value={formData.name}
+                  value={formData.profile.name}
                   onChange={handleInputChange}
                   className="w-full px-4 py-2 border rounded-md"
                   required
@@ -238,7 +259,7 @@ const ArenaSignUpForm: React.FC = () => {
                 <input
                   type="email"
                   name="email"
-                  value={formData.email}
+                  value={formData.profile.email}
                   onChange={handleInputChange}
                   className="w-full px-4 py-2 border rounded-md"
                   required
@@ -254,7 +275,13 @@ const ArenaSignUpForm: React.FC = () => {
     <CreatableSelect
       isMulti
       options={summerProgramOptions}
-      onChange={(options) => handleMultiSelectChange("selectedPrograms", options)}
+      onChange={(options) => setFormData((prevdata) => ({
+        ...prevdata, 
+        profile: {
+          ...prevdata.profile,
+          selectedPrograms: options ? options.map((option) => ({ value: option.value, label: option.label })) : []
+        }
+      }))}
       className="w-full"
       placeholder="Type to add your own program or select from the list"
       formatCreateLabel={(inputValue) => `Select "${inputValue}"`}
@@ -269,7 +296,13 @@ const ArenaSignUpForm: React.FC = () => {
               <Select
                 isMulti
                 options={internshipOptions}
-                onChange={(options) => handleMultiSelectChange("selectedInternshipOptions", options)}
+                onChange={(options) => setFormData((prevdata) => ({
+                  ...prevdata, 
+                  profile: {
+                    ...prevdata.profile, 
+                    selectedInternshipOptions: options ? options.map((option) => ({ value: option.value, label: option.label, price: option.price })) : []
+                  }
+                }))}
                 className="w-full"
               />
             </div>
@@ -280,7 +313,13 @@ const ArenaSignUpForm: React.FC = () => {
               <Select
                 isMulti
                 options={resumeOptions}
-                onChange={(options) => handleMultiSelectChange("selectedResumeOptions", options)}
+                onChange={(options) => setFormData((prevdata) => ({
+                  ...prevdata, 
+                  profile: {
+                    ...prevdata.profile, 
+                    selectedResumeOptions: options ? options.map((option) => ({ value: option.value, label: option.label, price: option.price })) : []
+                  }
+                }))}
                 className="w-full"
               />
             </div>
@@ -290,7 +329,17 @@ const ArenaSignUpForm: React.FC = () => {
               <label className="block text-sm font-semibold mb-2">SAT/ACT Prep Options You're Interested In</label>
               <Select
                 options={satPrepOptions}
-                onChange={(option) => setFormData({ ...formData, selectedSATPrep: option ? option.value : "" })}
+                onChange={(option) =>
+                  setFormData((prevData) => ({
+                    ...prevData,
+                    profile: {
+                      ...prevData.profile,
+                      selectedSATPrep: option
+                        ? { value: option.value, label: option.label, price: option.price }
+                        : { value: "", label: "", price: 0 }, 
+                    },
+                  }))
+                }
                 className="w-full"
               />
             </div>
@@ -300,7 +349,7 @@ const ArenaSignUpForm: React.FC = () => {
               <input
                 type="number"
                 name="satOneHourCount"
-                value={formData.satOneHourCount}
+                value={formData.profile.satOneHourCount}
                 onChange={handleInputChange}
                 className="w-full px-4 py-2 border rounded-md"
                 placeholder="Enter hours"
@@ -314,7 +363,7 @@ const ArenaSignUpForm: React.FC = () => {
           <textarea
             id="additionalInfo"
             name="additionalInfo"
-            value={formData.additionalInfo}
+            value={formData.profile.additionalInfo}
             onChange={handleInputChange}
             placeholder="Please provide any additional information here..."
             style={{
