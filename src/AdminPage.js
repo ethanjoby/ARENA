@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { app} from "./firebase"; // Make sure you have the correct path for your firebaseConfig file
 
 const AdminPage = () => {
   // Preset login credentials
+  const [responses, setResponses] = useState([]);
   const presetUsername = "admin";
   const presetPassword = "password123";
 
@@ -11,16 +14,22 @@ const AdminPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [error, setError] = useState("");
 
-  // State for form responses
-  const [responses, setResponses] = useState([]);
-
-  // Fetch responses from localStorage on login
+  // Fetch responses from Firebase when logged in
   useEffect(() => {
     if (isLoggedIn) {
-      const storedResponse = JSON.parse(localStorage.getItem("arenaSignUpData"));
-      if (storedResponse) {
-        setResponses([storedResponse]); // Wrap in an array for table mapping
-      }
+      const fetchData = async () => {
+        try {
+          const db = getFirestore(app);
+          const responsesCollection = collection(db, "arenaSignUps");
+          const querySnapshot = await getDocs(responsesCollection);
+          const responsesList = querySnapshot.docs.map((doc) => doc.data());
+          setResponses(responsesList);
+        } catch (error) {
+          console.error("Error fetching data: ", error);
+        }
+      };
+
+      fetchData();
     }
   }, [isLoggedIn]);
 
@@ -54,7 +63,11 @@ const AdminPage = () => {
                 <th className="py-3 px-4">Name</th>
                 <th className="py-3 px-4">Email</th>
                 <th className="py-3 px-4">Selected Programs</th>
-                <th className="py-3 px-4">Total Price</th>
+                <th className="py-3 px-4">Selected Internship Options</th>
+                <th className="py-3 px-4">Selected Resume Options</th>
+                <th className="py-3 px-4">Selected SAT Prep</th>
+                <th className="py-3 px-4">SAT One Hour Count</th>
+                <th className="py-3 px-4">Additional Info</th>
               </tr>
             </thead>
             <tbody>
@@ -68,9 +81,30 @@ const AdminPage = () => {
                   <td className="py-3 px-4">{response.name}</td>
                   <td className="py-3 px-4">{response.email}</td>
                   <td className="py-3 px-4">
-                    {response.selectedPrograms.join(", ")}
+                    {Array.isArray(response.selectedSATPrep)
+    ? responses.selectedPrograms.join(", ")
+    : response.selectedPrograms || "N/A"}
+                    
                   </td>
-                  <td className="py-3 px-4">${response.totalPrice}</td>
+                  <td className="py-3 px-4">
+                    
+                    {Array.isArray(response.selectedSATPrep)
+    ? responses.selectedInternshipOptions.join(", ")
+    : response.selectedInternshipOptions || "N/A"}
+                  </td>
+                  
+                  <td className="py-3 px-4">
+  {Array.isArray(response.selectedSATPrep)
+    ? responses.selectedResumeOptions.join(", ")
+    : response.selectedResumeOptions || "N/A"}
+</td>
+                  <td className="py-3 px-4">
+  {Array.isArray(response.selectedSATPrep)
+    ? response.selectedSATPrep.join(", ")
+    : response.selectedSATPrep || "N/A"}
+</td>
+                  <td className="py-3 px-4">{response.satOneHourCount}</td>
+                  <td className="py-3 px-4">{response.additionalInfo}</td>
                 </tr>
               ))}
             </tbody>

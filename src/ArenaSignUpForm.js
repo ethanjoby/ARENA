@@ -4,8 +4,7 @@ import CreatableSelect from 'react-select/creatable';
 import emailjs from "emailjs-com";
 import { useNavigate } from "react-router-dom";
 import NAVBAR1 from "./navbar";
-import Footer from "./Footer.js";
-
+import { db, addDoc, collection } from './firebase';
 function ArenaSignUpForm() {
   const [formData, setFormData] = useState({
     name: "",
@@ -139,6 +138,7 @@ function ArenaSignUpForm() {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+  
 
   const handleMultiSelectChange = (name, options) => {
     const values = options ? options.map((option) => option.value) : [];
@@ -175,26 +175,38 @@ function ArenaSignUpForm() {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.email) {
-      alert("Please fill out all required fields.");
-      return;
-    }
 
-    const emailParams = {
-      ...formData,
-      selectedPrograms: formData.selectedPrograms.join(", "),
-      speculatedPrice: calculateTotalPrice(),
-    };
-
-    emailjs
-      .send("service_2wckxjr", "template_xugiogj", emailParams, "Q1b_pv0uG9JEXJhAl")
-      .then(
-        () => {
-          alert("Submission successful! A confirmation email has been sent.");
-          navigate("/");
-        },
-        () => alert("Submission failed. Please try again.")
-      );
+    console.log(formData);
+    
+      const docRef = addDoc(collection(db, "arenaSignUps"), {
+        name: formData.name,
+        email: formData.email,
+        selectedPrograms: formData.selectedPrograms,
+        selectedInternshipOptions: formData.selectedInternshipOptions,
+        selectedResumeOptions: formData.selectedResumeOptions,
+        selectedSATPrep: formData.selectedSATPrep,
+        satOneHourCount: formData.satOneHourCount,
+        additionalInfo: formData.additionalInfo,
+      });
+  
+      console.log("Document written with ID: ", docRef.id);
+      
+      const emailParams = {
+        ...formData,
+        selectedPrograms: formData.selectedPrograms.join(", "),
+        speculatedPrice: calculateTotalPrice(),
+      };
+  
+      emailjs
+        .send("service_2wckxjr", "template_xugiogj", emailParams, "Q1b_pv0uG9JEXJhAl")
+        .then(
+          () => {
+            alert("Submission successful! A confirmation email has been sent.");
+            navigate("/");
+          },
+          () => alert("Submission failed. Please try again.")
+        );
+      
   };
 
   return (
@@ -317,6 +329,7 @@ function ArenaSignUpForm() {
         />
       </div>
           {/* Submit Button */}
+          
           <button type="submit" className="w-full py-3 bg-black text-white rounded-md">
             Submit
           </button>

@@ -63,7 +63,7 @@ const Testimonials = () => {
             {
               name: "Sophia Nguyen",
               role: "Political Science Major",
-              logo: "https://seeklogo.com/images/H/harvard-university-logo-D7CC65EE30-seeklogo.com.png",
+              logo: "https://cdn.freebiesupply.com/images/large/2x/harvard-logo-transparent.png",
               text: "I was overwhelmed by the number of schools and requirements, but ARENA’s step-by-step approach made everything manageable. They helped me highlight my strengths and build a compelling application. Couldn’t have done it without them!",
             },
             {
