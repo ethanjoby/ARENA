@@ -13,18 +13,21 @@ export async function signInDb(data: signinSchemaType) {
 
         if(isCounselor){
             const counselor = await db.query.counselors.findFirst({
-                where: eq(counselors.email, email)
+                where: and(
+                    eq(counselors.email, email),
+                    eq(counselors.hashedPassword, password)
+                )
             }); 
 
             if (!counselor) {
                 return { success: false, error: "Invalid email or password" };
             }
 
-            const passwordMatch = await bcrypt.compare(password, counselor.hashedPassword);
+            //const passwordMatch = await bcrypt.compare(password, counselor.hashedPassword);
 
-            if (!passwordMatch) {
+            /* if (!passwordMatch) {
                 return { success: false, error: "Invalid email or password" };
-            }
+            } */
 
             const cookieStore = await cookies();
 
