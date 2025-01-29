@@ -3,6 +3,7 @@ import HomePage from './HomePage';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AdminPage from './AdminPage';
 import Essays from './Essays';
+import ThankYouPage from "./ThankYouPage";
 
 import ArenaSignUpForm from './ArenaSignUpForm';
 
@@ -16,6 +17,7 @@ function App() {
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/sign-up" element={<ArenaSignUpForm />} />
         <Route path="/essays" element={<Essays />} />
+        <Route path="/thank-you" element={<ThankYouPage />} />
 
       </Routes>
     </Router>

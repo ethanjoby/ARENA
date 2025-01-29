@@ -203,39 +203,38 @@ function ArenaSignUpForm() {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-
+  
     console.log(formData);
-    
-      const docRef = addDoc(collection(db, "arenaSignUps"), {
-        name: formData.name,
-        email: formData.email,
-        selectedPrograms: formData.selectedPrograms,
-        selectedInternshipOptions: formData.selectedInternshipOptions,
-        selectedResumeOptions: formData.selectedResumeOptions,
-        selectedSATPrep: formData.selectedSATPrep,
-        satOneHourCount: formData.satOneHourCount,
-        additionalInfo: formData.additionalInfo,
-      });
   
-      console.log("Document written with ID: ", docRef.id);
-      
-      const emailParams = {
-        ...formData,
-        selectedPrograms: formData.selectedPrograms.join(", "),
-        speculatedPrice: calculateTotalPrice(),
-      };
+    const docRef = addDoc(collection(db, "arenaSignUps"), {
+      name: formData.name,
+      email: formData.email,
+      selectedPrograms: formData.selectedPrograms,
+      selectedInternshipOptions: formData.selectedInternshipOptions,
+      selectedResumeOptions: formData.selectedResumeOptions,
+      selectedSATPrep: formData.selectedSATPrep,
+      satOneHourCount: formData.satOneHourCount,
+      additionalInfo: formData.additionalInfo,
+    });
   
-      emailjs
-        .send("service_2wckxjr", "template_xugiogj", emailParams, "Q1b_pv0uG9JEXJhAl")
-        .then(
-          () => {
-            alert("Submission successful! A confirmation email has been sent.");
-            navigate("/");
-          },
-          () => alert("Submission failed. Please try again.")
-        );
-      
+    console.log("Document written with ID: ", docRef.id);
+  
+    const emailParams = {
+      ...formData,
+      selectedPrograms: formData.selectedPrograms.join(", "),
+      speculatedPrice: calculateTotalPrice(),
+    };
+  
+    emailjs
+      .send("service_2wckxjr", "template_xugiogj", emailParams, "Q1b_pv0uG9JEXJhAl")
+      .then(
+        () => {
+          navigate("/thank-you");  // Navigate to Thank You page on successful submission
+        },
+        () => alert("Submission failed. Please try again.")
+      );
   };
+  
 
   return (
     <div>
