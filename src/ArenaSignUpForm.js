@@ -32,9 +32,9 @@ function ArenaSignUpForm() {
   ];
 
   const satPrepOptions = [
-    { value: "10 Hours", label: "10 Hours - $149", price: 149 },
-    { value: "25 Hours", label: "25 Hours - $359", price: 359 },
-    { value: "50 Hours", label: "50 Hours - $699", price: 699 },
+    { value: "5 Hours", label: "5 one-hour meetings and 1 practice test - $150", price: 150 },
+    { value: "15 Hours", label: "15 one-hour meetings and 3 practice tests - $360", price: 360 },
+    { value: "30 Hours", label: "30 one-hour meetings and 6 practice tests - $680", price: 680 },
   ];
 
   const summerProgramOptions = [
@@ -319,18 +319,6 @@ function ArenaSignUpForm() {
               options={satPrepOptions}
               onChange={(option) => setFormData({ ...formData, selectedSATPrep: option ? option.value : "" })}
               className="w-full"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold mb-2">Add Individual SAT/ACT Hours</label>
-            <input
-              type="number"
-              name="satOneHourCount"
-              value={formData.satOneHourCount}
-              onChange={handleInputChange}
-              className="w-full px-4 py-2 border rounded-md"
-              placeholder="Enter hours"
             />
           </div>
         {/* Additional Info Section */}
