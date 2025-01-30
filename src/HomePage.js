@@ -1,4 +1,5 @@
 import './App.css';
+import Testimonials from './Testimonials';
 import HeroSection from './HeroSection';
 import Services from './Services';
 import Footer from './Footer';
@@ -15,6 +16,9 @@ function HomePage() {
       </div>
       <div id="services">
         <Services />
+      </div>
+      <div id="testimonials">
+        <Testimonials />
       </div>
       <div id="faq">
         <FAQs/>

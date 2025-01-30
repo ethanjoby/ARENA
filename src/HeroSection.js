@@ -27,11 +27,19 @@ const HeroSection = () => {
             Services
           </button>
           <button
+            onClick={() => scrollToSection('testimonials')}
+            className="hover:underline"
+          >
+            Testimonials
+          </button>
+          <button
             onClick={() => scrollToSection('faq')}
             className="hover:underline"
           >
             FAQs
           </button>
+
+          
 
         </nav>
         <div className="relative inline-flex group">
