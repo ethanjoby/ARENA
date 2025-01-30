@@ -27,23 +27,10 @@ const HeroSection = () => {
             Services
           </button>
           <button
-            onClick={() => scrollToSection('testimonials')}
-            className="hover:underline"
-          >
-            Testimonials
-          </button>
-          <button
             onClick={() => scrollToSection('faq')}
             className="hover:underline"
           >
             FAQs
-          </button>
-
-          <button
-            onClick={() => navigate('/essays')}
-            className="hover:underline"
-          >
-            Essays
           </button>
 
         </nav>
