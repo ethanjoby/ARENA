@@ -21,20 +21,20 @@ function ArenaSignUpForm() {
   const navigate = useNavigate();
 
   const internshipOptions = [
-    { value: "General Internship Help", label: "General Internship Help - $40", price: 40 },
-    { value: "Guaranteed Internship Placement", label: "Guaranteed Internship Placement - $150", price: 150 },
-    { value: "General Professor Internship Help", label: "General Professor Internship Help - $60", price: 60 },
+    { value: "General Internship Help", label: "General Internship Help", price: 40 },
+    { value: "Guaranteed Internship Placement", label: "Guaranteed Internship Placement", price: 150 },
+    { value: "General Professor Internship Help", label: "General Professor Internship Help", price: 60 },
   ];
 
   const resumeOptions = [
-    { value: "Resume & Cover Letter Review", label: "Resume & Cover Letter Review - $25", price: 25 },
-    { value: "Interview Prep", label: "Interview Prep - $30", price: 30 },
+    { value: "Resume & Cover Letter Review", label: "Resume & Cover Letter Review", price: 25 },
+    { value: "Interview Prep", label: "Interview Prep", price: 30 },
   ];
 
   const satPrepOptions = [
-    { value: "5 Hours", label: "5 one-hour meetings and 1 practice test - $150", price: 150 },
-    { value: "15 Hours", label: "15 one-hour meetings and 3 practice tests - $360", price: 360 },
-    { value: "30 Hours", label: "30 one-hour meetings and 6 practice tests - $680", price: 680 },
+    { value: "5 Hours", label: "5 one-hour meetings and 1 practice test", price: 150 },
+    { value: "15 Hours", label: "15 one-hour meetings and 3 practice tests", price: 360 },
+    { value: "30 Hours", label: "30 one-hour meetings and 6 practice tests", price: 680 },
   ];
 
   const summerProgramOptions = [
