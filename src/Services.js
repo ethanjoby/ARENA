@@ -3,32 +3,32 @@ import React from "react";
 const CollegeCounselingServices = () => {
   const services = [
     {
-      title: "Finding programs that are right for you.",
+      title: "Curated Summer Program List & Admissions Strategy",
       icon: "https://www.pngall.com/wp-content/uploads/8/College-PNG-Pic.png",
       gradient: "from-blue-600 to-blue-900",
       paragraph:
-        "At ARENA, we help students discover academic opportunities that align with their goals, interests, and strengths. Through personalized assessments, we understand your passions and career aspirations, recommending colleges, majors, and programs tailored to your profile. Whether you’re exploring research opportunities, honors tracks, or specialized academic paths, we guide you toward institutions that fit your ambitions. Our expert support ensures you make confident choices, setting the stage for long-term success.",
+        "With thousands of summer programs available, choosing the right one can be overwhelming. We simplify the process by curating a personalized list based on your academic interests, career goals, and strengths. From research opportunities and pre-college programs to specialized camps and leadership experiences, we help you find the best fit. Beyond just selection, we maximize your chances of acceptance by refining your applications. Our team assists with essays, personal statements, recommendation letters, and interview prep, ensuring you present yourself in the strongest possible way.",
     },
     {
-      title: "Application essay review and feedback.",
+      title: "Guaranteed Internships & Internship Guidance",
       icon: "https://cdn-icons-png.flaticon.com/512/4928/4928898.png",
       gradient: "from-purple-500 to-pink-600",
       paragraph:
-        "Crafting a compelling application essay is key to standing out in the admissions process, and ARENA is here to help you shine. Our team of experienced counselors provides personalized reviews and constructive feedback to help you tell your story authentically and effectively. We focus on refining your ideas, improving clarity, and showcasing your unique voice while ensuring your essay aligns with the specific expectations of your target schools. With our guidance, you’ll submit an essay that leaves a lasting impression.",
+        "Internships provide invaluable real-world experience, and we help you secure guaranteed placements through our network of professors, research labs, and industry professionals. If you’re seeking general internship support, we guide you in identifying top opportunities, crafting outreach emails, and connecting with companies. We also assist with refining applications and preparing for interviews, ensuring you present yourself as a strong candidate. Whether you’re interested in research, corporate internships, or startups, we help you gain hands-on experience that sets you apart.",
     },
     {
-      title: "Finding and connecting with professors.",
+      title: "Resume & Cover Letter Optimization",
       icon: "https://cdn1.iconfinder.com/data/icons/file-format-22/64/File_Format_Glyph-29-512.png",
       gradient: "from-green-500 to-teal-500",
       paragraph:
-        "Choosing the right path—whether it’s selecting a major, career focus, or extracurriculars—can feel overwhelming. ARENA’s counselors provide holistic guidance, using personalized assessments and one-on-one discussions. We help you explore your interests, evaluate options, and create a clear, achievable plan for success. Our goal is to empower you to make informed decisions that align with your aspirations and set you on a path to thrive in college and beyond.",
+        "A well-crafted resume and cover letter can make all the difference in securing internships and other opportunities. We work closely with students to build polished resumes that effectively showcase skills, achievements, and experiences. Our cover letter coaching helps you craft compelling, tailored narratives that make a strong first impression. We focus on clarity, professionalism, and personalization, ensuring you present a standout application. Whether you’re applying for an internship, job, or research position, we help you showcase your strengths in a way that grabs attention.",
     },
     {
-      title: "Guidance on what path is best for you.",
+      title: "Standardized Test Preparation",
       icon: "https://static.thenounproject.com/png/768328-200.png",
       gradient: "from-orange-500 to-red-500",
       paragraph:
-        "Choosing the right path—whether it’s selecting a major, career focus, or extracurricular involvement—can feel overwhelming. ARENA’s counselors take a holistic approach to guide you. Through personalized assessments and one-on-one discussions, we help you explore your interests, evaluate options, and map out a clear and achievable plan for success. Our goal is to empower you to make informed decisions that align with your aspirations and set you on a path to thrive in college and beyond.",
+        "Standardized test scores remain an important factor in college admissions, and our tailored SAT/ACT prep helps students maximize their potential. We offer diagnostic testing, personalized study plans, and proven test-taking strategies to target key areas of improvement. Our expert guidance, high-quality practice materials, and real test simulations help you build confidence and improve efficiency. Whether you need support in math, reading, writing, or science reasoning, we ensure you’re fully prepared to achieve your best possible score.",
     },
   ];
 
