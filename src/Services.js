@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 
 const CollegeCounselingServices = () => {
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+
   const services = [
     {
       title: "Curated Summer Program List & Admissions Strategy",
@@ -37,11 +39,16 @@ const CollegeCounselingServices = () => {
   ];
 
   return (
-    <section className="container mx-auto services-section bg-white text-black py-12 px-4 sm:px-6 lg:px-8">
+    <section className="container mx-auto bg-white text-black py-12 px-4 sm:px-6 lg:px-8">
       <h1 className="text-5xl font-bold text-center mb-12">What We Do</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
         {services.map((service, index) => (
-          <div key={index} className="relative group flex flex-col items-center text-center">
+          <div
+            key={index}
+            className={`relative group flex flex-col items-center text-center transition-opacity duration-300 ${hoveredIndex !== null && hoveredIndex !== index ? "opacity-30" : "opacity-100"}`}
+            onMouseEnter={() => setHoveredIndex(index)}
+            onMouseLeave={() => setHoveredIndex(null)}
+          >
             {/* Animated Border Effect */}
             <div
               className="absolute -inset-1 rounded-xl overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -55,7 +62,7 @@ const CollegeCounselingServices = () => {
             </div>
 
             {/* Card Content */}
-            <div className="relative bg-gray-100 rounded-xl shadow-lg p-6 flex flex-col items-center h-full">
+            <div className="relative bg-white hover:bg-gray-100 hover:scale-100 rounded-xl shadow-2xl p-6 flex flex-col items-center h-full">
               {/* Circled Number */}
               <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-black text-white rounded-full w-12 h-12 flex items-center justify-center text-lg font-bold shadow-md">
                 {index + 1}

@@ -15,3 +15,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+@layer components {
+  .underline-effect {
+    @apply relative  p-0;
+  }
+
+  .underline-effect::after {
+    @apply content-[''] absolute w-full h-1 left-0 bottom-[-4px] bg-black origin-bottom-right hover:origin-bottom-left scale-x-0 hover:scale-x-100 transition-transform duration-300;
+  }
+
+  .heading-text {
+    @apply bg-gradient-to-br from-[#FFFFFF] to-[#AAAAAA] bg-clip-text p-4 font-sans text-6xl font-extrabold text-transparent;
+  }
+}

@@ -13,6 +13,7 @@ module.exports = {
       animation: {
         'border-spin': 'border-spin 7s linear infinite',
       },
+      
     },
   },
   plugins: [],

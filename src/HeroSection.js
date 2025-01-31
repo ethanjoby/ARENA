@@ -51,13 +51,13 @@ const HeroSection = () => {
           <span>ARENA</span>
         </div>
         <nav className="hidden lg:flex text-sm space-x-8">
-          <button onClick={() => scrollToSection("services")} className="hover:underline">
+          <button onClick={() => scrollToSection("services")} className="underline-effect">
             Services
           </button>
-          <button onClick={() => scrollToSection("testimonials")} className="hover:underline">
+          <button onClick={() => scrollToSection("testimonials")} className="underline-effect">
             Testimonials
           </button>
-          <button onClick={() => scrollToSection("faq")} className="hover:underline">
+          <button onClick={() => scrollToSection("faq")} className="underline-effect">
             FAQs
           </button>
         </nav>
