@@ -1,57 +1,98 @@
-import React from 'react';
-import logo from './assets/logo123.webp'; // Adjust the path
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import logo from "./assets/logo123.webp";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-// Smooth scroll function
+
 const scrollToSection = (sectionId) => {
   const section = document.getElementById(sectionId);
   if (section) {
-    section.scrollIntoView({ behavior: 'smooth' });
+    section.scrollIntoView({ behavior: "smooth" });
   }
 };
+
 const HeroSection = () => {
   const navigate = useNavigate();
+
+  const [hoverEffects, setHoverEffects] = useState({
+    register: { x: 0, y: 0, size: 20, opacity: 0 },
+    learnMore: { x: 0, y: 0, size: 20, opacity: 0 },
+  });
+
+  const handleMouseMove = (e, key) => {
+    const rect = e.target.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    setHoverEffects((prev) => ({
+      ...prev,
+      [key]: { ...prev[key], x, y, opacity: 1 },
+    }));
+  };
+
+  const handleMouseEnter = (key) => {
+    setHoverEffects((prev) => ({
+      ...prev,
+      [key]: { ...prev[key], size: 300, opacity: 1 },
+    }));
+  };
+
+  const handleMouseLeave = (key) => {
+    setHoverEffects((prev) => ({
+      ...prev,
+      [key]: { ...prev[key], size: 20, opacity: 0 },
+    }));
+  };
+
   return (
     <section className="hero-section bg-white text-black min-h-screen flex flex-col items-center justify-center">
-      {/* Header */}
       <header className="absolute top-0 left-0 w-full p-4 flex justify-between items-center">
         <div className="logo flex items-center text-lg font-bold">
           <img src={logo} alt="Logo" className="h-8 mr-2" />
           <span>ARENA</span>
         </div>
         <nav className="hidden lg:flex text-sm space-x-8">
-          <button
-            onClick={() => scrollToSection('services')}
-            className="hover:underline"
-          >
+          <button onClick={() => scrollToSection("services")} className="hover:underline">
             Services
           </button>
-          <button
-            onClick={() => scrollToSection('testimonials')}
-            className="hover:underline"
-          >
+          <button onClick={() => scrollToSection("testimonials")} className="hover:underline">
             Testimonials
           </button>
-          <button
-            onClick={() => scrollToSection('faq')}
-            className="hover:underline"
-          >
+          <button onClick={() => scrollToSection("faq")} className="hover:underline">
             FAQs
           </button>
-
-          
-
         </nav>
         <Link
-              to="/sign-up"
-              className=" inline-flex border-black items-center gap-2 rounded-full border  bg-black px-8 py-3 text-white transition-all duration-800 hover:bg-transparent hover:text-black focus:outline-none focus:ring active:bg-white/90 py-12 px-4 sm:px-6 lg:px-8"
-            >
-              <span className="text-sm font-medium">Register</span>
-             
-            </Link>
+          to="/sign-up"
+          className="relative inline-flex items-center gap-2 rounded-full border border-black px-8 py-3 font-medium transition-all duration-300 overflow-hidden"
+          onMouseMove={(e) => handleMouseMove(e, "register")}
+          onMouseEnter={() => handleMouseEnter("register")}
+          onMouseLeave={() => handleMouseLeave("register")}
+        >
+          <div
+            style={{
+              position: "absolute",
+              top: hoverEffects.register.y,
+              left: hoverEffects.register.x,
+              width: hoverEffects.register.size,
+              height: hoverEffects.register.size,
+              backgroundColor: "black",
+              borderRadius: "50%",
+              transform: "translate(-50%, -50%)",
+              transition: "width 0.5s ease, height 0.5s ease, opacity 0.5s ease",
+              opacity: hoverEffects.register.opacity,
+              pointerEvents: "none",
+              zIndex: 0,
+            }}
+          />
+          <span
+            className="relative z-10"
+            style={{ color: hoverEffects.register.opacity > 0 ? "white" : "black" }}
+          >
+            Register
+          </span>
+        </Link>
       </header>
 
-      {/* Hero Content */}
       <div className="flex flex-col items-center text-center px-4">
         <div className="neon-logo">
           <img src={logo} alt="Logo" className="h-48" />
@@ -60,24 +101,43 @@ const HeroSection = () => {
           Your Path to College Starts Here!
         </h1>
         <p className="text-gray-400 mt-4 max-w-2xl">
-          Get help finding and applying to internships from students who have
-          done it.
+          Get help finding and applying to internships from students who have done it.
         </p>
         <div className="relative inline-flex group mt-10">
-          <div
-            className="absolute transition-all duration-1000 opacity-70 -inset-px bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] rounded-full blur-md group-hover:opacity-100 group-hover:-inset-0.5 group-hover:duration-200 animate-tilt"
-          ></div>
           <button
-            onClick={() => scrollToSection('services')}
-            className="hover:bg-white duration-800 hover:text-black relative inline-flex items-center justify-center px-6 py-3 text-md font-semibold text-white transition-all duration-200 bg-black  font-pj rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
+            onClick={() => scrollToSection("services")}
+            className="relative inline-flex items-center justify-center px-6 py-3 text-md font-semibold border border-black rounded-full overflow-hidden focus:outline-none"
+            onMouseMove={(e) => handleMouseMove(e, "learnMore")}
+            onMouseEnter={() => handleMouseEnter("learnMore")}
+            onMouseLeave={() => handleMouseLeave("learnMore")}
           >
-            Learn More →
+            <div
+              style={{
+                position: "absolute",
+                top: hoverEffects.learnMore.y,
+                left: hoverEffects.learnMore.x,
+                width: hoverEffects.learnMore.size,
+                height: hoverEffects.learnMore.size,
+                backgroundColor: "black",
+                borderRadius: "50%",
+                transform: "translate(-50%, -50%)",
+                transition: "width 0.5s ease, height 0.5s ease, opacity 0.5s ease",
+                opacity: hoverEffects.learnMore.opacity,
+                pointerEvents: "none",
+                zIndex: 0,
+              }}
+            />
+            <span
+              className="relative z-10"
+              style={{ color: hoverEffects.learnMore.opacity > 0 ? "white" : "black" }}
+            >
+              Learn More →
+            </span>
           </button>
         </div>
       </div>
     </section>
   );
 };
-
 
 export default HeroSection;
