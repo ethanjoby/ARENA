@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import TypingAnimation from "./TypingAnimation";
 
 const FAQs = () => {
   const faqData = [
@@ -42,9 +43,7 @@ const FAQs = () => {
       question: "How do I get started with ARENA?",
       answer: "Simply reach out to us through our website or email to discuss your goals, and we’ll guide you through the process to get started on your path to success!"
     }
-];
-
-  
+  ];
 
   const [openIndex, setOpenIndex] = useState(null);
 
@@ -53,11 +52,11 @@ const FAQs = () => {
   };
 
   return (
-    <div className=" container mx-auto p-6 bg-white text-black py-12 px-4 sm:px-6 lg:px-8">
+    <div className="container mx-auto p-6 bg-white text-black py-12 px-4 sm:px-6 lg:px-8">
       <h1 className="text-3xl font-bold mb-6">Frequently Asked Questions</h1>
       <div className="space-y-4">
         {faqData.map((faq, index) => (
-          <div key={index} className="border-b border-gray-700">
+          <div key={index} className="border-b border-gray-700 text-left">
             <button
               className="w-full flex justify-between items-center py-4 text-left focus:outline-none"
               onClick={() => toggleFAQ(index)}
@@ -66,7 +65,9 @@ const FAQs = () => {
               <span className="text-2xl">{openIndex === index ? "−" : "+"}</span>
             </button>
             {openIndex === index && (
-              <p className="text-gray-400 py-2 text-left">{faq.answer}</p>
+              <div className="text-left text-gray-500 italic text-small">
+                <TypingAnimation text={faq.answer} />
+              </div>
             )}
           </div>
         ))}
@@ -76,3 +77,4 @@ const FAQs = () => {
 };
 
 export default FAQs;
+
