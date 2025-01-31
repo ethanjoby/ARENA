@@ -104,9 +104,13 @@ const HeroSection = () => {
           Get help finding and applying to internships from students who have done it.
         </p>
         <div className="relative inline-flex group mt-10">
+        <div
+            className="absolute transition-all duration-1000 opacity-70 -inset-px bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] rounded-full blur-md group-hover:opacity-100 group-hover:-inset-1 group-hover:duration-200 animate-tilt"
+          ></div>
+          
           <button
             onClick={() => scrollToSection("services")}
-            className="relative inline-flex items-center justify-center px-6 py-3 text-md font-semibold border border-black rounded-full overflow-hidden focus:outline-none"
+            className="relative inline-flex items-center bg-white justify-center px-6 py-3 text-md font-semibold  rounded-full overflow-hidden focus:outline-none"
             onMouseMove={(e) => handleMouseMove(e, "learnMore")}
             onMouseEnter={() => handleMouseEnter("learnMore")}
             onMouseLeave={() => handleMouseLeave("learnMore")}

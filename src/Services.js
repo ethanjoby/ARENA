@@ -62,7 +62,7 @@ const CollegeCounselingServices = () => {
               </div>
 
               {/* Icon */}
-              <img src={service.icon} alt={`${service.title} Icon`} className="h-12 w-12 mb-4" />
+              <img src={service.icon} alt={`${service.title} Icon`} className="h-12 mt-4 w-12 mb-4" />
 
               {/* Title */}
               <p className="font-medium text-lg mb-2">{service.title}</p>
