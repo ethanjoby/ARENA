@@ -37,34 +37,34 @@ const CollegeCounselingServices = () => {
       <h1 className="text-5xl font-bold text-center mb-12">What We Do</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {services.map((service, index) => (
-          <div
-            key={index}
-            className="relative group flex flex-col items-center justify-between text-center"
-          >
-            {/* Gradient Background */}
+          <div key={index} className="relative group flex flex-col items-center text-center">
+            {/* Animated Border Effect */}
             <div
-              className={`absolute -inset-px bg-gradient-to-r ${service.gradient} rounded-xl blur-md opacity-70 group-hover:opacity-100 group-hover:duration-200`}
-            ></div>
+              className="absolute -inset-1 rounded-xl overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            >
+              <div
+                className="absolute left-[-25%] top-[-25%] h-[150%] w-[150%] animate-border-spin"
+                style={{
+                  background: `conic-gradient(${service.borderGradient} 0deg, transparent 80deg)`,
+                }}
+              ></div>
+            </div>
 
             {/* Card Content */}
-            <div className="relative bg-white rounded-xl shadow-lg p-6 flex flex-col items-center h-full">
+            <div className="relative bg-gray-100 rounded-xl shadow-lg p-6 flex flex-col items-center h-full">
               {/* Circled Number */}
-              <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-white text-gray-900 rounded-full w-12 h-12 flex items-center justify-center text-lg font-bold shadow-md">
+              <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-black text-white rounded-full w-12 h-12 flex items-center justify-center text-lg font-bold shadow-md">
                 {index + 1}
               </div>
 
               {/* Icon */}
-              <img
-                src={service.icon}
-                alt={`${service.title} Icon`}
-                className="h-12 w-12 mb-4"
-              />
+              <img src={service.icon} alt={`${service.title} Icon`} className="h-12 w-12 mb-4" />
 
               {/* Title */}
               <p className="font-medium text-lg mb-2">{service.title}</p>
 
               {/* Paragraph */}
-              <p className="font-small text-xs text-gray-500">{service.paragraph}</p>
+              <p className="text-xs text-gray-500">{service.paragraph}</p>
             </div>
           </div>
         ))}
@@ -74,3 +74,4 @@ const CollegeCounselingServices = () => {
 };
 
 export default CollegeCounselingServices;
+

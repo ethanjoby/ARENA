@@ -3,13 +3,16 @@ import Testimonials from './Testimonials';
 import HeroSection from './HeroSection';
 import Services from './Services';
 import Footer from './Footer';
-import FAQs from './FAQs'
+import FAQs from './FAQs'; 
+import Cursor from "./components/Cursor";
+import { useState } from "react";
 
 function HomePage() {
+  const [scaling] = useState(false);
   return (
     
     <div className="App">
-      
+      <Cursor scaling={scaling} />
       {/* Set each section with an ID for linking */}
       <div id="hero">
         <HeroSection />

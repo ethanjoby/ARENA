@@ -9,7 +9,6 @@ import ArenaSignUpForm from './ArenaSignUpForm';
 
 function App() {
   return (
-    
     <Router>
       <Routes>
         {/* Define your routes */}

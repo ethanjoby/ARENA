@@ -1,0 +1,18 @@
+.large_circle,
+.small_circle {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: rgb(253, 92, 205);
+  position: fixed;
+  pointer-events: none;
+  transition: transform 0.1s;
+  z-index: 9999; /* Ensures it's above everything */
+}
+
+.small_circle {
+  width: 16px;
+  height: 16px;
+  background-color: black;
+  z-index: 10000; /* Ensure it’s above even the large circle */
+}
