@@ -3,7 +3,6 @@ import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { app} from "./firebase"; // Make sure you have the correct path for your firebaseConfig file
 
 const AdminPage = () => {
-  // Preset login credentials
   const [responses, setResponses] = useState([]);
   const presetUsername = "admin";
   const presetPassword = "password123";
