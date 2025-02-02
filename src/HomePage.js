@@ -3,11 +3,11 @@ import Testimonials from './Testimonials';
 import HeroSection from './HeroSection';
 import Services from './Services';
 import Footer from './Footer';
-import FAQs from './FAQs'; 
+import FAQs from './FAQs';
+import AboutUs from './AboutUs'; // Import AboutUs component
 
 function HomePage() {
   return (
-    
     <div className="App">
       {/* Set each section with an ID for linking */}
       <div id="hero">
@@ -16,12 +16,14 @@ function HomePage() {
       <div id="services">
         <Services />
       </div>
- 
+      <div id="about-us">
+        <AboutUs /> {/* Add AboutUs section */}
+      </div>
       <div id="testimonials">
         <Testimonials />
       </div>
       <div id="faq">
-        <FAQs/>
+        <FAQs />
       </div>
       <Footer />
     </div>
