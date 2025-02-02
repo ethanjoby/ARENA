@@ -61,8 +61,9 @@ const teamLeaders = [
       "Worked with <strong> Duke PhD </strong> student on reinforcement learning research paper accepted for publication"
     ],
     funFact: "Once got mistaken for a professional marketer after a school project went viral.",
-    image: nirav
-  },
+    image: {
+      nirav
+    },
   {
     name: "Aaron Rathore",
     awards: [

@@ -1,5 +1,5 @@
 import React from "react";
-import nirav from "./assets/nirav_headshot.jpg";
+import { nirav } from "src/assets/nirav_headshot.jpg";
 
 const teamLeaders = [
   {
@@ -61,7 +61,7 @@ const teamLeaders = [
       "Worked with <strong> Duke PhD </strong> student on reinforcement learning research paper accepted for publication"
     ],
     funFact: "Once got mistaken for a professional marketer after a school project went viral.",
-    image: nirav
+    image: 
   },
   {
     name: "Aaron Rathore",
