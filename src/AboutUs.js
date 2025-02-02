@@ -36,7 +36,7 @@ const teamLeaders = [
         name: "Ethan Varghese",
         awards: [
             "USACO <strong> Gold </strong>",
-            "4× International Hackathon Champion | 1st out of ~1,000 participants in each competition | $3,000+ in Total Cash Prizes",
+            "4× International Hackathon Winner | 1st out of ~1,000 participants in each competition | $3,000+ in Total Cash Prizes",
            
         ],
         accomplishments: [
