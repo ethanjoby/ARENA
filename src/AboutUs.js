@@ -36,16 +36,16 @@ const teamLeaders = [
         name: "Ethan Varghese",
         awards: [
             "USACO <strong> Gold </strong>",
-            "Hackswift Hackathon Winner (1st/924)",
-            "American Allegiance of Education Hackathon Winner (1st/158)",
-            "WorthyHacks Hackathon Runner-Up (2nd/177)"
+            "4× International Hackathon Champion | 1st out of ~1,000 participants in each competition | $3,000+ in Total Cash Prizes",
+           
         ],
         accomplishments: [
-            "Built an Outage Detection Notification System for <strong> Caltech </strong> Servers",
+            "Intern at <strong>Caltech's Netlab</strong> ",
             "Designed and developed Anti-Covid Sanitization Robot for <strong> Amazon </strong> storage facilities, demoed at Intel partner showcase",
-            "Published research paper at <strong> National Linguistics Conference </strong>"
+            "Published research paper at <strong> National Linguistics Conference </strong>",
+            "Run an EdTech start-up with <strong>10,000+</strong> users, patent holding status, and VC funding"
         ],
-        funFact: "Learned to code by modifying video games instead of doing homework.",
+        funFact: "I am an avid philatelist(collect lots of stamps)!",
         image: "https://netlab.caltech.edu/assets/img/people/visiting-graduates/Ethan_Varghese-480.webp"
     },
     {
