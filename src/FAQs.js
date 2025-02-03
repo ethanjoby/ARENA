@@ -6,13 +6,13 @@ const FAQs = () => {
   const faqData = [
     {
       question: "What is the ARENA program?",
-      answer: "ARENA is a comprehensive counseling service designed to help high school students maximize their chances of acceptance into competitive summer programs.",
-      boldWords: ["ARENA", "maximize", "acceptance", "summer", "programs"],
+      answer: "ARENA is a comprehensive counseling service designed to help high school students secure competitive summer programs and internships. ARENA also offers SAT/ACT test preparation.",
+      boldWords: ["counseling", "service", "maximize", "acceptance", "summer", "programs", "interships", "SAT/ACT", "test", "preparation"],
     },
     {
       question: "Who is eligible to join the ARENA program?",
       answer: "Any high school student looking to strengthen their summer program applications, secure internships, or improve their SAT/ACT scores is welcome to join ARENA.",
-      boldWords: ["high", "school", "internships", "SAT/ACT", "ARENA"],
+      boldWords: ["high", "school", "summer", "program", "internships", "scores", "ARENA"],
     },
     {
       question: "What services does ARENA provide?",
@@ -37,12 +37,12 @@ const FAQs = () => {
     {
       question: "How does ARENA improve my chances of acceptance?",
       answer: "Our team provides tailored mentorship, essay feedback, and strategic advice based on past successful applicants. We help craft compelling applications, secure professor and company connections for internships, and offer proven test-taking strategies.",
-      boldWords: ["mentorship", "essay", "feedback", "internships", "test-taking"],
+      boldWords: ["mentorship", "essay", "feedback", "compelling", "applications", "internships", "test-taking"],
     },
     {
       question: "How does ARENA help with internships?",
       answer: "We offer direct support in securing internships, whether through guaranteed placements, professor outreach, or company connections. Our resume and cover letter guidance ensure students present themselves as strong candidates.",
-      boldWords: ["internships", "professor", "outreach", "company", "connections", "resume", "cover", "letter"],
+      boldWords: ["internships", "guaranteed", "placements", "professor", "outreach", "company", "connections", "resume", "cover", "letter"],
     },
     {
       question: "How does SAT/ACT prep with ARENA work?",
@@ -51,8 +51,8 @@ const FAQs = () => {
     },
     {
       question: "How do I get started with ARENA?",
-      answer: "Simply fill out the interest form by clicking the 'Register' button, and we’ll guide you through the process to get started on your path to success!",
-      boldWords: ["interest", "form", "'Register'", "guide", "goals", "success"],
+      answer: "Simply fill out the interest form by clicking the Register button, and we’ll guide you through the process to get started on your path to success!",
+      boldWords: ["interest", "form", "Register", "button", "guide", "goals", "success"],
     }
   ];
 
