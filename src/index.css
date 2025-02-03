@@ -65,4 +65,8 @@ code {
   animation: border-spin-reverse 4.1s linear infinite;
  }
  
- 
+ .highlight {
+  background-color: rgba(29, 140, 248, 0.1); /* Faint Indigo-300 background */
+  border-radius: 3px;
+  padding: 2px 4px;
+}
