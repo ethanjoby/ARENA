@@ -13,21 +13,21 @@ const CollegeCounselingServices = () => {
     },
     {
       title: "Guaranteed Internships & Internship Guidance",
-      icon: "https://cdn-icons-png.flaticon.com/512/4928/4928898.png",
+      icon: "https://static.thenounproject.com/png/768328-200.png", // Moved from #4
       gradient: "bg-purple-50",
       border: "border-purple-400",
       hoverBg: "hover:bg-purple-100",
     },
     {
       title: "Resume & Cover Letter Optimization",
-      icon: "https://cdn1.iconfinder.com/data/icons/file-format-22/64/File_Format_Glyph-29-512.png",
+      icon: "https://cdn-icons-png.flaticon.com/512/4928/4928898.png", // Moved from #2
       gradient: "bg-green-50",
       border: "border-green-400",
       hoverBg: "hover:bg-green-100",
     },
     {
       title: "Standardized Test Preparation",
-      icon: "https://static.thenounproject.com/png/768328-200.png",
+      icon: "https://cdn1.iconfinder.com/data/icons/file-format-22/64/File_Format_Glyph-29-512.png", // Moved from #3
       gradient: "bg-orange-50",
       border: "border-orange-400",
       hoverBg: "hover:bg-orange-100",
