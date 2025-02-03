@@ -9,10 +9,10 @@ const Testimonials = () => {
     <div className="bg-white text-black">
       <div className="container mx-auto px-6">
         {/* Heading */}
-        <h1 className="text-4xl md:text-5xl font-bold text-center mt-12 text-black leading-snug">
+        <h1 className="text-4xl md:text-5xl  text-center mt-12  leading-snug text-gray-400">
   Don't listen to us.  
-  <span className="block text-3xl md:text-4xl font-semibold text-gray-600">
-    Listen to our students.
+  <span className="block text-4xl md:text-5xl ">
+    Listen to our <span className = "font-bold text-black">students.</span>
   </span>
 </h1>
 
@@ -64,7 +64,7 @@ const Testimonials = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] rounded-lg blur-md opacity-0 group-hover:opacity-100 group-hover:duration-300 transition-all"></div>
               
               <div
-                className={`relative group bg-white shadow-2xl rounded-lg p-6 shadow-md text-center duration-500 hover:scale-103 ${hoveredIndex !== null && hoveredIndex !== index ? "opacity-30" : "opacity-100"}`}
+                className={`relative group bg-white shadow-2xl rounded-lg p-6 shadow-md text-center duration-500 hover:scale-103 ${hoveredIndex !== null && hoveredIndex !== index ? "opacity-100" : "opacity-100"}`}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
               >

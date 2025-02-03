@@ -106,14 +106,19 @@ const teamLeaders = [
     return (
       <div className="py-16 bg-white text-black">
         <div className="container mx-auto px-6">
-        <div className="flex flex-col items-center space-y-4 mb-16">
-        <h2 className="text-xl md:text-2xl font-semibold text-gray-700 text-center tracking-wide">
+        
+
+<h1 className="text-5xl font-bold text-center mb-6 uppercase tracking-wide text-gray-800">
+  Meet Our Team
+</h1>
+
+        <p className="italic text-sm text-gray-400 text-italics text-center tracking-wide">
   Our team has been accepted to programs and conducted research with professors at top universities
-</h2>
+</p>
 
 
 
-  <div className="flex flex-wrap justify-center gap-6 py-8">
+  <div className="flex flex-wrap justify-center gap-8 py-8">
     <img
       src="https://www.turbolearn.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstanford.57682cbd.png&w=1920&q=75"
       alt="Stanford"
@@ -140,18 +145,12 @@ const teamLeaders = [
       className="h-20"
     />
   </div>
-</div>
-
-<h1 className="text-5xl font-bold text-center mb-12 uppercase tracking-wide text-gray-800">
-  Meet Our Team
-</h1>
-
   
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
             {teamLeaders.map((leader, index) => (
               <div
                 key={index}
-                className="bg-white shadow-lg rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-105 border-2 border-transparent hover:border-blue-500 p-6 text-center"
+                className="bg-white shadow-lg rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-105 border-2 border-transparent hover:border-black p-6 text-center"
               >
                 <div className="relative flex justify-center mb-4">
                   <img

@@ -9,7 +9,6 @@ const TypingAnimation = ({ text, speed = 50, boldWords = [] }) => {
     if (animationDone) return; // Prevent re-running animation once completed
 
     let i = 0;
-    let boldIndex = 0;
     let charIndex = 0;
 
     const typeText = () => {

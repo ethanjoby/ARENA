@@ -44,7 +44,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="hero-section bg-white text-black py-12 flex flex-col items-center justify-center">
+    <section className="hero-section bg-white text-black py-24 flex flex-col items-center justify-center">
       <header className="absolute top-0 left-0 w-full p-4 flex justify-between items-center">
         <div className="logo flex items-center text-lg font-bold">
           <img src={logo} alt="Logo" className="h-8 mr-2" />
@@ -103,8 +103,8 @@ const HeroSection = () => {
         <h1 className="text-4xl md:text-6xl font-bold leading-snug">
           Your Path to College Starts Here!
         </h1>
-        <p className="text-gray-400 mt-4 max-w-2xl">
-          Get help finding and applying to internships from students who have done it.
+        <p className="text-gray-400 mt-4 max-w-2xl italic">
+          Let us help you make the best of your summer and make the best application possible!
         </p>
         <div className="relative inline-flex group mt-10">
         <div

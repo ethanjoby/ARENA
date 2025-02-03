@@ -5,11 +5,6 @@ import AdminPage from './AdminPage';
 import Essays from './Essays';
 import ThankYouPage from "./ThankYouPage";
 import ArenaSignUpForm from './ArenaSignUpForm';
-import Testimonials from './Testimonials';
-import HeroSection from './HeroSection';
-import Services from './Services';
-import Footer from './Footer';
-import FAQs from './FAQs';
 import AboutUs from './AboutUs';
 
 function App() {
