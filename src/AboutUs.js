@@ -84,15 +84,17 @@ const teamLeaders = [
   {
     name: "Advay Bajpai",
     awards: [
-      "<strong>Congressional App Challenge</strong> District Finalist"
+      "<strong>Congressional App Challenge</strong> District Finalist",
+      "USABO <strong>Honor List</strong>",
+      "USACO <strong> Gold </strong>",
     ],
     accomplishments: [
-      "Managed logistics and operations for tech-driven projects",
-      "Ensured seamless execution of multi-team collaborations",
+      "Made a crossword platform used by thousands: hit the top 10 on ProductHunt",
+      "Research Intern @ UC Davis's Mascal Lab and UC Merced's Inclusive Interaction Lab",
       "Specialized in operations for high-stakes environments",
-      "Streamlined processes for team efficiency"
+      "Manage a Pubnix server used by hundreds of concurrent users"
     ],
-    funFact: "Advay loves experimenting with productivity techniques and has meticulously tested different methods to optimize his daily workflow.",
+    funFact: "Advay loves playing the guitar in his free time. His favorite guitarists are Wes Montgomery and Charlie Christian.",
     image: advay
   }
 ];

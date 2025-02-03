@@ -80,7 +80,8 @@ const teamLeaders = [
     {
         name: "Advay Bajpai",
         awards: [
-            "Congressional App Challenge District Finalist"
+            "Congressional App Challenge District Finalist",
+            ""
         ],
         accomplishments: [
             "Managed logistics and operations for tech-driven projects",
