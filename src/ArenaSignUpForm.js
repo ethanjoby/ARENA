@@ -5,7 +5,8 @@ import emailjs from "emailjs-com";
 import { useNavigate } from "react-router-dom";
 import NAVBAR1 from "./navbar";
 import { db } from './firebase';
-import { addDoc, collection } from 'firebase/firestore'; // Import directly from firebase/firestore
+import { addDoc, collection } from 'firebase/firestore';
+import { doc, updateDoc } from "firebase/firestore"; // Import directly from firebase/firestore
 function ArenaSignUpForm() {
   const [formData, setFormData] = useState({
     name: "",
@@ -17,7 +18,21 @@ function ArenaSignUpForm() {
     satOneHourCount: 0,
     additionalInfo: ""
   });
-
+  const handleNoneForNow = async (field) => {
+    setFormData((prev) => ({ 
+      ...prev, 
+      [field]: Array.isArray(prev[field]) ? ["None"] : "None" 
+    }));
+  
+    try {
+      const userRef = doc(db, "arenaSignUps", formData.email); // Identifies the user's entry
+      await updateDoc(userRef, { [field]: Array.isArray(formData[field]) ? ["None"] : "None" }); 
+      console.log(`Updated ${field} to "None" in Firestore`);
+    } catch (error) {
+      console.error(`Error updating ${field}:`, error);
+    }
+  };
+  
   const navigate = useNavigate();
 
   const internshipOptions = [
@@ -276,54 +291,85 @@ function ArenaSignUpForm() {
             </div>
           </div>
 
-          {/* Summer Programs */}
+         {/* Summer Programs */}
 <div>
-  <label className="block text-sm font-semibold mb-2">
-    Summer Programs You're Interested In Applying To
-  </label>
+  <label className="block text-sm font-semibold mb-2">Summer Programs You're Interested In Applying To</label>
   <CreatableSelect
     isMulti
     options={summerProgramOptions}
+    value={formData.selectedPrograms.includes("None") ? [{ value: "None", label: "None" }] : formData.selectedPrograms.map(option => ({ value: option, label: option }))}
     onChange={(options) => handleMultiSelectChange("selectedPrograms", options)}
     className="w-full"
-    placeholder="Type to add your own program or select from the list"
-    formatCreateLabel={(inputValue) => `Select "${inputValue}"`}
   />
+  <button
+    type="button"
+    onClick={() => handleNoneForNow("selectedPrograms")}
+    className="mt-2 px-4 py-2 text-sm bg-white text-gray-700 rounded-full border border-gray-300 shadow-md hover:bg-gray-100 hover:scale-105 transition-all duration-300"
+  >
+    None for now
+  </button>
+</div>
+
+{/* Internship Options */}
+<div>
+  <label className="block text-sm font-semibold mb-2">Internship Services You're Interested In</label>
+  <Select
+    isMulti
+    options={internshipOptions}
+    value={formData.selectedInternshipOptions.includes("None") ? [{ value: "None", label: "None" }] : formData.selectedInternshipOptions.map(option => ({ value: option, label: option }))}
+    onChange={(options) => handleMultiSelectChange("selectedInternshipOptions", options)}
+    className="w-full"
+  />
+  <button
+    type="button"
+    onClick={() => handleNoneForNow("selectedInternshipOptions")}
+    className="mt-2 px-4 py-2 text-sm bg-white text-gray-700 rounded-full border border-gray-300 shadow-md hover:bg-gray-100 hover:scale-105 transition-all duration-300"
+  >
+    None for now
+  </button>
+</div>
+
+{/* Resume Options */}
+<div>
+  <label className="block text-sm font-semibold mb-2">Resume Services You're Interested In</label>
+  <Select
+    isMulti
+    options={resumeOptions}
+    value={formData.selectedResumeOptions.includes("None") ? [{ value: "None", label: "None" }] : formData.selectedResumeOptions.map(option => ({ value: option, label: option }))}
+    onChange={(options) => handleMultiSelectChange("selectedResumeOptions", options)}
+    className="w-full"
+  />
+  <button
+    type="button"
+    onClick={() => handleNoneForNow("selectedResumeOptions")}
+    className="mt-2 px-4 py-2 text-sm bg-white text-gray-700 rounded-full border border-gray-300 shadow-md hover:bg-gray-100 hover:scale-105 transition-all duration-300"
+  >
+    None for now
+  </button>
+</div>
+
+{/* SAT/ACT Prep */}
+<div>
+  <label className="block text-sm font-semibold mb-2">SAT/ACT Prep Options You're Interested In</label>
+  <Select
+    options={satPrepOptions}
+    value={formData.selectedSATPrep === "None" ? { value: "None", label: "None" } : satPrepOptions.find(o => o.value === formData.selectedSATPrep)}
+    onChange={(option) => setFormData({ ...formData, selectedSATPrep: option ? option.value : "" })}
+    className="w-full"
+  />
+  <button
+    type="button"
+    onClick={() => handleNoneForNow("selectedSATPrep")}
+    className="mt-2 px-4 py-2 text-sm bg-white text-gray-700 rounded-full border border-gray-300 shadow-md hover:bg-gray-100 hover:scale-105 transition-all duration-300"
+  >
+    None for now
+  </button>
 </div>
 
 
 
-          {/* Internship Options */}
-          <div>
-            <label className="block text-sm font-semibold mb-2">Internship Services You're Interested In</label>
-            <Select
-              isMulti
-              options={internshipOptions}
-              onChange={(options) => handleMultiSelectChange("selectedInternshipOptions", options)}
-              className="w-full"
-            />
-          </div>
 
-          {/* Resume Options */}
-          <div>
-            <label className="block text-sm font-semibold mb-2">Resume Services You're Interested In</label>
-            <Select
-              isMulti
-              options={resumeOptions}
-              onChange={(options) => handleMultiSelectChange("selectedResumeOptions", options)}
-              className="w-full"
-            />
-          </div>
 
-          {/* SAT/ACT Prep */}
-          <div>
-            <label className="block text-sm font-semibold mb-2">SAT/ACT Prep Options You're Interested In</label>
-            <Select
-              options={satPrepOptions}
-              onChange={(option) => setFormData({ ...formData, selectedSATPrep: option ? option.value : "" })}
-              className="w-full"
-            />
-          </div>
         {/* Additional Info Section */}
       <div style={{ marginTop: "20px", marginBottom: "20px" }}>
         <label className="block text-sm font-semibold mb-2">
