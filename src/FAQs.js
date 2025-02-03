@@ -7,7 +7,7 @@ const FAQs = () => {
     {
       question: "What is the ARENA program?",
       answer: "ARENA is a comprehensive counseling service designed to help high school students secure competitive summer programs and internships. ARENA also offers SAT/ACT test preparation.",
-      boldWords: ["counseling", "service", "maximize", "acceptance", "summer", "programs", "interships", "SAT/ACT", "test", "preparation"],
+      boldWords: ["counseling", "service", "maximize", "acceptance", "summer", "programs", "internships", "SAT/ACT", "test", "preparation"],
     },
     {
       question: "Who is eligible to join the ARENA program?",
