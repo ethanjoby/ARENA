@@ -28,3 +28,26 @@ code {
     @apply bg-gradient-to-br from-[#FFFFFF] to-[#AAAAAA] bg-clip-text p-4 font-sans text-6xl font-extrabold text-transparent;
   }
 }
+.faq-container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 2rem;
+  background-color: white;
+}
+
+.faq-question {
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.faq-question:hover {
+  color: #007bff;
+}
+
+.faq-answer {
+  font-size: 1rem;
+  color: #555;
+  padding-top: 0.5rem;
+}
