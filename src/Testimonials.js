@@ -6,46 +6,18 @@ const Testimonials = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
   return (
-    <div className="bg-white text-black py-16">
+    <div className="bg-white text-black">
       <div className="container mx-auto px-6">
-        {/* Top section with logos */}
-        <div className="flex flex-col items-center space-y-4">
-          <h2 className="text-sm uppercase text-gray-500">
-            Our team has been accepted to programs and done research with professors at top universities:
-          </h2>
-          <div className="flex flex-wrap justify-center gap-6">
-            <img
-              src="https://www.turbolearn.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstanford.57682cbd.png&w=1920&q=75"
-              alt="Stanford"
-              className="h-20"
-            />
-            <img
-              src="https://calbridge.org/wp-content/uploads/2024/05/Seal_of_the_California_Institute_of_Technology-svg.png"
-              alt="Caltech"
-              className="h-20"
-            />
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/2/25/Harvard_University_shield.png"
-              alt="Harvard"
-              className="h-20"
-            />
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/UCLA_Bruins_logo.svg/1280px-UCLA_Bruins_logo.svg.png"
-              alt="UCLA"
-              className="h-20"
-            />
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Seal_of_University_of_California%2C_Berkeley.svg/1200px-Seal_of_University_of_California%2C_Berkeley.svg.png"
-              alt="UC Berkley"
-              className="h-20"
-            />
-          </div>
-        </div>
-
         {/* Heading */}
-        <h2 className="text-3xl font-bold text-center mt-12">
-          Don't listen to us. Listen to our students.
-        </h2>
+        <h1 className="text-4xl md:text-5xl font-bold text-center mt-12 text-black leading-snug">
+  Don't listen to us.  
+  <span className="block text-3xl md:text-4xl font-semibold text-gray-600">
+    Listen to our students.
+  </span>
+</h1>
+
+
+
 
         {/* Testimonials */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">

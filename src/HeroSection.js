@@ -44,7 +44,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="hero-section bg-white text-black min-h-screen flex flex-col items-center justify-center">
+    <section className="hero-section bg-white text-black py-12 flex flex-col items-center justify-center">
       <header className="absolute top-0 left-0 w-full p-4 flex justify-between items-center">
         <div className="logo flex items-center text-lg font-bold">
           <img src={logo} alt="Logo" className="h-8 mr-2" />
@@ -96,7 +96,7 @@ const HeroSection = () => {
         </Link>
       </header>
 
-      <div className="flex flex-col items-center text-center px-4">
+      <div className="flex flex-col items-center text-center px-4 py-12">
         <div className="neon-logo">
           <img src={logo} alt="Logo" className="h-48" />
         </div>
