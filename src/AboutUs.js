@@ -1,5 +1,5 @@
 import React from "react";
-import nirav from "./assets/Nirav.jpg";
+import nirav from "./assets/NiravJaiswal.jpg";
 import aaron from "./assets/Aaron1.jpg"
 import advay from "./assets/AdvayPFP.jpg"
 import aryan from "./assets/Aryan.jpg"

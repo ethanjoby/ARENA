@@ -82,7 +82,7 @@ const Essays = () => {
         onSubmit={handleLogin}
         className="bg-white shadow-lg rounded-lg p-8 max-w-sm w-full"
       >
-        <h1 className="text-2xl font-bold mb-6 text-center">Essays Login</h1>
+        <h1 className="text-2xl font-bold mb-6 text-center">Register to ARENA for Login</h1>
         {error && <div className="text-red-500 text-center mb-4">{error}</div>}
         <div className="mb-4">
           <label className="block text-gray-700 font-semibold mb-2">
