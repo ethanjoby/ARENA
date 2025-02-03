@@ -102,7 +102,7 @@ const teamLeaders = [
 
   function AboutUs() {
     return (
-      <div className="py-16 bg-gray-50 text-black">
+      <div className="py-16 bg-white text-black">
         <div className="container mx-auto px-6">
           <h1 className="text-5xl font-bold text-center mb-12 uppercase tracking-wide text-gray-800">
             Meet Our Team

@@ -84,7 +84,7 @@ const FAQs = () => {
             </button>
             {openIndexes.includes(index) && (
               <div className="mt-3 text-gray-700 italic text-left">
-                <TypingAnimation text={faq.answer} speed={25} boldWords={faq.boldWords} />
+                <TypingAnimation text={faq.answer} speed={10} boldWords={faq.boldWords} />
               </div>
             )}
           </div>
