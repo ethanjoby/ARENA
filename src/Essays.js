@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import essaysData from "./assets/essays.json"; 
 
 const Essays = () => {
@@ -95,12 +96,23 @@ const Essays = () => {
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
-        <button
-          type="submit"
-          className="w-full py-2 bg-black text-white font-bold rounded transition duration-300"
-        >
-          Login
-        </button>
+        <div className="flex flex-col gap-4">
+  <button
+    type="submit"
+    className="w-full py-2 bg-black text-white font-bold rounded transition duration-300"
+  >
+    Login
+  </button>
+  <Link to="/sign-up">
+  <button
+    type="button"
+    className="w-full py-2 bg-gray-700 text-white font-bold rounded transition duration-300 hover:bg-gray-800"
+  >
+    Register
+  </button>
+</Link>
+</div>
+
       </form>
     </div>
   );
