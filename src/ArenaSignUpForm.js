@@ -243,6 +243,10 @@ function ArenaSignUpForm() {
       <div className="w-full   bg-white p-6 rounded-lg mb-8 ">
         
        <h1 className = "text-5xl font-bold mb-4 ">Sign-Up</h1>
+       <h2 className="text-3xl font-extrabold mb-6 tracking-wide">IMPORTANT: Please Read Description</h2>
+
+
+
     <p className="text-sm italic text-gray-700 mb-4">This form is designed to gauge your interest and help us better understand how we can support you. Through this program, we offer a variety of services tailored to meet your goals, including personalized guidance, expert consultations, hands-on resources, and collaborative opportunities to bring your vision to life. Simply select all the options that align with your interests and leave any additional information or details in the space provided below. Once we receive your response, we’ll follow up via email to schedule a <b>free consultation meeting</b> where we can dive deeper into your plans, answer your questions, and explore how our program can best assist you.
 </p>
         <form onSubmit={handleFormSubmit} className="space-y-6">
