@@ -243,7 +243,7 @@ function ArenaSignUpForm() {
       <div className="w-full   bg-white p-6 rounded-lg mb-8 ">
         
        <h1 className = "text-5xl font-bold mb-4 ">Sign-Up</h1>
-     
+       <h2 className="text-3xl font-extrabold mb-6 tracking-wide">IMPORTANT: Please Read Description</h2>
 
 
 
