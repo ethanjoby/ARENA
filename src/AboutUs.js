@@ -17,7 +17,7 @@ const teamLeaders = [
     accomplishments: [
       "Developed a modern gradebook system used by <strong> 50,000+ </strong> students",
       "Worked with <strong> UCLA </strong> Professor on a <strong>patented venture</strong>",
-      "UC Davis Research Assistant @ <strong>ECE Lab</strong>"
+      "UC Davis Research Assistant @ <strong>Jeong Lab</strong>"
     ],
     funFact: "Aryan enjoys collecting rare chess sets and has played in tournaments across different states.",
     image: aryan
