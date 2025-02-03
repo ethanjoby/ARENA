@@ -51,3 +51,18 @@ code {
   color: #555;
   padding-top: 0.5rem;
 }
+@keyframes border-spin-reverse {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+ }
+ 
+ 
+ .animate-border-spin-fast {
+  animation: border-spin-reverse 4.1s linear infinite;
+ }
+ 
+ 

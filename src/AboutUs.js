@@ -89,10 +89,10 @@ const teamLeaders = [
       "USACO <strong> Gold </strong>",
     ],
     accomplishments: [
-      "Made a crossword platform used by thousands: hit the top 10 on ProductHunt",
-      "Research Intern @ UC Davis's Mascal Lab and UC Merced's Inclusive Interaction Lab",
+      "Made a crossword platform used by thousands: hit the <strong>Top 10 on ProductHunt</strong>",
+      "Research Intern @ <strong>UC Davis's Mascal Lab</strong> and UC Merced's Inclusive Interaction Lab",
       "Specialized in operations for high-stakes environments",
-      "Manage a Pubnix server used by hundreds of concurrent users"
+      "Manage a <strong>Pubnix server</strong> used by <strong>hundreds</strong> of concurrent users"
     ],
     funFact: "Advay loves playing the guitar in his free time. His favorite guitarists are Wes Montgomery and Charlie Christian.",
     image: advay
