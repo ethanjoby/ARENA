@@ -51,9 +51,21 @@ const FAQs = () => {
     },
     {
       question: "How do I get started with ARENA?",
-      answer: "Simply fill out the interest form by clicking the Register button, and we’ll guide you through the process to get started on your path to success!",
+      answer: (
+        <>
+          Simply fill out the interest form by clicking the Register button, and we’ll guide you through the process to get started on your path to success! Or, straight away{" "}
+          <a
+            href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1dNqQ-a8w_pPG0V-0I7Goj3SsWO0qM23ORt4XRrbTf1MLcUQLL_V8vVpKJiLHwODmkN69BoZYW"
+            className="text-blue-500 underline"
+          >
+            sign up for a consultation meeting
+          </a>
+          .
+        </>
+      ),
       boldWords: ["interest", "form", "Register", "button", "guide", "goals", "success"],
     }
+    
   ];
 
   const [openIndexes, setOpenIndexes] = useState([]);
