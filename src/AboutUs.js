@@ -2,7 +2,7 @@ import React from "react";
 import nirav from "./assets/NiravJaiswal.jpg";
 import aaron from "./assets/Aaron1.jpg"
 import advay from "./assets/AdvayPFP.jpg"
-import aryan from "./assets/Aryan18.jpg"
+import aryan from "./assets/Aryan16.jpg"
 import ratul from "./assets/Ratul1.jpg"
 import ethan from "./assets/Ethan4.jpg"
 

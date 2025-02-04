@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getFirestore, collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { app } from "./firebase";
+import { Trash2 } from "lucide-react";
 
 const AdminPage = () => {
   const [questions, setQuestions] = useState([]);
@@ -48,6 +49,31 @@ const AdminPage = () => {
       setError("Invalid username or password!");
     }
   };
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this user?");
+    if (confirmDelete) {
+      try {
+        const db = getFirestore(app);
+        await deleteDoc(doc(db, "arenaSignUps", id));
+        setResponses(responses.filter((response) => response.id !== id));
+      } catch (error) {
+        console.error("Error deleting user: ", error);
+      }
+    }
+  };
+  const handleDeleteContact = async (id) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this message?");
+    if (confirmDelete) {
+      try {
+        const db = getFirestore(app);
+        await deleteDoc(doc(db, "contactus", id));
+        setQuestions(questions.filter((question) => question.id !== id));
+      } catch (error) {
+        console.error("Error deleting message: ", error);
+      }
+    }
+  };
+
 
   if (isLoggedIn) {
     return (
@@ -97,7 +123,10 @@ const AdminPage = () => {
                         <tr className="bg-gray-50 text-left">
                           <th className="py-3 px-4">Name</th>
                           <th className="py-3 px-4">Email</th>
+                          <th className="py-3 px-4">Phone</th>
+                          <th className="py-3 px-4">Grade Level</th>
                           <th className="py-3 px-4">Message</th>
+                          <th className="py-3 px-4"></th>
                         </tr>
                       </thead>
                       <tbody>
@@ -105,7 +134,14 @@ const AdminPage = () => {
                           <tr key={question.id} className={index % 2 === 0 ? "bg-gray-50" : ""}>
                             <td className="py-3 px-4">{question.name}</td>
                             <td className="py-3 px-4">{question.email}</td>
+                            <td className="py-3 px-4">{question.phone}</td>
+                            <td className="py-3 px-4">{question.grade}</td>
                             <td className="py-3 px-4">{question.info}</td>
+                            <td className="py-3 px-4">
+        <button onClick={() => handleDeleteContact(question.id)} className="text-red-500 hover:text-red-700">
+          <Trash2 size={20} />
+        </button>
+      </td>
                           </tr>
                         ))}
                       </tbody>
@@ -125,7 +161,10 @@ const AdminPage = () => {
                         <tr className="bg-gray-50 text-left">
                           <th className="py-3 px-4">Name</th>
                           <th className="py-3 px-4">Email</th>
+                          <th className="py-3 px-4">Phone</th>
+                          <th className="py-3 px-4">Grade</th>
                           <th className="py-3 px-4">Programs</th>
+                          <th className="py-3 px-4">Details</th>
                           <th className="py-3 px-4">Details</th>
                         </tr>
                       </thead>
@@ -134,6 +173,9 @@ const AdminPage = () => {
                           <tr key={response.id} className={index % 2 === 0 ? "bg-gray-50" : ""}>
                             <td className="py-3 px-4">{response.name}</td>
                             <td className="py-3 px-4">{response.email}</td>
+                            <td className="py-3 px-4">{response.phone}</td>
+                            <td className="py-3 px-4">{response.grade}</td>
+                            
                             <td className="py-3 px-4">
                               {Array.isArray(response.selectedPrograms) 
                                 ? response.selectedPrograms.join(", ") 
@@ -146,19 +188,26 @@ const AdminPage = () => {
                                   <p><strong>Internship:</strong> {Array.isArray(response.selectedInternshipOptions) 
                                     ? response.selectedInternshipOptions.join(", ") 
                                     : response.selectedInternshipOptions || "N/A"}</p>
+                                    <p><strong>Olympiads:</strong> {Array.isArray(response.selectedOlympiadOptions) 
+                                    ? response.selectedOlympiadOptions.join(", ") 
+                                    : response.selectedOlympiadOptions || "N/A"}</p>
                                   <p><strong>Resume:</strong> {Array.isArray(response.selectedResumeOptions) 
                                     ? response.selectedResumeOptions.join(", ") 
                                     : response.selectedResumeOptions || "N/A"}</p>
                                   <p><strong>SAT Prep:</strong> {Array.isArray(response.selectedSATPrep) 
                                     ? response.selectedSATPrep.join(", ") 
                                     : response.selectedSATPrep || "N/A"}</p>
-                                  <p><strong>SAT Hours:</strong> {response.satOneHourCount || "N/A"}</p>
                                   {response.additionalInfo && (
                                     <p><strong>Additional Info:</strong> {response.additionalInfo}</p>
                                   )}
                                 </div>
                               </details>
                             </td>
+                            <td className="py-3 px-4">
+                        <button onClick={() => handleDelete(response.id)} className="text-red-500 hover:text-red-700">
+                          <Trash2 size={20} />
+                        </button>
+                      </td>
                           </tr>
                         ))}
                       </tbody>

@@ -26,7 +26,10 @@ function HomePage() {
       <div id="faq">
         <FAQs />
       </div>
-      <ContactUS />
+      <div id="contact-us">
+        <ContactUS />
+      </div>
+      
       <Footer />
     </div>
   );

@@ -11,8 +11,11 @@ function ArenaSignUpForm() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
+    grade: "",
     selectedPrograms: [],
     selectedInternshipOptions: [],
+    selectedOlympiadOptions: [],
     selectedResumeOptions: [],
     selectedSATPrep: "",
     satOneHourCount: 0,
@@ -35,11 +38,27 @@ function ArenaSignUpForm() {
   
   const navigate = useNavigate();
 
+  const gradeOptions = [
+    { value: "8th", label: "8th Grade" },
+    { value: "9th", label: "9th Grade" },
+    { value: "10th", label: "10th Grade" },
+    { value: "11th", label: "11th Grade" },
+    { value: "12th", label: "12th Grade" }
+  ];
+
   const internshipOptions = [
     { value: "General Internship Help", label: "General Internship Help", price: 40 },
     { value: "Guaranteed Internship Placement", label: "Guaranteed Internship Placement", price: 150 },
     { value: "General Professor Internship Help", label: "General Professor Internship Help", price: 60 },
   ];
+
+  const olympiadOptions = [
+    { value: "AMC", label: "AMC", price: 50 },
+    { value: "USABO", label: "USABO", price: 60 },
+    { value: "USACO", label: "USACO", price: 55 },
+    { value: "USNCO", label: "USNCO", price: 65 },
+];
+
 
   const resumeOptions = [
     { value: "Resume & Cover Letter Review", label: "Resume & Cover Letter Review", price: 25 },
@@ -224,8 +243,11 @@ function ArenaSignUpForm() {
     const docRef = addDoc(collection(db, "arenaSignUps"), {
       name: formData.name,
       email: formData.email,
+      phone: formData.phone,
+      grade: formData.grade,
       selectedPrograms: formData.selectedPrograms,
       selectedInternshipOptions: formData.selectedInternshipOptions,
+      selectedOlympiadOptions: formData.selectedOlympiadOptions,
       selectedResumeOptions: formData.selectedResumeOptions,
       selectedSATPrep: formData.selectedSATPrep,
       satOneHourCount: formData.satOneHourCount,
@@ -262,8 +284,10 @@ function ArenaSignUpForm() {
 
 
 
-    <p className="text-sm italic text-gray-700 mb-4">This form is designed to gauge your interest and help us better understand how we can support you. Through this program, we offer a variety of services tailored to meet your goals, including personalized guidance, expert consultations, hands-on resources, and collaborative opportunities to bring your vision to life. Simply select all the options that align with your interests and leave any additional information or details in the space provided below. Once we receive your response, we’ll follow up via email to schedule a <b>free consultation meeting</b> where we can dive deeper into your plans, answer your questions, and explore how our program can best assist you.
+       <p className="text-sm italic text-gray-700 mb-4">
+  This form is designed to gauge your interest and help us better understand how we can support you. Through this program, we offer a variety of services tailored to meet your goals, including personalized guidance, expert consultations, hands-on resources, and collaborative opportunities to bring your vision to life. Simply select all the options that align with your interests and leave any additional information or details in the space provided below. Once we receive your response, we’ll follow up via email to schedule a <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1dNqQ-a8w_pPG0V-0I7Goj3SsWO0qM23ORt4XRrbTf1MLcUQLL_V8vVpKJiLHwODmkN69BoZYW" className="text-blue-500 underline">free consultation meeting</a> where we can dive deeper into your plans, answer your questions, and explore how our program can best assist you.
 </p>
+
         <form onSubmit={handleFormSubmit} className="space-y-6">
           {/* User Info */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -289,6 +313,28 @@ function ArenaSignUpForm() {
                 required
               />
             </div>
+            <div>
+              <label className="block text-sm font-semibold mb-2">Phone Number</label>
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 border rounded-md"
+                placeholder="e.g. (123) 456-7890"
+                required
+              />
+            </div>
+            <div>
+                <label className="block text-sm font-semibold mb-2">Grade Level</label>
+                <Select
+                  options={gradeOptions}
+                  value={gradeOptions.find(option => option.value === formData.grade)}
+                  onChange={(option) => setFormData({ ...formData, grade: option.value })}
+                  className="w-full"
+                  required
+                />
+              </div>
           </div>
 
          {/* Summer Programs */}
@@ -323,6 +369,24 @@ function ArenaSignUpForm() {
   <button
     type="button"
     onClick={() => handleNoneForNow("selectedInternshipOptions")}
+    className="mt-2 px-4 py-2 text-sm bg-white text-gray-700 rounded-full border border-gray-300 shadow-md hover:bg-gray-100 hover:scale-105 transition-all duration-300"
+  >
+    None for now
+  </button>
+</div>
+{/* Olympiad Prep Options */}
+<div>
+  <label className="block text-sm font-semibold mb-2">Olympiad Prep Services You're Interested In</label>
+  <Select
+    isMulti
+    options={olympiadOptions}
+    value={formData.selectedOlympiadOptions.includes("None") ? [{ value: "None", label: "None" }] : formData.selectedOlympiadOptions.map(option => ({ value: option, label: option }))}
+    onChange={(options) => handleMultiSelectChange("selectedOlympiadOptions", options)}
+    className="w-full"
+  />
+  <button
+    type="button"
+    onClick={() => handleNoneForNow("selectedOlympiadOptions")}
     className="mt-2 px-4 py-2 text-sm bg-white text-gray-700 rounded-full border border-gray-300 shadow-md hover:bg-gray-100 hover:scale-105 transition-all duration-300"
   >
     None for now
@@ -373,7 +437,7 @@ function ArenaSignUpForm() {
         {/* Additional Info Section */}
       <div style={{ marginTop: "20px", marginBottom: "20px" }}>
         <label className="block text-sm font-semibold mb-2">
-          Please tell us more about yourself. Ex: Grade, Career Interests, or Anything you feel is important for us to know:
+          Please tell us more about yourself. Ex: Career Interests, or Anything you feel is important for us to know:
         </label>
         <textarea
           id="additionalInfo"
