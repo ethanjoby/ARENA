@@ -2,6 +2,7 @@ import './App.css';
 import Testimonials from './Testimonials';
 import HeroSection from './HeroSection';
 import Services from './Services';
+import ContactUS from './ContactUs';
 import Footer from './Footer';
 import FAQs from './FAQs';
 import AboutUs from './AboutUs'; // Import AboutUs component
@@ -25,6 +26,7 @@ function HomePage() {
       <div id="faq">
         <FAQs />
       </div>
+      <ContactUS />
       <Footer />
     </div>
   );
