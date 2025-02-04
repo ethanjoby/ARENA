@@ -7,6 +7,27 @@ import NAVBAR1 from "./navbar";
 import { db } from './firebase';
 import { addDoc, collection } from 'firebase/firestore';
 import { doc, updateDoc } from "firebase/firestore"; // Import directly from firebase/firestore
+import axios from "axios";
+
+
+async function verifyEmail(email) {
+  const hunterapikey = "3514d3d593b868e937d5a1542c5376f05c6f49c1"; 
+  const hunterapi = `https://api.hunter.io/v2/email-verifier?email=${email}&api_key=${hunterapikey}`; 
+  try {
+    const response = await axios.get(hunterapi); 
+    console.log(response.data);
+
+    if (response.data.data.status === "accept_all") {
+      return true;  
+    }
+    return false;  
+  } catch (error) {
+    console.error("Error verifying email:", error);
+    return false;  
+  }
+}
+
+
 function ArenaSignUpForm() {
   const [formData, setFormData] = useState({
     name: "",
@@ -210,67 +231,73 @@ function ArenaSignUpForm() {
   const calculateTotalPrice = () => {
     let total = 0;
 
-    // Summer programs cost calculation
     total += formData.selectedPrograms.length > 0 ? 35 + (formData.selectedPrograms.length - 1) * 15 : 0;
 
-    // Internship options cost
     total += formData.selectedInternshipOptions.reduce((acc, option) => {
       const selected = internshipOptions.find((o) => o.value === option);
       return acc + (selected ? selected.price : 0);
     }, 0);
 
-    // Resume options cost
     total += formData.selectedResumeOptions.reduce((acc, option) => {
       const selected = resumeOptions.find((o) => o.value === option);
       return acc + (selected ? selected.price : 0);
     }, 0);
 
-    // SAT/ACT prep cost
     const selectedSATOption = satPrepOptions.find((o) => o.value === formData.selectedSATPrep);
     total += selectedSATOption ? selectedSATOption.price : 0;
-
-    // Add per-hour SAT/ACT prep cost
     total += formData.satOneHourCount * 22;
 
     return total;
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async(e) => {
     e.preventDefault();
   
     console.log(formData);
+
+    const isEmailValid = await verifyEmail(formData.email);
   
-    const docRef = addDoc(collection(db, "arenaSignUps"), {
-      name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      grade: formData.grade,
-      selectedPrograms: formData.selectedPrograms,
-      selectedInternshipOptions: formData.selectedInternshipOptions,
-      selectedOlympiadOptions: formData.selectedOlympiadOptions,
-      selectedResumeOptions: formData.selectedResumeOptions,
-      selectedSATPrep: formData.selectedSATPrep,
-      satOneHourCount: formData.satOneHourCount,
-      additionalInfo: formData.additionalInfo,
-    });
-  
-    console.log("Document written with ID: ", docRef.id);
-  
-    const emailParams = {
-      ...formData,
-      selectedPrograms: formData.selectedPrograms.join(", "),
-      speculatedPrice: calculateTotalPrice(),
-    };
-  
-    emailjs
-      .send("service_2wckxjr", "template_xugiogj", emailParams, "Q1b_pv0uG9JEXJhAl")
-      .then(
-        () => {
-          navigate("/thank-you");  // Navigate to Thank You page on successful submission
-        },
-        () => alert("Submission failed. Please try again.")
-      );
-  };
+    if (isEmailValid) {
+      try {
+        const docRef = await addDoc(collection(db, "arenaSignUps"), {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          grade: formData.grade,
+          selectedPrograms: formData.selectedPrograms,
+          selectedInternshipOptions: formData.selectedInternshipOptions,
+          selectedOlympiadOptions: formData.selectedOlympiadOptions,
+          selectedResumeOptions: formData.selectedResumeOptions,
+          selectedSATPrep: formData.selectedSATPrep,
+          satOneHourCount: formData.satOneHourCount,
+          additionalInfo: formData.additionalInfo,
+        });
+
+        console.log("Document written with ID: ", docRef.id);
+
+        const emailParams = {
+          ...formData,
+          selectedPrograms: formData.selectedPrograms.join(", "),
+          speculatedPrice: calculateTotalPrice(),
+        };
+
+        emailjs
+          .send("service_2wckxjr", "template_xugiogj", emailParams, "Q1b_pv0uG9JEXJhAl")
+          .then(
+            () => {
+              navigate("/thank-you");  
+            },
+            () => alert("Submission failed. Please try again.")
+          );
+
+      } catch (error) {
+        console.error("Error saving to Firestore:", error);
+        alert("There was an error. Please try again.");
+      }
+    } else {
+      alert("Invalid email address. Please enter a valid email.");
+    }
+};
   
 
   return (
