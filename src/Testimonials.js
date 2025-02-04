@@ -75,7 +75,7 @@ const Testimonials = () => {
               ),
             },
             {
-              name: "Daniel K.",
+              name: "Raghav K.",
               role: "Accepted into the Stanford SIMR Summer Program",
               logo: "https://identity.stanford.edu/wp-content/uploads/sites/3/2020/07/block-s-right.png",
               text: (

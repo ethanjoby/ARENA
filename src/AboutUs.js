@@ -75,7 +75,7 @@ const teamLeaders = [
     ],
     accomplishments: [
       "Interned at a company to computationally design enzymes",
-      "Research Intern @ <strong> Stanford </strong> MechE Lab working on nueral prostheses + developing a platform to personalize prosthetics",
+      "Research Intern @ <strong> Stanford </strong> MechE Lab working on neural prostheses + developing a platform to personalize prosthetics",
       "<strong> UCSD </strong> Resarch Assistant with Bioengineering Group; worked on models to optimize therapeutic binding sites and drug delivery systems"
     ],
     funFact: "Aaron accidentally joined a chess tournament thinking it was a coding competition—and still won a few rounds.",
