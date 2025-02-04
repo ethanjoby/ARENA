@@ -163,7 +163,6 @@ const AdminPage = () => {
                                   <p><strong>SAT Prep:</strong> {Array.isArray(response.selectedSATPrep) 
                                     ? response.selectedSATPrep.join(", ") 
                                     : response.selectedSATPrep || "N/A"}</p>
-                                  <p><strong>SAT Hours:</strong> {response.satOneHourCount || "N/A"}</p>
                                   {response.additionalInfo && (
                                     <p><strong>Additional Info:</strong> {response.additionalInfo}</p>
                                   )}
