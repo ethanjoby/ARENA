@@ -13,6 +13,7 @@ function ArenaSignUpForm() {
     email: "",
     selectedPrograms: [],
     selectedInternshipOptions: [],
+    selectedOlympiadOptions: [],
     selectedResumeOptions: [],
     selectedSATPrep: "",
     satOneHourCount: 0,
@@ -40,6 +41,14 @@ function ArenaSignUpForm() {
     { value: "Guaranteed Internship Placement", label: "Guaranteed Internship Placement", price: 150 },
     { value: "General Professor Internship Help", label: "General Professor Internship Help", price: 60 },
   ];
+
+  const olympiadOptions = [
+    { value: "AMC", label: "AMC", price: 50 },
+    { value: "USABO", label: "USABO", price: 60 },
+    { value: "USACO", label: "USACO", price: 55 },
+    { value: "USNCO", label: "USNCO", price: 65 },
+];
+
 
   const resumeOptions = [
     { value: "Resume & Cover Letter Review", label: "Resume & Cover Letter Review", price: 25 },
@@ -226,6 +235,7 @@ function ArenaSignUpForm() {
       email: formData.email,
       selectedPrograms: formData.selectedPrograms,
       selectedInternshipOptions: formData.selectedInternshipOptions,
+      selectedOlympiadOptions: formData.selectedOlympiadOptions,
       selectedResumeOptions: formData.selectedResumeOptions,
       selectedSATPrep: formData.selectedSATPrep,
       satOneHourCount: formData.satOneHourCount,
@@ -323,6 +333,24 @@ function ArenaSignUpForm() {
   <button
     type="button"
     onClick={() => handleNoneForNow("selectedInternshipOptions")}
+    className="mt-2 px-4 py-2 text-sm bg-white text-gray-700 rounded-full border border-gray-300 shadow-md hover:bg-gray-100 hover:scale-105 transition-all duration-300"
+  >
+    None for now
+  </button>
+</div>
+{/* Olympiad Prep Options */}
+<div>
+  <label className="block text-sm font-semibold mb-2">Olympiad Prep Services You're Interested In</label>
+  <Select
+    isMulti
+    options={olympiadOptions}
+    value={formData.selectedOlympiadOptions.includes("None") ? [{ value: "None", label: "None" }] : formData.selectedOlympiadOptions.map(option => ({ value: option, label: option }))}
+    onChange={(options) => handleMultiSelectChange("selectedOlympiadOptions", options)}
+    className="w-full"
+  />
+  <button
+    type="button"
+    onClick={() => handleNoneForNow("selectedOlympiadOptions")}
     className="mt-2 px-4 py-2 text-sm bg-white text-gray-700 rounded-full border border-gray-300 shadow-md hover:bg-gray-100 hover:scale-105 transition-all duration-300"
   >
     None for now

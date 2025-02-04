@@ -146,6 +146,9 @@ const AdminPage = () => {
                                   <p><strong>Internship:</strong> {Array.isArray(response.selectedInternshipOptions) 
                                     ? response.selectedInternshipOptions.join(", ") 
                                     : response.selectedInternshipOptions || "N/A"}</p>
+                                    <p><strong>Olympiads:</strong> {Array.isArray(response.selectedOlympiadOptions) 
+                                    ? response.selectedOlympiadOptions.join(", ") 
+                                    : response.selectedOlympiadOptions || "N/A"}</p>
                                   <p><strong>Resume:</strong> {Array.isArray(response.selectedResumeOptions) 
                                     ? response.selectedResumeOptions.join(", ") 
                                     : response.selectedResumeOptions || "N/A"}</p>
