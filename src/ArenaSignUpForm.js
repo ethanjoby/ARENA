@@ -11,6 +11,8 @@ function ArenaSignUpForm() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
+    grade: "",
     selectedPrograms: [],
     selectedInternshipOptions: [],
     selectedOlympiadOptions: [],
@@ -35,6 +37,14 @@ function ArenaSignUpForm() {
   };
   
   const navigate = useNavigate();
+
+  const gradeOptions = [
+    { value: "8th", label: "8th Grade" },
+    { value: "9th", label: "9th Grade" },
+    { value: "10th", label: "10th Grade" },
+    { value: "11th", label: "11th Grade" },
+    { value: "12th", label: "12th Grade" }
+  ];
 
   const internshipOptions = [
     { value: "General Internship Help", label: "General Internship Help", price: 40 },
@@ -233,6 +243,8 @@ function ArenaSignUpForm() {
     const docRef = addDoc(collection(db, "arenaSignUps"), {
       name: formData.name,
       email: formData.email,
+      phone: formData.phone,
+      grade: formData.grade,
       selectedPrograms: formData.selectedPrograms,
       selectedInternshipOptions: formData.selectedInternshipOptions,
       selectedOlympiadOptions: formData.selectedOlympiadOptions,
@@ -301,6 +313,28 @@ function ArenaSignUpForm() {
                 required
               />
             </div>
+            <div>
+              <label className="block text-sm font-semibold mb-2">Phone Number</label>
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 border rounded-md"
+                placeholder="e.g. (123) 456-7890"
+                required
+              />
+            </div>
+            <div>
+                <label className="block text-sm font-semibold mb-2">Grade Level</label>
+                <Select
+                  options={gradeOptions}
+                  value={gradeOptions.find(option => option.value === formData.grade)}
+                  onChange={(option) => setFormData({ ...formData, grade: option.value })}
+                  className="w-full"
+                  required
+                />
+              </div>
           </div>
 
          {/* Summer Programs */}
@@ -403,7 +437,7 @@ function ArenaSignUpForm() {
         {/* Additional Info Section */}
       <div style={{ marginTop: "20px", marginBottom: "20px" }}>
         <label className="block text-sm font-semibold mb-2">
-          Please tell us more about yourself. Ex: Grade, Career Interests, or Anything you feel is important for us to know:
+          Please tell us more about yourself. Ex: Career Interests, or Anything you feel is important for us to know:
         </label>
         <textarea
           id="additionalInfo"
