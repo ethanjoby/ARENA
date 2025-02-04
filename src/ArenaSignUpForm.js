@@ -272,8 +272,10 @@ function ArenaSignUpForm() {
 
 
 
-    <p className="text-sm italic text-gray-700 mb-4">This form is designed to gauge your interest and help us better understand how we can support you. Through this program, we offer a variety of services tailored to meet your goals, including personalized guidance, expert consultations, hands-on resources, and collaborative opportunities to bring your vision to life. Simply select all the options that align with your interests and leave any additional information or details in the space provided below. Once we receive your response, we’ll follow up via email to schedule a <b>free consultation meeting</b> where we can dive deeper into your plans, answer your questions, and explore how our program can best assist you.
+       <p className="text-sm italic text-gray-700 mb-4">
+  This form is designed to gauge your interest and help us better understand how we can support you. Through this program, we offer a variety of services tailored to meet your goals, including personalized guidance, expert consultations, hands-on resources, and collaborative opportunities to bring your vision to life. Simply select all the options that align with your interests and leave any additional information or details in the space provided below. Once we receive your response, we’ll follow up via email to schedule a <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1dNqQ-a8w_pPG0V-0I7Goj3SsWO0qM23ORt4XRrbTf1MLcUQLL_V8vVpKJiLHwODmkN69BoZYW" className="text-blue-500 underline">free consultation meeting</a> where we can dive deeper into your plans, answer your questions, and explore how our program can best assist you.
 </p>
+
         <form onSubmit={handleFormSubmit} className="space-y-6">
           {/* User Info */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">

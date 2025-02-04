@@ -61,8 +61,9 @@ const ContactUs = () => {
             <div className="mb-8">
               <h2 className="text-2xl font-semibold text-center">We'd Love to Hear From You</h2>
               <p className="text-center text-gray-500 mt-2">
-                 If you <b>ONLY</b> have questions, please fill out the form below. Otherwise, click <b>Register</b> to sign up.
-              </p>
+  If you <b>ONLY</b> have questions, please fill out the form below. Otherwise, click <b>Register</b> to sign up. <b>Or</b>, straight away <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1dNqQ-a8w_pPG0V-0I7Goj3SsWO0qM23ORt4XRrbTf1MLcUQLL_V8vVpKJiLHwODmkN69BoZYW" className="text-blue-500 underline">sign up for a consultation meeting</a>.
+</p>
+
             </div>
             <form onSubmit={onSubmit} className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
