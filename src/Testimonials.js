@@ -85,7 +85,7 @@ const Testimonials = () => {
               ),
             },
             {
-              name: "Maya V.",
+              name: "Wei Y.",
               role: "Landed a Research Internship at Harvard",
               logo: "https://upload.wikimedia.org/wikipedia/commons/2/25/Harvard_University_shield.png",
               text: (
