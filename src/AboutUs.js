@@ -109,7 +109,7 @@ const teamLeaders = [
         
 
 <h1 className="text-5xl font-bold text-center mb-6 uppercase tracking-wide text-gray-800">
-  Meet Our Team
+  Meet Our Head Team
 </h1>
 
         <p className="italic text-sm text-gray-400 text-italics text-center tracking-wide">
