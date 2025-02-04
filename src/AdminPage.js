@@ -1,27 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
-import { app} from "./firebase"; // Make sure you have the correct path for your firebaseConfig file
+import { app } from "./firebase";
 
 const AdminPage = () => {
+  const [questions, setQuestions] = useState([]);
   const [responses, setResponses] = useState([]);
+  const [activeView, setActiveView] = useState('contact'); 
   const presetUsername = "admin";
   const presetPassword = "password123";
 
-  // State for login form
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [error, setError] = useState("");
 
-  // Fetch responses from Firebase when logged in
   useEffect(() => {
     if (isLoggedIn) {
       const fetchData = async () => {
         try {
           const db = getFirestore(app);
+          const questionCollection = collection(db, "contactus");
           const responsesCollection = collection(db, "arenaSignUps");
-          const querySnapshot = await getDocs(responsesCollection);
-          const responsesList = querySnapshot.docs.map((doc) => doc.data());
+          
+          const contactQuestions = await getDocs(questionCollection);
+          const signupResponses = await getDocs(responsesCollection);
+          
+          const questionList = contactQuestions.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+          const responsesList = signupResponses.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+          
+          setQuestions(questionList);
           setResponses(responsesList);
         } catch (error) {
           console.error("Error fetching data: ", error);
@@ -32,7 +39,6 @@ const AdminPage = () => {
     }
   }, [isLoggedIn]);
 
-  // Handle login submission
   const handleLogin = (e) => {
     e.preventDefault();
     if (username === presetUsername && password === presetPassword) {
@@ -43,79 +49,132 @@ const AdminPage = () => {
     }
   };
 
-  // Admin dashboard
   if (isLoggedIn) {
     return (
-      <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6">
-        <h1 className="text-4xl font-bold mb-4">Admin Dashboard</h1>
-        <button
-          onClick={() => setIsLoggedIn(false)}
-          className="mb-6 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-        >
-          Logout
-        </button>
+      <div className="min-h-screen bg-gray-100 p-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex justify-between items-center mb-8">
+            <h1 className="text-4xl font-bold">Admin Dashboard</h1>
+            <button
+              onClick={() => setIsLoggedIn(false)}
+              className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+            >
+              Logout
+            </button>
+          </div>
 
-        {responses.length > 0 ? (
-          <table className="w-full max-w-4xl bg-white rounded-lg shadow-lg overflow-hidden">
-            <thead>
-              <tr className="bg-gray-200 text-gray-700 text-left">
-                <th className="py-3 px-4">Name</th>
-                <th className="py-3 px-4">Email</th>
-                <th className="py-3 px-4">Selected Programs</th>
-                <th className="py-3 px-4">Selected Internship Options</th>
-                <th className="py-3 px-4">Selected Resume Options</th>
-                <th className="py-3 px-4">Selected SAT Prep</th>
-                <th className="py-3 px-4">SAT One Hour Count</th>
-                <th className="py-3 px-4">Additional Info</th>
-              </tr>
-            </thead>
-            <tbody>
-              {responses.map((response, index) => (
-                <tr
-                  key={index}
-                  className={`${
-                    index % 2 === 0 ? "bg-gray-50" : "bg-white"
-                  } text-gray-700`}
-                >
-                  <td className="py-3 px-4">{response.name}</td>
-                  <td className="py-3 px-4">{response.email}</td>
-                  <td className="py-3 px-4">
-                    {Array.isArray(response.selectedSATPrep)
-    ? responses.selectedPrograms.join(", ")
-    : response.selectedPrograms || "N/A"}
-                    
-                  </td>
-                  <td className="py-3 px-4">
-                    
-                    {Array.isArray(response.selectedSATPrep)
-    ? responses.selectedInternshipOptions.join(", ")
-    : response.selectedInternshipOptions || "N/A"}
-                  </td>
-                  
-                  <td className="py-3 px-4">
-  {Array.isArray(response.selectedSATPrep)
-    ? responses.selectedResumeOptions.join(", ")
-    : response.selectedResumeOptions || "N/A"}
-</td>
-                  <td className="py-3 px-4">
-  {Array.isArray(response.selectedSATPrep)
-    ? response.selectedSATPrep.join(", ")
-    : response.selectedSATPrep || "N/A"}
-</td>
-                  <td className="py-3 px-4">{response.satOneHourCount}</td>
-                  <td className="py-3 px-4">{response.additionalInfo}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <p className="text-gray-700">No responses available.</p>
-        )}
+          <div className="flex justify-center mb-6 space-x-4">
+            <button
+              onClick={() => setActiveView('contact')}
+              className={`px-6 py-3 rounded-lg font-semibold transition-colors ${
+                activeView === 'contact'
+                  ? 'bg-black text-white'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+              }`}
+            >
+              Contact Messages
+            </button>
+            <button
+              onClick={() => setActiveView('signup')}
+              className={`px-6 py-3 rounded-lg font-semibold transition-colors ${
+                activeView === 'signup'
+                  ? 'bg-black text-white'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+              }`}
+            >
+              Program Sign-ups
+            </button>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            {activeView === 'contact' ? (
+              <>
+                <h2 className="text-2xl font-bold mb-4">Contact Form Messages</h2>
+                {questions.length > 0 ? (
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="bg-gray-50 text-left">
+                          <th className="py-3 px-4">Name</th>
+                          <th className="py-3 px-4">Email</th>
+                          <th className="py-3 px-4">Message</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {questions.map((question, index) => (
+                          <tr key={question.id} className={index % 2 === 0 ? "bg-gray-50" : ""}>
+                            <td className="py-3 px-4">{question.name}</td>
+                            <td className="py-3 px-4">{question.email}</td>
+                            <td className="py-3 px-4">{question.info}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <p className="text-gray-600">No contact form messages available.</p>
+                )}
+              </>
+            ) : (
+              <>
+                <h2 className="text-2xl font-bold mb-4">Program Sign-ups</h2>
+                {responses.length > 0 ? (
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="bg-gray-50 text-left">
+                          <th className="py-3 px-4">Name</th>
+                          <th className="py-3 px-4">Email</th>
+                          <th className="py-3 px-4">Programs</th>
+                          <th className="py-3 px-4">Details</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {responses.map((response, index) => (
+                          <tr key={response.id} className={index % 2 === 0 ? "bg-gray-50" : ""}>
+                            <td className="py-3 px-4">{response.name}</td>
+                            <td className="py-3 px-4">{response.email}</td>
+                            <td className="py-3 px-4">
+                              {Array.isArray(response.selectedPrograms) 
+                                ? response.selectedPrograms.join(", ") 
+                                : response.selectedPrograms || "N/A"}
+                            </td>
+                            <td className="py-3 px-4">
+                              <details className="cursor-pointer">
+                                <summary className="text-blue-600 hover:text-blue-800">View Details</summary>
+                                <div className="mt-2 text-sm">
+                                  <p><strong>Internship:</strong> {Array.isArray(response.selectedInternshipOptions) 
+                                    ? response.selectedInternshipOptions.join(", ") 
+                                    : response.selectedInternshipOptions || "N/A"}</p>
+                                  <p><strong>Resume:</strong> {Array.isArray(response.selectedResumeOptions) 
+                                    ? response.selectedResumeOptions.join(", ") 
+                                    : response.selectedResumeOptions || "N/A"}</p>
+                                  <p><strong>SAT Prep:</strong> {Array.isArray(response.selectedSATPrep) 
+                                    ? response.selectedSATPrep.join(", ") 
+                                    : response.selectedSATPrep || "N/A"}</p>
+                                  <p><strong>SAT Hours:</strong> {response.satOneHourCount || "N/A"}</p>
+                                  {response.additionalInfo && (
+                                    <p><strong>Additional Info:</strong> {response.additionalInfo}</p>
+                                  )}
+                                </div>
+                              </details>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <p className="text-gray-600">No sign-up responses available.</p>
+                )}
+              </>
+            )}
+          </div>
+        </div>
       </div>
     );
   }
 
-  // Login form
   return (
     <div className="min-h-screen bg-black flex items-center justify-center">
       <form
@@ -148,7 +207,7 @@ const AdminPage = () => {
         </div>
         <button
           type="submit"
-          className="w-full py-2 bg-black text-white font-bold rounded  transition duration-300"
+          className="w-full py-2 bg-black text-white font-bold rounded transition duration-300"
         >
           Login
         </button>
