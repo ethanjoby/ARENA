@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getFirestore, collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { app } from "./firebase";
+import { Trash2 } from "lucide-react";
 
 const AdminPage = () => {
   const [questions, setQuestions] = useState([]);
@@ -48,6 +49,19 @@ const AdminPage = () => {
       setError("Invalid username or password!");
     }
   };
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this user?");
+    if (confirmDelete) {
+      try {
+        const db = getFirestore(app);
+        await deleteDoc(doc(db, "arenaSignUps", id));
+        setResponses(responses.filter((response) => response.id !== id));
+      } catch (error) {
+        console.error("Error deleting user: ", error);
+      }
+    }
+  };
+
 
   if (isLoggedIn) {
     return (
@@ -133,6 +147,7 @@ const AdminPage = () => {
                           <th className="py-3 px-4">Grade</th>
                           <th className="py-3 px-4">Programs</th>
                           <th className="py-3 px-4">Details</th>
+                          <th className="py-3 px-4"></th>
                         </tr>
                       </thead>
                       <tbody>
@@ -142,6 +157,7 @@ const AdminPage = () => {
                             <td className="py-3 px-4">{response.email}</td>
                             <td className="py-3 px-4">{response.phone}</td>
                             <td className="py-3 px-4">{response.grade}</td>
+                            
                             <td className="py-3 px-4">
                               {Array.isArray(response.selectedPrograms) 
                                 ? response.selectedPrograms.join(", ") 
@@ -169,6 +185,11 @@ const AdminPage = () => {
                                 </div>
                               </details>
                             </td>
+                            <td className="py-3 px-4">
+                        <button onClick={() => handleDelete(response.id)} className="text-red-500 hover:text-red-700">
+                          <Trash2 size={20} />
+                        </button>
+                      </td>
                           </tr>
                         ))}
                       </tbody>
