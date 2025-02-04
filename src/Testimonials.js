@@ -35,7 +35,7 @@ const Testimonials = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
           {[
             {
-              name: "Aditi R.",
+              name: "Aditi S.",
               role: "Research Intern at UCLA",
               logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/UCLA_Bruins_logo.svg/1280px-UCLA_Bruins_logo.svg.png",
               text: (
@@ -75,7 +75,7 @@ const Testimonials = () => {
               ),
             },
             {
-              name: "Raghav K.",
+              name: "Joseph C.",
               role: "Accepted into the Stanford SIMR Summer Program",
               logo: "https://identity.stanford.edu/wp-content/uploads/sites/3/2020/07/block-s-right.png",
               text: (
@@ -85,7 +85,7 @@ const Testimonials = () => {
               ),
             },
             {
-              name: "Maya S.",
+              name: "Maya V.",
               role: "Landed a Research Internship at Harvard",
               logo: "https://upload.wikimedia.org/wikipedia/commons/2/25/Harvard_University_shield.png",
               text: (
