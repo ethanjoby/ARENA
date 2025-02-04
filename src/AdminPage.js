@@ -73,7 +73,37 @@ const AdminPage = () => {
       }
     }
   };
+  const handleResponseChange = (id) => {
+    setQuestions(questions.map((question) =>
+      question.id === id ? { ...question, responded: !question.responded } : question
+    ));
+  };
+  
+  
+  const [customTables, setCustomTables] = useState([
+    {
+      name: "Custom Table 1",
+      columns: ["Name", "Email", "Interests", "Signed up for Consultation Meeting?", "Meet when?"],
+      rows: [["", "", "", "", ""]],
+    },
+  ]);
+  
 
+  
+
+  const handleAddRow = (index) => {
+    setCustomTables(customTables.map((table, i) => 
+      i === index ? { ...table, rows: [...table.rows, ["", "", "", "", ""]] } : table
+    ));
+  };
+  const handleDeleteRow = (rowIndex) => {
+    setCustomTables(customTables.map((table, i) =>
+      i === 0
+        ? { ...table, rows: table.rows.filter((_, ri) => ri !== rowIndex) }
+        : table
+    ));
+  };
+  
 
   if (isLoggedIn) {
     return (
@@ -110,6 +140,27 @@ const AdminPage = () => {
             >
               Program Sign-ups
             </button>
+            <button
+              onClick={() => setActiveView('meetings')}
+              className={`px-6 py-3 rounded-lg font-semibold transition-colors ${
+                activeView === 'meetings'
+                  ? 'bg-black text-white'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+              }`}
+            >
+              Meetings
+            </button>
+            <button
+              onClick={() => setActiveView('customers')}
+              className={`px-6 py-3 rounded-lg font-semibold transition-colors ${
+                activeView === 'customers'
+                  ? 'bg-black text-white'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+              }`}
+            >
+              Customers To Get
+            </button>
+
           </div>
 
           <div className="bg-white rounded-lg shadow-lg p-6">
@@ -127,6 +178,7 @@ const AdminPage = () => {
                           <th className="py-3 px-4">Grade Level</th>
                           <th className="py-3 px-4">Message</th>
                           <th className="py-3 px-4"></th>
+                          <th className="py-3 px-4">Check if responded</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -142,6 +194,13 @@ const AdminPage = () => {
           <Trash2 size={20} />
         </button>
       </td>
+      <td className="py-3 px-4 ">
+        <input 
+          type="checkbox" 
+          checked={question.responded || false} 
+          onChange={() => handleResponseChange(question.id)} 
+        />
+      </td>
                           </tr>
                         ))}
                       </tbody>
@@ -151,7 +210,7 @@ const AdminPage = () => {
                   <p className="text-gray-600">No contact form messages available.</p>
                 )}
               </>
-            ) : (
+            ) : activeView === 'signup' ? (
               <>
                 <h2 className="text-2xl font-bold mb-4">Program Sign-ups</h2>
                 {responses.length > 0 ? (
@@ -217,7 +276,86 @@ const AdminPage = () => {
                   <p className="text-gray-600">No sign-up responses available.</p>
                 )}
               </>
-            )}
+            ) : activeView === 'meetings' ? (
+              <>
+<h2 className="text-2xl font-bold mb-4">Meetings</h2>
+{/* Default Table */}
+<div className="mt-4">
+  <h3 className="text-xl font-bold mb-4">Meeting Information</h3>
+  <div className="overflow-x-auto">
+    <table className="w-full">
+      <thead>
+        <tr className="bg-gray-50 text-left">
+          <th className="py-3 px-4">Name</th>
+          <th className="py-3 px-4">Email</th>
+          <th className="py-3 px-4">Interests</th>
+          <th className="py-3 px-4">Signed up for Consultation?</th>
+          <th className="py-3 px-4">Meet when?</th>
+          <th className="py-3 px-4">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {customTables.length >= 0 ? (
+          customTables[0].rows.map((row, rowIndex) => (
+            <tr key={rowIndex} className={rowIndex % 2 === 0 ? "bg-gray-50" : ""}>
+              {row.map((cell, cellIndex) => (
+                <td key={cellIndex} className="py-3 px-4">
+                  <input
+                    type="text"
+                    value={cell}
+                    onChange={(e) =>
+                      setCustomTables(
+                        customTables.map((table, i) =>
+                          i === 0
+                            ? {
+                                ...table,
+                                rows: table.rows.map((r, ri) =>
+                                  ri === rowIndex
+                                    ? r.map((c, ci) =>
+                                        ci === cellIndex ? e.target.value : c
+                                      )
+                                    : r
+                                ),
+                              }
+                            : table
+                        )
+                      )
+                    }
+                    className="w-full border border-gray-300 p-1 rounded"
+                  />
+                </td>
+              ))}
+              <td className="py-3 px-4">
+                <button
+                  onClick={() => handleDeleteRow(rowIndex)}
+                  className="text-red-500 hover:text-red-700"
+                >
+                  <Trash2 size={20} />
+                </button>
+              </td>
+            </tr>
+          ))
+        ) : (
+          <tr>
+            <td colSpan={6} className="text-center py-4">No data available</td>
+          </tr>
+        )}
+      </tbody>
+    </table>
+  </div>
+  <button
+    onClick={() => handleAddRow(0)}
+    className="bg-green-500 text-white px-4 py-2 rounded mt-2"
+  >
+    Add Row
+  </button>
+</div>
+
+</>
+            ) : activeView === 'customers' ? (
+              <h2 className="text-2xl font-bold mb-4">Customers To Get</h2>
+            ) : null
+          }
           </div>
         </div>
       </div>
