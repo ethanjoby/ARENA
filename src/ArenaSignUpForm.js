@@ -17,8 +17,10 @@ async function verifyEmail(email) {
     const response = await axios.get(hunterapi); 
     console.log(response.data);
 
-    if (response.data.data.status === "accept_all") {
+    if (response.data.data.result === "deliverable") {
       return true;  
+    } else if (response.data.data.result === "risky"){
+      return { isRisky: true }; 
     }
     return false;  
   } catch (error) {
@@ -40,7 +42,8 @@ function ArenaSignUpForm() {
     selectedResumeOptions: [],
     selectedSATPrep: "",
     satOneHourCount: 0,
-    additionalInfo: ""
+    additionalInfo: "",
+    isRisky: "", 
   });
   const handleNoneForNow = async (field) => {
     setFormData((prev) => ({ 
@@ -271,6 +274,7 @@ function ArenaSignUpForm() {
           selectedSATPrep: formData.selectedSATPrep,
           satOneHourCount: formData.satOneHourCount,
           additionalInfo: formData.additionalInfo,
+          isRisky: isEmailValid.isRisky ? "this email might not be rea" : "", 
         });
 
         console.log("Document written with ID: ", docRef.id);

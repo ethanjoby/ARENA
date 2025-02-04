@@ -200,6 +200,9 @@ const AdminPage = () => {
                                   {response.additionalInfo && (
                                     <p><strong>Additional Info:</strong> {response.additionalInfo}</p>
                                   )}
+                                  {response.isRisky && (
+                                    <p><strong className="font-black text-red-400">IsRisky??:</strong>{response.isRisky}</p>
+                                  )}
                                 </div>
                               </details>
                             </td>
