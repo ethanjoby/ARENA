@@ -61,6 +61,18 @@ const AdminPage = () => {
       }
     }
   };
+  const handleDeleteContact = async (id) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this message?");
+    if (confirmDelete) {
+      try {
+        const db = getFirestore(app);
+        await deleteDoc(doc(db, "contactus", id));
+        setQuestions(questions.filter((question) => question.id !== id));
+      } catch (error) {
+        console.error("Error deleting message: ", error);
+      }
+    }
+  };
 
 
   if (isLoggedIn) {
@@ -114,6 +126,7 @@ const AdminPage = () => {
                           <th className="py-3 px-4">Phone</th>
                           <th className="py-3 px-4">Grade Level</th>
                           <th className="py-3 px-4">Message</th>
+                          <th className="py-3 px-4"></th>
                         </tr>
                       </thead>
                       <tbody>
@@ -124,6 +137,11 @@ const AdminPage = () => {
                             <td className="py-3 px-4">{question.phone}</td>
                             <td className="py-3 px-4">{question.grade}</td>
                             <td className="py-3 px-4">{question.info}</td>
+                            <td className="py-3 px-4">
+        <button onClick={() => handleDeleteContact(question.id)} className="text-red-500 hover:text-red-700">
+          <Trash2 size={20} />
+        </button>
+      </td>
                           </tr>
                         ))}
                       </tbody>
@@ -147,7 +165,7 @@ const AdminPage = () => {
                           <th className="py-3 px-4">Grade</th>
                           <th className="py-3 px-4">Programs</th>
                           <th className="py-3 px-4">Details</th>
-                          <th className="py-3 px-4"></th>
+                          <th className="py-3 px-4">Details</th>
                         </tr>
                       </thead>
                       <tbody>
