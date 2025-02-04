@@ -6,7 +6,7 @@ import { Trash2 } from "lucide-react";
 const AdminPage = () => {
   const [questions, setQuestions] = useState([]);
   const [responses, setResponses] = useState([]);
-  const [activeView, setActiveView] = useState('contact'); 
+  const [activeView, setActiveView] = useState('contact');
   const presetUsername = "admin";
   const presetPassword = "password123";
 
@@ -16,6 +16,12 @@ const AdminPage = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    // Check if user is already logged in
+    const storedLoginState = localStorage.getItem('adminLoggedIn');
+    if (storedLoginState === 'true') {
+      setIsLoggedIn(true);
+    }
+
     if (isLoggedIn) {
       const fetchData = async () => {
         try {
@@ -44,11 +50,18 @@ const AdminPage = () => {
     e.preventDefault();
     if (username === presetUsername && password === presetPassword) {
       setIsLoggedIn(true);
+      localStorage.setItem('adminLoggedIn', 'true'); // Store the login state in localStorage
       setError("");
     } else {
       setError("Invalid username or password!");
     }
   };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    localStorage.removeItem('adminLoggedIn'); // Remove login state from localStorage
+  };
+
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this user?");
     if (confirmDelete) {
@@ -61,6 +74,7 @@ const AdminPage = () => {
       }
     }
   };
+
   const handleDeleteContact = async (id) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this message?");
     if (confirmDelete) {
@@ -73,13 +87,13 @@ const AdminPage = () => {
       }
     }
   };
+
   const handleResponseChange = (id) => {
     setQuestions(questions.map((question) =>
       question.id === id ? { ...question, responded: !question.responded } : question
     ));
   };
-  
-  
+
   const [customTables, setCustomTables] = useState([
     {
       name: "Custom Table 1",
@@ -87,15 +101,13 @@ const AdminPage = () => {
       rows: [["", "", "", "", ""]],
     },
   ]);
-  
-
-  
 
   const handleAddRow = (index) => {
     setCustomTables(customTables.map((table, i) => 
       i === index ? { ...table, rows: [...table.rows, ["", "", "", "", ""]] } : table
     ));
   };
+
   const handleDeleteRow = (rowIndex) => {
     setCustomTables(customTables.map((table, i) =>
       i === 0
@@ -103,7 +115,6 @@ const AdminPage = () => {
         : table
     ));
   };
-  
 
   if (isLoggedIn) {
     return (
@@ -112,7 +123,7 @@ const AdminPage = () => {
           <div className="flex justify-between items-center mb-8">
             <h1 className="text-4xl font-bold">Admin Dashboard</h1>
             <button
-              onClick={() => setIsLoggedIn(false)}
+              onClick={handleLogout}
               className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
             >
               Logout
@@ -160,7 +171,6 @@ const AdminPage = () => {
             >
               Customers To Get
             </button>
-
           </div>
 
           <div className="bg-white rounded-lg shadow-lg p-6">
@@ -190,17 +200,17 @@ const AdminPage = () => {
                             <td className="py-3 px-4">{question.grade}</td>
                             <td className="py-3 px-4">{question.info}</td>
                             <td className="py-3 px-4">
-        <button onClick={() => handleDeleteContact(question.id)} className="text-red-500 hover:text-red-700">
-          <Trash2 size={20} />
-        </button>
-      </td>
-      <td className="py-3 px-4 ">
-        <input 
-          type="checkbox" 
-          checked={question.responded || false} 
-          onChange={() => handleResponseChange(question.id)} 
-        />
-      </td>
+                              <button onClick={() => handleDeleteContact(question.id)} className="text-red-500 hover:text-red-700">
+                                <Trash2 size={20} />
+                              </button>
+                            </td>
+                            <td className="py-3 px-4 ">
+                              <input 
+                                type="checkbox" 
+                                checked={question.responded || false} 
+                                onChange={() => handleResponseChange(question.id)} 
+                              />
+                            </td>
                           </tr>
                         ))}
                       </tbody>
@@ -263,10 +273,10 @@ const AdminPage = () => {
                               </details>
                             </td>
                             <td className="py-3 px-4">
-                        <button onClick={() => handleDelete(response.id)} className="text-red-500 hover:text-red-700">
-                          <Trash2 size={20} />
-                        </button>
-                      </td>
+                              <button onClick={() => handleDelete(response.id)} className="text-red-500 hover:text-red-700">
+                                <Trash2 size={20} />
+                              </button>
+                            </td>
                           </tr>
                         ))}
                       </tbody>
@@ -278,129 +288,147 @@ const AdminPage = () => {
               </>
             ) : activeView === 'meetings' ? (
               <>
-<h2 className="text-2xl font-bold mb-4">Meetings</h2>
-{/* Default Table */}
-<div className="mt-4">
-  <h3 className="text-xl font-bold mb-4">Meeting Information</h3>
-  <div className="overflow-x-auto">
-    <table className="w-full">
-      <thead>
-        <tr className="bg-gray-50 text-left">
-          <th className="py-3 px-4">Name</th>
-          <th className="py-3 px-4">Email</th>
-          <th className="py-3 px-4">Interests</th>
-          <th className="py-3 px-4">Signed up for Consultation?</th>
-          <th className="py-3 px-4">Meet when?</th>
-          <th className="py-3 px-4">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {customTables.length >= 0 ? (
-          customTables[0].rows.map((row, rowIndex) => (
-            <tr key={rowIndex} className={rowIndex % 2 === 0 ? "bg-gray-50" : ""}>
-              {row.map((cell, cellIndex) => (
-                <td key={cellIndex} className="py-3 px-4">
-                  <input
-                    type="text"
-                    value={cell}
-                    onChange={(e) =>
-                      setCustomTables(
-                        customTables.map((table, i) =>
-                          i === 0
-                            ? {
-                                ...table,
-                                rows: table.rows.map((r, ri) =>
-                                  ri === rowIndex
-                                    ? r.map((c, ci) =>
-                                        ci === cellIndex ? e.target.value : c
+                <h2 className="text-2xl font-bold mb-4">Meetings</h2>
+                {/* Default Table */}
+                <div className="mt-4">
+                  <h3 className="text-xl font-bold mb-4">Meeting Information</h3>
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="bg-gray-50 text-left">
+                          <th className="py-3 px-4">Name</th>
+                          <th className="py-3 px-4">Email</th>
+                          <th className="py-3 px-4">Interests</th>
+                          <th className="py-3 px-4">Signed up for Consultation?</th>
+                          <th className="py-3 px-4">Meet when?</th>
+                          <th className="py-3 px-4">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {customTables.length >= 0 ? (
+                          customTables[0].rows.map((row, rowIndex) => (
+                            <tr key={rowIndex} className={rowIndex % 2 === 0 ? "bg-gray-50" : ""}>
+                              {row.map((cell, cellIndex) => (
+                                <td key={cellIndex} className="py-3 px-4">
+                                  <input
+                                    type="text"
+                                    value={cell}
+                                    onChange={(e) =>
+                                      setCustomTables(
+                                        customTables.map((table, i) =>
+                                          i === 0
+                                            ? {
+                                                ...table,
+                                                rows: table.rows.map((r, ri) =>
+                                                  ri === rowIndex
+                                                    ? r.map((c, ci) =>
+                                                        ci === cellIndex ? e.target.value : c
+                                                      )
+                                                    : r
+                                                ),
+                                              }
+                                            : table
+                                        )
                                       )
-                                    : r
-                                ),
-                              }
-                            : table
-                        )
-                      )
-                    }
-                    className="w-full border border-gray-300 p-1 rounded"
-                  />
-                </td>
-              ))}
-              <td className="py-3 px-4">
-                <button
-                  onClick={() => handleDeleteRow(rowIndex)}
-                  className="text-red-500 hover:text-red-700"
-                >
-                  <Trash2 size={20} />
-                </button>
-              </td>
-            </tr>
-          ))
-        ) : (
-          <tr>
-            <td colSpan={6} className="text-center py-4">No data available</td>
-          </tr>
-        )}
-      </tbody>
-    </table>
-  </div>
-  <button
-    onClick={() => handleAddRow(0)}
-    className="bg-green-500 text-white px-4 py-2 rounded mt-2"
-  >
-    Add Row
-  </button>
-</div>
-
-</>
+                                    }
+                                    className="w-full border border-gray-300 p-1 rounded"
+                                  />
+                                </td>
+                              ))}
+                              <td className="py-3 px-4">
+                                <button
+                                  onClick={() => handleDeleteRow(rowIndex)}
+                                  className="text-red-500 hover:text-red-700"
+                                >
+                                  <Trash2 size={20} />
+                                </button>
+                              </td>
+                            </tr>
+                          ))
+                        ) : (
+                          <tr>
+                            <td colSpan={6} className="text-center py-4">No data available</td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                  <button
+                    onClick={() => handleAddRow(0)}
+                    className="bg-green-500 text-white px-4 py-2 rounded mt-2"
+                  >
+                    Add Row
+                  </button>
+                </div>
+              </>
             ) : activeView === 'customers' ? (
-              <h2 className="text-2xl font-bold mb-4">Customers To Get</h2>
-            ) : null
-          }
+              <>
+                <h2 className="text-2xl font-bold mb-4">Customers to Get</h2>
+                {/* Custom Data */}
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="bg-gray-50 text-left">
+                        <th className="py-3 px-4">Name</th>
+                        <th className="py-3 px-4">Email</th>
+                        <th className="py-3 px-4">Interests</th>
+                        <th className="py-3 px-4">Sign up for Consultation?</th>
+                        <th className="py-3 px-4">Meet when?</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {customTables.length > 0 && customTables[0].rows.length > 0 ? (
+                        customTables[0].rows.map((row, index) => (
+                          <tr key={index} className={index % 2 === 0 ? "bg-gray-50" : ""}>
+                            {row.map((cell, cellIndex) => (
+                              <td key={cellIndex} className="py-3 px-4">{cell}</td>
+                            ))}
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan={5} className="text-center py-4">No data available</td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </>
+            ) : null}
           </div>
         </div>
       </div>
     );
-  }
-
-  return (
-    <div className="min-h-screen bg-black flex items-center justify-center">
-      <form
-        onSubmit={handleLogin}
-        className="bg-white shadow-lg rounded-lg p-8 max-w-sm w-full"
-      >
-        <h1 className="text-2xl font-bold mb-6 text-center">Admin Login</h1>
-        {error && <div className="text-red-500 text-center mb-4">{error}</div>}
-        <div className="mb-4">
-          <label className="block text-gray-700 font-semibold mb-2">
-            Username
-          </label>
+  } else {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-gray-100">
+        <form onSubmit={handleLogin} className="bg-white p-8 rounded-lg shadow-lg w-96">
+          <h2 className="text-2xl font-bold mb-4">Admin Login</h2>
           <input
             type="text"
+            placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-2 border border-gray-300 rounded mb-4"
           />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 font-semibold mb-2">
-            Password
-          </label>
           <input
             type="password"
+            placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-2 border border-gray-300 rounded mb-4"
           />
-        </div>
-        <button
-          type="submit"
-          className="w-full py-2 bg-black text-white font-bold rounded transition duration-300"
-        >
-          Login
-        </button>
-      </form>
-    </div>
-  );
+          {error && <p className="text-red-500 mb-4">{error}</p>}
+          <button
+            type="submit"
+            className="w-full py-2 bg-black text-white rounded hover:bg-gray-800"
+          >
+            Login
+          </button>
+        </form>
+      </div>
+    );
+  }
 };
 
 export default AdminPage;
