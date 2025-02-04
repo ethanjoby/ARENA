@@ -70,15 +70,15 @@ const teamLeaders = [
     name: "Aaron Rathore",
     awards: [
       "USABO <strong>Honor List</strong>",
-      "3rd Place <strong>Lockheed Martin</strong> CyberQuest Competition",
+      "2nd Place <strong>Lockheed Martin</strong> CyberQuest Competition",
       "International Biology Bowl <strong>Semifinalist</strong>"
     ],
     accomplishments: [
       "Interned at a company to computationally design enzymes",
-      "Research Intern @ <strong> Stanford </strong> MechE Lab",
-      "<strong> UCSD </strong> Assistant with Bioengineering Group"
+      "Research Intern @ <strong> Stanford </strong> MechE Lab working on nueral prosthes + developing a platform to personalize prosthetics",
+      "<strong> UCSD </strong> Resarch Assistant with Bioengineering Group; worked on models to optimize therapeutic binding sites and drug delivery systems"
     ],
-    funFact: "Aaron has always been fascinated by nature and has a collection of pressed flowers and plants from different places he’s visited.",
+    funFact: "Aaron accidentally joined a chess tournament thinking it was a coding competition—and still won a few rounds.",
     image: aaron
   },
   {
