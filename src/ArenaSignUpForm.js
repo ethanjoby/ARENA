@@ -373,7 +373,7 @@ function ArenaSignUpForm() {
         {/* Additional Info Section */}
       <div style={{ marginTop: "20px", marginBottom: "20px" }}>
         <label className="block text-sm font-semibold mb-2">
-          Additional Information:
+          Please tell us more about yourself. Ex: Grade, Career Interests, or Anything you feel is important for us to know:
         </label>
         <textarea
           id="additionalInfo"
