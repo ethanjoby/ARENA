@@ -7,6 +7,7 @@ import NAVBAR1 from "./navbar";
 import { db } from './firebase';
 import { addDoc, collection } from 'firebase/firestore';
 import { doc, updateDoc } from "firebase/firestore"; // Import directly from firebase/firestore
+
 function ArenaSignUpForm() {
  const [formData, setFormData] = useState({
    name: "",
