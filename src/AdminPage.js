@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { getFirestore, getDocs, deleteDoc, query, orderBy } from "firebase/firestore";
 import { doc, updateDoc } from 'firebase/firestore'; 
 import { addDoc, collection } from 'firebase/firestore';
-import { app, db } from "./firebase";
-import { CodeSquare, Trash2, Edit } from "lucide-react";
+import { app } from "./firebase";
+import {Trash2, Edit } from "lucide-react";
 
 const AdminPage = () => {
   const [meetings, setmeetings] = useState([]); 
@@ -153,7 +153,7 @@ const AdminPage = () => {
             name: meetingsdata.name,
             email: meetingsdata.email,
             interests: meetingsdata.interests,
-            consultationMeeting: meetingsdata.consultationMeeting,
+            consultationMeeting: meetingsdata.meetingType,
             date: meetingDateTime, // Store correctly formatted date
             hosts: meetingsdata.hosts,
         };
@@ -397,7 +397,7 @@ const AdminPage = () => {
               </>
             ) : activeView === 'meetings' ? (
                  <>
-      <h2 className="text-2xl font-bold mb-4">Meetings</h2>
+      <h2 className="text-2xl font-bold mb-4">Customer Next Meeting</h2>
       {meetings.length > 0 ? (
         <div className="overflow-x-auto w-full">
           <table className="w-full table-auto border-collapse">
@@ -406,7 +406,7 @@ const AdminPage = () => {
                 <th className="py-3 px-4">Name</th>
                 <th className="py-3 px-4">Email</th>
                 <th className="py-3 px-4">Interests</th>
-                <th className="py-3 px-4">Is Consultation Meeting</th>
+                <th className="py-3 px-4">Type Of Meeting</th>
                 <th className="py-3 px-4">Date & Time</th>
                 <th className="py-3 px-4">Meeting Host(s)</th>
                 <th className="py-3 px-4">Actions</th>
@@ -421,11 +421,15 @@ const AdminPage = () => {
                     <td className="py-3 px-4"><input type="email" value={editData.email} onChange={(e) => handleEditChange(e, 'email')} className="border p-2 w-full" /></td>
                     <td className="py-3 px-4"><input type="text" value={editData.interests} onChange={(e) => handleEditChange(e, 'interests')} className="border p-2 w-full" /></td>
                     <td className="py-3 px-4">
-                      <select value={editData.consultationMeeting} onChange={(e) => handleEditChange(e, 'consultationMeeting')} className="border p-2 w-full">
-                        <option value="false">No</option>
-                        <option value="true">Yes</option>
-                      </select>
-                    </td>
+  <select value={editData.meetingType} onChange={(e) => handleEditChange(e, 'meetingType')} className="border p-2 w-full">
+    <option value="consultation">Consultation</option>
+    <option value="follow-up">Follow-up</option>
+    <option value="introductory">Introductory</option>
+    <option value="technical">Technical Discussion</option>
+    <option value="strategy">Strategy Planning</option>
+  </select>
+</td>
+
                     <td className="py-3 px-4">
                       <input type="datetime-local" value={editData.date} onChange={(e) => handleEditChange(e, 'date')} className="border p-2 w-full" />
                     </td>
@@ -440,7 +444,8 @@ const AdminPage = () => {
                     <td className="py-3 px-4">{meeting.name}</td>
                     <td className="py-3 px-4">{meeting.email}</td>
                     <td className="py-3 px-4">{meeting.interests}</td>
-                    <td className="py-3 px-4">{meeting.consultationMeeting ? "Yes" : "No"}</td>
+                    <td className="py-3 px-4">{meeting.meetingType}</td>
+
                     <td className="py-3 px-4">{new Date(meeting.date).toLocaleString()}</td>
                     <td className="py-3 px-4">{meeting.hosts}</td>
                     <td className="py-3 px-4">
@@ -486,17 +491,21 @@ const AdminPage = () => {
       />
     </td>
     <td className="py-2 px-1">
-      <select
-        className="border p-2 w-full rounded-md"
-        value={meetingsdata.consultationMeeting}
-        onChange={(e) =>
-          setmeetingsdata({ ...meetingsdata, consultationMeeting: e.target.value === "true" })
-        }
-      >
-        <option value="false">No</option>
-        <option value="true">Yes</option>
-      </select>
-    </td>
+  <select
+    className="border p-2 w-full rounded-md"
+    value={meetingsdata.meetingType}
+    onChange={(e) =>
+      setmeetingsdata({ ...meetingsdata, meetingType: e.target.value })
+    }
+  >
+    <option value="consultation">Consultation</option>
+    <option value="follow-up">Follow-up</option>
+    <option value="introductory">Introductory</option>
+    <option value="technical">Technical Discussion</option>
+    <option value="strategy">Strategy Planning</option>
+  </select>
+</td>
+
     <td className="py-2 px-1">
       <div className="flex flex-col space-y-2">
         <input
@@ -513,7 +522,7 @@ const AdminPage = () => {
         />
       </div>
     </td>
-    <td className="py-2 px-1">
+    <td className="py-2 ">
       <input
         type="text"
         placeholder="Meeting Host(s)"
@@ -522,7 +531,7 @@ const AdminPage = () => {
         onChange={(e) => setmeetingsdata({ ...meetingsdata, hosts: e.target.value })}
       />
     </td>
-    <td className="py-2 px-1">
+    <td className="py-2 pl-4 ">
       <button
         onClick={addMeeting}
         className="font-bold text-white bg-green-500 px-4 py-2 rounded-md hover:bg-green-600 transition"
@@ -577,18 +586,21 @@ const AdminPage = () => {
             onChange={(e) => setmeetingsdata({ ...meetingsdata, interests: e.target.value })}
           />
         </td>
-        <td className="py-2 px-4">
-          <select
-            className="border p-2 w-full"
-            value={meetingsdata.consultationMeeting}
-            onChange={(e) =>
-              setmeetingsdata({ ...meetingsdata, consultationMeeting: e.target.value === "true" })
-            }
-          >
-            <option value="false">No</option>
-            <option value="true">Yes</option>
-          </select>
-        </td>
+        <td className="py-2 px-1">
+  <select
+    className="border p-2 w-full rounded-md"
+    value={meetingsdata.meetingType}
+    onChange={(e) =>
+      setmeetingsdata({ ...meetingsdata, meetingType: e.target.value })
+    }
+  >
+    <option value="consultation">Consultation</option>
+    <option value="follow-up">Follow-up</option>
+    <option value="introductory">Introductory</option>
+    <option value="technical">Technical Discussion</option>
+    <option value="strategy">Strategy Planning</option>
+  </select>
+</td>
         <td className="py-2 px-4 w-1/3">
   <input
     type="text"
