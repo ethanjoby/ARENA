@@ -26,11 +26,52 @@ const AdminPage = () => {
     name: "", 
     email: "", 
     interests: "", 
-    consultationMeeting: false, 
+    meetingType: "", 
     date: "",
     time: "",
     hosts: "",
   }); ;
+  const fetchData = async () => {
+    try {
+      const db = getFirestore(app);
+      const questionCollection = collection(db, "contactus");
+      const responsesCollection = collection(db, "arenaSignUps");
+      const meetingsCollection = collection(db, "meetings");
+
+      //const questionorder = query(questionCollection, orderBy("createdAt", "asc"));
+      //const responsesOrder = query(responsesCollection,orderBy("createdAt", "asc")); 
+      const meetingsOrder = query(meetingsCollection, orderBy("date", "asc")); 
+      
+      const contactQuestions = await getDocs(questionCollection);
+      const signupResponses = await getDocs(responsesCollection);
+      const meetingsBooked = await getDocs(meetingsOrder); 
+      
+      const questionList = contactQuestions.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+        createdAt: doc.data().createdAt?.toDate() || new Date() //make the thung into a javascript date to read out
+      }));
+
+      const responsesList = signupResponses.docs.map((doc) => ({ 
+        id: doc.id, 
+        ...doc.data(),
+        createdAt: doc.data().createdAt?.toDate() || new Date(), 
+      }));
+
+      const meetingsList = meetingsBooked.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+        date: doc.data().date?.toDate() || new Date(), // Ensure date is a JavaScript Date
+        hosts: doc.data().hosts || "",
+      }));
+      
+      setQuestions(questionList);
+      setResponses(responsesList);
+      setmeetings(meetingsList); 
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+  };
 
   useEffect(() => {
     const storedLoginState = localStorage.getItem('adminLoggedIn');
@@ -39,47 +80,7 @@ const AdminPage = () => {
     }
 
     if (isLoggedIn) {
-      const fetchData = async () => {
-        try {
-          const db = getFirestore(app);
-          const questionCollection = collection(db, "contactus");
-          const responsesCollection = collection(db, "arenaSignUps");
-          const meetingsCollection = collection(db, "meetings");
-
-          //const questionorder = query(questionCollection, orderBy("createdAt", "asc"));
-          //const responsesOrder = query(responsesCollection,orderBy("createdAt", "asc")); 
-          const meetingsOrder = query(meetingsCollection, orderBy("date", "asc")); 
-          
-          const contactQuestions = await getDocs(questionCollection);
-          const signupResponses = await getDocs(responsesCollection);
-          const meetingsBooked = await getDocs(meetingsOrder); 
-          
-          const questionList = contactQuestions.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-            createdAt: doc.data().createdAt?.toDate() || new Date() //make the thung into a javascript date to read out
-          }));
-
-          const responsesList = signupResponses.docs.map((doc) => ({ 
-            id: doc.id, 
-            ...doc.data(),
-            createdAt: doc.data().createdAt?.toDate() || new Date(), 
-          }));
-
-          const meetingsList = meetingsBooked.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-            date: doc.data().date?.toDate() || new Date(), // Ensure date is a JavaScript Date
-            hosts: doc.data().hosts || "",
-          }));
-          
-          setQuestions(questionList);
-          setResponses(responsesList);
-          setmeetings(meetingsList); 
-        } catch (error) {
-          console.error("Error fetching data: ", error);
-        }
-      };
+      
 
       fetchData();
     }
@@ -153,22 +154,24 @@ const AdminPage = () => {
             name: meetingsdata.name,
             email: meetingsdata.email,
             interests: meetingsdata.interests,
-            consultationMeeting: meetingsdata.meetingType,
+            meetingType: meetingsdata.meetingType,
             date: meetingDateTime, // Store correctly formatted date
             hosts: meetingsdata.hosts,
         };
 
         await addDoc(meetingsCollection, newMeeting);
+        fetchData();
         
         setmeetingsdata({
             name: "",
             email: "",
             interests: "",
-            consultationMeeting: false,
+            meetingType: "",
             date: "",
             time: "", 
             hosts: "",
         });
+        
 
     } catch (error) {
         console.error("Error adding meeting: ", error);
@@ -409,17 +412,8 @@ const AdminPage = () => {
                     <td className="py-3 px-4"><input type="text" value={editData.name} onChange={(e) => handleEditChange(e, 'name')} className="border p-2 w-full" /></td>
                     <td className="py-3 px-4"><input type="email" value={editData.email} onChange={(e) => handleEditChange(e, 'email')} className="border p-2 w-full" /></td>
                     <td className="py-3 px-4"><input type="text" value={editData.interests} onChange={(e) => handleEditChange(e, 'interests')} className="border p-2 w-full" /></td>
-                    <td className="py-3 px-4">
-  <select value={editData.meetingType} onChange={(e) => handleEditChange(e, 'meetingType')} className="border p-2 w-full">
-  <option value="None">Type Of meeting</option>
-    <option value="Consultation">Consultation</option>
-    <option value="Extracurricular">Extracurricular</option>
-    <option value="Research">Research</option>
-    <option value="School">Tutoring-School</option>
-    <option value="SAT/ACT">Tutoring-SAT/ACT</option>
-    <option value="Olympiad">Tutoring-Olympiad</option>
-  </select>
-</td>
+                    <td className="py-3 px-4"><input type="text" value={editData.meetingType} onChange={(e) => handleEditChange(e, 'meetingType')} className="border p-2 w-full" /></td>
+                    
 
                     <td className="py-3 px-4">
                       <input type="datetime-local" value={editData.date} onChange={(e) => handleEditChange(e, 'date')} className="border p-2 w-full" />
@@ -482,22 +476,15 @@ const AdminPage = () => {
       />
     </td>
     <td className="py-2 px-1">
-  <select
-    className="border p-2 w-full rounded-md"
-    value={meetingsdata.meetingType}
-    onChange={(e) =>
-      setmeetingsdata({ ...meetingsdata, meetingType: e.target.value })
-    }
-  >
-    <option value="None">Type Of meeting</option>
-    <option value="Consultation">Consultation</option>
-    <option value="Extracurricular">Extracurricular</option>
-    <option value="Research">Research</option>
-    <option value="School">Tutoring-School</option>
-    <option value="SAT/ACT">Tutoring-SAT/ACT</option>
-    <option value="Olympiad">Tutoring-Olympiad</option>
-  </select>
-</td>
+      <input
+        type="text"
+        placeholder="Meeting Type"
+        className="border p-2 w-full rounded-md"
+        value={meetingsdata.meetingType}
+        onChange={(e) => setmeetingsdata({ ...meetingsdata, meetingType: e.target.value })}
+      />
+    </td>
+    
 
     <td className="py-2 px-1">
       <div className="flex flex-col space-y-2">
@@ -579,23 +566,16 @@ const AdminPage = () => {
             onChange={(e) => setmeetingsdata({ ...meetingsdata, interests: e.target.value })}
           />
         </td>
-        <td className="py-2 px-1">
-  <select
-    className="border p-2 w-full rounded-md"
-    value={meetingsdata.meetingType}
-    onChange={(e) =>
-      setmeetingsdata({ ...meetingsdata, meetingType: e.target.value })
-    }
-  >
-    <option value="None">Type Of meeting</option>
-    <option value="Consultation">Consultation</option>
-    <option value="Extracurricular">Extracurricular</option>
-    <option value="Research">Research</option>
-    <option value="School">Tutoring-School</option>
-    <option value="SAT/ACT">Tutoring-SAT/ACT</option>
-    <option value="Olympiad">Tutoring-Olympiad</option>
-  </select>
-</td>
+        <td className="py-2 px-4">
+          <input
+            type="text"
+            placeholder="Meeting Type"
+            className="border p-2 w-full"
+            value={meetingsdata.meetingType}
+            onChange={(e) => setmeetingsdata({ ...meetingsdata, meetingType: e.target.value })}
+          />
+        </td>
+        
         <td className="py-2 px-4 w-1/3">
   <input
     type="text"
