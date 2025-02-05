@@ -422,7 +422,7 @@ const AdminPage = () => {
                     <td className="py-3 px-4"><input type="text" value={editData.interests} onChange={(e) => handleEditChange(e, 'interests')} className="border p-2 w-full" /></td>
                     <td className="py-3 px-4">
   <select value={editData.meetingType} onChange={(e) => handleEditChange(e, 'meetingType')} className="border p-2 w-full">
-    <option value="consultation">Consultation</option>
+    <option value="Consultation">Consultation</option>
     <option value="follow-up">Follow-up</option>
     <option value="introductory">Introductory</option>
     <option value="technical">Technical Discussion</option>
@@ -498,11 +498,12 @@ const AdminPage = () => {
       setmeetingsdata({ ...meetingsdata, meetingType: e.target.value })
     }
   >
-    <option value="consultation">Consultation</option>
-    <option value="follow-up">Follow-up</option>
-    <option value="introductory">Introductory</option>
-    <option value="technical">Technical Discussion</option>
-    <option value="strategy">Strategy Planning</option>
+    <option value="Consultation">Consultation</option>
+    <option value="Extracurricular">Extracurricular</option>
+    <option value="Research">Research</option>
+    <option value="School">Tutoring-School</option>
+    <option value="SAT/ACT">Tutoring-SAT/ACT</option>
+    <option value="Olympiad">Tutoring-Olympiad</option>
   </select>
 </td>
 
@@ -594,11 +595,12 @@ const AdminPage = () => {
       setmeetingsdata({ ...meetingsdata, meetingType: e.target.value })
     }
   >
-    <option value="consultation">Consultation</option>
-    <option value="follow-up">Follow-up</option>
-    <option value="introductory">Introductory</option>
-    <option value="technical">Technical Discussion</option>
-    <option value="strategy">Strategy Planning</option>
+    <option value="Consultation">Consultation</option>
+    <option value="Extracurricular">Extracurricular</option>
+    <option value="Research">Research</option>
+    <option value="School">Tutoring-School</option>
+    <option value="SAT/ACT">Tutoring-SAT/ACT</option>
+    <option value="Olympiad">Tutoring-Olympiad</option>
   </select>
 </td>
         <td className="py-2 px-4 w-1/3">
