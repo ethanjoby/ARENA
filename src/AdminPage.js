@@ -244,7 +244,8 @@ const AdminPage = () => {
                           <th className="py-3 px-4">Phone</th>
                           <th className="py-3 px-4">Grade Level</th>
                           <th className="py-3 px-4">Message</th>
-                          <th className="py-3 px-4"></th>
+                          <th className="py-3 px-4">Date</th>
+                          <th className="py-3 px-4">Delete</th>
                           <th className="py-3 px-4">Check if responded</th>
                         </tr>
                       </thead>
