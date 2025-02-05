@@ -25,11 +25,11 @@ const AdminPage = () => {
   const [meetingsdata, setmeetingsdata] = useState({
     name: "", 
     email: "", 
-    interests: "", 
     meetingType: "", 
     date: "",
     time: "",
     hosts: "",
+    link: "",
   }); ;
   const fetchData = async () => {
     try {
@@ -153,10 +153,10 @@ const AdminPage = () => {
         const newMeeting = {
             name: meetingsdata.name,
             email: meetingsdata.email,
-            interests: meetingsdata.interests,
             meetingType: meetingsdata.meetingType,
             date: meetingDateTime, // Store correctly formatted date
             hosts: meetingsdata.hosts,
+            link: meetingsdata.link,
         };
 
         await addDoc(meetingsCollection, newMeeting);
@@ -165,11 +165,11 @@ const AdminPage = () => {
         setmeetingsdata({
             name: "",
             email: "",
-            interests: "",
             meetingType: "",
             date: "",
             time: "", 
             hosts: "",
+            link: "",
         });
         
 
@@ -397,10 +397,11 @@ const AdminPage = () => {
               <tr className="bg-gray-50 text-left w-full">
                 <th className="py-3 px-4">Name</th>
                 <th className="py-3 px-4">Email</th>
-                <th className="py-3 px-4">Interests</th>
+                
                 <th className="py-3 px-4">Type Of Meeting</th>
                 <th className="py-3 px-4">Date & Time</th>
                 <th className="py-3 px-4">Meeting Host(s)</th>
+                <th className="py-3 px-4">Link</th>
                 <th className="py-3 px-4">Actions</th>
               </tr>
             </thead>
@@ -409,30 +410,41 @@ const AdminPage = () => {
               <tr key={meeting.id} className={index % 2 === 0 ? "bg-gray-50" : ""}>
                 {editingId === meeting.id ? (
                   <>
-                    <td className="py-3 px-4"><input type="text" value={editData.name} onChange={(e) => handleEditChange(e, 'name')} className="border p-2 w-full" /></td>
-                    <td className="py-3 px-4"><input type="email" value={editData.email} onChange={(e) => handleEditChange(e, 'email')} className="border p-2 w-full" /></td>
-                    <td className="py-3 px-4"><input type="text" value={editData.interests} onChange={(e) => handleEditChange(e, 'interests')} className="border p-2 w-full" /></td>
-                    <td className="py-3 px-4"><input type="text" value={editData.meetingType} onChange={(e) => handleEditChange(e, 'meetingType')} className="border p-2 w-full" /></td>
+                    <td className="py-3 px-2"><input type="text" value={editData.name} onChange={(e) => handleEditChange(e, 'name')} className="border p-2 w-full" /></td>
+                    <td className="py-3 px-2"><input type="email" value={editData.email} onChange={(e) => handleEditChange(e, 'email')} className="border p-2 w-full" /></td>
+                    
+                    <td className="py-3 px-2"><input type="text" value={editData.meetingType} onChange={(e) => handleEditChange(e, 'meetingType')} className="border p-2 w-full" /></td>
                     
 
-                    <td className="py-3 px-4">
+                    <td className="py-3 px-2">
                       <input type="datetime-local" value={editData.date} onChange={(e) => handleEditChange(e, 'date')} className="border p-2 w-full" />
                     </td>
-                    <td className="py-3 px-4"><input type="text" value={editData.hosts} onChange={(e) => handleEditChange(e, 'hosts')} className="border p-2 w-full" /></td>
-                    <td className="py-3 px-4">
+                    <td className="py-3 px-2"><input type="text" value={editData.hosts} onChange={(e) => handleEditChange(e, 'hosts')} className="border p-2 w-full" /></td>
+                    <td className="py-3 px-2"><input type="text" value={editData.link} onChange={(e) => handleEditChange(e, 'link')} className="border p-2 w-full" /></td>
+                    <td className="py-3 px-2">
                       <button onClick={saveEdit} className="text-green-500 hover:text-green-700 mr-2">Save</button>
                       <button onClick={() => setEditingId(null)} className="text-gray-500 hover:text-gray-700">Cancel</button>
                     </td>
+                    
                   </>
                 ) : (
                   <>
-                    <td className="py-3 px-4">{meeting.name}</td>
-                    <td className="py-3 px-4">{meeting.email}</td>
-                    <td className="py-3 px-4">{meeting.interests}</td>
-                    <td className="py-3 px-4">{meeting.meetingType}</td>
+                    <td className="py-3 px-2">{meeting.name}</td>
+                    <td className="py-3 px-2">{meeting.email}</td>
+                    
+                    <td className="py-3 px-2">{meeting.meetingType}</td>
 
-                    <td className="py-3 px-4">{new Date(meeting.date).toLocaleString()}</td>
-                    <td className="py-3 px-4">{meeting.hosts}</td>
+                    <td className="py-3 px-2">{new Date(meeting.date).toLocaleString()}</td>
+                    <td className="py-3 px-2">{meeting.hosts}</td>
+                    <td >
+                      <a
+      href={meeting.link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="bg-green-500 text-white px-2 py-2 rounded-xl shadow-md hover:bg-green-600 transition"
+    >
+      Join Meet
+    </a></td>
                     <td className="py-3 px-4">
                       <button onClick={() => startEditing(meeting)} className="text-blue-500 hover:text-blue-700 mr-2">
                         <Edit size={20} />
@@ -441,6 +453,7 @@ const AdminPage = () => {
                         <Trash2 size={20} />
                       </button>
                     </td>
+                    
                   </>
                 )}
               </tr>
@@ -466,15 +479,7 @@ const AdminPage = () => {
         onChange={(e) => setmeetingsdata({ ...meetingsdata, email: e.target.value })}
       />
     </td>
-    <td className="py-2 px-1">
-      <input
-        type="text"
-        placeholder="Interests"
-        className="border p-2 w-full rounded-md"
-        value={meetingsdata.interests}
-        onChange={(e) => setmeetingsdata({ ...meetingsdata, interests: e.target.value })}
-      />
-    </td>
+    
     <td className="py-2 px-1">
       <input
         type="text"
@@ -511,6 +516,15 @@ const AdminPage = () => {
         onChange={(e) => setmeetingsdata({ ...meetingsdata, hosts: e.target.value })}
       />
     </td>
+    <td className="py-2 ">
+      <input
+        type="text"
+        placeholder="Link"
+        className="border p-2 w-full rounded-md"
+        value={meetingsdata.link}
+        onChange={(e) => setmeetingsdata({ ...meetingsdata, link: e.target.value })}
+      />
+    </td>
     <td className="py-2 pl-4 ">
       <button
         onClick={addMeeting}
@@ -531,7 +545,7 @@ const AdminPage = () => {
               <tr className="bg-gray-50 text-left">
                 <th className="py-3 px-4">Name</th>
                 <th className="py-3 px-4">Email</th>
-                <th className="py-3 px-4">Interests</th>
+                
                 <th className="py-3 px-4">Is Consultation Meeting</th>
                 <th className="py-3 px-4">Date</th>
                 <th className="py-3 px-4">Actions</th>
@@ -557,15 +571,7 @@ const AdminPage = () => {
             onChange={(e) => setmeetingsdata({ ...meetingsdata, email: e.target.value })}
           />
         </td>
-        <td className="py-2 px-4">
-          <input
-            type="text"
-            placeholder="Interests"
-            className="border p-2 w-full"
-            value={meetingsdata.interests}
-            onChange={(e) => setmeetingsdata({ ...meetingsdata, interests: e.target.value })}
-          />
-        </td>
+       
         <td className="py-2 px-4">
           <input
             type="text"
@@ -583,6 +589,15 @@ const AdminPage = () => {
     className="border p-2 w-full rounded-md"
     value={meetingsdata.hosts}
     onChange={(e) => setmeetingsdata({ ...meetingsdata, hosts: e.target.value })}
+  />
+</td>
+<td className="py-2 px-4 w-1/3">
+  <input
+    type="text"
+    placeholder="Link"
+    className="border p-2 w-full rounded-md"
+    value={meetingsdata.link}
+    onChange={(e) => setmeetingsdata({ ...meetingsdata, link: e.target.value })}
   />
 </td>
 <td className="py-2 px-4 text-right">
