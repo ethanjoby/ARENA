@@ -29,6 +29,7 @@ const AdminPage = () => {
     consultationMeeting: false, 
     date: "",
     time: "",
+    hosts: "",
   }); ;
 
   useEffect(() => {
@@ -69,6 +70,7 @@ const AdminPage = () => {
             id: doc.id,
             ...doc.data(),
             date: doc.data().date?.toDate() || new Date(), // Ensure date is a JavaScript Date
+            hosts: doc.data().hosts || "",
           }));
           
           setQuestions(questionList);
@@ -153,6 +155,7 @@ const AdminPage = () => {
             interests: meetingsdata.interests,
             consultationMeeting: meetingsdata.consultationMeeting,
             date: meetingDateTime, // Store correctly formatted date
+            hosts: meetingsdata.hosts,
         };
 
         await addDoc(meetingsCollection, newMeeting);
@@ -164,6 +167,7 @@ const AdminPage = () => {
             consultationMeeting: false,
             date: "",
             time: "", 
+            hosts: "",
         });
 
     } catch (error) {
@@ -244,7 +248,7 @@ const AdminPage = () => {
               <>
                 <h2 className="text-2xl font-bold mb-4">Contact Form Messages</h2>
                 {questions.length > 0 ? (
-                  <div className="overflow-x-auto">
+                  <div className="overflow-x-auto w-full">
                     <table className="w-full">
                       <thead>
                         <tr className="bg-gray-50 text-left">
@@ -360,16 +364,17 @@ const AdminPage = () => {
                  <>
       <h2 className="text-2xl font-bold mb-4">Meetings</h2>
       {meetings.length > 0 ? (
-        <div className="overflow-x-auto">
-          <table className="w-full">
+        <div className="overflow-x-auto w-full">
+          <table className="w-full table-auto border-collapse">
             <thead>
-              <tr className="bg-gray-50 text-left">
+              <tr className="bg-gray-50 text-left w-full">
                 <th className="py-3 px-4">Name</th>
                 <th className="py-3 px-4">Email</th>
                 <th className="py-3 px-4">Interests</th>
                 <th className="py-3 px-4">Is Consultation Meeting</th>
                 <th className="py-3 px-4">Date</th>
                 <th className="py-3 px-4">Time</th>
+                <th className="py-3 px-4">Meeting Host(s)</th>
                 <th className="py-3 px-4">Actions</th>
               </tr>
             </thead>
@@ -382,6 +387,7 @@ const AdminPage = () => {
                   <td className="py-3 px-4">{meeting.consultationMeeting ? "Yes" : "No"}</td>
                   <td>{new Date(meeting.date).toLocaleDateString()}</td>
         <td>{new Date(meeting.date).toLocaleTimeString()}</td>
+        <td className="py-3 px-4">{meeting.hosts}</td>
                   <td className="py-3 px-4">
                     <button onClick={() => handleMeetingDelete(meeting.id)} className="text-red-500 hover:text-red-700">
                       <Trash2 size={20} />
@@ -392,64 +398,78 @@ const AdminPage = () => {
             </tbody>
             <tfoot>
               <tr className="bg-gray-50">
-                <td className="py-2 px-4">
-                  <input
-                    type="text"
-                    placeholder="Name"
-                    className="border p-2 w-full"
-                    value={meetingsdata.name}
-                    onChange={(e) => setmeetingsdata({ ...meetingsdata, name: e.target.value })}
-                  />
-                </td>
-                <td className="py-2 px-4">
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    className="border p-2 w-full"
-                    value={meetingsdata.email}
-                    onChange={(e) => setmeetingsdata({ ...meetingsdata, email: e.target.value })}
-                  />
-                </td>
-                <td className="py-2 px-4">
-                  <input
-                    type="text"
-                    placeholder="Interests"
-                    className="border p-2 w-full"
-                    value={meetingsdata.interests}
-                    onChange={(e) => setmeetingsdata({ ...meetingsdata, interests: e.target.value })}
-                  />
-                </td>
-                <td className="py-2 px-4">
-                  <select
-                    className="border p-2 w-full"
-                    value={meetingsdata.consultationMeeting}
-                    onChange={(e) =>
-                      setmeetingsdata({ ...meetingsdata, consultationMeeting: e.target.value === "true" })
-                    }
-                  >
-                    <option value="false">No</option>
-                    <option value="true">Yes</option>
-                  </select>
-                </td>
-                <td className="py-2 px-4">
-                  <input
-                    type="date"
-                    className="border p-2 w-full"
-                    value={meetingsdata.date}
-                    onChange={(e) => setmeetingsdata({ ...meetingsdata, date: e.target.value})}
-                  />
-                  <input 
-    type="time" 
-    value={meetingsdata.time} 
-    onChange={(e) => setmeetingsdata({ ...meetingsdata, time: e.target.value })} 
-    required 
-  />
-                </td>
-                <td className="py-2 px-4">
-                  <button onClick={addMeeting} className="font-bold text-white bg-green-500 px-4 py-2 rounded-md">
-                    Add Meeting
-                  </button>
-                </td>
+              <td className="py-2 px-4">
+      <input
+        type="text"
+        placeholder="Name"
+        className="border p-2 w-full rounded-md"
+        value={meetingsdata.name}
+        onChange={(e) => setmeetingsdata({ ...meetingsdata, name: e.target.value })}
+      />
+    </td>
+    <td className="py-2 px-4">
+      <input
+        type="email"
+        placeholder="Email"
+        className="border p-2 w-full rounded-md"
+        value={meetingsdata.email}
+        onChange={(e) => setmeetingsdata({ ...meetingsdata, email: e.target.value })}
+      />
+    </td>
+    <td className="py-2 px-4">
+      <input
+        type="text"
+        placeholder="Interests"
+        className="border p-2 w-full rounded-md"
+        value={meetingsdata.interests}
+        onChange={(e) => setmeetingsdata({ ...meetingsdata, interests: e.target.value })}
+      />
+    </td>
+    <td className="py-2 px-4">
+      <select
+        className="border p-2 w-full rounded-md"
+        value={meetingsdata.consultationMeeting}
+        onChange={(e) =>
+          setmeetingsdata({ ...meetingsdata, consultationMeeting: e.target.value === "true" })
+        }
+      >
+        <option value="false">No</option>
+        <option value="true">Yes</option>
+      </select>
+    </td>
+    <td className="py-2 px-4">
+      <div className="flex flex-col space-y-2">
+        <input
+          type="date"
+          className="border p-2 rounded-md"
+          value={meetingsdata.date}
+          onChange={(e) => setmeetingsdata({ ...meetingsdata, date: e.target.value })}
+        />
+        <input
+          type="time"
+          className="border p-2 rounded-md"
+          value={meetingsdata.time}
+          onChange={(e) => setmeetingsdata({ ...meetingsdata, time: e.target.value })}
+        />
+      </div>
+    </td>
+    <td className="py-2 px-4">
+      <input
+        type="text"
+        placeholder="Meeting Host(s)"
+        className="border p-2 w-full rounded-md"
+        value={meetingsdata.hosts}
+        onChange={(e) => setmeetingsdata({ ...meetingsdata, hosts: e.target.value })}
+      />
+    </td>
+    <td className="py-2 px-4 text-center">
+      <button
+        onClick={addMeeting}
+        className="font-bold text-white bg-green-500 px-4 py-2 rounded-md hover:bg-green-600 transition"
+      >
+        Add Meeting
+      </button>
+    </td>
               </tr>
             </tfoot>
           </table>
@@ -468,7 +488,7 @@ const AdminPage = () => {
                 <th className="py-3 px-4">Actions</th>
               </tr>
             </thead>
-    <tfoot>
+    <tfoot className="w-full">
       <tr className="bg-gray-50">
         <td className="py-2 px-4">
           <input
@@ -509,19 +529,28 @@ const AdminPage = () => {
             <option value="true">Yes</option>
           </select>
         </td>
-        <td className="py-2 px-4">
-          <input
-            type="date"
-            className="border p-2 w-full"
-            value={meetingsdata.date}
-            onChange={(e) => setmeetingsdata({ ...meetingsdata, date: e.target.value })}
-          />
-        </td>
-        <td className="py-2 px-4">
-          <button onClick={addMeeting} className="font-bold text-white bg-green-500 px-4 py-2 rounded-md">
-            Add Meeting
-          </button>
-        </td>
+        <td className="py-2 px-4 w-1/3">
+  <input
+    type="text"
+    placeholder="Edit Hosts"
+    className="border p-2 w-full rounded-md"
+    value={meetingsdata.hosts}
+    onChange={(e) => setmeetingsdata({ ...meetingsdata, hosts: e.target.value })}
+  />
+</td>
+<td className="py-2 px-4 text-right">
+<div className="flex justify-end mt-4">
+  <button
+    onClick={addMeeting}
+    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+  >
+    Add Meeting
+  </button>
+</div>
+
+</td>
+
+
       </tr>
     </tfoot>
   </table>
