@@ -27,7 +27,8 @@ const AdminPage = () => {
     email: "", 
     interests: "", 
     consultationMeeting: false, 
-    date: "", 
+    date: "",
+    time: "",
   }); ;
 
   useEffect(() => {
@@ -141,28 +142,36 @@ const AdminPage = () => {
     try {
       const db = getFirestore(app);
       const meetingsCollection = collection(db, "meetings");
+      
+      // Combine date and time into a single Date object
+      const [hours, minutes] = meetingsdata.time.split(":");
+      const meetingDateTime = new Date(meetingsdata.date);
+      meetingDateTime.setHours(hours, minutes);
   
       const newMeeting = {
         name: meetingsdata.name,
         email: meetingsdata.email,
         interests: meetingsdata.interests,
         consultationMeeting: meetingsdata.consultationMeeting,
-        date: new Date(meetingsdata.date), // Make sure this is a valid date object
+        date: meetingDateTime, // Store the combined Date object
       };
   
       await addDoc(meetingsCollection, newMeeting);
+      
       setmeetingsdata({
         name: "",
         email: "",
         interests: "",
         consultationMeeting: false,
         date: "",
-      }); // Clear the form after submitting
+        time: "", // Clear the form after submitting
+      });
   
     } catch (error) {
       console.error("Error adding meeting: ", error);
     }
   };
+  
 
 
 
@@ -360,6 +369,7 @@ const AdminPage = () => {
                 <th className="py-3 px-4">Interests</th>
                 <th className="py-3 px-4">Is Consultation Meeting</th>
                 <th className="py-3 px-4">Date</th>
+                <th className="py-3 px-4">Time</th>
                 <th className="py-3 px-4">Actions</th>
               </tr>
             </thead>
@@ -370,7 +380,8 @@ const AdminPage = () => {
                   <td className="py-3 px-4">{meeting.email}</td>
                   <td className="py-3 px-4">{meeting.interests}</td>
                   <td className="py-3 px-4">{meeting.consultationMeeting ? "Yes" : "No"}</td>
-                  <td className="py-3 px-4">{meeting.date.toDateString()}</td>
+                  <td>{new Date(meeting.date).toLocaleDateString()}</td>
+        <td>{new Date(meeting.date).toLocaleTimeString()}</td>
                   <td className="py-3 px-4">
                     <button onClick={() => handleMeetingDelete(meeting.id)} className="text-red-500 hover:text-red-700">
                       <Trash2 size={20} />
@@ -427,6 +438,12 @@ const AdminPage = () => {
                     value={meetingsdata.date}
                     onChange={(e) => setmeetingsdata({ ...meetingsdata, date: e.target.value})}
                   />
+                  <input 
+    type="time" 
+    value={meetingsdata.time} 
+    onChange={(e) => setmeetingsdata({ ...meetingsdata, time: e.target.value })} 
+    required 
+  />
                 </td>
                 <td className="py-2 px-4">
                   <button onClick={addMeeting} className="font-bold text-white bg-green-500 px-4 py-2 rounded-md">
