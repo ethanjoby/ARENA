@@ -241,7 +241,6 @@ const AdminPage = () => {
                         <tr className="bg-gray-50 text-left">
                           <th className="py-3 px-4">Name</th>
                           <th className="py-3 px-4">Email</th>
-                          <th className="py-3 px-4">Parent Email</th>
                           <th className="py-3 px-4">Phone</th>
                           <th className="py-3 px-4">Grade Level</th>
                           <th className="py-3 px-4">Message</th>
@@ -254,7 +253,6 @@ const AdminPage = () => {
                           <tr key={question.id} className={index % 2 === 0 ? "bg-gray-50" : ""}>
                             <td className="py-3 px-4">{question.name}</td>
                             <td className="py-3 px-4">{question.email}</td>
-                            <td className="py-3 px-4">{question.parentEmail}</td>
                             <td className="py-3 px-4">{question.phone}</td>
                             <td className="py-3 px-4">{question.grade}</td>
                             <td className="py-3 px-4">{question.info}</td>

@@ -4,7 +4,7 @@ import { db } from './firebase';
 import { addDoc, collection, Timestamp } from 'firebase/firestore';
 
 const ContactUs = () => {
-  const [formdata, setFormdata] = useState({ name: "", email: "", info: "", createdAt: "" });
+  const [formdata, setFormdata] = useState({ name: "", email: "", phone: "", grade: "", info: "", createdAt: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
   const navigate = useNavigate();
@@ -24,11 +24,13 @@ const ContactUs = () => {
       await addDoc(collection(db, "contactus"), {
         name: formdata.name,
         email: formdata.email,
+        phone: formdata.phone,
+        grade: formdata.grade,
         info: formdata.info,
         createdAt: Timestamp.now(), 
       });
       setSubmitStatus('success');
-      setFormdata({ name: "", email: "", info: "" });
+      setFormdata({ name: "", email: "", phone: "", grade: "", info: "" });
       navigate("/thank-you");
     } catch (error) {
       setSubmitStatus('error');
@@ -83,6 +85,26 @@ const ContactUs = () => {
                   value={formdata.email}
                   onChange={handleChange}
                   placeholder="Your Email"
+                  required
+                  className="border border-gray-300 rounded-lg py-3 px-4 w-full bg-white text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-600 transition-transform duration-300 hover:scale-105"
+                />
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <input
+                  type="text"
+                  name="phone"
+                  value={formdata.phone}
+                  onChange={handleChange}
+                  placeholder="Your Phone"
+                  required
+                  className="border border-gray-300 rounded-lg py-3 px-4 w-full bg-white text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-600 transition-transform duration-300 hover:scale-105"
+                />
+                <input
+                  type="text"
+                  name="grade"
+                  value={formdata.grade}
+                  onChange={handleChange}
+                  placeholder="Your Grade"
                   required
                   className="border border-gray-300 rounded-lg py-3 px-4 w-full bg-white text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-600 transition-transform duration-300 hover:scale-105"
                 />
