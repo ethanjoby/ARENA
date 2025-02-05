@@ -336,33 +336,31 @@ const AdminPage = () => {
                       <thead>
                         <tr className="bg-gray-50 text-left">
                           <th className="py-3 px-4">Name</th>
-                          <th className="py-3 px-4">Email</th>
-                          <th className="py-3 px-4">Parent Email</th>
-                          <th className="py-3 px-4">Phone</th>
+                          <th className="py-3 px-4">Contact</th>
+                          
+                          
                           <th className="py-3 px-4">Grade</th>
-                          <th className="py-3 px-4">Programs</th>
                           <th className="py-3 px-4">Details</th>
-                          <th className="py-3 px-4">Details</th>
+                          <th className="py-3 px-4"></th>
                         </tr>
                       </thead>
                       <tbody>
                         {responses.map((response, index) => (
                           <tr key={response.id} className={index % 2 === 0 ? "bg-gray-50" : ""}>
                             <td className="py-3 px-4">{response.name}</td>
-                            <td className="py-3 px-4">{response.email}</td>
-                            <td className="py-3 px-4">{response.parentEmail}</td>
-                            <td className="py-3 px-4">{response.phone}</td>
+                            <td className="py-3 px-4"><strong>Student Email:</strong> {response.email}<br/> <strong>Parent Email: </strong>{response.parentEmail}<br/> <strong>Phone Number:</strong> <br/>{response.phone}</td>
+                            
+                            
                             <td className="py-3 px-4">{response.grade}</td>
                             
-                            <td className="py-3 px-4">
-                              {Array.isArray(response.selectedPrograms) 
-                                ? response.selectedPrograms.join(", ") 
-                                : response.selectedPrograms || "N/A"}
-                            </td>
+                            
                             <td className="py-3 px-4">
                               <details className="cursor-pointer">
                                 <summary className="text-blue-600 hover:text-blue-800">View Details</summary>
                                 <div className="mt-2 text-sm">
+                                <p><strong>Summer Programs:</strong> {Array.isArray(response.selectedPrograms) 
+                                ? response.selectedPrograms.join(", ") 
+                                : response.selectedPrograms || "N/A"}</p>
                                   <p><strong>Internship:</strong> {Array.isArray(response.selectedInternshipOptions) 
                                     ? response.selectedInternshipOptions.join(", ") 
                                     : response.selectedInternshipOptions || "N/A"}</p>
