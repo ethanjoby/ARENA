@@ -3,7 +3,7 @@ import { getFirestore, getDocs, deleteDoc, query, orderBy } from "firebase/fires
 import { doc, updateDoc } from 'firebase/firestore'; 
 import { addDoc, collection } from 'firebase/firestore';
 import { app, db } from "./firebase";
-import { CodeSquare, Trash2 } from "lucide-react";
+import { CodeSquare, Trash2, Edit } from "lucide-react";
 
 const AdminPage = () => {
   const [meetings, setmeetings] = useState([]); 
@@ -184,7 +184,42 @@ const AdminPage = () => {
       question.id === id ? { ...question, responded: !question.responded } : question
     ));
   };
+  
+  const [editingId, setEditingId] = useState(null);
+  const [editData, setEditData] = useState({});
+  const updateMeeting = async (id, updatedData) => {
+    try {
+      const db = getFirestore(app);
+      const meetingRef = doc(db, "meetings", id);
+  
+      await updateDoc(meetingRef, updatedData);
+  
+      setmeetings((prevMeetings) =>
+        prevMeetings.map((meeting) =>
+          meeting.id === id ? { ...meeting, ...updatedData } : meeting
+        )
+      );
+  
+      console.log("Meeting updated successfully!");
+    } catch (error) {
+      console.error("Error updating meeting:", error);
+    }
+  };
+  
 
+  const startEditing = (meeting) => {
+    setEditingId(meeting.id);
+    setEditData(meeting);
+  };
+
+  const handleEditChange = (e, field) => {
+    setEditData({ ...editData, [field]: e.target.value });
+  };
+
+  const saveEdit = () => {
+    updateMeeting(editingId, editData);
+    setEditingId(null);
+  };
 
   if (isLoggedIn) {
     return (
@@ -378,21 +413,48 @@ const AdminPage = () => {
               </tr>
             </thead>
             <tbody>
-              {meetings.map((meeting, index) => (
-                <tr key={meeting.id} className={index % 2 === 0 ? "bg-gray-50" : ""}>
-                  <td className="py-3 px-4">{meeting.name}</td>
-                  <td className="py-3 px-4">{meeting.email}</td>
-                  <td className="py-3 px-4">{meeting.interests}</td>
-                  <td className="py-3 px-4">{meeting.consultationMeeting ? "Yes" : "No"}</td>
-                  <td>{new Date(meeting.date).toLocaleDateString()}; <br/>{new Date(meeting.date).toLocaleTimeString()}</td>
-        <td className="py-3 px-4">{meeting.hosts}</td>
-                  <td className="py-3 px-4">
-                    <button onClick={() => handleMeetingDelete(meeting.id)} className="text-red-500 hover:text-red-700">
-                      <Trash2 size={20} />
-                    </button>
-                  </td>
-                </tr>
-              ))}
+            {meetings.map((meeting, index) => (
+              <tr key={meeting.id} className={index % 2 === 0 ? "bg-gray-50" : ""}>
+                {editingId === meeting.id ? (
+                  <>
+                    <td className="py-3 px-4"><input type="text" value={editData.name} onChange={(e) => handleEditChange(e, 'name')} className="border p-2 w-full" /></td>
+                    <td className="py-3 px-4"><input type="email" value={editData.email} onChange={(e) => handleEditChange(e, 'email')} className="border p-2 w-full" /></td>
+                    <td className="py-3 px-4"><input type="text" value={editData.interests} onChange={(e) => handleEditChange(e, 'interests')} className="border p-2 w-full" /></td>
+                    <td className="py-3 px-4">
+                      <select value={editData.consultationMeeting} onChange={(e) => handleEditChange(e, 'consultationMeeting')} className="border p-2 w-full">
+                        <option value="false">No</option>
+                        <option value="true">Yes</option>
+                      </select>
+                    </td>
+                    <td className="py-3 px-4">
+                      <input type="datetime-local" value={editData.date} onChange={(e) => handleEditChange(e, 'date')} className="border p-2 w-full" />
+                    </td>
+                    <td className="py-3 px-4"><input type="text" value={editData.hosts} onChange={(e) => handleEditChange(e, 'hosts')} className="border p-2 w-full" /></td>
+                    <td className="py-3 px-4">
+                      <button onClick={saveEdit} className="text-green-500 hover:text-green-700 mr-2">Save</button>
+                      <button onClick={() => setEditingId(null)} className="text-gray-500 hover:text-gray-700">Cancel</button>
+                    </td>
+                  </>
+                ) : (
+                  <>
+                    <td className="py-3 px-4">{meeting.name}</td>
+                    <td className="py-3 px-4">{meeting.email}</td>
+                    <td className="py-3 px-4">{meeting.interests}</td>
+                    <td className="py-3 px-4">{meeting.consultationMeeting ? "Yes" : "No"}</td>
+                    <td className="py-3 px-4">{new Date(meeting.date).toLocaleString()}</td>
+                    <td className="py-3 px-4">{meeting.hosts}</td>
+                    <td className="py-3 px-4">
+                      <button onClick={() => startEditing(meeting)} className="text-blue-500 hover:text-blue-700 mr-2">
+                        <Edit size={20} />
+                      </button>
+                      <button onClick={() => handleMeetingDelete(meeting.id)} className="text-red-500 hover:text-red-700">
+                        <Trash2 size={20} />
+                      </button>
+                    </td>
+                  </>
+                )}
+              </tr>
+            ))}
             </tbody>
             <tfoot className = "">
               <tr className="bg-gray-50">
