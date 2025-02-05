@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from './firebase';
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, Timestamp } from 'firebase/firestore';
 
 const ContactUs = () => {
-  const [formdata, setFormdata] = useState({ name: "", email: "", info: "" });
+  const [formdata, setFormdata] = useState({ name: "", email: "", info: "", createdAt: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
   const navigate = useNavigate();
@@ -25,6 +25,7 @@ const ContactUs = () => {
         name: formdata.name,
         email: formdata.email,
         info: formdata.info,
+        createdAt: Timestamp.now(), 
       });
       setSubmitStatus('success');
       setFormdata({ name: "", email: "", info: "" });

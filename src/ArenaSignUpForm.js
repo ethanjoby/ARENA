@@ -5,6 +5,7 @@ import emailjs from "emailjs-com";
 import { useNavigate } from "react-router-dom";
 import NAVBAR1 from "./navbar";
 import { db } from './firebase';
+import { Timestamp } from 'firebase/firestore';
 import { addDoc, collection } from 'firebase/firestore';
 import { doc, updateDoc } from "firebase/firestore"; // Import directly from firebase/firestore
 
@@ -21,8 +22,10 @@ function ArenaSignUpForm() {
    selectedResumeOptions: [],
    selectedSATPrep: "",
    satOneHourCount: 0,
-   additionalInfo: ""
+   additionalInfo: "",
+   createdAt: "", 
  });
+
  const handleNoneForNow = async (field) => {
    setFormData((prev) => ({
      ...prev,
@@ -266,6 +269,7 @@ function ArenaSignUpForm() {
      selectedSATPrep: formData.selectedSATPrep,
      satOneHourCount: formData.satOneHourCount,
      additionalInfo: formData.additionalInfo,
+     createdAt: Timestamp.now(), 
    });
     console.log("Document written with ID: ", docRef.id);
     const emailParams = {

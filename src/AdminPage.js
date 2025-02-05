@@ -1,22 +1,36 @@
 import React, { useState, useEffect } from "react";
-import { getFirestore, collection, getDocs, deleteDoc, doc } from "firebase/firestore";
-import { app } from "./firebase";
-import { Trash2 } from "lucide-react";
+import { getFirestore, getDocs, deleteDoc, query, orderBy } from "firebase/firestore";
+import { doc, updateDoc } from 'firebase/firestore'; 
+import { addDoc, collection } from 'firebase/firestore';
+import { app, db } from "./firebase";
+import { CodeSquare, Trash2 } from "lucide-react";
 
 const AdminPage = () => {
+  const [meetings, setmeetings] = useState([]); 
   const [questions, setQuestions] = useState([]);
   const [responses, setResponses] = useState([]);
+
   const [activeView, setActiveView] = useState('contact');
+
   const presetUsername = "admin";
   const presetPassword = "password123";
+
+  //console.log(meetings); 
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [error, setError] = useState("");
 
+  const [meetingsdata, setmeetingsdata] = useState({
+    name: "", 
+    email: "", 
+    interests: "", 
+    consultationMeeting: false, 
+    date: "", 
+  }); ;
+
   useEffect(() => {
-    // Check if user is already logged in
     const storedLoginState = localStorage.getItem('adminLoggedIn');
     if (storedLoginState === 'true') {
       setIsLoggedIn(true);
@@ -28,15 +42,37 @@ const AdminPage = () => {
           const db = getFirestore(app);
           const questionCollection = collection(db, "contactus");
           const responsesCollection = collection(db, "arenaSignUps");
+          const meetingsCollection = collection(db, "meetings");
+
+          //const questionorder = query(questionCollection, orderBy("createdAt", "asc"));
+          //const responsesOrder = query(responsesCollection,orderBy("createdAt", "asc")); 
+          const meetingsOrder = query(meetingsCollection, orderBy("date", "asc")); 
           
           const contactQuestions = await getDocs(questionCollection);
           const signupResponses = await getDocs(responsesCollection);
+          const meetingsBooked = await getDocs(meetingsOrder); 
           
-          const questionList = contactQuestions.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-          const responsesList = signupResponses.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+          const questionList = contactQuestions.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+            createdAt: doc.data().createdAt?.toDate() || new Date() //make the thung into a javascript date to read out
+          }));
+
+          const responsesList = signupResponses.docs.map((doc) => ({ 
+            id: doc.id, 
+            ...doc.data(),
+            createdAt: doc.data().createdAt?.toDate() || new Date(), 
+          }));
+
+          const meetingsList = meetingsBooked.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+            date: doc.data().date?.toDate() || new Date(), // Ensure date is a JavaScript Date
+          }));
           
           setQuestions(questionList);
           setResponses(responsesList);
+          setmeetings(meetingsList); 
         } catch (error) {
           console.error("Error fetching data: ", error);
         }
@@ -88,33 +124,54 @@ const AdminPage = () => {
     }
   };
 
+  const handleMeetingDelete = async(id) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this meeting?");
+    if(confirmDelete){
+      try {
+        const db = getFirestore(app); 
+        await deleteDoc(doc(db, "meetings", id)); 
+        setmeetings(meetings.filter((meeting) => meeting.id !== id)); 
+      } catch (error) {
+        console.error("Eerro deleting the meetings", error); 
+      }
+    }
+  }
+
+  const addMeeting = async () => {
+    try {
+      const db = getFirestore(app);
+      const meetingsCollection = collection(db, "meetings");
+  
+      const newMeeting = {
+        name: meetingsdata.name,
+        email: meetingsdata.email,
+        interests: meetingsdata.interests,
+        consultationMeeting: meetingsdata.consultationMeeting,
+        date: new Date(meetingsdata.date), // Make sure this is a valid date object
+      };
+  
+      await addDoc(meetingsCollection, newMeeting);
+      setmeetingsdata({
+        name: "",
+        email: "",
+        interests: "",
+        consultationMeeting: false,
+        date: "",
+      }); // Clear the form after submitting
+  
+    } catch (error) {
+      console.error("Error adding meeting: ", error);
+    }
+  };
+
+
+
   const handleResponseChange = (id) => {
     setQuestions(questions.map((question) =>
       question.id === id ? { ...question, responded: !question.responded } : question
     ));
   };
 
-  const [customTables, setCustomTables] = useState([
-    {
-      name: "Custom Table 1",
-      columns: ["Name", "Email", "Interests", "Signed up for Consultation Meeting?", "Meet when?"],
-      rows: [["", "", "", "", ""]],
-    },
-  ]);
-
-  const handleAddRow = (index) => {
-    setCustomTables(customTables.map((table, i) => 
-      i === index ? { ...table, rows: [...table.rows, ["", "", "", "", ""]] } : table
-    ));
-  };
-
-  const handleDeleteRow = (rowIndex) => {
-    setCustomTables(customTables.map((table, i) =>
-      i === 0
-        ? { ...table, rows: table.rows.filter((_, ri) => ri !== rowIndex) }
-        : table
-    ));
-  };
 
   if (isLoggedIn) {
     return (
@@ -201,6 +258,7 @@ const AdminPage = () => {
                             <td className="py-3 px-4">{question.phone}</td>
                             <td className="py-3 px-4">{question.grade}</td>
                             <td className="py-3 px-4">{question.info}</td>
+                            <td className="py-3 px-4">{question.createdAt.toDateString()}</td>
                             <td className="py-3 px-4">
                               <button onClick={() => handleDeleteContact(question.id)} className="text-red-500 hover:text-red-700">
                                 <Trash2 size={20} />
@@ -291,112 +349,172 @@ const AdminPage = () => {
                 )}
               </>
             ) : activeView === 'meetings' ? (
-              <>
-                <h2 className="text-2xl font-bold mb-4">Meetings</h2>
-                {/* Default Table */}
-                <div className="mt-4">
-                  <h3 className="text-xl font-bold mb-4">Meeting Information</h3>
-                  <div className="overflow-x-auto">
-                    <table className="w-full">
-                      <thead>
-                        <tr className="bg-gray-50 text-left">
-                          <th className="py-3 px-4">Name</th>
-                          <th className="py-3 px-4">Email</th>
-                          <th className="py-3 px-4">Interests</th>
-                          <th className="py-3 px-4">Signed up for Consultation?</th>
-                          <th className="py-3 px-4">Meet when?</th>
-                          <th className="py-3 px-4">Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {customTables.length >= 0 ? (
-                          customTables[0].rows.map((row, rowIndex) => (
-                            <tr key={rowIndex} className={rowIndex % 2 === 0 ? "bg-gray-50" : ""}>
-                              {row.map((cell, cellIndex) => (
-                                <td key={cellIndex} className="py-3 px-4">
-                                  <input
-                                    type="text"
-                                    value={cell}
-                                    onChange={(e) =>
-                                      setCustomTables(
-                                        customTables.map((table, i) =>
-                                          i === 0
-                                            ? {
-                                                ...table,
-                                                rows: table.rows.map((r, ri) =>
-                                                  ri === rowIndex
-                                                    ? r.map((c, ci) =>
-                                                        ci === cellIndex ? e.target.value : c
-                                                      )
-                                                    : r
-                                                ),
-                                              }
-                                            : table
-                                        )
-                                      )
-                                    }
-                                    className="w-full border border-gray-300 p-1 rounded"
-                                  />
-                                </td>
-                              ))}
-                              <td className="py-3 px-4">
-                                <button
-                                  onClick={() => handleDeleteRow(rowIndex)}
-                                  className="text-red-500 hover:text-red-700"
-                                >
-                                  <Trash2 size={20} />
-                                </button>
-                              </td>
-                            </tr>
-                          ))
-                        ) : (
-                          <tr>
-                            <td colSpan={6} className="text-center py-4">No data available</td>
-                          </tr>
-                        )}
-                      </tbody>
-                    </table>
-                  </div>
-                  <button
-                    onClick={() => handleAddRow(0)}
-                    className="bg-green-500 text-white px-4 py-2 rounded mt-2"
+                 <>
+      <h2 className="text-2xl font-bold mb-4">Meetings</h2>
+      {meetings.length > 0 ? (
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="bg-gray-50 text-left">
+                <th className="py-3 px-4">Name</th>
+                <th className="py-3 px-4">Email</th>
+                <th className="py-3 px-4">Interests</th>
+                <th className="py-3 px-4">Is Consultation Meeting</th>
+                <th className="py-3 px-4">Date</th>
+                <th className="py-3 px-4">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {meetings.map((meeting, index) => (
+                <tr key={meeting.id} className={index % 2 === 0 ? "bg-gray-50" : ""}>
+                  <td className="py-3 px-4">{meeting.name}</td>
+                  <td className="py-3 px-4">{meeting.email}</td>
+                  <td className="py-3 px-4">{meeting.interests}</td>
+                  <td className="py-3 px-4">{meeting.consultationMeeting ? "Yes" : "No"}</td>
+                  <td className="py-3 px-4">{meeting.date.toDateString()}</td>
+                  <td className="py-3 px-4">
+                    <button onClick={() => handleMeetingDelete(meeting.id)} className="text-red-500 hover:text-red-700">
+                      <Trash2 size={20} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+            <tfoot>
+              <tr className="bg-gray-50">
+                <td className="py-2 px-4">
+                  <input
+                    type="text"
+                    placeholder="Name"
+                    className="border p-2 w-full"
+                    value={meetingsdata.name}
+                    onChange={(e) => setmeetingsdata({ ...meetingsdata, name: e.target.value })}
+                  />
+                </td>
+                <td className="py-2 px-4">
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    className="border p-2 w-full"
+                    value={meetingsdata.email}
+                    onChange={(e) => setmeetingsdata({ ...meetingsdata, email: e.target.value })}
+                  />
+                </td>
+                <td className="py-2 px-4">
+                  <input
+                    type="text"
+                    placeholder="Interests"
+                    className="border p-2 w-full"
+                    value={meetingsdata.interests}
+                    onChange={(e) => setmeetingsdata({ ...meetingsdata, interests: e.target.value })}
+                  />
+                </td>
+                <td className="py-2 px-4">
+                  <select
+                    className="border p-2 w-full"
+                    value={meetingsdata.consultationMeeting}
+                    onChange={(e) =>
+                      setmeetingsdata({ ...meetingsdata, consultationMeeting: e.target.value === "true" })
+                    }
                   >
-                    Add Row
+                    <option value="false">No</option>
+                    <option value="true">Yes</option>
+                  </select>
+                </td>
+                <td className="py-2 px-4">
+                  <input
+                    type="date"
+                    className="border p-2 w-full"
+                    value={meetingsdata.date}
+                    onChange={(e) => setmeetingsdata({ ...meetingsdata, date: e.target.value})}
+                  />
+                </td>
+                <td className="py-2 px-4">
+                  <button onClick={addMeeting} className="font-bold text-white bg-green-500 px-4 py-2 rounded-md">
+                    Add Meeting
                   </button>
-                </div>
-              </>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      ) : (
+        <>
+        <p>No meetings available.</p>
+        <table className="w-full mt-4">
+        <thead>
+              <tr className="bg-gray-50 text-left">
+                <th className="py-3 px-4">Name</th>
+                <th className="py-3 px-4">Email</th>
+                <th className="py-3 px-4">Interests</th>
+                <th className="py-3 px-4">Is Consultation Meeting</th>
+                <th className="py-3 px-4">Date</th>
+                <th className="py-3 px-4">Actions</th>
+              </tr>
+            </thead>
+    <tfoot>
+      <tr className="bg-gray-50">
+        <td className="py-2 px-4">
+          <input
+            type="text"
+            placeholder="Name"
+            className="border p-2 w-full"
+            value={meetingsdata.name}
+            onChange={(e) => setmeetingsdata({ ...meetingsdata, name: e.target.value })}
+          />
+        </td>
+        <td className="py-2 px-4">
+          <input
+            type="email"
+            placeholder="Email"
+            className="border p-2 w-full"
+            value={meetingsdata.email}
+            onChange={(e) => setmeetingsdata({ ...meetingsdata, email: e.target.value })}
+          />
+        </td>
+        <td className="py-2 px-4">
+          <input
+            type="text"
+            placeholder="Interests"
+            className="border p-2 w-full"
+            value={meetingsdata.interests}
+            onChange={(e) => setmeetingsdata({ ...meetingsdata, interests: e.target.value })}
+          />
+        </td>
+        <td className="py-2 px-4">
+          <select
+            className="border p-2 w-full"
+            value={meetingsdata.consultationMeeting}
+            onChange={(e) =>
+              setmeetingsdata({ ...meetingsdata, consultationMeeting: e.target.value === "true" })
+            }
+          >
+            <option value="false">No</option>
+            <option value="true">Yes</option>
+          </select>
+        </td>
+        <td className="py-2 px-4">
+          <input
+            type="date"
+            className="border p-2 w-full"
+            value={meetingsdata.date}
+            onChange={(e) => setmeetingsdata({ ...meetingsdata, date: e.target.value })}
+          />
+        </td>
+        <td className="py-2 px-4">
+          <button onClick={addMeeting} className="font-bold text-white bg-green-500 px-4 py-2 rounded-md">
+            Add Meeting
+          </button>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+      </>
+      )}
+    </>
             ) : activeView === 'customers' ? (
               <>
-                <h2 className="text-2xl font-bold mb-4">Customers to Get</h2>
-                {/* Custom Data */}
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="bg-gray-50 text-left">
-                        <th className="py-3 px-4">Name</th>
-                        <th className="py-3 px-4">Email</th>
-                        <th className="py-3 px-4">Interests</th>
-                        <th className="py-3 px-4">Sign up for Consultation?</th>
-                        <th className="py-3 px-4">Meet when?</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {customTables.length > 0 && customTables[0].rows.length > 0 ? (
-                        customTables[0].rows.map((row, index) => (
-                          <tr key={index} className={index % 2 === 0 ? "bg-gray-50" : ""}>
-                            {row.map((cell, cellIndex) => (
-                              <td key={cellIndex} className="py-3 px-4">{cell}</td>
-                            ))}
-                          </tr>
-                        ))
-                      ) : (
-                        <tr>
-                          <td colSpan={5} className="text-center py-4">No data available</td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
+              
               </>
             ) : null}
           </div>
