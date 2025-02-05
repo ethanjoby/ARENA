@@ -235,7 +235,7 @@ const AdminPage = () => {
             </button>
           </div>
 
-          <div className="grid grid-cols-4 gap-4 mb-6">
+          <div className="grid grid-cols-3 gap-4 mb-6">
   <button
     onClick={() => setActiveView('contact')}
     className={`w-full px-6 py-3 rounded-lg font-semibold transition-colors ${
@@ -266,16 +266,7 @@ const AdminPage = () => {
   >
     Meetings
   </button>
-  <button
-    onClick={() => setActiveView('customers')}
-    className={`w-full px-6 py-3 rounded-lg font-semibold transition-colors ${
-      activeView === 'customers'
-        ? 'bg-black text-white'
-        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-    }`}
-  >
-    Customers To Get
-  </button>
+  
 </div>
 
           <div className="bg-white rounded-lg shadow-lg p-6">
@@ -420,6 +411,7 @@ const AdminPage = () => {
                     <td className="py-3 px-4"><input type="text" value={editData.interests} onChange={(e) => handleEditChange(e, 'interests')} className="border p-2 w-full" /></td>
                     <td className="py-3 px-4">
   <select value={editData.meetingType} onChange={(e) => handleEditChange(e, 'meetingType')} className="border p-2 w-full">
+  <option value="None">Type Of meeting</option>
     <option value="Consultation">Consultation</option>
     <option value="Extracurricular">Extracurricular</option>
     <option value="Research">Research</option>
@@ -497,6 +489,7 @@ const AdminPage = () => {
       setmeetingsdata({ ...meetingsdata, meetingType: e.target.value })
     }
   >
+    <option value="None">Type Of meeting</option>
     <option value="Consultation">Consultation</option>
     <option value="Extracurricular">Extracurricular</option>
     <option value="Research">Research</option>
@@ -594,6 +587,7 @@ const AdminPage = () => {
       setmeetingsdata({ ...meetingsdata, meetingType: e.target.value })
     }
   >
+    <option value="None">Type Of meeting</option>
     <option value="Consultation">Consultation</option>
     <option value="Extracurricular">Extracurricular</option>
     <option value="Research">Research</option>
