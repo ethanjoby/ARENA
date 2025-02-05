@@ -140,37 +140,37 @@ const AdminPage = () => {
 
   const addMeeting = async () => {
     try {
-      const db = getFirestore(app);
-      const meetingsCollection = collection(db, "meetings");
-      
-      // Combine date and time into a single Date object
-      const [hours, minutes] = meetingsdata.time.split(":");
-      const meetingDateTime = new Date(meetingsdata.date);
-      meetingDateTime.setHours(hours, minutes);
-  
-      const newMeeting = {
-        name: meetingsdata.name,
-        email: meetingsdata.email,
-        interests: meetingsdata.interests,
-        consultationMeeting: meetingsdata.consultationMeeting,
-        date: meetingDateTime, // Store the combined Date object
-      };
-  
-      await addDoc(meetingsCollection, newMeeting);
-      
-      setmeetingsdata({
-        name: "",
-        email: "",
-        interests: "",
-        consultationMeeting: false,
-        date: "",
-        time: "", // Clear the form after submitting
-      });
-  
+        const db = getFirestore(app);
+        const meetingsCollection = collection(db, "meetings");
+
+        // Combine date and time into a single Date object
+        const [hours, minutes] = meetingsdata.time.split(":");
+        const meetingDateTime = new Date(`${meetingsdata.date}T${hours}:${minutes}:00`);
+
+        const newMeeting = {
+            name: meetingsdata.name,
+            email: meetingsdata.email,
+            interests: meetingsdata.interests,
+            consultationMeeting: meetingsdata.consultationMeeting,
+            date: meetingDateTime, // Store correctly formatted date
+        };
+
+        await addDoc(meetingsCollection, newMeeting);
+        
+        setmeetingsdata({
+            name: "",
+            email: "",
+            interests: "",
+            consultationMeeting: false,
+            date: "",
+            time: "", 
+        });
+
     } catch (error) {
-      console.error("Error adding meeting: ", error);
+        console.error("Error adding meeting: ", error);
     }
-  };
+};
+
   
 
 
