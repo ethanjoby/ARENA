@@ -104,7 +104,7 @@ const Portal = () => {
           <tbody>
             {meetings.map((meeting, index) => (
               <tr 
-                key={meeting.id}
+                key={index}
                 className={`
                   hover:bg-gray-50 transition-colors
                   ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
@@ -112,7 +112,7 @@ const Portal = () => {
               >
                 <td className="py-3 px-4 border-b border-gray-100">{meeting.name}</td>
                 <td className="py-3 px-4 border-b border-gray-100">{meeting.email}</td>
-                <td className="py-3 px-4 border-b border-gray-100">{meeting.date}</td>
+                <td className="py-3 px-4 border-b border-gray-100">{meeting.date.toDate().toLocaleString()}</td>
                 <td className="py-3 px-4 border-b border-gray-100">
                   <a href={meeting.link} className="text-blue-600 hover:text-blue-800 hover:underline">
                     {meeting.link}

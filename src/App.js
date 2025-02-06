@@ -6,6 +6,7 @@ import Essays from './Essays';
 import ThankYouPage from "./ThankYouPage";
 import ArenaSignUpForm from './ArenaSignUpForm';
 import AboutUs from './AboutUs';
+import Portal from './Portal'; 
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/essays" element={<Essays />} />
         <Route path="/thank-you" element={<ThankYouPage />} />
         <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/portal" element={<Portal />} />
       </Routes>
     </Router>
   );
