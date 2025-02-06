@@ -186,16 +186,14 @@ const AdminPage = () => {
   
   const [signupData, setSignupData] = useState({
     name: "",
-    email: "",
-    parentEmail: "",
-    phone: "",
-    grade: "",
+    info: "",
+    details: "",
     status: "",
     notes: "",
   });
   
   const addSignup = async () => {
-    if (!signupData.name || !signupData.email || !signupData.status) {
+    if (!signupData.name || !signupData.status) {
       alert("Please fill in the required fields.");
       return;
     }
@@ -204,10 +202,8 @@ const AdminPage = () => {
       const db = getFirestore(app);
       const docRef = await addDoc(collection(db, "arenaSignUps"), {
         name: signupData.name,
-        email: signupData.email,
-        parentEmail: signupData.parentEmail,
-        phone: signupData.phone,
-        grade: signupData.grade,
+        info: signupData.info,
+        details: signupData.details,
         status: signupData.status,
         notes: signupData.notes,
         createdAt: Timestamp.fromDate(new Date()), // Save timestamp for sorting
@@ -219,10 +215,8 @@ const AdminPage = () => {
       // Reset the form
       setSignupData({
         name: "",
-        email: "",
-        parentEmail: "",
-        phone: "",
-        grade: "",
+        info: "",
+        details: "",
         status: "",
         notes: "",
       });
@@ -232,6 +226,7 @@ const AdminPage = () => {
       console.error("Error adding sign-up: ", error);
     }
   };
+  
   
   
 
@@ -574,75 +569,79 @@ const AdminPage = () => {
               </>
             ) : activeView === 'signup' ? (
               <>
-                <h2 className="text-3xl font-bold text-gray-800 mb-6">Program Sign-ups</h2>
-
+                <h2 className="text-2xl font-bold mb-4">Program Sign-ups</h2>
 {responses.length > 0 ? (
   <div className="overflow-x-auto">
-    <table className="w-full border-collapse shadow-lg">
+    <table className="w-full border-collapse shadow-md rounded-lg">
       <thead>
-        <tr className="bg-gray-200 text-gray-700 text-sm uppercase border-b">
-          {["Name", "Info", "Details", "Status", "Notes", "Actions"].map((header) => (
-            <th key={header} className="py-3 px-4 text-left">{header}</th>
-          ))}
+        <tr className="bg-gray-100 text-left">
+          <th className="py-3 px-4">Name</th>
+          <th className="py-3 px-4">Info</th>
+          <th className="py-3 px-4">Details</th>
+          <th className="py-3 px-4">Status</th>
+          <th className="py-3 px-4">Notes</th>
+          <th className="py-3 px-4">Save</th>
+          <th className="py-3 px-4">Delete</th>
         </tr>
       </thead>
       <tbody>
         {responses.map((response, index) => (
-          <tr 
-            key={response.id} 
-            className={`border-b transition ${index % 2 === 0 ? "bg-gray-50" : "bg-white"} hover:bg-gray-200`}
+          <tr
+            key={response.id}
+            className={`border-b ${index % 2 === 0 ? "bg-gray-50" : "bg-white"} hover:bg-gray-100 transition`}
           >
-            {/* Name */}
-            <td className="py-4 px-4 font-semibold text-gray-700">{response.name}</td>
+            <td className="py-3 px-4 text-sm font-medium text-gray-700">{response.name}</td>
 
-            {/* Info */}
-            <td className="py-4 px-4 text-sm text-gray-600">
-              <p><strong>Email:</strong> {response.email}</p>
-              <p><strong>Parent Email:</strong> {response.parentEmail}</p>
-              <p><strong>Phone:</strong> {response.phone}</p>
-              <p><strong>Grade:</strong> {response.grade}</p>
+            <td className="py-3 px-4 text-sm text-gray-600 align-top">
+              <strong>Student Email:</strong> {response.email}
+              <br />
+              <strong>Parent Email:</strong> {response.parentEmail}
+              <br />
+              <strong>Phone:</strong> {response.phone}
+              <br />
+              <strong>Grade:</strong> {response.grade}
             </td>
 
-            {/* Details */}
-            <td className="py-4 px-4 text-sm">
+            <td className="py-3 px-4 text-sm">
               <details className="cursor-pointer">
                 <summary className="text-blue-600 hover:text-blue-800 font-medium">View Details</summary>
                 <div className="mt-2 text-gray-600">
-                  {[
-                    { label: "Summer Programs", value: response.selectedPrograms },
-                    { label: "Internship", value: response.selectedInternshipOptions },
-                    { label: "Olympiads", value: response.selectedOlympiadOptions },
-                    { label: "Resume", value: response.selectedResumeOptions },
-                    { label: "SAT Prep", value: response.selectedSAT }
-                  ].map(({ label, value }) => (
-                    <p key={label}><strong>{label}:</strong> {Array.isArray(value) ? value.join(", ") : value || "N/A"}</p>
-                  ))}
+                  <p><strong>Summer Programs:</strong> {response.selectedPrograms?.join(", ") || "N/A"}</p>
+                  <p><strong>Internship:</strong> {response.selectedInternshipOptions?.join(", ") || "N/A"}</p>
+                  <p><strong>Olympiads:</strong> {response.selectedOlympiadOptions?.join(", ") || "N/A"}</p>
+                  <p><strong>Resume:</strong> {response.selectedResumeOptions?.join(", ") || "N/A"}</p>
+                  <p>
+                    <strong>SAT Prep:</strong>{" "}
+                    {Array.isArray(response.selectedSAT)
+                      ? response.selectedSAT.join(", ")
+                      : response.selectedSAT || "N/A"}
+                  </p>
                   {response.additionalInfo && <p><strong>Additional Info:</strong> {response.additionalInfo}</p>}
                 </div>
               </details>
             </td>
 
-            {/* Status Dropdown */}
-            <td className="py-4 px-4 w-1/4">
-              <select
-                value={signupStatuses[response.id] || ""}
-                onChange={(e) => handleStatusChange(response.id, e.target.value)}
-                className="w-full border rounded-lg py-2 px-3 bg-white shadow-sm focus:ring-2 focus:ring-blue-500 transition"
-              >
-                <option value="" disabled>Select Status</option>
-                {statusOptions.map((status) => (
-                  <option key={status} value={status}>{status}</option>
-                ))}
-              </select>
+            <td className="py-3 px-4 w-1/5">
+              <div className="relative">
+                <select
+                  value={signupStatuses[response.id] || ""}
+                  onChange={(e) => handleStatusChange(response.id, e.target.value)}
+                  className="w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                >
+                  <option value="" disabled>Select Status</option>
+                  {statusOptions.map((status) => (
+                    <option key={status} value={status}>{status}</option>
+                  ))}
+                </select>
+              </div>
             </td>
 
-            {/* Notes */}
-            <td className="py-4 px-4">
+            <td className="py-3 px-4 w-1/5">
               {editingNotesId === response.id ? (
                 <textarea
                   value={response.notes || ""}
                   onChange={(e) => handleNotesChange(response.id, e.target.value)}
-                  className="border border-gray-300 w-full p-2 rounded-md resize-y text-sm"
+                  className="border border-gray-300 p-2 rounded-md w-full min-h-[40px] text-sm resize-y"
                   autoFocus
                 />
               ) : (
@@ -655,8 +654,7 @@ const AdminPage = () => {
               )}
             </td>
 
-            {/* Actions */}
-            <td className="py-4 px-4 text-center">
+            <td className="py-3 px-4">
               {editingNotesId === response.id && (
                 <button
                   onClick={() => handleSaveNotes(response.id)}
@@ -665,9 +663,12 @@ const AdminPage = () => {
                   Save
                 </button>
               )}
+            </td>
+
+            <td className="py-3 px-4 text-center">
               <button
                 onClick={() => handleDelete(response.id)}
-                className="ml-2 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white px-3 py-1 rounded-lg transition"
+                className="border border-red-500 text-red-500 hover:bg-red-500 hover:text-white px-3 py-1 rounded-lg transition"
               >
                 <Trash2 size={18} />
               </button>
@@ -675,11 +676,76 @@ const AdminPage = () => {
           </tr>
         ))}
       </tbody>
+
+      <tfoot>
+  <tr className="bg-gray-100">
+    <td className="py-3 px-4">
+      <input
+        type="text"
+        placeholder="Name"
+        className="border p-2 w-full rounded-md"
+        value={signupData.name}
+        onChange={(e) => setSignupData({ ...signupData, name: e.target.value })}
+      />
+    </td>
+    <td className="py-3 px-4">
+      <input
+        type="text"
+        placeholder="Info"
+        className="border p-2 w-full rounded-md"
+        value={signupData.info}
+        onChange={(e) => setSignupData({ ...signupData, info: e.target.value })}
+      />
+    </td>
+    <td className="py-3 px-4">
+      <input
+        type="text"
+        placeholder="Details"
+        className="border p-2 w-full rounded-md"
+        value={signupData.details}
+        onChange={(e) => setSignupData({ ...signupData, details: e.target.value })}
+      />
+    </td>
+    <td className="py-3 px-4">
+      <select
+        className="border p-2 rounded-md w-full"
+        value={signupData.status}
+        onChange={(e) => setSignupData({ ...signupData, status: e.target.value })}
+      >
+        <option value="" disabled>Select Status</option>
+        {statusOptions.map((status) => (
+          <option key={status} value={status}>
+            {status}
+          </option>
+        ))}
+      </select>
+    </td>
+    <td className="py-3 px-4">
+      <input
+        type="text"
+        placeholder="Notes"
+        className="border p-2 w-full rounded-md"
+        value={signupData.notes}
+        onChange={(e) => setSignupData({ ...signupData, notes: e.target.value })}
+      />
+    </td>
+    <td className="py-3 px-4 text-right" colSpan="2">
+      <button
+        onClick={addSignup}
+        className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-200"
+      >
+        Add Sign-up
+      </button>
+    </td>
+  </tr>
+</tfoot>
+
     </table>
   </div>
 ) : (
   <p className="text-gray-600">No sign-up responses available.</p>
 )}
+
 
               </>
             ) : activeView === 'meetings' ? (
