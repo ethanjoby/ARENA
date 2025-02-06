@@ -17,7 +17,7 @@ const GoogleFormEmbed = ({ src, width = "100%", height = "100%" }) => {
         src={src}
         width={width}
         height={height}
-        style={{ border: "none" }}
+        style={{ border: "none", borderRadius: "10px" }}
         title="Google Form"
       >
         Loading…

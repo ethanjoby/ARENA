@@ -424,29 +424,24 @@ const AdminPage = () => {
             <thead>
               <tr className="bg-gray-50 text-left">
                 <th className="py-3 px-4">Name</th>
-                <th className="py-3 px-4">Email</th>
-                <th className="py-3 px-4">Phone</th>
-                <th className="py-3 px-4">Grade Level</th>
+                <th className="py-3 px-4">Info</th>
                 <th className="py-3 px-4">Message</th>
                 <th className="py-3 px-4">Date</th>
-                <th className="py-3 px-4">Delete</th>
                 <th className="py-3 px-4">Notes</th>
+                <th className="py-3 px-4">Save</th>
+                <th className="py-3 px-4">Delete</th>
+                
+                
               </tr>
             </thead>
             <tbody>
   {questions.map((question, index) => (
     <tr key={question.id} className={index % 2 === 0 ? "bg-gray-50" : ""}>
       <td className="py-3 px-4">{question.name}</td>
-      <td className="py-3 px-4">{question.email}</td>
-      <td className="py-3 px-4">{question.phone}</td>
-      <td className="py-3 px-4">{question.grade}</td>
+      <td className="py-3 px-4"><strong>Email:</strong> {question.email}<br/> <strong>Phone: </strong>{question.phone}<br/> <strong>Grade: </strong><strong/>{question.grade}</td>
       <td className="py-3 px-4">{question.info}</td>
       <td className="py-3 px-4">{question.createdAt.toDateString()}</td>
-      <td className="py-3 px-4">
-        <button onClick={() => handleDeleteContact(question.id)} className="text-red-500 hover:text-red-700">
-          <Trash2 size={20} />
-        </button>
-      </td>
+      
       <td className="py-3 px-4">
         {editingNotesId === question.id ? (
           <input
@@ -475,6 +470,11 @@ const AdminPage = () => {
           </button>
         )}
       </td>
+      <td className="py-3 px-4">
+        <button onClick={() => handleDeleteContact(question.id)} className="text-red-500 hover:text-red-700">
+          <Trash2 size={20} />
+        </button>
+      </td>
     </tr>
   ))}
 </tbody>
@@ -494,8 +494,8 @@ const AdminPage = () => {
             <thead>
               <tr className="bg-gray-50 text-left">
                 <th className="py-3 px-4">Name</th>
-                <th className="py-3 px-4">Contact</th>
-                <th className="py-3 px-4">Grade</th>
+                <th className="py-3 px-4">Info</th>
+         
                 <th className="py-3 px-4">Details</th>
                 <th className="py-3 px-4">Notes</th>
                 <th className="py-3 px-4">Save</th>
@@ -514,9 +514,12 @@ const AdminPage = () => {
                     <br />
                     <strong>Phone Number:</strong>
                     <br />
-                    {response.phone}
+                    {response.phone}<br/>
+                    <strong>Grade:</strong>
+                  
+                    {response.grade}
                   </td>
-                  <td className="py-3 px-4">{response.grade}</td>
+                
                   <td className="py-3 px-4">
                     <details className="cursor-pointer">
                       <summary className="text-blue-600 hover:text-blue-800">View Details</summary>
@@ -608,7 +611,7 @@ const AdminPage = () => {
                  <>
       <h2 className="text-2xl font-bold mb-4">Customer Next Meeting</h2>
       <div className="flex space-x-4 mb-4">
-  {["Free Consultation", "Ratul", "Aaron", "Nirav", "Advay"].map((tab) => (
+  {["Free Consultation", "Ratul", "Aaron", "Nirav", "Advay", "Aryan", "Ethan"].map((tab) => (
     <button
       key={tab}
       className={`px-4 py-2 rounded ${activeMeetingTab === tab ? "bg-blue-500 text-white" : "bg-gray-200"}`}
@@ -628,7 +631,12 @@ const AdminPage = () => {
     <GoogleFormEmbed src="https://calendar.google.com/calendar/embed?src=arena.college.counseling%40gmail.com&ctz=America%2FLos_Angeles" />
   ) : activeMeetingTab === 'Advay' ? (
     <GoogleFormEmbed src="https://calendar.google.com/calendar/embed?src=arena.college.counseling%40gmail.com&ctz=America%2FLos_Angeles" />
-  ): null}
+  
+  ) : activeMeetingTab === 'Aryan' ? (
+  <GoogleFormEmbed src="https://calendar.google.com/calendar/embed?src=arena.college.counseling%40gmail.com&ctz=America%2FLos_Angeles" />
+) : activeMeetingTab === 'Ethan' ? (
+  <GoogleFormEmbed src="https://calendar.google.com/calendar/embed?src=arena.college.counseling%40gmail.com&ctz=America%2FLos_Angeles" />
+):null}
   
 {/*
 {meetings[activeMeetingTab]?.length > 0 ? (
