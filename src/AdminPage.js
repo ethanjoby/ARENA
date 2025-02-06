@@ -395,14 +395,14 @@ const AdminPage = () => {
           <table className="w-full table-auto border-collapse">
             <thead>
               <tr className="bg-gray-50 text-left w-full">
-                <th className="py-3 px-4">Name</th>
-                <th className="py-3 px-4">Email</th>
+                <th className="py-3 px-2">Name</th>
+                <th className="py-3 px-2">Email</th>
                 
-                <th className="py-3 px-4">Type Of Meeting</th>
-                <th className="py-3 px-4">Date & Time</th>
-                <th className="py-3 px-4">Meeting Host(s)</th>
-                <th className="py-3 px-4">Link</th>
-                <th className="py-3 px-4">Actions</th>
+                <th className="py-3 px-2">Type Of Meeting</th>
+                <th className="py-3 px-2">Date & Time</th>
+                <th className="py-3 px-2">Meeting Host(s)</th>
+                <th className="py-3 px-2">Link</th>
+                <th className="py-3 px-2">Actions</th>
               </tr>
             </thead>
             <tbody>
