@@ -246,7 +246,33 @@ const AdminPage = () => {
       question.id === id ? { ...question, responded: !question.responded } : question
     ));
   };
-  
+  const [editingNotesId, setEditingNotesId] = useState(null);
+
+const handleNotesChange = (id, value) => {
+  setQuestions((prevQuestions) =>
+    prevQuestions.map((question) =>
+      question.id === id ? { ...question, notes: value } : question
+    )
+  );
+};
+
+const handleSaveNotes = async (id) => {
+  try {
+    const db = getFirestore(app);
+    const questionRef = doc(db, "contactus", id);
+    const questionToUpdate = questions.find((q) => q.id === id);
+
+    if (questionToUpdate) {
+      await updateDoc(questionRef, { notes: questionToUpdate.notes || "" });
+      console.log("Notes updated successfully!");
+    }
+
+    setEditingNotesId(null); // Disable editing after save
+  } catch (error) {
+    console.error("Error updating notes:", error);
+  }
+};
+
   const [editingId, setEditingId] = useState(null);
   const [editData, setEditData] = useState({
     name: "",
@@ -356,54 +382,76 @@ const AdminPage = () => {
   
 </div>
 
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            {activeView === 'contact' ? (
-              <>
-                <h2 className="text-2xl font-bold mb-4">Contact Form Messages</h2>
-                {questions.length > 0 ? (
-                  <div className="overflow-x-auto w-full">
-                    <table className="w-full">
-                      <thead>
-                        <tr className="bg-gray-50 text-left">
-                          <th className="py-3 px-4">Name</th>
-                          <th className="py-3 px-4">Email</th>
-                          <th className="py-3 px-4">Phone</th>
-                          <th className="py-3 px-4">Grade Level</th>
-                          <th className="py-3 px-4">Message</th>
-                          <th className="py-3 px-4">Date</th>
-                          <th className="py-3 px-4">Delete</th>
-                          <th className="py-3 px-4">Check if responded</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {questions.map((question, index) => (
-                          <tr key={question.id} className={index % 2 === 0 ? "bg-gray-50" : ""}>
-                            <td className="py-3 px-4">{question.name}</td>
-                            <td className="py-3 px-4">{question.email}</td>
-                            <td className="py-3 px-4">{question.phone}</td>
-                            <td className="py-3 px-4">{question.grade}</td>
-                            <td className="py-3 px-4">{question.info}</td>
-                            <td className="py-3 px-4">{question.createdAt.toDateString()}</td>
-                            <td className="py-3 px-4">
-                              <button onClick={() => handleDeleteContact(question.id)} className="text-red-500 hover:text-red-700">
-                                <Trash2 size={20} />
-                              </button>
-                            </td>
-                            <td className="py-3 px-4 ">
-                              <input 
-                                type="checkbox" 
-                                checked={question.responded || false} 
-                                onChange={() => handleResponseChange(question.id)} 
-                              />
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                ) : (
-                  <p className="text-gray-600">No contact form messages available.</p>
-                )}
+<div className="bg-white rounded-lg shadow-lg p-6">
+  {activeView === 'contact' ? (
+    <>
+      <h2 className="text-2xl font-bold mb-4">Contact Form Messages</h2>
+      {questions.length > 0 ? (
+        <div className="overflow-x-auto w-full">
+          <table className="w-full">
+            <thead>
+              <tr className="bg-gray-50 text-left">
+                <th className="py-3 px-4">Name</th>
+                <th className="py-3 px-4">Email</th>
+                <th className="py-3 px-4">Phone</th>
+                <th className="py-3 px-4">Grade Level</th>
+                <th className="py-3 px-4">Message</th>
+                <th className="py-3 px-4">Date</th>
+                <th className="py-3 px-4">Delete</th>
+                <th className="py-3 px-4">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+  {questions.map((question, index) => (
+    <tr key={question.id} className={index % 2 === 0 ? "bg-gray-50" : ""}>
+      <td className="py-3 px-4">{question.name}</td>
+      <td className="py-3 px-4">{question.email}</td>
+      <td className="py-3 px-4">{question.phone}</td>
+      <td className="py-3 px-4">{question.grade}</td>
+      <td className="py-3 px-4">{question.info}</td>
+      <td className="py-3 px-4">{question.createdAt.toDateString()}</td>
+      <td className="py-3 px-4">
+        <button onClick={() => handleDeleteContact(question.id)} className="text-red-500 hover:text-red-700">
+          <Trash2 size={20} />
+        </button>
+      </td>
+      <td className="py-3 px-4">
+        {editingNotesId === question.id ? (
+          <input
+            type="text"
+            value={question.notes || ""}
+            onChange={(e) => handleNotesChange(question.id, e.target.value)}
+            className="border p-1 rounded w-full"
+            autoFocus
+          />
+        ) : (
+          <div 
+            onClick={() => setEditingNotesId(question.id)} 
+            className="cursor-pointer p-1 min-w-[100px] border rounded bg-gray-100"
+          >
+            {question.notes || "Click to add notes"}
+          </div>
+        )}
+      </td>
+      <td className="py-3 px-4">
+        {editingNotesId === question.id && (
+          <button
+            onClick={() => handleSaveNotes(question.id)}
+            className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700"
+          >
+            Save
+          </button>
+        )}
+      </td>
+    </tr>
+  ))}
+</tbody>
+
+          </table>
+        </div>
+      ) : (
+        <p className="text-gray-600">No contact form messages available.</p>
+      )}
               </>
             ) : activeView === 'signup' ? (
               <>
@@ -415,11 +463,9 @@ const AdminPage = () => {
                         <tr className="bg-gray-50 text-left">
                           <th className="py-3 px-4">Name</th>
                           <th className="py-3 px-4">Contact</th>
-                          
-                          
                           <th className="py-3 px-4">Grade</th>
                           <th className="py-3 px-4">Details</th>
-                          <th className="py-3 px-4"></th>
+                          <th className="py-3 px-4">Delete</th>
                         </tr>
                       </thead>
                       <tbody>
