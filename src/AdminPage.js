@@ -8,6 +8,15 @@ import { Timestamp } from "firebase/firestore";
 import GoogleFormEmbed from "./GoogleFormEmbed";
 
 const AdminPage = () => {
+  const [signupStatuses, setSignupStatuses] = useState({});
+  const statusOptions = [
+    "Contacted Us in some way shape or form",
+    "Scheduled a Consultation Meeting",
+    "Finish Consultation Meeting",
+    "Did payment",
+    "Are scheduled with tutors/people"
+  ];
+  
   const [questions, setQuestions] = useState([]);
   const [responses, setResponses] = useState([]);
   const [activeMeetingTab, setActiveMeetingTab] = useState("consultation");
@@ -24,7 +33,7 @@ const AdminPage = () => {
   const presetPassword = "password123";
 
   //console.log(meetings); 
-
+  
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -62,8 +71,19 @@ const AdminPage = () => {
       const responsesList = signupResponses.docs.map((doc) => ({ 
         id: doc.id, 
         ...doc.data(),
-        createdAt: doc.data().createdAt?.toDate() || new Date(), 
+        createdAt: doc.data().createdAt?.toDate() || new Date(),
+        status: doc.data().status || "" // ✅ Load status from Firestore
       }));
+      
+      // ✅ Set signupStatuses state with Firestore data
+      const statusMap = {};
+      responsesList.forEach((response) => {
+        statusMap[response.id] = response.status || "";
+      });
+      
+      setSignupStatuses(statusMap);
+      
+      
 
       const meetingsList = meetingsBooked.docs.map((doc) => ({
         id: doc.id,
@@ -161,6 +181,55 @@ const AdminPage = () => {
       } catch (error) {
         console.error("Error deleting meeting:", error);
       }
+    }
+  };
+  
+  const [signupData, setSignupData] = useState({
+    name: "",
+    email: "",
+    parentEmail: "",
+    phone: "",
+    grade: "",
+    status: "",
+    notes: "",
+  });
+  
+  const addSignup = async () => {
+    if (!signupData.name || !signupData.email || !signupData.status) {
+      alert("Please fill in the required fields.");
+      return;
+    }
+  
+    try {
+      const db = getFirestore(app);
+      const docRef = await addDoc(collection(db, "arenaSignUps"), {
+        name: signupData.name,
+        email: signupData.email,
+        parentEmail: signupData.parentEmail,
+        phone: signupData.phone,
+        grade: signupData.grade,
+        status: signupData.status,
+        notes: signupData.notes,
+        createdAt: Timestamp.fromDate(new Date()), // Save timestamp for sorting
+      });
+  
+      // Update UI by adding the new signup to state
+      setResponses([...responses, { id: docRef.id, ...signupData }]);
+  
+      // Reset the form
+      setSignupData({
+        name: "",
+        email: "",
+        parentEmail: "",
+        phone: "",
+        grade: "",
+        status: "",
+        notes: "",
+      });
+  
+      console.log("Sign-up added with ID: ", docRef.id);
+    } catch (error) {
+      console.error("Error adding sign-up: ", error);
     }
   };
   
@@ -269,6 +338,24 @@ const AdminPage = () => {
           meeting.id === id ? { ...meeting, notes: value } : meeting
         ),
       }));
+    }
+  };
+  
+  const handleStatusChange = async (id, newStatus) => {
+    try {
+      const db = getFirestore(app);
+      const docRef = doc(db, "arenaSignUps", id);
+      
+      await updateDoc(docRef, { status: newStatus }); // ✅ Update Firestore
+  
+      setSignupStatuses((prevStatuses) => ({
+        ...prevStatuses,
+        [id]: newStatus,
+      }));
+  
+      console.log("Status updated successfully!");
+    } catch (error) {
+      console.error("Error updating status:", error);
     }
   };
   
@@ -495,112 +582,193 @@ const AdminPage = () => {
               <tr className="bg-gray-50 text-left">
                 <th className="py-3 px-4">Name</th>
                 <th className="py-3 px-4">Info</th>
-         
                 <th className="py-3 px-4">Details</th>
+                <th className="py-3 px-4">Status</th>
                 <th className="py-3 px-4">Notes</th>
                 <th className="py-3 px-4">Save</th>
                 <th className="py-3 px-4">Delete</th>
               </tr>
             </thead>
             <tbody>
-              {responses.map((response, index) => (
-                <tr key={response.id} className={index % 2 === 0 ? "bg-gray-50" : ""}>
-                  <td className="py-3 px-4">{response.name}</td>
-                  <td className="py-3 px-4">
-                    <strong>Student Email:</strong> {response.email}
-                    <br />
-                    <strong>Parent Email: </strong>
-                    {response.parentEmail}
-                    <br />
-                    <strong>Phone Number:</strong>
-                    <br />
-                    {response.phone}<br/>
-                    <strong>Grade:</strong>
-                  
-                    {response.grade}
-                  </td>
-                
-                  <td className="py-3 px-4">
-                    <details className="cursor-pointer">
-                      <summary className="text-blue-600 hover:text-blue-800">View Details</summary>
-                      <div className="mt-2 text-sm">
-                        <p>
-                          <strong>Summer Programs:</strong>{" "}
-                          {Array.isArray(response.selectedPrograms)
-                            ? response.selectedPrograms.join(", ")
-                            : response.selectedPrograms || "N/A"}
-                        </p>
-                        <p>
-                          <strong>Internship:</strong>{" "}
-                          {Array.isArray(response.selectedInternshipOptions)
-                            ? response.selectedInternshipOptions.join(", ")
-                            : response.selectedInternshipOptions || "N/A"}
-                        </p>
-                        <p>
-                          <strong>Olympiads:</strong>{" "}
-                          {Array.isArray(response.selectedOlympiadOptions)
-                            ? response.selectedOlympiadOptions.join(", ")
-                            : response.selectedOlympiadOptions || "N/A"}
-                        </p>
-                        <p>
-                          <strong>Resume:</strong>{" "}
-                          {Array.isArray(response.selectedResumeOptions)
-                            ? response.selectedResumeOptions.join(", ")
-                            : response.selectedResumeOptions || "N/A"}
-                        </p>
-                        <p>
-                          <strong>SAT Prep:</strong>{" "}
-                          {Array.isArray(response.selectedSATPrep)
-                            ? response.selectedSATPrep.join(", ")
-                            : response.selectedSATPrep || "N/A"}
-                        </p>
-                        {response.additionalInfo && (
-                          <p>
-                            <strong>Additional Info:</strong> {response.additionalInfo}
-                          </p>
-                        )}
-                      </div>
-                    </details>
-                  </td>
-                  <td className="py-3 px-4">
-  {editingNotesId === response.id ? (
-    <input
-      type="text"
-      value={response.notes || ""}
-      onChange={(e) => handleNotesChange(response.id, e.target.value)}
-      className="border p-1 rounded w-full"
-      autoFocus
-    />
-  ) : (
-    <div 
-      onClick={() => setEditingNotesId(response.id)} 
-      className="cursor-pointer p-1 min-w-[100px] border rounded bg-gray-100"
+  {responses.map((response, index) => (
+    <tr 
+      key={response.id} 
+      className={`border-b ${index % 2 === 0 ? "bg-gray-50" : "bg-white"} hover:bg-gray-100 transition`}
     >
-      {response.notes || "Click to add notes"}
-    </div>
-  )}
-</td>
-                  <td className="py-3 px-4">
-                    {editingNotesId === response.id && (
-                      <button
-                        onClick={() => handleSaveNotes(response.id)}
-                        className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700"
-                      >
-                        Save
-                      </button>
-                    )}
-                  </td>
-                  <td className="py-3 px-4">
-                    <button
-                      onClick={() => handleDelete(response.id)}
-                      className="text-red-500 hover:text-red-700"
-                    >
-                      <Trash2 size={20} />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+      <td className="py-3 px-4 text-sm font-medium text-gray-700">{response.name}</td>
+
+      <td className="py-3 px-4 text-sm text-gray-600 align-top">
+        <strong>Student Email:</strong> {response.email}
+        <br />
+        <strong>Parent Email:</strong> {response.parentEmail}
+        <br />
+        <strong>Phone:</strong> {response.phone}
+        <br />
+        <strong>Grade:</strong> {response.grade}
+      </td>
+
+      <td className="py-3 px-4 text-sm">
+        <details className="cursor-pointer">
+          <summary className="text-blue-600 hover:text-blue-800 font-medium">View Details</summary>
+          <div className="mt-2 text-gray-600">
+            <p><strong>Summer Programs:</strong> {response.selectedPrograms?.join(", ") || "N/A"}</p>
+            <p><strong>Internship:</strong> {response.selectedInternshipOptions?.join(", ") || "N/A"}</p>
+            <p><strong>Olympiads:</strong> {response.selectedOlympiadOptions?.join(", ") || "N/A"}</p>
+            <p><strong>Resume:</strong> {response.selectedResumeOptions?.join(", ") || "N/A"}</p>
+            <p>
+  <strong>SAT Prep:</strong>{" "}
+  {Array.isArray(response.selectedSAT)
+    ? response.selectedSAT.join(", ")
+    : response.selectedSAT || "N/A"}
+</p>
+
+            {response.additionalInfo && <p><strong>Additional Info:</strong> {response.additionalInfo}</p>}
+          </div>
+        </details>
+      </td>
+
+      {/* 🚀 Larger Status Dropdown */}
+      <td className="py-3 px-4 w-1/2">
+        <div className="relative">
+          <select
+            value={signupStatuses[response.id] || ""}
+            onChange={(e) => handleStatusChange(response.id, e.target.value)}
+            className="w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+          >
+            <option value="" disabled>Select Status</option>
+            {statusOptions.map((status) => (
+              <option key={status} value={status}>{status}</option>
+            ))}
+          </select>
+        </div>
+      </td>
+
+      {/* 🚀 Larger Notes Input (Textarea) */}
+      <td className="py-3 px-4 w-1/2">
+        {editingNotesId === response.id ? (
+          <textarea
+            value={response.notes || ""}
+            onChange={(e) => handleNotesChange(response.id, e.target.value)}
+            className="border border-gray-300 p-2 rounded-md w-full min-h-[40px] text-sm resize-y"
+            autoFocus
+          />
+        ) : (
+          <div 
+            onClick={() => setEditingNotesId(response.id)} 
+            className="cursor-pointer p-3 border rounded-md bg-gray-100 text-gray-600 text-sm min-h-[40px] flex items-center"
+          >
+            {response.notes || "Click to add notes"}
+          </div>
+        )}
+      </td>
+
+      {/* 🚀 Save Button Styled */}
+      <td className="py-3 px-4">
+        {editingNotesId === response.id && (
+          <button
+            onClick={() => handleSaveNotes(response.id)}
+            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+          >
+            Save
+          </button>
+        )}
+      </td>
+
+      {/* 🚀 Delete Button with Better Contrast */}
+      <td className="py-3 px-4 text-center">
+        <button
+          onClick={() => handleDelete(response.id)}
+          className="border border-red-500 text-red-500 hover:bg-red-500 hover:text-white px-3 py-1 rounded-lg transition"
+        >
+          <Trash2 size={18} />
+        </button>
+      </td>
+    </tr>
+  ))}
+</tbody>
+
+
+            <tfoot>
+  <tr className="bg-gray-50">
+    <td className="py-2 px-4">
+      <input
+        type="text"
+        placeholder="Name"
+        className="border p-2 w-full rounded-md"
+        value={signupData.name}
+        onChange={(e) => setSignupData({ ...signupData, name: e.target.value })}
+      />
+    </td>
+    <td className="py-2 px-4">
+      <input
+        type="email"
+        placeholder="Student Email"
+        className="border p-2 w-full rounded-md"
+        value={signupData.email}
+        onChange={(e) => setSignupData({ ...signupData, email: e.target.value })}
+      />
+    </td>
+    <td className="py-2 px-4">
+      <input
+        type="email"
+        placeholder="Parent Email"
+        className="border p-2 w-full rounded-md"
+        value={signupData.parentEmail}
+        onChange={(e) => setSignupData({ ...signupData, parentEmail: e.target.value })}
+      />
+    </td>
+    <td className="py-2 px-4">
+      <input
+        type="text"
+        placeholder="Phone Number"
+        className="border p-2 w-full rounded-md"
+        value={signupData.phone}
+        onChange={(e) => setSignupData({ ...signupData, phone: e.target.value })}
+      />
+    </td>
+    <td className="py-2 px-4">
+      <input
+        type="number"
+        placeholder="Grade"
+        className="border p-2 w-full rounded-md"
+        value={signupData.grade}
+        onChange={(e) => setSignupData({ ...signupData, grade: e.target.value })}
+      />
+    </td>
+    <td className="py-2 px-4">
+      <select
+        className="border p-2 rounded-md w-full"
+        value={signupData.status}
+        onChange={(e) => setSignupData({ ...signupData, status: e.target.value })}
+      >
+        <option value="" disabled>Select Status</option>
+        {statusOptions.map((status) => (
+          <option key={status} value={status}>
+            {status}
+          </option>
+        ))}
+      </select>
+    </td>
+    <td className="py-2 px-4">
+      <input
+        type="text"
+        placeholder="Notes"
+        className="border p-2 w-full rounded-md"
+        value={signupData.notes}
+        onChange={(e) => setSignupData({ ...signupData, notes: e.target.value })}
+      />
+    </td>
+    <td className="py-2 px-4 text-right">
+      <button
+        onClick={addSignup}
+        className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-200"
+      >
+        Add Sign-up
+      </button>
+    </td>
+  </tr>
+</tfoot>
+
           </table>
         </div>
       ) : (
