@@ -5,6 +5,7 @@ import { addDoc, collection } from 'firebase/firestore';
 import { app } from "./firebase";
 import {Trash2, Edit } from "lucide-react";
 import { Timestamp } from "firebase/firestore";
+import GoogleFormEmbed from "./GoogleFormEmbed";
 
 const AdminPage = () => {
   const [questions, setQuestions] = useState([]);
@@ -607,7 +608,7 @@ const AdminPage = () => {
                  <>
       <h2 className="text-2xl font-bold mb-4">Customer Next Meeting</h2>
       <div className="flex space-x-4 mb-4">
-  {["consultation", "summerProgram", "satAct", "ec"].map((tab) => (
+  {["Free Consultation", "Ratul", "Aaron", "Nirav", "Advay"].map((tab) => (
     <button
       key={tab}
       className={`px-4 py-2 rounded ${activeMeetingTab === tab ? "bg-blue-500 text-white" : "bg-gray-200"}`}
@@ -617,8 +618,23 @@ const AdminPage = () => {
     </button>
   ))}
 </div>
-
+{activeMeetingTab === 'Free Consultation' ? (
+  <GoogleFormEmbed src="https://calendar.google.com/calendar/embed?src=arena.college.counseling%40gmail.com&ctz=America%2FLos_Angeles" />
+  ) : activeMeetingTab === 'Ratul' ? (
+    <GoogleFormEmbed src="https://calendar.google.com/calendar/embed?src=arena.college.counseling%40gmail.com&ctz=America%2FLos_Angeles" />
+  ) : activeMeetingTab === 'Aaron' ? (
+    <GoogleFormEmbed src="https://calendar.google.com/calendar/embed?src=arena.college.counseling%40gmail.com&ctz=America%2FLos_Angeles" />
+  ) : activeMeetingTab === 'Nirav' ? (
+    <GoogleFormEmbed src="https://calendar.google.com/calendar/embed?src=arena.college.counseling%40gmail.com&ctz=America%2FLos_Angeles" />
+  ) : activeMeetingTab === 'Advay' ? (
+    <GoogleFormEmbed src="https://calendar.google.com/calendar/embed?src=arena.college.counseling%40gmail.com&ctz=America%2FLos_Angeles" />
+  ): null}
+  
+{/*
 {meetings[activeMeetingTab]?.length > 0 ? (
+  <>
+  <GoogleFormEmbed src="https://calendar.google.com/calendar/embed?src=arena.college.counseling%40gmail.com&ctz=America%2FLos_Angeles" />
+  
   <table className="w-full mt-4 border-collapse border border-gray-300">
     <thead className="bg-gray-100 text-gray-700">
       <tr>
@@ -677,6 +693,7 @@ const AdminPage = () => {
       ))}
     </tbody>
   </table>
+  </>
 ) : (
   <p className="text-gray-600 text-center py-4">No meetings available for this category.</p>
 )}
@@ -756,7 +773,7 @@ const AdminPage = () => {
 
   </table>
       </>
-
+*/}
     </>
             ) : activeView === 'customers' ? (
               <>

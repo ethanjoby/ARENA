@@ -1,12 +1,13 @@
 import React from "react";
 
-const GoogleFormEmbed = ({ src, width = "1000", height = "100%" }) => {
+const GoogleFormEmbed = ({ src, width = "100%", height = "100%" }) => {
   const containerStyle = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#000",
-    height: "1100px",
+    backgroundColor: "white",
+    height: "1000px",
+    width: "1100px",
     margin: 0,
   };
 
