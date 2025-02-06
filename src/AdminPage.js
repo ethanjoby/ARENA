@@ -248,30 +248,61 @@ const AdminPage = () => {
   };
   const [editingNotesId, setEditingNotesId] = useState(null);
 
-const handleNotesChange = (id, value) => {
-  setQuestions((prevQuestions) =>
-    prevQuestions.map((question) =>
-      question.id === id ? { ...question, notes: value } : question
-    )
-  );
-};
-
-const handleSaveNotes = async (id) => {
-  try {
-    const db = getFirestore(app);
-    const questionRef = doc(db, "contactus", id);
-    const questionToUpdate = questions.find((q) => q.id === id);
-
-    if (questionToUpdate) {
-      await updateDoc(questionRef, { notes: questionToUpdate.notes || "" });
-      console.log("Notes updated successfully!");
+  const handleNotesChange = (id, value) => {
+    if (activeView === "contact") {
+      setQuestions((prevQuestions) =>
+        prevQuestions.map((question) =>
+          question.id === id ? { ...question, notes: value } : question
+        )
+      );
+    } else if (activeView === "signup") {
+      setResponses((prevResponses) =>
+        prevResponses.map((response) =>
+          response.id === id ? { ...response, notes: value } : response
+        )
+      );
+    } else if (activeView === "meetings") {
+      setMeetings((prevMeetings) => ({
+        ...prevMeetings,
+        [activeMeetingTab]: prevMeetings[activeMeetingTab].map((meeting) =>
+          meeting.id === id ? { ...meeting, notes: value } : meeting
+        ),
+      }));
     }
+  };
+  
+  
 
-    setEditingNotesId(null); // Disable editing after save
-  } catch (error) {
-    console.error("Error updating notes:", error);
-  }
-};
+  const handleSaveNotes = async (id) => {
+    try {
+      const db = getFirestore(app);
+      let collectionName;
+      let dataToUpdate;
+  
+      if (activeView === "contact") {
+        collectionName = "contactus";
+        dataToUpdate = questions.find((q) => q.id === id);
+      } else if (activeView === "signup") {
+        collectionName = "arenaSignUps";
+        dataToUpdate = responses.find((r) => r.id === id);
+      } else if (activeView === "meetings") {
+        collectionName = "meetings";
+        dataToUpdate = meetings[activeMeetingTab].find((m) => m.id === id);
+      }
+  
+      if (dataToUpdate) {
+        const docRef = doc(db, collectionName, id);
+        await updateDoc(docRef, { notes: dataToUpdate.notes || "" });
+        console.log("Notes updated successfully!");
+      }
+  
+      setEditingNotesId(null); // Exit edit mode after saving
+    } catch (error) {
+      console.error("Error updating notes:", error);
+    }
+  };
+  
+  
 
   const [editingId, setEditingId] = useState(null);
   const [editData, setEditData] = useState({
@@ -456,66 +487,121 @@ const handleSaveNotes = async (id) => {
             ) : activeView === 'signup' ? (
               <>
                 <h2 className="text-2xl font-bold mb-4">Program Sign-ups</h2>
-                {responses.length > 0 ? (
-                  <div className="overflow-x-auto">
-                    <table className="w-full">
-                      <thead>
-                        <tr className="bg-gray-50 text-left">
-                          <th className="py-3 px-4">Name</th>
-                          <th className="py-3 px-4">Contact</th>
-                          <th className="py-3 px-4">Grade</th>
-                          <th className="py-3 px-4">Details</th>
-                          <th className="py-3 px-4">Delete</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {responses.map((response, index) => (
-                          <tr key={response.id} className={index % 2 === 0 ? "bg-gray-50" : ""}>
-                            <td className="py-3 px-4">{response.name}</td>
-                            <td className="py-3 px-4"><strong>Student Email:</strong> {response.email}<br/> <strong>Parent Email: </strong>{response.parentEmail}<br/> <strong>Phone Number:</strong> <br/>{response.phone}</td>
-                            
-                            
-                            <td className="py-3 px-4">{response.grade}</td>
-                            
-                            
-                            <td className="py-3 px-4">
-                              <details className="cursor-pointer">
-                                <summary className="text-blue-600 hover:text-blue-800">View Details</summary>
-                                <div className="mt-2 text-sm">
-                                <p><strong>Summer Programs:</strong> {Array.isArray(response.selectedPrograms) 
-                                ? response.selectedPrograms.join(", ") 
-                                : response.selectedPrograms || "N/A"}</p>
-                                  <p><strong>Internship:</strong> {Array.isArray(response.selectedInternshipOptions) 
-                                    ? response.selectedInternshipOptions.join(", ") 
-                                    : response.selectedInternshipOptions || "N/A"}</p>
-                                    <p><strong>Olympiads:</strong> {Array.isArray(response.selectedOlympiadOptions) 
-                                    ? response.selectedOlympiadOptions.join(", ") 
-                                    : response.selectedOlympiadOptions || "N/A"}</p>
-                                  <p><strong>Resume:</strong> {Array.isArray(response.selectedResumeOptions) 
-                                    ? response.selectedResumeOptions.join(", ") 
-                                    : response.selectedResumeOptions || "N/A"}</p>
-                                  <p><strong>SAT Prep:</strong> {Array.isArray(response.selectedSATPrep) 
-                                    ? response.selectedSATPrep.join(", ") 
-                                    : response.selectedSATPrep || "N/A"}</p>
-                                  {response.additionalInfo && (
-                                    <p><strong>Additional Info:</strong> {response.additionalInfo}</p>
-                                  )}
-                                </div>
-                              </details>
-                            </td>
-                            <td className="py-3 px-4">
-                              <button onClick={() => handleDelete(response.id)} className="text-red-500 hover:text-red-700">
-                                <Trash2 size={20} />
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                ) : (
-                  <p className="text-gray-600">No sign-up responses available.</p>
-                )}
+      {responses.length > 0 ? (
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="bg-gray-50 text-left">
+                <th className="py-3 px-4">Name</th>
+                <th className="py-3 px-4">Contact</th>
+                <th className="py-3 px-4">Grade</th>
+                <th className="py-3 px-4">Details</th>
+                <th className="py-3 px-4">Notes</th>
+                <th className="py-3 px-4">Save</th>
+                <th className="py-3 px-4">Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {responses.map((response, index) => (
+                <tr key={response.id} className={index % 2 === 0 ? "bg-gray-50" : ""}>
+                  <td className="py-3 px-4">{response.name}</td>
+                  <td className="py-3 px-4">
+                    <strong>Student Email:</strong> {response.email}
+                    <br />
+                    <strong>Parent Email: </strong>
+                    {response.parentEmail}
+                    <br />
+                    <strong>Phone Number:</strong>
+                    <br />
+                    {response.phone}
+                  </td>
+                  <td className="py-3 px-4">{response.grade}</td>
+                  <td className="py-3 px-4">
+                    <details className="cursor-pointer">
+                      <summary className="text-blue-600 hover:text-blue-800">View Details</summary>
+                      <div className="mt-2 text-sm">
+                        <p>
+                          <strong>Summer Programs:</strong>{" "}
+                          {Array.isArray(response.selectedPrograms)
+                            ? response.selectedPrograms.join(", ")
+                            : response.selectedPrograms || "N/A"}
+                        </p>
+                        <p>
+                          <strong>Internship:</strong>{" "}
+                          {Array.isArray(response.selectedInternshipOptions)
+                            ? response.selectedInternshipOptions.join(", ")
+                            : response.selectedInternshipOptions || "N/A"}
+                        </p>
+                        <p>
+                          <strong>Olympiads:</strong>{" "}
+                          {Array.isArray(response.selectedOlympiadOptions)
+                            ? response.selectedOlympiadOptions.join(", ")
+                            : response.selectedOlympiadOptions || "N/A"}
+                        </p>
+                        <p>
+                          <strong>Resume:</strong>{" "}
+                          {Array.isArray(response.selectedResumeOptions)
+                            ? response.selectedResumeOptions.join(", ")
+                            : response.selectedResumeOptions || "N/A"}
+                        </p>
+                        <p>
+                          <strong>SAT Prep:</strong>{" "}
+                          {Array.isArray(response.selectedSATPrep)
+                            ? response.selectedSATPrep.join(", ")
+                            : response.selectedSATPrep || "N/A"}
+                        </p>
+                        {response.additionalInfo && (
+                          <p>
+                            <strong>Additional Info:</strong> {response.additionalInfo}
+                          </p>
+                        )}
+                      </div>
+                    </details>
+                  </td>
+                  <td className="py-3 px-4">
+  {editingNotesId === response.id ? (
+    <input
+      type="text"
+      value={response.notes || ""}
+      onChange={(e) => handleNotesChange(response.id, e.target.value)}
+      className="border p-1 rounded w-full"
+      autoFocus
+    />
+  ) : (
+    <div 
+      onClick={() => setEditingNotesId(response.id)} 
+      className="cursor-pointer p-1 min-w-[100px] border rounded bg-gray-100"
+    >
+      {response.notes || "Click to add notes"}
+    </div>
+  )}
+</td>
+                  <td className="py-3 px-4">
+                    {editingNotesId === response.id && (
+                      <button
+                        onClick={() => handleSaveNotes(response.id)}
+                        className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700"
+                      >
+                        Save
+                      </button>
+                    )}
+                  </td>
+                  <td className="py-3 px-4">
+                    <button
+                      onClick={() => handleDelete(response.id)}
+                      className="text-red-500 hover:text-red-700"
+                    >
+                      <Trash2 size={20} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <p className="text-gray-600">No sign-up responses available.</p>
+      )}
               </>
             ) : activeView === 'meetings' ? (
                  <>
