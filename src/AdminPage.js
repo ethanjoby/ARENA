@@ -4,12 +4,19 @@ import { doc, updateDoc } from 'firebase/firestore';
 import { addDoc, collection } from 'firebase/firestore';
 import { app } from "./firebase";
 import {Trash2, Edit } from "lucide-react";
+import { Timestamp } from "firebase/firestore";
 
 const AdminPage = () => {
-  const [meetings, setmeetings] = useState([]); 
   const [questions, setQuestions] = useState([]);
   const [responses, setResponses] = useState([]);
-
+  const [activeMeetingTab, setActiveMeetingTab] = useState("consultation");
+  const [meetings, setMeetings] = useState({
+    consultation: [],
+    summerProgram: [],
+    satAct: [],
+    ec: []
+  });
+  
   const [activeView, setActiveView] = useState('contact');
 
   const presetUsername = "admin";
@@ -27,7 +34,6 @@ const AdminPage = () => {
     email: "", 
     meetingType: "", 
     date: "",
-    time: "",
     hosts: "",
     link: "",
   }); ;
@@ -67,7 +73,15 @@ const AdminPage = () => {
       
       setQuestions(questionList);
       setResponses(responsesList);
-      setmeetings(meetingsList); 
+      const categorizedMeetings = {
+        consultation: meetingsList.filter(m => m.meetingType === "Consultation"),
+        summerProgram: meetingsList.filter(m => m.meetingType === "Summer Program"),
+        satAct: meetingsList.filter(m => m.meetingType === "SAT/ACT"),
+        ec: meetingsList.filter(m => m.meetingType === "Extracurriculars")
+      };
+      
+      setMeetings(categorizedMeetings);
+      
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
@@ -128,55 +142,100 @@ const AdminPage = () => {
     }
   };
 
-  const handleMeetingDelete = async(id) => {
+  const handleMeetingDelete = async (id) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this meeting?");
-    if(confirmDelete){
+    
+    if (confirmDelete) {
       try {
-        const db = getFirestore(app); 
-        await deleteDoc(doc(db, "meetings", id)); 
-        setmeetings(meetings.filter((meeting) => meeting.id !== id)); 
+        const db = getFirestore(app);
+        await deleteDoc(doc(db, "meetings", id));
+  
+        setMeetings((prev) => ({
+          ...prev,
+          [activeMeetingTab]: prev[activeMeetingTab]?.filter(meeting => meeting.id !== id) || []
+        }));
+  
+        console.log("Meeting deleted successfully!");
+  
       } catch (error) {
-        console.error("Eerro deleting the meetings", error); 
+        console.error("Error deleting meeting:", error);
       }
     }
-  }
+  };
+  
+  
 
   const addMeeting = async () => {
     try {
-        const db = getFirestore(app);
-        const meetingsCollection = collection(db, "meetings");
-
-        // Combine date and time into a single Date object
-        const [hours, minutes] = meetingsdata.time.split(":");
-        const meetingDateTime = new Date(`${meetingsdata.date}T${hours}:${minutes}:00`);
-
-        const newMeeting = {
-            name: meetingsdata.name,
-            email: meetingsdata.email,
-            meetingType: meetingsdata.meetingType,
-            date: meetingDateTime, // Store correctly formatted date
-            hosts: meetingsdata.hosts,
-            link: meetingsdata.link,
-        };
-
-        await addDoc(meetingsCollection, newMeeting);
-        fetchData();
-        
-        setmeetingsdata({
-            name: "",
-            email: "",
-            meetingType: "",
-            date: "",
-            time: "", 
-            hosts: "",
-            link: "",
-        });
-        
-
+      console.log("Trying to add a meeting...");
+  
+      if (!meetingsdata.name.trim() || 
+          !meetingsdata.email.trim() || 
+          !meetingsdata.date.trim() || 
+          !meetingsdata.link.trim()) {
+        alert("Please fill in all required fields.");
+        console.error("Missing required fields:", meetingsdata);
+        return;
+      }
+  
+      const db = getFirestore(app);
+      const meetingsCollection = collection(db, "meetings");
+  
+      // Convert date to Firestore Timestamp
+      const meetingDateTime = Timestamp.fromDate(new Date(meetingsdata.date));
+  
+      console.log("Formatted date:", meetingDateTime);
+  
+      // Properly format the meeting type
+      const formattedMeetingType = {
+        consultation: "Consultation",
+        summerProgram: "Summer Program",
+        satAct: "SAT/ACT",
+        ec: "Extracurriculars"
+      }[activeMeetingTab] || "Other"; // Fallback in case of unexpected input
+  
+      const newMeeting = {
+        name: meetingsdata.name,
+        email: meetingsdata.email,
+        date: meetingDateTime, 
+        hosts: meetingsdata.hosts || "N/A",
+        link: meetingsdata.link,
+        meetingType: formattedMeetingType // Ensure correct format
+      };
+  
+      // Add to Firestore
+      const docRef = await addDoc(meetingsCollection, newMeeting);
+      newMeeting.id = docRef.id;
+  
+      console.log("Meeting added to Firestore with ID:", newMeeting.id);
+  
+      // Update state properly for all meeting types
+      setMeetings((prev) => ({
+        ...prev,
+        [activeMeetingTab]: [...(prev[activeMeetingTab] || []), newMeeting],
+      }));
+  
+      // Clear input fields after adding
+      setmeetingsdata({
+        name: "",
+        email: "",
+        date: "",
+        hosts: "",
+        link: ""
+      });
+  
     } catch (error) {
-        console.error("Error adding meeting: ", error);
+      console.error("Error adding meeting: ", error);
     }
-};
+  };
+  
+  
+  
+  
+  
+  
+  
+  
 
   
 
@@ -189,7 +248,14 @@ const AdminPage = () => {
   };
   
   const [editingId, setEditingId] = useState(null);
-  const [editData, setEditData] = useState({});
+  const [editData, setEditData] = useState({
+    name: "",
+    email: "",
+    date: "",
+    hosts: "",
+    link: "" // ✅ Include Meeting Link in edit state
+  });
+  
   const updateMeeting = async (id, updatedData) => {
     try {
       const db = getFirestore(app);
@@ -197,7 +263,7 @@ const AdminPage = () => {
   
       await updateDoc(meetingRef, updatedData);
   
-      setmeetings((prevMeetings) =>
+      setMeetings((prevMeetings) =>
         prevMeetings.map((meeting) =>
           meeting.id === id ? { ...meeting, ...updatedData } : meeting
         )
@@ -218,11 +284,29 @@ const AdminPage = () => {
   const handleEditChange = (e, field) => {
     setEditData({ ...editData, [field]: e.target.value });
   };
+  
 
-  const saveEdit = () => {
-    updateMeeting(editingId, editData);
-    setEditingId(null);
+  const saveEdit = async () => {
+    try {
+      const db = getFirestore(app);
+      const meetingRef = doc(db, "meetings", editingId);
+  
+      await updateDoc(meetingRef, editData);
+  
+      // Fix: Ensure prevMeetings is treated as an array
+      setMeetings((prev) => ({
+        ...prev,
+        [activeMeetingTab]: prev[activeMeetingTab]?.map((meeting) =>
+          meeting.id === editingId ? { ...meeting, ...editData } : meeting
+        ) || []
+      }));
+  
+      setEditingId(null);
+    } catch (error) {
+      console.error("Error updating meeting:", error);
+    }
   };
+  
 
   if (isLoggedIn) {
     return (
@@ -390,78 +474,98 @@ const AdminPage = () => {
             ) : activeView === 'meetings' ? (
                  <>
       <h2 className="text-2xl font-bold mb-4">Customer Next Meeting</h2>
-      {meetings.length > 0 ? (
-        <div className="overflow-x-auto w-full">
-          <table className="w-full table-auto border-collapse">
-            <thead>
-              <tr className="bg-gray-50 text-left w-full">
-                <th className="py-3 px-2">Name</th>
-                <th className="py-3 px-2">Email</th>
-                
-                <th className="py-3 px-2">Type Of Meeting</th>
-                <th className="py-3 px-2">Date & Time</th>
-                <th className="py-3 px-2">Meeting Host(s)</th>
-                <th className="py-3 px-2">Link</th>
-                <th className="py-3 px-2">Actions</th>
+      <div className="flex space-x-4 mb-4">
+  {["consultation", "summerProgram", "satAct", "ec"].map((tab) => (
+    <button
+      key={tab}
+      className={`px-4 py-2 rounded ${activeMeetingTab === tab ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+      onClick={() => setActiveMeetingTab(tab)}
+    >
+      {tab.replace(/([A-Z])/g, " $1")} {/* Formats "summerProgram" to "Summer Program" */}
+    </button>
+  ))}
+</div>
+
+{meetings[activeMeetingTab]?.length > 0 ? (
+  <table className="w-full mt-4 border-collapse border border-gray-300">
+    <thead className="bg-gray-100 text-gray-700">
+      <tr>
+        <th className="py-3 px-4 text-left border-b border-gray-300">Name</th>
+        <th className="py-3 px-4 text-left border-b border-gray-300">Email</th>
+        <th className="py-3 px-4 text-left border-b border-gray-300">Date/Time</th>
+        <th className="py-3 px-4 text-left border-b border-gray-300">Hosts</th>
+        <th className="py-3 px-4 text-left border-b border-gray-300">Meeting Link</th>
+        <th className="py-3 px-4 text-center border-b border-gray-300">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {meetings[activeMeetingTab].map((meeting, index) => (
+        <tr key={meeting.id} className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}>
+          {editingId === meeting.id ? (
+            <>
+              <td className="py-2 px-4 border-b"><input type="text" value={editData.name} onChange={(e) => handleEditChange(e, 'name')} className="border p-2 w-full rounded-md" /></td>
+              <td className="py-2 px-4 border-b"><input type="email" value={editData.email} onChange={(e) => handleEditChange(e, 'email')} className="border p-2 w-full rounded-md" /></td>
+              <td className="py-2 px-4 border-b"><input type="datetime-local" value={editData.date} onChange={(e) => handleEditChange(e, 'date')} className="border p-2 w-full rounded-md" /></td>
+              <td className="py-2 px-4 border-b"><input type="text" value={editData.hosts} onChange={(e) => handleEditChange(e, 'hosts')} className="border p-2 w-full rounded-md" /></td>
+              <td className="py-2 px-4 border-b"><input type="text" value={editData.link} onChange={(e) => handleEditChange(e, 'link')} className="border p-2 w-full rounded-md" /></td>
+              <td className="py-2 px-4 border-b text-center">
+                <button onClick={saveEdit} className="text-green-500 hover:text-green-700 font-bold mr-2">Save</button>
+                <button onClick={() => setEditingId(null)} className="text-gray-500 hover:text-gray-700">Cancel</button>
+              </td>
+            </>
+          ) : (
+            <>
+              <td className="py-3 px-4 border-b">{meeting.name}</td>
+              <td className="py-3 px-4 border-b">{meeting.email}</td>
+              <td className="py-3 px-4 border-b">{new Date(meeting.date).toLocaleString()}</td>
+              <td className="py-3 px-4 border-b">{meeting.hosts}</td>
+              <td className="py-3 px-4 border-b text-center">
+  <a 
+    href={meeting.link} 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    className="inline-flex items-center bg-green-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-green-600 transition duration-300"
+  >
+    <span className="mr-2">Join</span>
+    ➜
+  </a>
+</td>
+
+              <td className="py-3 px-4 border-b text-center">
+                <button onClick={() => startEditing(meeting)} className="text-blue-500 hover:text-blue-700 font-bold mr-2">
+                  <Edit size={20} />
+                </button>
+                <button onClick={() => handleMeetingDelete(meeting.id)} className="text-red-500 hover:text-red-700 font-bold">
+                  <Trash2 size={20} />
+                </button>
+              </td>
+            </>
+          )}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+) : (
+  <p className="text-gray-600 text-center py-4">No meetings available for this category.</p>
+)}
+
+
+ 
+        <>
+        <table className="w-full mt-4">
+        <thead>
+              <tr className="bg-gray-50 text-left">
+                <th className="py-3 px-4">Name</th>
+                <th className="py-3 px-4">Email</th>
+                <th className="py-3 px-4">Hosts</th>
+                <th className="py-3 px-4">Date/Time</th>
+                <th className="py-3 px-4">Link</th>
+                <th className="py-3 px-4"></th>
               </tr>
             </thead>
-            <tbody>
-            {meetings.map((meeting, index) => (
-              <tr key={meeting.id} className={index % 2 === 0 ? "bg-gray-50" : ""}>
-                {editingId === meeting.id ? (
-                  <>
-                    <td className="py-3 px-2"><input type="text" value={editData.name} onChange={(e) => handleEditChange(e, 'name')} className="border p-2 w-full" /></td>
-                    <td className="py-3 px-2"><input type="email" value={editData.email} onChange={(e) => handleEditChange(e, 'email')} className="border p-2 w-full" /></td>
-                    
-                    <td className="py-3 px-2"><input type="text" value={editData.meetingType} onChange={(e) => handleEditChange(e, 'meetingType')} className="border p-2 w-full" /></td>
-                    
-
-                    <td className="py-3 px-2">
-                      <input type="datetime-local" value={editData.date} onChange={(e) => handleEditChange(e, 'date')} className="border p-2 w-full" />
-                    </td>
-                    <td className="py-3 px-2"><input type="text" value={editData.hosts} onChange={(e) => handleEditChange(e, 'hosts')} className="border p-2 w-full" /></td>
-                    <td className="py-3 px-2"><input type="text" value={editData.link} onChange={(e) => handleEditChange(e, 'link')} className="border p-2 w-full" /></td>
-                    <td className="py-3 px-2">
-                      <button onClick={saveEdit} className="text-green-500 hover:text-green-700 mr-2">Save</button>
-                      <button onClick={() => setEditingId(null)} className="text-gray-500 hover:text-gray-700">Cancel</button>
-                    </td>
-                    
-                  </>
-                ) : (
-                  <>
-                    <td className="py-3 px-2">{meeting.name}</td>
-                    <td className="py-3 px-2">{meeting.email}</td>
-                    
-                    <td className="py-3 px-2">{meeting.meetingType}</td>
-
-                    <td className="py-3 px-2">{new Date(meeting.date).toLocaleString()}</td>
-                    <td className="py-3 px-2">{meeting.hosts}</td>
-                    <td >
-                      <a
-      href={meeting.link}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="bg-green-500 text-white px-2 py-2 rounded-xl shadow-md hover:bg-green-600 transition"
-    >
-      Join Meet
-    </a></td>
-                    <td className="py-3 px-4">
-                      <button onClick={() => startEditing(meeting)} className="text-blue-500 hover:text-blue-700 mr-2">
-                        <Edit size={20} />
-                      </button>
-                      <button onClick={() => handleMeetingDelete(meeting.id)} className="text-red-500 hover:text-red-700">
-                        <Trash2 size={20} />
-                      </button>
-                    </td>
-                    
-                  </>
-                )}
-              </tr>
-            ))}
-            </tbody>
-            <tfoot className = "">
-              <tr className="bg-gray-50">
-              <td className="py-2 px-1">
+            <tfoot>
+  <tr className="bg-gray-50">
+    <td className="py-2 px-4">
       <input
         type="text"
         placeholder="Name"
@@ -470,7 +574,7 @@ const AdminPage = () => {
         onChange={(e) => setmeetingsdata({ ...meetingsdata, name: e.target.value })}
       />
     </td>
-    <td className="py-2 px-1">
+    <td className="py-2 px-4">
       <input
         type="email"
         placeholder="Email"
@@ -479,145 +583,48 @@ const AdminPage = () => {
         onChange={(e) => setmeetingsdata({ ...meetingsdata, email: e.target.value })}
       />
     </td>
-    
-    <td className="py-2 px-1">
+    <td className="py-2 px-4">
       <input
         type="text"
-        placeholder="Meeting Type"
-        className="border p-2 w-full rounded-md"
-        value={meetingsdata.meetingType}
-        onChange={(e) => setmeetingsdata({ ...meetingsdata, meetingType: e.target.value })}
-      />
-    </td>
-    
-
-    <td className="py-2 px-1">
-      <div className="flex flex-col space-y-2">
-        <input
-          type="date"
-          className="border p-2 rounded-md"
-          value={meetingsdata.date}
-          onChange={(e) => setmeetingsdata({ ...meetingsdata, date: e.target.value })}
-        />
-        <input
-          type="time"
-          className="border p-2 rounded-md"
-          value={meetingsdata.time}
-          onChange={(e) => setmeetingsdata({ ...meetingsdata, time: e.target.value })}
-        />
-      </div>
-    </td>
-    <td className="py-2 ">
-      <input
-        type="text"
-        placeholder="Meeting Host(s)"
+        placeholder="Hosts"
         className="border p-2 w-full rounded-md"
         value={meetingsdata.hosts}
         onChange={(e) => setmeetingsdata({ ...meetingsdata, hosts: e.target.value })}
       />
     </td>
-    <td className="py-2 ">
+    <td className="py-2 px-4">
+      <input
+        type="datetime-local"
+        className="border p-2 w-full rounded-md"
+        value={meetingsdata.date}
+        onChange={(e) => setmeetingsdata({ ...meetingsdata, date: e.target.value })}
+      />
+    </td>
+    <td className="py-2 px-4">
       <input
         type="text"
-        placeholder="Link"
+        placeholder="Meeting Link"
         className="border p-2 w-full rounded-md"
         value={meetingsdata.link}
         onChange={(e) => setmeetingsdata({ ...meetingsdata, link: e.target.value })}
       />
     </td>
-    <td className="py-2 pl-4 ">
+    <td className="py-2 px-4 text-right">
       <button
         onClick={addMeeting}
-        className="font-bold text-white bg-green-500 px-4 py-2 rounded-md hover:bg-green-600 transition"
+        className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-200"
       >
-        +
+        Add Meeting
       </button>
     </td>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-      ) : (
-        <>
-        <p>No meetings available.</p>
-        <table className="w-full mt-4">
-        <thead>
-              <tr className="bg-gray-50 text-left">
-                <th className="py-3 px-4">Name</th>
-                <th className="py-3 px-4">Email</th>
-                
-                <th className="py-3 px-4">Is Consultation Meeting</th>
-                <th className="py-3 px-4">Date</th>
-                <th className="py-3 px-4">Actions</th>
-              </tr>
-            </thead>
-    <tfoot className="w-full">
-      <tr className="bg-gray-50">
-        <td className="py-2 px-4">
-          <input
-            type="text"
-            placeholder="Name"
-            className="border p-2 w-full"
-            value={meetingsdata.name}
-            onChange={(e) => setmeetingsdata({ ...meetingsdata, name: e.target.value })}
-          />
-        </td>
-        <td className="py-2 px-4">
-          <input
-            type="email"
-            placeholder="Email"
-            className="border p-2 w-full"
-            value={meetingsdata.email}
-            onChange={(e) => setmeetingsdata({ ...meetingsdata, email: e.target.value })}
-          />
-        </td>
-       
-        <td className="py-2 px-4">
-          <input
-            type="text"
-            placeholder="Meeting Type"
-            className="border p-2 w-full"
-            value={meetingsdata.meetingType}
-            onChange={(e) => setmeetingsdata({ ...meetingsdata, meetingType: e.target.value })}
-          />
-        </td>
-        
-        <td className="py-2 px-4 w-1/3">
-  <input
-    type="text"
-    placeholder="Edit Hosts"
-    className="border p-2 w-full rounded-md"
-    value={meetingsdata.hosts}
-    onChange={(e) => setmeetingsdata({ ...meetingsdata, hosts: e.target.value })}
-  />
-</td>
-<td className="py-2 px-4 w-1/3">
-  <input
-    type="text"
-    placeholder="Link"
-    className="border p-2 w-full rounded-md"
-    value={meetingsdata.link}
-    onChange={(e) => setmeetingsdata({ ...meetingsdata, link: e.target.value })}
-  />
-</td>
-<td className="py-2 px-4 text-right">
-<div className="flex justify-end mt-4">
-  <button
-    onClick={addMeeting}
-    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-  >
-    Add Meeting
-  </button>
-</div>
-
-</td>
+  </tr>
+</tfoot>
 
 
-      </tr>
-    </tfoot>
+
   </table>
       </>
-      )}
+
     </>
             ) : activeView === 'customers' ? (
               <>
