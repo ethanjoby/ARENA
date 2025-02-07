@@ -833,7 +833,7 @@ const AdminPage = () => {
   ) : activeMeetingTab === 'Nirav' ? (
     <GoogleFormEmbed src="https://calendar.google.com/calendar/embed?src=2b4eff80e6b801ca6346f6f804488edfe35665d0aa6538a18fc617d05e835c91%40group.calendar.google.com&ctz=America%2FLos_Angeles" />
   ) : activeMeetingTab === 'Advay' ? (
-    <GoogleFormEmbed src="https://calendar.google.com/calendar/embed?src=arena.college.counseling%40gmail.com&ctz=America%2FLos_Angeles" />
+    <GoogleFormEmbed src="https://calendar.google.com/calendar/embed?src=advayb2018%40gmail.com&ctz=America%2FLos_Angeles" />
   
   ) : activeMeetingTab === 'Aryan' ? (
   <GoogleFormEmbed src="https://calendar.google.com/calendar/embed?src=mail.to.aryankumar%40gmail.com&ctz=America%2FLos_Angeles" />
