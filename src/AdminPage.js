@@ -24,8 +24,15 @@ const AdminPage = () => {
     Tutoring: [],
     SummerProgram: [],
     Internship: [],
-    SATACT: []
-  });
+    'SAT/ACT': [],
+    'Free Consultation': [],
+    Ratul: [],
+    Aaron: [],
+    Nirav: [],
+    Advay: [],
+    Ethan: [],
+    Aryan: []
+});
   
   const [activeView, setActiveView] = useState('contact');
 
@@ -95,14 +102,26 @@ const AdminPage = () => {
       setQuestions(questionList);
       setResponses(responsesList);
       const categorizedMeetings = {
-        Tutoring: meetingsList.filter(m => m.meetingType === "Tutoring"),
-        summerProgram: meetingsList.filter(m => m.meetingType === "Summer Program"),
-        Internship: meetingsList.filter(m => m.meetingType === "Internship"),
-        SATACT: meetingsList.filter(m => m.meetingType === "SAT/ACT")
-      };
+        Tutoring: [],
+        SummerProgram: [],
+        Internship: [],
+        'SAT/ACT': [],
+        'Free Consultation': [],
+        Ratul: [],
+        Aaron: [],
+        Nirav: [],
+        Advay: [],
+        Ethan: [],
+        Aryan: []
+    };
       
       setMeetings(categorizedMeetings);
-      
+      meetingsList.forEach(meeting => {
+        const category = meeting.meetingType || 'Uncategorized';
+        if (categorizedMeetings.hasOwnProperty(category)) {
+            categorizedMeetings[category].push(meeting);
+        }
+    });
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
@@ -163,26 +182,26 @@ const AdminPage = () => {
     }
   };
 
-  const handleMeetingDelete = async (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this meeting?");
-    
-    if (confirmDelete) {
+  // FIND the handleMeetingDelete function and REPLACE it with:
+const handleMeetingDelete = async (id) => {
+  const confirmDelete = window.confirm("Are you sure you want to delete this meeting?");
+  
+  if (confirmDelete) {
       try {
-        const db = getFirestore(app);
-        await deleteDoc(doc(db, "meetings", id));
-  
-        setMeetings((prev) => ({
-          ...prev,
-          [activeMeetingTab]: prev[activeMeetingTab]?.filter(meeting => meeting.id !== id) || []
-        }));
-  
-        console.log("Meeting deleted successfully!");
-  
+          const db = getFirestore(app);
+          await deleteDoc(doc(db, "meetings", id));
+          
+          setMeetings(prev => ({
+              ...prev,
+              [activeMeetingTab]: prev[activeMeetingTab].filter(meeting => meeting.id !== id)
+          }));
+          
+          console.log("Meeting deleted successfully!");
       } catch (error) {
-        console.error("Error deleting meeting:", error);
+          console.error("Error deleting meeting:", error);
       }
-    }
-  };
+  }
+};
   
   const [signupData, setSignupData] = useState({
     name: "",
@@ -230,69 +249,52 @@ const AdminPage = () => {
   
   
 
-  const addMeeting = async () => {
-    try {
-      console.log("Trying to add a meeting...");
-  
-      if (!meetingsdata.name.trim() || 
-          !meetingsdata.email.trim() || 
-          !meetingsdata.subject.trim() || 
-          !meetingsdata.hours.trim()) {
-        alert("Please fill in all required fields.");
-        console.error("Missing required fields:", meetingsdata);
-        return;
+  // FIND the addMeeting function and REPLACE it with:
+const addMeeting = async () => {
+  try {
+      if (!meetingsdata.name || !meetingsdata.email || !meetingsdata.subject || !meetingsdata.hours) {
+          alert("Please fill in all required fields.");
+          return;
       }
-  
+
       const db = getFirestore(app);
       const meetingsCollection = collection(db, "meetings");
-  
-      // Convert date to Firestore Timestamp
-      const meetingDateTime = Timestamp.fromDate(new Date(meetingsdata.date));
-  
-      console.log("Formatted date:", meetingDateTime);
-  
-      // Properly format the meeting type
-      const formattedMeetingType = {
-        Tutoring: "Tutoring",
-        SummerProgram: "Summer Program",
-        Internship: "Internship",
-        SATACT: "SAT/ACT"
-      }[activeMeetingTab] || "Other"; // Fallback in case of unexpected input
-  
+
+      // Create the new meeting object
       const newMeeting = {
-        name: meetingsdata.name,
-        email: meetingsdata.email,
-        subject: meetingsdata.subject, 
-        hosts: meetingsdata.hosts || "N/A",
-        hours: meetingsdata.hours,
-        meetingType: formattedMeetingType // Ensure correct format
+          name: meetingsdata.name,
+          email: meetingsdata.email,
+          subject: meetingsdata.subject,
+          hosts: meetingsdata.hosts || "N/A",
+          hours: meetingsdata.hours,
+          meetingType: activeMeetingTab, // Use the active tab as the meeting type
+          date: Timestamp.fromDate(new Date()) // Add current timestamp
       };
-  
+
       // Add to Firestore
       const docRef = await addDoc(meetingsCollection, newMeeting);
-      newMeeting.id = docRef.id;
-  
-      console.log("Meeting added to Firestore with ID:", newMeeting.id);
-  
-      // Update state properly for all meeting types
-      setMeetings((prev) => ({
-        ...prev,
-        [activeMeetingTab]: [...(prev[activeMeetingTab] || []), newMeeting],
+      
+      // Update local state
+      setMeetings(prev => ({
+          ...prev,
+          [activeMeetingTab]: [...(prev[activeMeetingTab] || []), { ...newMeeting, id: docRef.id }]
       }));
-  
-      // Clear input fields after adding
+
+      // Clear form
       setmeetingsdata({
-        name: "",
-        email: "",
-        subject: "",
-        hosts: "",
-        hours: ""
+          name: "",
+          email: "",
+          subject: "",
+          hosts: "",
+          hours: ""
       });
-  
-    } catch (error) {
+
+      console.log("Meeting added successfully!");
+      
+  } catch (error) {
       console.error("Error adding meeting: ", error);
-    }
-  };
+  }
+};
   
   
   
@@ -1022,7 +1024,7 @@ const AdminPage = () => {
         <th className="py-3 px-4 text-left ">Email</th>
         <th className="py-3 px-4 text-left ">Subject</th>
         <th className="py-3 px-4 text-left">Tutor</th>
-        <th className="py-3 px-4 text-left ">Hours</th>
+        <th className="py-3 px-4 text-left ">Hours Left</th>
         <th className="py-3 px-4 text-center ">Actions</th>
       </tr>
     </thead>
