@@ -19,7 +19,7 @@ const AdminPage = () => {
   
   const [questions, setQuestions] = useState([]);
   const [responses, setResponses] = useState([]);
-  const [activeMeetingTab, setActiveMeetingTab] = useState("consultation");
+  const [activeMeetingTab, setActiveMeetingTab] = useState("Free Consultation");
   const [meetings, setMeetings] = useState({
     consultation: [],
     summerProgram: [],
@@ -751,16 +751,78 @@ const AdminPage = () => {
             ) : activeView === 'meetings' ? (
                  <>
       <h2 className="text-2xl font-bold mb-4">Customer Next Meeting</h2>
-      <div className="flex space-x-4 mb-4">
-  {["Free Consultation", "Ratul", "Aaron", "Nirav", "Advay", "Aryan", "Ethan"].map((tab) => (
-    <button
-      key={tab}
-      className={`px-4 py-2 rounded ${activeMeetingTab === tab ? "bg-blue-500 text-white" : "bg-gray-200"}`}
-      onClick={() => setActiveMeetingTab(tab)}
-    >
-      {tab.replace(/([A-Z])/g, " $1")} {/* Formats "summerProgram" to "Summer Program" */}
-    </button>
-  ))}
+<div className="grid grid-cols-7 gap-4 mb-6">
+  <button
+    onClick={() => setActiveMeetingTab('Free Consultation')}
+    className={`w-full px-6 py-1 rounded-lg font-semibold transition-colors ${
+      activeMeetingTab === 'Free Consultation'
+        ? 'bg-black text-white'
+        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+    }`}
+  >
+    Free Consultation
+  </button>
+  <button
+    onClick={() => setActiveMeetingTab('Ratul')}
+    className={`w-full px-6 py-3 rounded-lg font-semibold transition-colors ${
+      activeMeetingTab === 'Ratul'
+        ? 'bg-black text-white'
+        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+    }`}
+  >
+    Ratul
+  </button>
+  <button
+    onClick={() => setActiveMeetingTab('Aaron')}
+    className={`w-full px-6 py-3 rounded-lg font-semibold transition-colors ${
+      activeMeetingTab === 'Aaron'
+        ? 'bg-black text-white'
+        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+    }`}
+  >
+    Aaron
+  </button>
+  <button
+    onClick={() => setActiveMeetingTab('Nirav')}
+    className={`w-full px-6 py-3 rounded-lg font-semibold transition-colors ${
+      activeMeetingTab === 'Nirav'
+        ? 'bg-black text-white'
+        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+    }`}
+  >
+    Nirav
+  </button>
+  <button
+    onClick={() => setActiveMeetingTab('Advay')}
+    className={`w-full px-6 py-3 rounded-lg font-semibold transition-colors ${
+      activeMeetingTab === 'Advay'
+        ? 'bg-black text-white'
+        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+    }`}
+  >
+    Advay
+  </button>
+  <button
+    onClick={() => setActiveMeetingTab('Ethan')}
+    className={`w-full px-6 py-3 rounded-lg font-semibold transition-colors ${
+      activeMeetingTab === 'Ethan'
+        ? 'bg-black text-white'
+        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+    }`}
+  >
+    Ethan
+  </button>
+  <button
+    onClick={() => setActiveMeetingTab('Aryan')}
+    className={`w-full px-6 py-3 rounded-lg font-semibold transition-colors ${
+      activeMeetingTab === 'Aryan'
+        ? 'bg-black text-white'
+        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+    }`}
+  >
+    Aryan
+  </button>
+  
 </div>
 {activeMeetingTab === 'Free Consultation' ? (
   <GoogleFormEmbed src="https://calendar.google.com/calendar/embed?src=arena.college.counseling%40gmail.com&ctz=America%2FLos_Angeles" />
