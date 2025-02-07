@@ -21,10 +21,10 @@ const AdminPage = () => {
   const [responses, setResponses] = useState([]);
   const [activeMeetingTab, setActiveMeetingTab] = useState("Free Consultation");
   const [meetings, setMeetings] = useState({
-    consultation: [],
-    summerProgram: [],
-    satAct: [],
-    ec: []
+    Tutoring: [],
+    SummerProgram: [],
+    Internship: [],
+    SATACT: []
   });
   
   const [activeView, setActiveView] = useState('contact');
@@ -43,9 +43,9 @@ const AdminPage = () => {
     name: "", 
     email: "", 
     meetingType: "", 
-    date: "",
+    subject: "",
     hosts: "",
-    link: "",
+    hours: "",
   }); ;
   const fetchData = async () => {
     try {
@@ -95,10 +95,10 @@ const AdminPage = () => {
       setQuestions(questionList);
       setResponses(responsesList);
       const categorizedMeetings = {
-        consultation: meetingsList.filter(m => m.meetingType === "Consultation"),
+        Tutoring: meetingsList.filter(m => m.meetingType === "Tutoring"),
         summerProgram: meetingsList.filter(m => m.meetingType === "Summer Program"),
-        satAct: meetingsList.filter(m => m.meetingType === "SAT/ACT"),
-        ec: meetingsList.filter(m => m.meetingType === "Extracurriculars")
+        Internship: meetingsList.filter(m => m.meetingType === "Internship"),
+        SATACT: meetingsList.filter(m => m.meetingType === "SAT/ACT")
       };
       
       setMeetings(categorizedMeetings);
@@ -236,8 +236,8 @@ const AdminPage = () => {
   
       if (!meetingsdata.name.trim() || 
           !meetingsdata.email.trim() || 
-          !meetingsdata.date.trim() || 
-          !meetingsdata.link.trim()) {
+          !meetingsdata.subject.trim() || 
+          !meetingsdata.hours.trim()) {
         alert("Please fill in all required fields.");
         console.error("Missing required fields:", meetingsdata);
         return;
@@ -253,18 +253,18 @@ const AdminPage = () => {
   
       // Properly format the meeting type
       const formattedMeetingType = {
-        consultation: "Consultation",
-        summerProgram: "Summer Program",
-        satAct: "SAT/ACT",
-        ec: "Extracurriculars"
+        Tutoring: "Tutoring",
+        SummerProgram: "Summer Program",
+        Internship: "Internship",
+        SATACT: "SAT/ACT"
       }[activeMeetingTab] || "Other"; // Fallback in case of unexpected input
   
       const newMeeting = {
         name: meetingsdata.name,
         email: meetingsdata.email,
-        date: meetingDateTime, 
+        subject: meetingsdata.subject, 
         hosts: meetingsdata.hosts || "N/A",
-        link: meetingsdata.link,
+        hours: meetingsdata.hours,
         meetingType: formattedMeetingType // Ensure correct format
       };
   
@@ -284,9 +284,9 @@ const AdminPage = () => {
       setmeetingsdata({
         name: "",
         email: "",
-        date: "",
+        subject: "",
         hosts: "",
-        link: ""
+        hours: ""
       });
   
     } catch (error) {
@@ -391,9 +391,9 @@ const AdminPage = () => {
   const [editData, setEditData] = useState({
     name: "",
     email: "",
-    date: "",
+    subject: "",
     hosts: "",
-    link: "" // ✅ Include Meeting Link in edit state
+    hours: "" // ✅ Include Meeting Link in edit state
   });
   
   const updateMeeting = async (id, updatedData) => {
@@ -462,7 +462,7 @@ const AdminPage = () => {
             </button>
           </div>
 
-          <div className="grid grid-cols-3 gap-4 mb-6">
+          <div className="grid grid-cols-4 gap-4 mb-6">
   <button
     onClick={() => setActiveView('contact')}
     className={`w-full px-6 py-3 rounded-lg font-semibold transition-colors ${
@@ -493,6 +493,16 @@ const AdminPage = () => {
   >
     Meetings
   </button>
+  <button
+    onClick={() => setActiveView('customers')}
+    className={`w-full px-6 py-3 rounded-lg font-semibold transition-colors ${
+      activeView === 'customers'
+        ? 'bg-black text-white'
+        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+    }`}
+  >
+    Customers
+  </button>
   
 </div>
 
@@ -501,7 +511,7 @@ const AdminPage = () => {
     <>
       <h2 className="text-2xl font-bold mb-4">Contact Form Messages</h2>
       {questions.length > 0 ? (
-        <div className="overflow-x-auto w-full">
+        <div className="overflow-x-auto w-full rounded ">
           <table className="w-full">
             <thead>
               <tr className="bg-gray-50 text-left">
@@ -825,7 +835,10 @@ const AdminPage = () => {
   
 </div>
 {activeMeetingTab === 'Free Consultation' ? (
+  
   <GoogleFormEmbed src="https://calendar.google.com/calendar/embed?src=arena.college.counseling%40gmail.com&ctz=America%2FLos_Angeles" />
+  
+
   ) : activeMeetingTab === 'Ratul' ? (
     <GoogleFormEmbed src="https://calendar.google.com/calendar/embed?src=imratulc%40gmail.com&ctz=America%2FLos_Angeles" />
   ) : activeMeetingTab === 'Aaron' ? (
@@ -844,7 +857,7 @@ const AdminPage = () => {
 {/*
 {meetings[activeMeetingTab]?.length > 0 ? (
   <>
-  <GoogleFormEmbed src="https://calendar.google.com/calendar/embed?src=arena.college.counseling%40gmail.com&ctz=America%2FLos_Angeles" />
+
   
   <table className="w-full mt-4 border-collapse border border-gray-300">
     <thead className="bg-gray-100 text-gray-700">
@@ -988,8 +1001,153 @@ const AdminPage = () => {
     </>
             ) : activeView === 'customers' ? (
               <>
+      <h2 className="text-2xl font-bold mb-4">Customer Next Meeting</h2>
+      <div className="flex space-x-4 mb-4">
+  {["Tutoring", "SummerProgram", "Internship", "SAT/ACT"].map((tab) => (
+    <button
+      key={tab}
+      className={`px-4 py-2 rounded ${activeMeetingTab === tab ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+      onClick={() => setActiveMeetingTab(tab)}
+    >
+      {tab.replace(/([A-Z])/g, " $1")} {/* Formats "summerProgram" to "Summer Program" */}
+    </button>
+  ))}
+</div>
+
+{meetings[activeMeetingTab]?.length > 0 ? (
+  <table className="overflow-x-auto w-full">
+    <thead className="bg-gray-100 text-gray-700">
+      <tr>
+        <th className="py-3 px-4 text-left">Name</th>
+        <th className="py-3 px-4 text-left ">Email</th>
+        <th className="py-3 px-4 text-left ">Subject</th>
+        <th className="py-3 px-4 text-left">Tutor</th>
+        <th className="py-3 px-4 text-left ">Hours</th>
+        <th className="py-3 px-4 text-center ">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {meetings[activeMeetingTab].map((meeting, index) => (
+        <tr key={meeting.id} className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}>
+          {editingId === meeting.id ? (
+            <>
+              <td className="py-2 px-4 border-b"><input type="text" value={editData.name} onChange={(e) => handleEditChange(e, 'name')} className="border p-2 w-full rounded-md" /></td>
+              <td className="py-2 px-4 border-b"><input type="email" value={editData.email} onChange={(e) => handleEditChange(e, 'email')} className="border p-2 w-full rounded-md" /></td>
+              <td className="py-2 px-4 border-b"><input type="text" value={editData.subject} onChange={(e) => handleEditChange(e, 'subject')} className="border p-2 w-full rounded-md" /></td>
+              <td className="py-2 px-4 border-b"><input type="text" value={editData.hosts} onChange={(e) => handleEditChange(e, 'hosts')} className="border p-2 w-full rounded-md" /></td>
+              <td className="py-2 px-4 border-b"><input type="text" value={editData.hours} onChange={(e) => handleEditChange(e, 'hours')} className="border p-2 w-full rounded-md" /></td>
+              <td className="py-2 px-4 border-b text-center">
+                <button onClick={saveEdit} className="text-green-500 hover:text-green-700 font-bold mr-2">Save</button>
+                <button onClick={() => setEditingId(null)} className="text-gray-500 hover:text-gray-700">Cancel</button>
+              </td>
+            </>
+          ) : (
+            <>
+              <td className="py-3 px-4 border-b">{meeting.name}</td>
+              <td className="py-3 px-4 border-b">{meeting.email}</td>
+              <td className="py-3 px-4 border-b">{meeting.subject}</td>
               
-              </>
+              <td className="py-3 px-4 border-b">{meeting.hosts}</td>
+              <td className="py-3 px-4 border-b">{meeting.hours}</td>
+             
+
+              <td className="py-3 px-4 border-b text-center">
+                <button onClick={() => startEditing(meeting)} className="text-blue-500 hover:text-blue-700 font-bold mr-2">
+                  <Edit size={20} />
+                </button>
+                <button onClick={() => handleMeetingDelete(meeting.id)} className="text-red-500 hover:text-red-700 font-bold">
+                  <Trash2 size={20} />
+                </button>
+              </td>
+            </>
+          )}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+) : (
+  <p className="text-gray-600 text-center py-4">No meetings available for this category.</p>
+)}
+
+
+ 
+        <>
+        <table className="w-full mt-4">
+        <thead>
+              <tr className="bg-gray-50 text-left">
+                <th className="py-3 px-4">Name</th>
+                <th className="py-3 px-4">Email</th>
+                <th className="py-3 px-4">Tutor</th>
+                <th className="py-3 px-4">Subject</th>
+                <th className="py-3 px-4">Hours</th>
+                <th className="py-3 px-4"></th>
+              </tr>
+            </thead>
+            <tfoot>
+  <tr className="bg-gray-50">
+    <td className="py-2 px-4">
+      <input
+        type="text"
+        placeholder="Name"
+        className="border p-2 w-full rounded-md"
+        value={meetingsdata.name}
+        onChange={(e) => setmeetingsdata({ ...meetingsdata, name: e.target.value })}
+      />
+    </td>
+    <td className="py-2 px-4">
+      <input
+        type="email"
+        placeholder="Email"
+        className="border p-2 w-full rounded-md"
+        value={meetingsdata.email}
+        onChange={(e) => setmeetingsdata({ ...meetingsdata, email: e.target.value })}
+      />
+    </td>
+    <td className="py-2 px-4">
+      <input
+        type="text"
+        placeholder="Hosts"
+        className="border p-2 w-full rounded-md"
+        value={meetingsdata.hosts}
+        onChange={(e) => setmeetingsdata({ ...meetingsdata, hosts: e.target.value })}
+      />
+    </td>
+    <td className="py-2 px-4">
+      <input
+        type="text"
+        placeholder="Subject"
+        className="border p-2 w-full rounded-md"
+        value={meetingsdata.subject}
+        onChange={(e) => setmeetingsdata({ ...meetingsdata, subject: e.target.value })}
+      />
+    </td>
+    <td className="py-2 px-4">
+      <input
+        type="text"
+        placeholder="Hours Left"
+        className="border p-2 w-full rounded-md"
+        value={meetingsdata.hours}
+        onChange={(e) => setmeetingsdata({ ...meetingsdata, hours: e.target.value })}
+      />
+    </td>
+    
+    <td className="py-2 px-4 text-right">
+      <button
+        onClick={addMeeting}
+        className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-200"
+      >
+        Add Meeting
+      </button>
+    </td>
+  </tr>
+</tfoot>
+
+
+
+  </table>
+      </>
+
+    </>
             ) : null}
           </div>
         </div>
