@@ -1031,27 +1031,27 @@ const AdminPage = () => {
         <tr key={meeting.id} className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}>
           {editingId === meeting.id ? (
             <>
-              <td className="py-2 px-4 border-b"><input type="text" value={editData.name} onChange={(e) => handleEditChange(e, 'name')} className="border p-2 w-full rounded-md" /></td>
-              <td className="py-2 px-4 border-b"><input type="email" value={editData.email} onChange={(e) => handleEditChange(e, 'email')} className="border p-2 w-full rounded-md" /></td>
-              <td className="py-2 px-4 border-b"><input type="text" value={editData.subject} onChange={(e) => handleEditChange(e, 'subject')} className="border p-2 w-full rounded-md" /></td>
-              <td className="py-2 px-4 border-b"><input type="text" value={editData.hosts} onChange={(e) => handleEditChange(e, 'hosts')} className="border p-2 w-full rounded-md" /></td>
-              <td className="py-2 px-4 border-b"><input type="text" value={editData.hours} onChange={(e) => handleEditChange(e, 'hours')} className="border p-2 w-full rounded-md" /></td>
-              <td className="py-2 px-4 border-b text-center">
+              <td className="py-2 px-4 "><input type="text" value={editData.name} onChange={(e) => handleEditChange(e, 'name')} className="border p-2 w-full rounded-md" /></td>
+              <td className="py-2 px-4 "><input type="email" value={editData.email} onChange={(e) => handleEditChange(e, 'email')} className="border p-2 w-full rounded-md" /></td>
+              <td className="py-2 px-4 "><input type="text" value={editData.subject} onChange={(e) => handleEditChange(e, 'subject')} className="border p-2 w-full rounded-md" /></td>
+              <td className="py-2 px-4 "><input type="text" value={editData.hosts} onChange={(e) => handleEditChange(e, 'hosts')} className="border p-2 w-full rounded-md" /></td>
+              <td className="py-2 px-4 "><input type="text" value={editData.hours} onChange={(e) => handleEditChange(e, 'hours')} className="border p-2 w-full rounded-md" /></td>
+              <td className="py-2 px-4  text-center">
                 <button onClick={saveEdit} className="text-green-500 hover:text-green-700 font-bold mr-2">Save</button>
                 <button onClick={() => setEditingId(null)} className="text-gray-500 hover:text-gray-700">Cancel</button>
               </td>
             </>
           ) : (
             <>
-              <td className="py-3 px-4 border-b">{meeting.name}</td>
-              <td className="py-3 px-4 border-b">{meeting.email}</td>
-              <td className="py-3 px-4 border-b">{meeting.subject}</td>
+              <td className="py-3 px-4 ">{meeting.name}</td>
+              <td className="py-3 px-4 ">{meeting.email}</td>
+              <td className="py-3 px-4">{meeting.subject}</td>
               
-              <td className="py-3 px-4 border-b">{meeting.hosts}</td>
-              <td className="py-3 px-4 border-b">{meeting.hours}</td>
+              <td className="py-3 px-4 ">{meeting.hosts}</td>
+              <td className="py-3 px-4">{meeting.hours}</td>
              
 
-              <td className="py-3 px-4 border-b text-center">
+              <td className="py-3 px-4 text-center">
                 <button onClick={() => startEditing(meeting)} className="text-blue-500 hover:text-blue-700 font-bold mr-2">
                   <Edit size={20} />
                 </button>
