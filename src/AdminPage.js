@@ -16,6 +16,7 @@ const AdminPage = () => {
     "Did payment",
     "Are scheduled with tutors/people"
   ];
+  
   const [searchQuery, setSearchQuery] = useState("");
 const [selectedFilter, setSelectedFilter] = useState("all");
 const [sortOrder, setSortOrder] = useState("newest");
@@ -563,6 +564,7 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
       <h2 className="text-2xl font-bold mb-4">Contact Form Messages</h2>
       {questions.length > 0 ? (
         <div className="overflow-x-auto w-full rounded ">
+          
           <table className="w-full">
             <thead>
               <tr className="bg-gray-50 text-left">
@@ -631,6 +633,7 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
             ) : activeView === 'signup' ? (
               <>
                 <h2 className="text-2xl font-bold mb-4">Program Sign-ups</h2>
+                
 {responses.length > 0 ? (
   <div className="overflow-x-auto">
     <table className="w-full border-collapse">
@@ -709,7 +712,15 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
         <select
   value={signupStatuses[response.id] || ""}
   onChange={(e) => handleStatusChange(response.id, e.target.value)}
-  className="w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all hover:bg-gray-50"
+  className={`w-full rounded-full px-4 py-2 border-2 transition-colors ${
+    signupStatuses[response.id] === 'Did payment'
+      ? 'bg-green-50 border-green-500 text-green-700'
+      : signupStatuses[response.id] === 'Contacted Us in some way shape or form'
+      ? 'bg-blue-50 border-blue-500 text-blue-700'
+      : signupStatuses[response.id] === 'Are scheduled with tutors/people'
+      ? 'bg-purple-50 border-purple-500 text-purple-700'
+      : 'border-gray-200'
+  }`}
 >
   <option value="" disabled>Select Status</option>
   {statusOptions.map((status) => (
@@ -890,7 +901,9 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
             ) : activeView === 'meetings' ? (
                  <>
       <h2 className="text-2xl font-bold mb-4">Customer Next Meeting</h2>
+      
 <div className="grid grid-cols-7 gap-4 mb-6">
+  
   <button
     onClick={() => setActiveMeetingTab('Free Consultation')}
     className={`w-full px-6 py-1 rounded-lg font-semibold transition-colors ${
@@ -963,6 +976,7 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
   </button>
   
 </div>
+
 {activeMeetingTab === 'Free Consultation' ? (
   
   <GoogleFormEmbed src="https://calendar.google.com/calendar/embed?src=arena.college.counseling%40gmail.com&ctz=America%2FLos_Angeles" />
@@ -1274,14 +1288,18 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
 
 
   </table>
+  
       </>
 
     </>
             ) : null}
           </div>
+          
         </div>
       </div>
+      
     );
+    
   } else {
     return (
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
