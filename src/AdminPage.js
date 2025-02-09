@@ -16,7 +16,9 @@ const AdminPage = () => {
     "Did payment",
     "Are scheduled with tutors/people"
   ];
-  
+  const [searchQuery, setSearchQuery] = useState("");
+const [selectedFilter, setSelectedFilter] = useState("all");
+const [sortOrder, setSortOrder] = useState("newest");
   const [questions, setQuestions] = useState([]);
   const [responses, setResponses] = useState([]);
   const [activeMeetingTab, setActiveMeetingTab] = useState("Free Consultation");
@@ -246,7 +248,22 @@ const handleMeetingDelete = async (id) => {
     }
   };
   
-  
+  const [editingSignupId, setEditingSignupId] = useState(null);
+const [editSignupData, setEditSignupData] = useState({
+  name: "",
+  email: "",
+  parentEmail: "",
+  phone: "",
+  grade: "",
+  selectedPrograms: [],
+  selectedInternshipOptions: [],
+  selectedOlympiadOptions: [],
+  selectedResumeOptions: [],
+  selectedSAT: [],
+  additionalInfo: "",
+  status: "",
+  notes: ""
+});
   
 
   // FIND the addMeeting function and REPLACE it with:
@@ -449,10 +466,41 @@ const addMeeting = async () => {
     }
   };
   
-
+  const startSignupEditing = (response) => {
+    setEditingSignupId(response.id);
+    setEditSignupData(response);
+  };
+  
+  const handleSignupEditChange = (e, field) => {
+    setEditSignupData({ ...editSignupData, [field]: e.target.value });
+  };
+  
+  const saveSignupEdit = async () => {
+    try {
+      const db = getFirestore(app);
+      const signupRef = doc(db, "arenaSignUps", editingSignupId);
+      
+      await updateDoc(signupRef, editSignupData);
+      
+      setResponses(prev => 
+        prev.map(response => 
+          response.id === editingSignupId ? { ...response, ...editSignupData } : response
+        )
+      );
+      
+      setEditingSignupId(null);
+      console.log("Sign-up updated successfully!");
+    } catch (error) {
+      console.error("Error updating sign-up:", error);
+    }
+  };
+  const tabStyles = "relative px-6 py-3 rounded-lg font-semibold transition-all duration-300";
+const activeTabStyles = "bg-gradient-to-r from-blue-600 to-blue-800 text-white shadow-lg transform scale-105";
+const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
   if (isLoggedIn) {
     return (
       <div className="min-h-screen bg-gray-100 p-6">
+        
         <div className="max-w-6xl mx-auto">
           <div className="flex justify-between items-center mb-8">
             <h1 className="text-4xl font-bold">Admin Dashboard</h1>
@@ -462,6 +510,7 @@ const addMeeting = async () => {
             >
               Logout
             </button>
+            
           </div>
 
           <div className="grid grid-cols-4 gap-4 mb-6">
@@ -517,13 +566,13 @@ const addMeeting = async () => {
           <table className="w-full">
             <thead>
               <tr className="bg-gray-50 text-left">
-                <th className="py-3 px-4">Name</th>
-                <th className="py-3 px-4">Info</th>
-                <th className="py-3 px-4">Message</th>
-                <th className="py-3 px-4">Date</th>
-                <th className="py-3 px-4">Notes</th>
-                <th className="py-3 px-4">Save</th>
-                <th className="py-3 px-4">Delete</th>
+              <th className="sticky top-0 bg-gray-100 px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider rounded-t-lg">Name</th>
+              <th className="sticky top-0 bg-gray-100 px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider rounded-t-lg">Info</th>
+              <th className="sticky top-0 bg-gray-100 px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider rounded-t-lg">Message</th>
+              <th className="sticky top-0 bg-gray-100 px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider rounded-t-lg">Date</th>
+              <th className="sticky top-0 bg-gray-100 px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider rounded-t-lg">Notes</th>
+              <th className="sticky top-0 bg-gray-100 px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider rounded-t-lg">Save</th>
+              <th className="sticky top-0 bg-gray-100 px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider rounded-t-lg">Delete</th>
                 
                 
               </tr>
@@ -584,109 +633,187 @@ const addMeeting = async () => {
                 <h2 className="text-2xl font-bold mb-4">Program Sign-ups</h2>
 {responses.length > 0 ? (
   <div className="overflow-x-auto">
-    <table className="w-full border-collapse shadow-md rounded-lg">
-      <thead>
-        <tr className="bg-gray-100 text-left">
-          <th className="py-3 px-4">Name</th>
-          <th className="py-3 px-4">Info</th>
-          <th className="py-3 px-4">Details</th>
-          <th className="py-3 px-4">Status</th>
-          <th className="py-3 px-4">Notes</th>
-          <th className="py-3 px-4">Save</th>
-          <th className="py-3 px-4">Delete</th>
-        </tr>
-      </thead>
+    <table className="w-full border-collapse">
+    <thead>
+  <tr className="bg-gray-50 border-b border-gray-200">
+    <th className="sticky top-0 bg-gray-100 px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider rounded-t-lg">
+      <div className="flex items-center space-x-2">
+        <span>Name</span>
+        <button onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}>
+          {sortOrder === 'asc' ? '↓' : '↑'}
+        </button>
+      </div>
+    </th>
+    <th className="sticky top-0 bg-gray-100 px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider rounded-t-lg">Contact Info</th>
+    <th className="sticky top-0 bg-gray-100 px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider rounded-t-lg">Program Details</th>
+    <th className="sticky top-0 bg-gray-100 px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider rounded-t-lg">Status</th>
+    <th className="sticky top-0 bg-gray-100 px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider rounded-t-lg">Notes</th>
+    <th className="px-6 py-4 text-center text-sm font-semibold text-gray-900">Actions</th>
+  </tr>
+</thead>
       <tbody>
-        {responses.map((response, index) => (
-          <tr
-            key={response.id}
-            className={`border-b ${index % 2 === 0 ? "bg-gray-50" : "bg-white"} hover:bg-gray-100 transition`}
+      {responses.map((response, index) => (
+  <tr
+    key={response.id}
+    className={`border-b ${index % 2 === 0 ? "bg-gray-50" : "bg-white"} hover:bg-gray-100 transition`}
+  >
+    {editingSignupId === response.id ? (
+      <>
+        <td className="py-3 px-4">
+          <input
+            type="text"
+            value={editSignupData.name}
+            onChange={(e) => handleSignupEditChange(e, 'name')}
+            className="border p-2 w-full rounded-md"
+          />
+        </td>
+        <td className="py-3 px-4">
+          <input
+            type="text"
+            placeholder="Student Email"
+            value={editSignupData.email}
+            onChange={(e) => handleSignupEditChange(e, 'email')}
+            className="border p-2 w-full rounded-md mb-2"
+          />
+          <input
+            type="text"
+            placeholder="Parent Email"
+            value={editSignupData.parentEmail}
+            onChange={(e) => handleSignupEditChange(e, 'parentEmail')}
+            className="border p-2 w-full rounded-md mb-2"
+          />
+          <input
+            type="text"
+            placeholder="Phone"
+            value={editSignupData.phone}
+            onChange={(e) => handleSignupEditChange(e, 'phone')}
+            className="border p-2 w-full rounded-md mb-2"
+          />
+          <input
+            type="text"
+            placeholder="Grade"
+            value={editSignupData.grade}
+            onChange={(e) => handleSignupEditChange(e, 'grade')}
+            className="border p-2 w-full rounded-md"
+          />
+        </td>
+        <td className="py-3 px-4">
+          <textarea
+            value={editSignupData.additionalInfo}
+            onChange={(e) => handleSignupEditChange(e, 'additionalInfo')}
+            className="border p-2 w-full rounded-md"
+            rows="4"
+          />
+        </td>
+        <td className="py-3 px-4">
+        <select
+  value={signupStatuses[response.id] || ""}
+  onChange={(e) => handleStatusChange(response.id, e.target.value)}
+  className="w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all hover:bg-gray-50"
+>
+  <option value="" disabled>Select Status</option>
+  {statusOptions.map((status) => (
+    <option key={status} value={status} className="py-2">
+      {status}
+    </option>
+  ))}
+</select>
+        </td>
+        <td className="py-3 px-4">
+          <textarea
+            value={editSignupData.notes}
+            onChange={(e) => handleSignupEditChange(e, 'notes')}
+            className="border p-2 w-full rounded-md"
+            rows="4"
+          />
+        </td>
+        <td className="py-3 px-4">
+          <button
+            onClick={saveSignupEdit}
+            className="bg-green-500 text-white px-3 py-1 rounded mr-2"
           >
-            <td className="py-3 px-4 text-sm font-medium text-gray-700">{response.name}</td>
-
-            <td className="py-3 px-4 text-sm text-gray-600 align-top">
-              <strong>Student Email:</strong> {response.email}
-              <br />
-              <strong>Parent Email:</strong> {response.parentEmail}
-              <br />
-              <strong>Phone:</strong> {response.phone}
-              <br />
-              <strong>Grade:</strong> {response.grade}
-            </td>
-
-            <td className="py-3 px-4 text-sm">
-              <details className="cursor-pointer">
-                <summary className="text-blue-600 hover:text-blue-800 font-medium">View Details</summary>
-                <div className="mt-2 text-gray-600">
-                  <p><strong>Summer Programs:</strong> {response.selectedPrograms?.join(", ") || "N/A"}</p>
-                  <p><strong>Internship:</strong> {response.selectedInternshipOptions?.join(", ") || "N/A"}</p>
-                  <p><strong>Olympiads:</strong> {response.selectedOlympiadOptions?.join(", ") || "N/A"}</p>
-                  <p><strong>Resume:</strong> {response.selectedResumeOptions?.join(", ") || "N/A"}</p>
-                  <p>
-                    <strong>SAT Prep:</strong>{" "}
-                    {Array.isArray(response.selectedSAT)
-                      ? response.selectedSAT.join(", ")
-                      : response.selectedSAT || "N/A"}
-                  </p>
-                  {response.additionalInfo && <p><strong>Additional Info:</strong> {response.additionalInfo}</p>}
-                </div>
-              </details>
-            </td>
-
-            <td className="py-3 px-4 w-1/5">
-              <div className="relative">
-                <select
-                  value={signupStatuses[response.id] || ""}
-                  onChange={(e) => handleStatusChange(response.id, e.target.value)}
-                  className="w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-                >
-                  <option value="" disabled>Select Status</option>
-                  {statusOptions.map((status) => (
-                    <option key={status} value={status}>{status}</option>
-                  ))}
-                </select>
-              </div>
-            </td>
-
-            <td className="py-3 px-4 w-1/5">
-              {editingNotesId === response.id ? (
-                <textarea
-                  value={response.notes || ""}
-                  onChange={(e) => handleNotesChange(response.id, e.target.value)}
-                  className="border border-gray-300 p-2 rounded-md w-full min-h-[40px] text-sm resize-y"
-                  autoFocus
-                />
-              ) : (
-                <div 
-                  onClick={() => setEditingNotesId(response.id)} 
-                  className="cursor-pointer p-3 border rounded-md bg-gray-100 text-gray-600 text-sm min-h-[40px] flex items-center"
-                >
-                  {response.notes || "Click to add notes"}
-                </div>
-              )}
-            </td>
-
-            <td className="py-3 px-4">
-              {editingNotesId === response.id && (
-                <button
-                  onClick={() => handleSaveNotes(response.id)}
-                  className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
-                >
-                  Save
-                </button>
-              )}
-            </td>
-
-            <td className="py-3 px-4 text-center">
-              <button
-                onClick={() => handleDelete(response.id)}
-                className="border border-red-500 text-red-500 hover:bg-red-500 hover:text-white px-3 py-1 rounded-lg transition"
-              >
-                <Trash2 size={18} />
-              </button>
-            </td>
-          </tr>
-        ))}
+            Save
+          </button>
+          <button
+            onClick={() => setEditingSignupId(null)}
+            className="bg-gray-500 text-white px-3 py-1 rounded"
+          >
+            Cancel
+          </button>
+        </td>
+      </>
+    ) : (
+      <>
+        <td className="py-3 px-4 text-sm font-medium text-gray-700">{response.name}</td>
+        <td className="py-3 px-4 text-sm text-gray-600 align-top">
+          <strong>Student Email:</strong> {response.email}
+          <br />
+          <strong>Parent Email:</strong> {response.parentEmail}
+          <br />
+          <strong>Phone:</strong> {response.phone}
+          <br />
+          <strong>Grade:</strong> {response.grade}
+        </td>
+        <td className="py-3 px-4 text-sm">
+        <details className="cursor-pointer group">
+  <summary className="text-blue-600 hover:text-blue-800 font-medium list-none">
+    <div className="flex items-center space-x-2">
+      <span>View Details</span>
+      <svg className="w-5 h-5 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+      </svg>
+    </div>
+  </summary>
+  <div className="mt-2 text-gray-600 bg-gray-50 p-4 rounded-lg">
+    {/* Keep your existing detail items but add these classes */}
+    <p className="mb-2"><strong className="font-medium">Summer Programs:</strong> {response.selectedPrograms?.join(", ") || "N/A"}</p>
+    <p className="mb-2"><strong className="font-medium">Internship:</strong> {response.selectedInternshipOptions?.join(", ") || "N/A"}</p>
+    <p className="mb-2"><strong className="font-medium">Olympiads:</strong> {response.selectedOlympiadOptions?.join(", ") || "N/A"}</p>
+    <p className="mb-2"><strong className="font-medium">Resume:</strong> {response.selectedResumeOptions?.join(", ") || "N/A"}</p>
+    <p className="mb-2"><strong className="font-medium">SAT Prep:</strong> {Array.isArray(response.selectedSAT) ? response.selectedSAT.join(", ") : response.selectedSAT || "N/A"}</p>
+    {response.additionalInfo && <p><strong className="font-medium">Additional Info:</strong> {response.additionalInfo}</p>}
+  </div>
+</details>
+        </td>
+        <td className="py-3 px-4 w-1/5">
+          <select
+            value={signupStatuses[response.id] || ""}
+            onChange={(e) => handleStatusChange(response.id, e.target.value)}
+            className="w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+          >
+            <option value="" disabled>Select Status</option>
+            {statusOptions.map((status) => (
+              <option key={status} value={status}>{status}</option>
+            ))}
+          </select>
+        </td>
+        <td className="py-3 px-4">{response.notes || "No notes"}</td>
+        <td className="py-3 px-4 text-center">
+        <div className="flex space-x-2">
+  <button
+    onClick={() => startSignupEditing(response)}
+    className="group relative p-2 rounded-full hover:bg-blue-50 transition-colors"
+  >
+    <Edit className="h-5 w-5 text-blue-600" />
+    <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity">
+      Edit
+    </span>
+  </button>
+  <button
+    onClick={() => handleDelete(response.id)}
+    className="group relative p-2 rounded-full hover:bg-red-50 transition-colors"
+  >
+    <Trash2 className="h-5 w-5 text-red-600" />
+    <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity">
+      Delete
+    </span>
+  </button>
+</div>
+        </td>
+      </>
+    )}
+  </tr>
+))}
       </tbody>
 
       <tfoot>
@@ -1022,7 +1149,7 @@ const addMeeting = async () => {
       <tr>
         <th className="py-3 px-4 text-left">Name</th>
         <th className="py-3 px-4 text-left ">Email</th>
-        <th className="py-3 px-4 text-left ">Subject</th>
+        <th className="py-3 px-4 text-left ">Topic</th>
         <th className="py-3 px-4 text-left">Tutor</th>
         <th className="py-3 px-4 text-left ">Hours Left</th>
         <th className="py-3 px-4 text-center ">Actions</th>
@@ -1080,7 +1207,7 @@ const addMeeting = async () => {
                 <th className="py-3 px-4">Name</th>
                 <th className="py-3 px-4">Email</th>
                 <th className="py-3 px-4">Tutor</th>
-                <th className="py-3 px-4">Subject</th>
+                <th className="py-3 px-4">Topic</th>
                 <th className="py-3 px-4">Hours</th>
                 <th className="py-3 px-4"></th>
               </tr>
