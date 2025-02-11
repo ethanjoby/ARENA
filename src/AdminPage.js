@@ -14,7 +14,8 @@ const AdminPage = () => {
     "Scheduled a Consultation Meeting",
     "Finish Consultation Meeting",
     "Did payment",
-    "Are scheduled with tutors/people"
+    "Are scheduled with tutors/people",
+    "No show"
   ];
   
   const [searchQuery, setSearchQuery] = useState("");
@@ -713,14 +714,21 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
   value={signupStatuses[response.id] || ""}
   onChange={(e) => handleStatusChange(response.id, e.target.value)}
   className={`w-full rounded-full px-4 py-2 border-2 transition-colors ${
-    signupStatuses[response.id] === 'Did payment'
-      ? 'bg-green-50 border-green-500 text-green-700'
+    signupStatuses[response.id] === 'Are scheduled with tutors/people'
+      ? 'bg-green-100 border-green-600 text-green-900'
+      : signupStatuses[response.id] === 'Finish Consultation Meeting'
+      ? 'bg-blue-100 border-blue-600 text-blue-900'
       : signupStatuses[response.id] === 'Contacted Us in some way shape or form'
-      ? 'bg-blue-50 border-blue-500 text-blue-700'
-      : signupStatuses[response.id] === 'Are scheduled with tutors/people'
-      ? 'bg-purple-50 border-purple-500 text-purple-700'
-      : 'border-gray-200'
+      ? 'bg-orange-100 border-orange-600 text-orange-900'
+      : signupStatuses[response.id] === 'Scheduled a Consultation Meeting'
+      ? 'bg-yellow-100 border-yellow-600 text-yellow-900'
+      : signupStatuses[response.id] === 'Did payment'
+      ? 'bg-purple-100 border-purple-600 text-purple-900'
+      : signupStatuses[response.id] === 'No show'
+      ? 'bg-red-100 border-red-600 text-red-900'
+      : 'bg-gray-100 border-gray-400 text-gray-700'
   }`}
+
 >
   <option value="" disabled>Select Status</option>
   {statusOptions.map((status) => (
@@ -787,17 +795,27 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
 </details>
         </td>
         <td className="py-3 px-4 w-1/5">
-          <select
-            value={signupStatuses[response.id] || ""}
-            onChange={(e) => handleStatusChange(response.id, e.target.value)}
-            className="w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-          >
-            <option value="" disabled>Select Status</option>
-            {statusOptions.map((status) => (
-              <option key={status} value={status}>{status}</option>
-            ))}
-          </select>
-        </td>
+        <div
+    className={`w-full rounded-full px-4 py-2 border-2 transition-colors ${
+      signupStatuses[response.id] === 'Are scheduled with tutors/people'
+        ? 'bg-green-100 border-green-600 text-green-900'
+        : signupStatuses[response.id] === 'Finish Consultation Meeting'
+        ? 'bg-blue-100 border-blue-600 text-blue-900'
+        : signupStatuses[response.id] === 'Contacted Us in some way shape or form'
+        ? 'bg-orange-100 border-orange-600 text-orange-900'
+        : signupStatuses[response.id] === 'Scheduled a Consultation Meeting'
+        ? 'bg-yellow-100 border-yellow-600 text-yellow-900'
+        : signupStatuses[response.id] === 'Did payment'
+        ? 'bg-purple-100 border-purple-600 text-purple-900'
+        : signupStatuses[response.id] === 'No show'
+        ? 'bg-red-100 border-red-600 text-red-900'
+        : 'bg-gray-100 border-gray-400 text-gray-700'
+    }`}
+  >
+    {signupStatuses[response.id] || "No Status"}
+  </div>
+
+</td>
         <td className="py-3 px-4">{response.notes || "No notes"}</td>
         <td className="py-3 px-4 text-center">
         <div className="flex space-x-2">
