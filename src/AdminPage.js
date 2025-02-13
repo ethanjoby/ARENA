@@ -994,7 +994,7 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
   ) : activeMeetingTab === 'Aryan' ? (
   <GoogleFormEmbed src="https://calendar.google.com/calendar/embed?src=mail.to.aryankumar%40gmail.com&ctz=America%2FLos_Angeles" />
 ) : activeMeetingTab === 'Ethan' ? (
-  <GoogleFormEmbed src="https://calendar.google.com/calendar/embed?src=arena.college.counseling%40gmail.com&ctz=America%2FLos_Angeles" />
+  <GoogleFormEmbed src="https://calendar.google.com/calendar/embed?src=vargheseethan07%40gmail.com&ctz=America%2FLos_Angeles" />
 ):null}
   
 {/*
