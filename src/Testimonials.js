@@ -2,147 +2,178 @@ import React from "react";
 import LingoSage from "./assets/LingoSage.png";
 import SAT from "./assets/1580.png";
 
+const testimonials = [
+  {
+    name: "Aditi S.",
+    role: "Research Intern at UCLA",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/UCLA_Bruins_logo.svg/1280px-UCLA_Bruins_logo.svg.png",
+    before: [
+      "Had no idea how to approach professors",
+      "Struggled with writing outreach emails",
+      "Unclear on how to structure a research resume"
+    ],
+    after: [
+      "Crafted the perfect outreach email",
+      "Refined resume and interview skills",
+      "Landed a research internship at UCLA"
+    ]
+  },
+  {
+    name: "Jake M.",
+    role: "Accepted into EinR at Berkeley Labs",
+    logo: "https://www.lbl.gov/wp-content/uploads/2022/07/About-4-UC.png",
+    before: [
+      "Overwhelmed by summer program applications",
+      "Struggled with writing compelling essays",
+      "Didn't know how to showcase achievements"
+    ],
+    after: [
+      "Received a curated list of opportunities",
+      "Polished essays with expert feedback",
+      "Accepted into top-choice program with a scholarship"
+    ]
+  },
+  {
+    name: "Sophia L.",
+    role: "Corporate Internship at LingoSage",
+    logo: LingoSage,
+    before: [
+      "Had no leads for internships",
+      "Resume lacked industry appeal",
+      "Struggled with confidence in interviews"
+    ],
+    after: [
+      "Connected with the right people",
+      "Revamped resume and cover letter",
+      "Secured an internship at LingoSage"
+    ]
+  },
+  {
+    name: "Ryan T.",
+    role: "Scored a 1580 on the SAT",
+    logo: SAT,
+    before: [
+      "Struggled to break past a score plateau",
+      "Inefficient study methods",
+      "Low confidence in test-taking"
+    ],
+    after: [
+      "Personalized study plan & expert strategies",
+      "Improved time management",
+      "Achieved a 1580 SAT score"
+    ]
+  },
+  {
+    name: "Joseph C.",
+    role: "Accepted into the Stanford SIMR Program",
+    logo: "https://identity.stanford.edu/wp-content/uploads/sites/3/2020/07/block-s-right.png",
+    before: [
+      "Uncertain how to make application stand out",
+      "Struggled with crafting a strong personal statement",
+      "Lacked direction in program selection"
+    ],
+    after: [
+      "Received step-by-step application guidance",
+      "Personal statement refined to highlight strengths",
+      "Accepted into Stanford SIMR"
+    ]
+  },
+  {
+    name: "Wei Y.",
+    role: "Research Internship at Harvard",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/2/25/Harvard_University_shield.png",
+    before: [
+      "Didn't know how to secure a research internship",
+      "Generic outreach emails were ignored",
+      "Lacked interview experience"
+    ],
+    after: [
+      "Identified & contacted the right professors",
+      "Outreach emails refined for impact",
+      "Confidently nailed the interview & secured offer"
+    ]
+  }
+];
+
 const Testimonials = () => {
   return (
     <div className="bg-white text-black">
       <div className="container mx-auto px-6">
         {/* Heading */}
         <h1 className="text-4xl md:text-5xl text-center mt-12 leading-snug text-gray-400">
-          Don't listen to us.
-          <span className="block text-4xl md:text-5xl relative">
-            Listen to our{" "}
-            <span className="font-bold text-black relative inline-block">
-              students.
-              <svg
-                className="absolute left-0 bottom-[-8px] w-full h-5"
-                viewBox="0 0 200 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M5 15 C 50 25, 150 5, 195 15"
-                  stroke="black"
-                  strokeWidth="4"
-                  strokeLinecap="round"
-                  fill="transparent"
-                />
-              </svg>
-            </span>
+          Real Stories. Real{" "}
+          <span className="font-bold text-black relative inline-block">
+            successes.
+            <svg
+              className="absolute left-0 bottom-[-8px] w-full h-5"
+              viewBox="0 0 200 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5 15 C 50 25, 150 5, 195 15"
+                stroke="black"
+                strokeWidth="4"
+                strokeLinecap="round"
+                fill="transparent"
+              />
+            </svg>
           </span>
         </h1>
+
         {/* Student Testimonials */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-          {[
-            {
-              name: "Aditi S.",
-              role: "Research Intern at UCLA",
-              logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/UCLA_Bruins_logo.svg/1280px-UCLA_Bruins_logo.svg.png",
-              text: (
-                <>
-                  Before working with Arena Counseling Services, I had no idea
-                  how to approach professors for research opportunities. Their
-                  team helped me craft the <span className="highlight">perfect</span> email, refine my{" "}
-                  <span className="highlight">resume</span>, and prepare for
-                  interviews. Thanks to their guidance, I landed a{" "}
-                  <span className="highlight">research internship</span> at a{" "}
-                  <span className="highlight">top university</span> that aligns
-                  perfectly with my interests!
-                </>
-              ),
-            },
-            {
-              name: "Jake M.",
-              role: "Accepted into EinR at Berkeley Labs",
-              logo: "https://www.lbl.gov/wp-content/uploads/2022/07/About-4-UC.png",
-              text: (
-                <>
-                  I didn’t know where to start when applying to{" "}
-                  <span className="highlight">summer programs</span>, but Arena
-                  Counseling Services made everything so much easier. They
-                  curated a list of opportunities that matched my interests and
-                  helped me polish my <span className="highlight">essays</span>.
-                  I not only got accepted into my{" "}
-                  <span className="highlight">top-choice</span> program, but I
-                  also received a <span className="highlight">scholarship</span>!
-                </>
-              ),
-            },
-            {
-              name: "Sophia L.",
-              role: "Landed a Corporate Internship at a Tech Company",
-              logo: LingoSage,
-              text: (
-                <>
-                  I was struggling to find <span className="highlight">internships</span>, but Arena
-                  Counseling Services connected me with the right people and gave me the confidence to apply. They revamped my{" "}
-                  <span className="highlight">resume</span> and{" "}
-                  <span className="highlight">cover letter</span>, and their{" "}
-                  <span className="highlight">interview coaching</span> made all the difference. I secured an internship at a tech start-up{" "}
-                  <span className="highlight">LingoSage</span>, and I know I couldn’t have done it without their help!
-                </>
-              ),
-            },
-            {
-              name: "Ryan T.",
-              role: "Scored a 1580 on the SAT",
-              logo: SAT,
-              text: (
-                <>
-                  I was struggling to improve my{" "}
-                  <span className="highlight">SAT score</span>, but Arena Counseling Services completely transformed my approach. Their personalized study plan and{" "}
-                  <span className="highlight">expert strategies</span> helped me boost my score to a{" "}
-                  <span className="highlight">1580</span>! The practice tests and{" "}
-                  <span className="highlight">test-taking tips</span> they provided made a huge difference in my{" "}
-                  <span className="highlight">confidence</span> and performance. I’m so grateful for their guidance, which helped me achieve a score I’m proud of!
-                </>
-              ),
-            },
-            {
-              name: "Joseph C.",
-              role: "Accepted into the Stanford SIMR Summer Program",
-              logo: "https://identity.stanford.edu/wp-content/uploads/sites/3/2020/07/block-s-right.png",
-              text: (
-                <>
-                  I was determined to get into the{" "}
-                  <span className="highlight">Stanford SIMR</span> program, but I wasn’t sure how to make my application stand out. Arena Counseling Services guided me through every step—from selecting the right program to crafting a compelling{" "}
-                  <span className="highlight">personal statement</span>. Their support helped me fine-tune my{" "}
-                  <span className="highlight">application</span> and make it truly shine. I was ecstatic when I was{" "}
-                  <span className="highlight">accepted</span> into the program!
-                </>
-              ),
-            },
-            {
-              name: "Wei Y.",
-              role: "Landed a Research Internship at Harvard",
-              logo: "https://upload.wikimedia.org/wikipedia/commons/2/25/Harvard_University_shield.png",
-              text: (
-                <>
-                  I never imagined I’d have the chance to intern at{" "}
-                  <span className="highlight">Harvard</span>, but Arena Counseling Services made it possible! They helped me identify the right professors to contact, refine my{" "}
-                  <span className="highlight">outreach emails</span>, and prepare a standout{" "}
-                  <span className="highlight">application</span>. Their resume and{" "}
-                  <span className="highlight">interview coaching</span> gave me the confidence I needed, and I was thrilled to receive an offer!
-                </>
-              ),
-            },
-          ].map((testimonial, index) => (
+          {testimonials.map((testimonial, index) => (
             <div className="relative inline-flex group" key={index}>
-              {/* Gradient Background for the hovered card */}
-              <div className="absolute inset-0 bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] rounded-lg blur-md opacity-0 group-hover:opacity-100 group-hover:duration-300 transition-all"></div>
+              {/* Gradient Background */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] rounded-lg blur-md opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
 
-              <div
-                className={
-                  "relative group bg-white shadow-2xl rounded-lg p-6 shadow-md text-center duration-500 hover:scale-103 opacity-100"
-                }
-              >
+              <div className="relative bg-white shadow-2xl rounded-lg p-6 text-center duration-500 hover:scale-105 w-full">
                 <img
                   src={testimonial.logo}
                   alt={`${testimonial.name} logo`}
-                  className="h-10 mx-auto mb-4"
+                  className="h-12 mx-auto mb-4"
                 />
-                <p className="text-black italic mb-4">{testimonial.text}</p>
                 <h3 className="text-lg font-semibold">{testimonial.name}</h3>
-                <p className="text-sm text-gray-500">{testimonial.role}</p>
+                <p className="text-sm text-gray-500 mb-4">{testimonial.role}</p>
+                <div className="text-left space-y-6">
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <h4 className="text-gray-600 font-semibold mb-2 flex items-center">
+                      <span className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-2">
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </span>
+                      The Challenge
+                    </h4>
+                    <ul className="space-y-2 text-gray-600">
+                      {testimonial.before.map((point, i) => (
+                        <li key={i} className="flex items-start">
+                          <span className="mr-2">•</span>
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="bg-blue-50 p-4 rounded-lg">
+                    <h4 className="text-blue-600 font-semibold mb-2 flex items-center">
+                      <span className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-2">
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </span>
+                      The Result
+                    </h4>
+                    <ul className="space-y-2 text-blue-600">
+                      {testimonial.after.map((point, i) => (
+                        <li key={i} className="flex items-start">
+                          <span className="mr-2">•</span>
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
           ))}
@@ -150,31 +181,27 @@ const Testimonials = () => {
 
         {/* Parent Testimonials */}
         <h2 className="text-4xl md:text-5xl text-center mt-12 leading-snug text-gray-400">
-          And here's what
-          <span>
-            {" "}
-            <span className="font-bold text-black relative inline-block">
-              parents
-              <svg
-                className="absolute left-0 bottom-[-8px] w-full h-5"
-                viewBox="0 0 200 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M5 15 C 50 25, 150 5, 195 15"
-                  stroke="black"
-                  strokeWidth="4"
-                  strokeLinecap="round"
-                  fill="transparent"
-                />
-              </svg>
-            </span>
-            {" "}
-          </span>
+          And here's what{" "}
+          <span className="font-bold text-black relative inline-block">
+            parents
+            <svg
+              className="absolute left-0 bottom-[-8px] w-full h-5"
+              viewBox="0 0 200 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5 15 C 50 25, 150 5, 195 15"
+                stroke="black"
+                strokeWidth="4"
+                strokeLinecap="round"
+                fill="transparent"
+              />
+            </svg>
+          </span>{" "}
           are saying.
         </h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12 mb-12">
           {[
             {
               name: "Susan D.",
@@ -195,7 +222,7 @@ const Testimonials = () => {
               role: "Parent of a College-Bound Senior",
               text: (
                 <>
-                  Arena Counseling Services completely transformed my son's approach to the <span className="highlight">SAT</span>. With their personalized study plan and expert guidance, he was able to improve his score by <span className="highlight">200 points</span>. The one-on-one tutoring and tailored test-taking strategies gave him the confidence he needed, and we’re thrilled with the results. Their support made all the difference in helping him reach his <span className="highlight">college goals</span>.
+                  Arena Counseling Services completely transformed my son's approach to the <span className="highlight">SAT</span>. With their personalized study plan and expert guidance, he was able to improve his score by <span className="highlight">200 points</span>. The one-on-one tutoring and tailored test-taking strategies gave him the confidence he needed, and we're thrilled with the results. Their support made all the difference in helping him reach his <span className="highlight">college goals</span>.
                 </>
               ),
             },
@@ -211,14 +238,9 @@ const Testimonials = () => {
             },
           ].map((testimonial, index) => (
             <div className="relative inline-flex group" key={index}>
-              {/* Gradient Background for the hovered card */}
               <div className="absolute inset-0 bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] rounded-lg blur-md opacity-0 group-hover:opacity-100 group-hover:duration-300 transition-all"></div>
 
-              <div
-                className={
-                  "relative group bg-white shadow-2xl rounded-lg p-6 shadow-md text-center duration-500 hover:scale-103 opacity-100"
-                }
-              >
+              <div className="relative bg-white shadow-2xl rounded-lg p-6 text-center duration-500 hover:scale-105">
                 <p className="text-black italic mb-4">{testimonial.text}</p>
                 <h3 className="text-lg font-semibold">{testimonial.name}</h3>
                 <p className="text-sm text-gray-500">{testimonial.role}</p>
