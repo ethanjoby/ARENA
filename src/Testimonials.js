@@ -209,7 +209,7 @@ const Testimonials = () => {
               text: (
                 <>
                   Arena Counseling Services helped my daughter secure a{" "}
-                  <span className="highlight">research internship at the UCLA Plasma Physics Lab</span>. Their team not only
+                  <span className="highlight">research internship at UCLA</span>. Their team not only
                   helped her refine her <span className="highlight">resume</span> and craft tailored <span className="highlight">outreach emails</span> to professors, but also provided interview coaching that gave her the
                   confidence she needed to excel. The level of detail and dedication they provided was
                   exceptional, and the internship opportunity has been a turning point in her academic
