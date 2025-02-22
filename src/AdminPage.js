@@ -24,19 +24,13 @@ const [sortOrder, setSortOrder] = useState("newest");
   const [responses, setResponses] = useState([]);
   const [activeMeetingTab, setActiveMeetingTab] = useState("Free Consultation");
   const [meetings, setMeetings] = useState({
-    Tutoring: [],
-    SummerProgram: [],
-    Internship: [],
-    'SAT/ACT': [],
-    'Free Consultation': [],
     Ratul: [],
-    Aaron: [],
-    Nirav: [],
     Advay: [],
+    Aaron: [],
+    Aryan: [],
     Ethan: [],
-    Aryan: []
-});
-  
+    Nirav: []
+  });
   const [activeView, setActiveView] = useState('contact');
 
   const presetUsername = "admin";
@@ -50,12 +44,12 @@ const [sortOrder, setSortOrder] = useState("newest");
   const [error, setError] = useState("");
 
   const [meetingsdata, setmeetingsdata] = useState({
-    name: "", 
-    email: "", 
-    meetingType: "", 
+    customerName: "",
+    email: "",
+    service: "",
     subject: "",
-    hosts: "",
     hours: "",
+    paid: "No"  // Set default value
   }); ;
   const fetchData = async () => {
     try {
@@ -268,50 +262,54 @@ const [editSignupData, setEditSignupData] = useState({
   
 
   // FIND the addMeeting function and REPLACE it with:
-const addMeeting = async () => {
-  try {
-      if (!meetingsdata.name || !meetingsdata.email || !meetingsdata.subject || !meetingsdata.hours) {
-          alert("Please fill in all required fields.");
-          return;
-      }
+  const addMeeting = async () => {
+    try {
+        // Check all required fields
+        if (!meetingsdata.customerName || !meetingsdata.email || !meetingsdata.service || !meetingsdata.hours) {
+            alert("Please fill in all required fields:\n- Customer Name\n- Email\n- Service\n- Hours");
+            return;
+        }
 
-      const db = getFirestore(app);
-      const meetingsCollection = collection(db, "meetings");
+        const db = getFirestore(app);
+        const meetingsCollection = collection(db, "meetings");
 
-      // Create the new meeting object
-      const newMeeting = {
-          name: meetingsdata.name,
-          email: meetingsdata.email,
-          subject: meetingsdata.subject,
-          hosts: meetingsdata.hosts || "N/A",
-          hours: meetingsdata.hours,
-          meetingType: activeMeetingTab, // Use the active tab as the meeting type
-          date: Timestamp.fromDate(new Date()) // Add current timestamp
-      };
+        // Create the new meeting object
+        const newMeeting = {
+            customerName: meetingsdata.customerName,
+            email: meetingsdata.email,
+            service: meetingsdata.service,
+            subject: meetingsdata.subject || "N/A",
+            hours: meetingsdata.hours,
+            paid: meetingsdata.paid,
+            meetingType: activeMeetingTab,
+            date: Timestamp.fromDate(new Date())
+        };
 
-      // Add to Firestore
-      const docRef = await addDoc(meetingsCollection, newMeeting);
-      
-      // Update local state
-      setMeetings(prev => ({
-          ...prev,
-          [activeMeetingTab]: [...(prev[activeMeetingTab] || []), { ...newMeeting, id: docRef.id }]
-      }));
+        // Add to Firestore
+        const docRef = await addDoc(meetingsCollection, newMeeting);
+        
+        // Update local state
+        setMeetings(prev => ({
+            ...prev,
+            [activeMeetingTab]: [...(prev[activeMeetingTab] || []), { ...newMeeting, id: docRef.id }]
+        }));
 
-      // Clear form
-      setmeetingsdata({
-          name: "",
-          email: "",
-          subject: "",
-          hosts: "",
-          hours: ""
-      });
+        // Clear form
+        setmeetingsdata({
+            customerName: "",
+            email: "",
+            service: "",
+            subject: "",
+            hours: "",
+            paid: "No"
+        });
 
-      console.log("Meeting added successfully!");
-      
-  } catch (error) {
-      console.error("Error adding meeting: ", error);
-  }
+        alert("Customer added successfully!");
+        
+    } catch (error) {
+        console.error("Error adding customer:", error);
+        alert("Error adding customer. Please try again.");
+    }
 };
   
   
@@ -409,11 +407,12 @@ const addMeeting = async () => {
 
   const [editingId, setEditingId] = useState(null);
   const [editData, setEditData] = useState({
-    name: "",
+    customerName: "",
     email: "",
+    service: "",
     subject: "",
-    hosts: "",
-    hours: "" // ✅ Include Meeting Link in edit state
+    hours: "",
+    paid: "No"
   });
   
   const updateMeeting = async (id, updatedData) => {
@@ -900,7 +899,7 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
               </>
             ) : activeView === 'meetings' ? (
                  <>
-      <h2 className="text-2xl font-bold mb-4">Customer Next Meeting</h2>
+      <h2 className="text-2xl font-bold mb-4">Customer Details</h2>
       
 <div className="grid grid-cols-7 gap-4 mb-6">
   
@@ -1146,64 +1145,66 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
               <>
       <h2 className="text-2xl font-bold mb-4">Customer Next Meeting</h2>
       <div className="flex space-x-4 mb-4">
-  {["Tutoring", "SummerProgram", "Internship", "SAT/ACT"].map((tab) => (
-    <button
-      key={tab}
-      className={`px-4 py-2 rounded ${activeMeetingTab === tab ? "bg-blue-500 text-white" : "bg-gray-200"}`}
-      onClick={() => setActiveMeetingTab(tab)}
-    >
-      {tab.replace(/([A-Z])/g, " $1")} {/* Formats "summerProgram" to "Summer Program" */}
-    </button>
-  ))}
+      {["Ratul", "Advay", "Aaron", "Aryan", "Ethan", "Nirav"].map((tab) => (
+  <button
+    key={tab}
+    className={`px-4 py-2 rounded ${activeMeetingTab === tab ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+    onClick={() => setActiveMeetingTab(tab)}
+  >
+    {tab}
+  </button>
+))}
 </div>
 
 {meetings[activeMeetingTab]?.length > 0 ? (
   <table className="overflow-x-auto w-full">
     <thead className="bg-gray-100 text-gray-700">
-      <tr>
-        <th className="py-3 px-4 text-left">Name</th>
-        <th className="py-3 px-4 text-left ">Email</th>
-        <th className="py-3 px-4 text-left ">Topic</th>
-        <th className="py-3 px-4 text-left">Tutor</th>
-        <th className="py-3 px-4 text-left ">Hours Left</th>
-        <th className="py-3 px-4 text-center ">Actions</th>
-      </tr>
-    </thead>
+  <tr>
+    <th className="py-3 px-4 text-left">Customer Name</th>
+    <th className="py-3 px-4 text-left">Email</th>
+    <th className="py-3 px-4 text-left">Service</th>
+    <th className="py-3 px-4 text-left">Hours Left</th>
+    <th className="py-3 px-4 text-left">Paid?</th>
+    <th className="py-3 px-4 text-center">Actions</th>
+  </tr>
+</thead>
     <tbody>
       {meetings[activeMeetingTab].map((meeting, index) => (
         <tr key={meeting.id} className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}>
           {editingId === meeting.id ? (
-            <>
-              <td className="py-2 px-4 "><input type="text" value={editData.name} onChange={(e) => handleEditChange(e, 'name')} className="border p-2 w-full rounded-md" /></td>
-              <td className="py-2 px-4 "><input type="email" value={editData.email} onChange={(e) => handleEditChange(e, 'email')} className="border p-2 w-full rounded-md" /></td>
-              <td className="py-2 px-4 "><input type="text" value={editData.subject} onChange={(e) => handleEditChange(e, 'subject')} className="border p-2 w-full rounded-md" /></td>
-              <td className="py-2 px-4 "><input type="text" value={editData.hosts} onChange={(e) => handleEditChange(e, 'hosts')} className="border p-2 w-full rounded-md" /></td>
-              <td className="py-2 px-4 "><input type="text" value={editData.hours} onChange={(e) => handleEditChange(e, 'hours')} className="border p-2 w-full rounded-md" /></td>
-              <td className="py-2 px-4  text-center">
-                <button onClick={saveEdit} className="text-green-500 hover:text-green-700 font-bold mr-2">Save</button>
-                <button onClick={() => setEditingId(null)} className="text-gray-500 hover:text-gray-700">Cancel</button>
-              </td>
-            </>
-          ) : (
-            <>
-              <td className="py-3 px-4 ">{meeting.name}</td>
-              <td className="py-3 px-4 ">{meeting.email}</td>
-              <td className="py-3 px-4">{meeting.subject}</td>
-              
-              <td className="py-3 px-4 ">{meeting.hosts}</td>
-              <td className="py-3 px-4">{meeting.hours}</td>
-             
-
-              <td className="py-3 px-4 text-center">
-                <button onClick={() => startEditing(meeting)} className="text-blue-500 hover:text-blue-700 font-bold mr-2">
-                  <Edit size={20} />
-                </button>
-                <button onClick={() => handleMeetingDelete(meeting.id)} className="text-red-500 hover:text-red-700 font-bold">
-                  <Trash2 size={20} />
-                </button>
-              </td>
-            </>
-          )}
+  <>
+    <td className="py-2 px-4"><input type="text" value={editData.customerName} onChange={(e) => handleEditChange(e, 'customerName')} className="border p-2 w-full rounded-md" /></td>
+    <td className="py-2 px-4"><input type="email" value={editData.email} onChange={(e) => handleEditChange(e, 'email')} className="border p-2 w-full rounded-md" /></td>
+    <td className="py-2 px-4"><input type="text" value={editData.service} onChange={(e) => handleEditChange(e, 'service')} className="border p-2 w-full rounded-md" /></td>
+    <td className="py-2 px-4"><input type="text" value={editData.hours} onChange={(e) => handleEditChange(e, 'hours')} className="border p-2 w-full rounded-md" /></td>
+    <td className="py-2 px-4">
+      <select value={editData.paid} onChange={(e) => handleEditChange(e, 'paid')} className="border p-2 w-full rounded-md">
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+    </td>
+    <td className="py-2 px-4 text-center">
+      <button onClick={saveEdit} className="text-green-500 hover:text-green-700 font-bold mr-2">Save</button>
+      <button onClick={() => setEditingId(null)} className="text-gray-500 hover:text-gray-700">Cancel</button>
+    </td>
+  </>
+) : (
+  <>
+    <td className="py-3 px-4">{meeting.customerName}</td>
+    <td className="py-3 px-4">{meeting.email}</td>
+    <td className="py-3 px-4">{meeting.service}</td>
+    <td className="py-3 px-4">{meeting.hours}</td>
+    <td className="py-3 px-4">{meeting.paid}</td>
+    <td className="py-3 px-4 text-center">
+      <button onClick={() => startEditing(meeting)} className="text-blue-500 hover:text-blue-700 font-bold mr-2">
+        <Edit size={20} />
+      </button>
+      <button onClick={() => handleMeetingDelete(meeting.id)} className="text-red-500 hover:text-red-700 font-bold">
+        <Trash2 size={20} />
+      </button>
+    </td>
+  </>
+)}
         </tr>
       ))}
     </tbody>
@@ -1220,10 +1221,9 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
               <tr className="bg-gray-50 text-left">
                 <th className="py-3 px-4">Name</th>
                 <th className="py-3 px-4">Email</th>
-                <th className="py-3 px-4">Tutor</th>
-                <th className="py-3 px-4">Topic</th>
-                <th className="py-3 px-4">Hours</th>
-                <th className="py-3 px-4"></th>
+                <th className="py-3 px-4">Service</th>
+                <th className="py-3 px-4">Hours Left</th>
+                <th className="py-3 px-4">Paid?</th>
               </tr>
             </thead>
             <tfoot>
@@ -1231,55 +1231,61 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
     <td className="py-2 px-4">
       <input
         type="text"
-        placeholder="Name"
+        placeholder="Enter customer name"
         className="border p-2 w-full rounded-md"
-        value={meetingsdata.name}
-        onChange={(e) => setmeetingsdata({ ...meetingsdata, name: e.target.value })}
+        value={meetingsdata.customerName}
+        onChange={(e) => setmeetingsdata({ ...meetingsdata, customerName: e.target.value })}
+        required
       />
     </td>
     <td className="py-2 px-4">
       <input
         type="email"
-        placeholder="Email"
+        placeholder="Enter email"
         className="border p-2 w-full rounded-md"
         value={meetingsdata.email}
         onChange={(e) => setmeetingsdata({ ...meetingsdata, email: e.target.value })}
+        required
       />
     </td>
     <td className="py-2 px-4">
+
       <input
         type="text"
-        placeholder="Hosts"
+        placeholder="Enter service"
         className="border p-2 w-full rounded-md"
-        value={meetingsdata.hosts}
-        onChange={(e) => setmeetingsdata({ ...meetingsdata, hosts: e.target.value })}
+        value={meetingsdata.service}
+        onChange={(e) => setmeetingsdata({ ...meetingsdata, service: e.target.value })}
+        required
       />
     </td>
     <td className="py-2 px-4">
+
       <input
         type="text"
-        placeholder="Subject"
-        className="border p-2 w-full rounded-md"
-        value={meetingsdata.subject}
-        onChange={(e) => setmeetingsdata({ ...meetingsdata, subject: e.target.value })}
-      />
-    </td>
-    <td className="py-2 px-4">
-      <input
-        type="text"
-        placeholder="Hours Left"
+        placeholder="Enter hours"
         className="border p-2 w-full rounded-md"
         value={meetingsdata.hours}
         onChange={(e) => setmeetingsdata({ ...meetingsdata, hours: e.target.value })}
+        required
       />
     </td>
-    
+    <td className="py-2 px-4">
+      <select
+        className="border p-2 w-full rounded-md"
+        value={meetingsdata.paid}
+        onChange={(e) => setmeetingsdata({ ...meetingsdata, paid: e.target.value })}
+      >
+        <option value="No">Not Paid</option>
+        <option value="Yes">Paid</option>
+      </select>
+    </td>
     <td className="py-2 px-4 text-right">
       <button
         onClick={addMeeting}
-        className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-200"
+        className="mt-6 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-200"
       >
-        Add Meeting
+        Add Customer
       </button>
     </td>
   </tr>
