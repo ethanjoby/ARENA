@@ -6,6 +6,7 @@ import { app } from "./firebase";
 import {Trash2, Edit } from "lucide-react";
 import { Timestamp } from "firebase/firestore";
 import GoogleFormEmbed from "./GoogleFormEmbed";
+import { motion } from "framer-motion";
 
 const AdminPage = () => {
   const [signupStatuses, setSignupStatuses] = useState({});
@@ -564,7 +565,9 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
       {questions.length > 0 ? (
         <div className="overflow-x-auto w-full rounded ">
           
-          <table className="w-full">
+          <table className="w-full border-collapse rounded-xl shadow-lg bg-white/80 backdrop-blur-md overflow-hidden transition-all duration-300 hover:shadow-2xl">
+
+
             <thead>
               <tr className="bg-gray-50 text-left">
               <th className="sticky top-0 bg-gray-100 px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider rounded-t-lg">Name</th>
@@ -666,7 +669,7 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
             type="text"
             value={editSignupData.name}
             onChange={(e) => handleSignupEditChange(e, 'name')}
-            className="border p-2 w-full rounded-md"
+            className="border p-3 w-full rounded-lg bg-white/60 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
           />
         </td>
         <td className="py-3 px-4">
@@ -675,35 +678,35 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
             placeholder="Student Email"
             value={editSignupData.email}
             onChange={(e) => handleSignupEditChange(e, 'email')}
-            className="border p-2 w-full rounded-md mb-2"
+            className="w-full p-3 text-white transition-all duration-300 bg-white/10 backdrop-blur-lg rounded-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-gray-300"
           />
           <input
             type="text"
             placeholder="Parent Email"
             value={editSignupData.parentEmail}
             onChange={(e) => handleSignupEditChange(e, 'parentEmail')}
-            className="border p-2 w-full rounded-md mb-2"
+            className="w-full p-3 text-white transition-all duration-300 bg-white/10 backdrop-blur-lg rounded-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-gray-300"
           />
           <input
             type="text"
             placeholder="Phone"
             value={editSignupData.phone}
             onChange={(e) => handleSignupEditChange(e, 'phone')}
-            className="border p-2 w-full rounded-md mb-2"
+            className="w-full p-3 text-white transition-all duration-300 bg-white/10 backdrop-blur-lg rounded-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-gray-300"
           />
           <input
             type="text"
             placeholder="Grade"
             value={editSignupData.grade}
             onChange={(e) => handleSignupEditChange(e, 'grade')}
-            className="border p-2 w-full rounded-md"
+            className="border p-3 w-full rounded-lg bg-white/60 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
           />
         </td>
         <td className="py-3 px-4">
           <textarea
             value={editSignupData.additionalInfo}
             onChange={(e) => handleSignupEditChange(e, 'additionalInfo')}
-            className="border p-2 w-full rounded-md"
+            className="border p-3 w-full rounded-lg bg-white/60 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
             rows="4"
           />
         </td>
@@ -733,7 +736,7 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
           <textarea
             value={editSignupData.notes}
             onChange={(e) => handleSignupEditChange(e, 'notes')}
-            className="border p-2 w-full rounded-md"
+            className="border p-3 w-full rounded-lg bg-white/60 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
             rows="4"
           />
         </td>
@@ -827,12 +830,12 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
       </tbody>
 
       <tfoot>
-  <tr className="bg-gray-100">
+      <tr className="group transition-all duration-300 hover:scale-[1.02] hover:bg-blue-500/10 hover:shadow-md">
     <td className="py-3 px-4">
       <input
         type="text"
         placeholder="Name"
-        className="border p-2 w-full rounded-md"
+        className="border p-3 w-full rounded-lg bg-white/60 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
         value={signupData.name}
         onChange={(e) => setSignupData({ ...signupData, name: e.target.value })}
       />
@@ -841,7 +844,7 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
       <input
         type="text"
         placeholder="Info"
-        className="border p-2 w-full rounded-md"
+        className="border p-3 w-full rounded-lg bg-white/60 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
         value={signupData.info}
         onChange={(e) => setSignupData({ ...signupData, info: e.target.value })}
       />
@@ -850,7 +853,7 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
       <input
         type="text"
         placeholder="Details"
-        className="border p-2 w-full rounded-md"
+        className="border p-3 w-full rounded-lg bg-white/60 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
         value={signupData.details}
         onChange={(e) => setSignupData({ ...signupData, details: e.target.value })}
       />
@@ -873,7 +876,7 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
       <input
         type="text"
         placeholder="Notes"
-        className="border p-2 w-full rounded-md"
+        className="border p-3 w-full rounded-lg bg-white/60 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
         value={signupData.notes}
         onChange={(e) => setSignupData({ ...signupData, notes: e.target.value })}
       />
@@ -899,7 +902,11 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
               </>
             ) : activeView === 'meetings' ? (
                  <>
-      <h2 className="text-2xl font-bold mb-4">Customer Details</h2>
+      <h2 className="text-3xl font-extrabold text-gray-900 mb-6 tracking-tight">
+  📋 Meetings
+</h2>
+<p className="text-gray-500 mb-6 text-lg">Manage your customer bookings with ease.</p>
+
       
 <div className="grid grid-cols-7 gap-4 mb-6">
   
@@ -996,221 +1003,202 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
   <GoogleFormEmbed src="https://calendar.google.com/calendar/embed?src=vargheseethan07%40gmail.com&ctz=America%2FLos_Angeles" />
 ):null}
   
-{/*
-{meetings[activeMeetingTab]?.length > 0 ? (
-  <>
-
-  
-  <table className="w-full mt-4 border-collapse border border-gray-300">
-    <thead className="bg-gray-100 text-gray-700">
-      <tr>
-        <th className="py-3 px-4 text-left border-b border-gray-300">Name</th>
-        <th className="py-3 px-4 text-left border-b border-gray-300">Email</th>
-        <th className="py-3 px-4 text-left border-b border-gray-300">Date/Time</th>
-        <th className="py-3 px-4 text-left border-b border-gray-300">Hosts</th>
-        <th className="py-3 px-4 text-left border-b border-gray-300">Meeting Link</th>
-        <th className="py-3 px-4 text-center border-b border-gray-300">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {meetings[activeMeetingTab].map((meeting, index) => (
-        <tr key={meeting.id} className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}>
-          {editingId === meeting.id ? (
-            <>
-              <td className="py-2 px-4 border-b"><input type="text" value={editData.name} onChange={(e) => handleEditChange(e, 'name')} className="border p-2 w-full rounded-md" /></td>
-              <td className="py-2 px-4 border-b"><input type="email" value={editData.email} onChange={(e) => handleEditChange(e, 'email')} className="border p-2 w-full rounded-md" /></td>
-              <td className="py-2 px-4 border-b"><input type="datetime-local" value={editData.date} onChange={(e) => handleEditChange(e, 'date')} className="border p-2 w-full rounded-md" /></td>
-              <td className="py-2 px-4 border-b"><input type="text" value={editData.hosts} onChange={(e) => handleEditChange(e, 'hosts')} className="border p-2 w-full rounded-md" /></td>
-              <td className="py-2 px-4 border-b"><input type="text" value={editData.link} onChange={(e) => handleEditChange(e, 'link')} className="border p-2 w-full rounded-md" /></td>
-              <td className="py-2 px-4 border-b text-center">
-                <button onClick={saveEdit} className="text-green-500 hover:text-green-700 font-bold mr-2">Save</button>
-                <button onClick={() => setEditingId(null)} className="text-gray-500 hover:text-gray-700">Cancel</button>
-              </td>
-            </>
-          ) : (
-            <>
-              <td className="py-3 px-4 border-b">{meeting.name}</td>
-              <td className="py-3 px-4 border-b">{meeting.email}</td>
-              <td className="py-3 px-4 border-b">{new Date(meeting.date).toLocaleString()}</td>
-              <td className="py-3 px-4 border-b">{meeting.hosts}</td>
-              <td className="py-3 px-4 border-b text-center">
-  <a 
-    href={meeting.link} 
-    target="_blank" 
-    rel="noopener noreferrer" 
-    className="inline-flex items-center bg-green-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-green-600 transition duration-300"
-  >
-    <span className="mr-2">Join</span>
-    ➜
-  </a>
-</td>
-
-              <td className="py-3 px-4 border-b text-center">
-                <button onClick={() => startEditing(meeting)} className="text-blue-500 hover:text-blue-700 font-bold mr-2">
-                  <Edit size={20} />
-                </button>
-                <button onClick={() => handleMeetingDelete(meeting.id)} className="text-red-500 hover:text-red-700 font-bold">
-                  <Trash2 size={20} />
-                </button>
-              </td>
-            </>
-          )}
-        </tr>
-      ))}
-    </tbody>
-  </table>
-  </>
-) : (
-  <p className="text-gray-600 text-center py-4">No meetings available for this category.</p>
-)}
-
-
- 
-        <>
-        <table className="w-full mt-4">
-        <thead>
-              <tr className="bg-gray-50 text-left">
-                <th className="py-3 px-4">Name</th>
-                <th className="py-3 px-4">Email</th>
-                <th className="py-3 px-4">Hosts</th>
-                <th className="py-3 px-4">Date/Time</th>
-                <th className="py-3 px-4">Link</th>
-                <th className="py-3 px-4"></th>
-              </tr>
-            </thead>
-            <tfoot>
-  <tr className="bg-gray-50">
-    <td className="py-2 px-4">
-      <input
-        type="text"
-        placeholder="Name"
-        className="border p-2 w-full rounded-md"
-        value={meetingsdata.name}
-        onChange={(e) => setmeetingsdata({ ...meetingsdata, name: e.target.value })}
-      />
-    </td>
-    <td className="py-2 px-4">
-      <input
-        type="email"
-        placeholder="Email"
-        className="border p-2 w-full rounded-md"
-        value={meetingsdata.email}
-        onChange={(e) => setmeetingsdata({ ...meetingsdata, email: e.target.value })}
-      />
-    </td>
-    <td className="py-2 px-4">
-      <input
-        type="text"
-        placeholder="Hosts"
-        className="border p-2 w-full rounded-md"
-        value={meetingsdata.hosts}
-        onChange={(e) => setmeetingsdata({ ...meetingsdata, hosts: e.target.value })}
-      />
-    </td>
-    <td className="py-2 px-4">
-      <input
-        type="datetime-local"
-        className="border p-2 w-full rounded-md"
-        value={meetingsdata.date}
-        onChange={(e) => setmeetingsdata({ ...meetingsdata, date: e.target.value })}
-      />
-    </td>
-    <td className="py-2 px-4">
-      <input
-        type="text"
-        placeholder="Meeting Link"
-        className="border p-2 w-full rounded-md"
-        value={meetingsdata.link}
-        onChange={(e) => setmeetingsdata({ ...meetingsdata, link: e.target.value })}
-      />
-    </td>
-    <td className="py-2 px-4 text-right">
-      <button
-        onClick={addMeeting}
-        className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-200"
-      >
-        Add Meeting
-      </button>
-    </td>
-  </tr>
-</tfoot>
-
-
-
-  </table>
-      </>
-*/}
+{}
     </>
             ) : activeView === 'customers' ? (
               <>
-      <h2 className="text-2xl font-bold mb-4">Customer Next Meeting</h2>
+      <h2 className="text-2xl font-bold mb-4">Customer Details</h2>
       <div className="flex space-x-4 mb-4">
       {["Ratul", "Advay", "Aaron", "Aryan", "Ethan", "Nirav"].map((tab) => (
   <button
-    key={tab}
-    className={`px-4 py-2 rounded ${activeMeetingTab === tab ? "bg-blue-500 text-white" : "bg-gray-200"}`}
-    onClick={() => setActiveMeetingTab(tab)}
-  >
-    {tab}
-  </button>
+  key={tab}
+  className={`relative px-6 py-3 rounded-full font-semibold transition-all duration-300 shadow-md backdrop-blur-lg
+    ${activeMeetingTab === tab 
+      ? "bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-2xl scale-110 ring-2 ring-blue-300" 
+      : "bg-gray-200 hover:bg-gray-300 text-gray-700 hover:scale-105"
+    }`}
+  onClick={() => setActiveMeetingTab(tab)}
+>
+  <span className="relative z-10">{tab}</span>
+  {activeMeetingTab === tab && (
+    <span className="absolute inset-0 bg-white opacity-10 rounded-full animate-ping"></span>
+  )}
+</button>
+
+
+
 ))}
 </div>
 
 {meetings[activeMeetingTab]?.length > 0 ? (
-  <table className="overflow-x-auto w-full">
-    <thead className="bg-gray-100 text-gray-700">
-  <tr>
-    <th className="py-3 px-4 text-left">Customer Name</th>
-    <th className="py-3 px-4 text-left">Email</th>
-    <th className="py-3 px-4 text-left">Service</th>
-    <th className="py-3 px-4 text-left">Hours Left</th>
-    <th className="py-3 px-4 text-left">Paid?</th>
-    <th className="py-3 px-4 text-center">Actions</th>
-  </tr>
-</thead>
-    <tbody>
-      {meetings[activeMeetingTab].map((meeting, index) => (
-        <tr key={meeting.id} className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}>
-          {editingId === meeting.id ? (
-  <>
-    <td className="py-2 px-4"><input type="text" value={editData.customerName} onChange={(e) => handleEditChange(e, 'customerName')} className="border p-2 w-full rounded-md" /></td>
-    <td className="py-2 px-4"><input type="email" value={editData.email} onChange={(e) => handleEditChange(e, 'email')} className="border p-2 w-full rounded-md" /></td>
-    <td className="py-2 px-4"><input type="text" value={editData.service} onChange={(e) => handleEditChange(e, 'service')} className="border p-2 w-full rounded-md" /></td>
-    <td className="py-2 px-4"><input type="text" value={editData.hours} onChange={(e) => handleEditChange(e, 'hours')} className="border p-2 w-full rounded-md" /></td>
-    <td className="py-2 px-4">
-      <select value={editData.paid} onChange={(e) => handleEditChange(e, 'paid')} className="border p-2 w-full rounded-md">
-        <option value="Yes">Yes</option>
-        <option value="No">No</option>
-      </select>
-    </td>
-    <td className="py-2 px-4 text-center">
-      <button onClick={saveEdit} className="text-green-500 hover:text-green-700 font-bold mr-2">Save</button>
-      <button onClick={() => setEditingId(null)} className="text-gray-500 hover:text-gray-700">Cancel</button>
-    </td>
-  </>
-) : (
-  <>
-    <td className="py-3 px-4">{meeting.customerName}</td>
-    <td className="py-3 px-4">{meeting.email}</td>
-    <td className="py-3 px-4">{meeting.service}</td>
-    <td className="py-3 px-4">{meeting.hours}</td>
-    <td className="py-3 px-4">{meeting.paid}</td>
-    <td className="py-3 px-4 text-center">
-      <button onClick={() => startEditing(meeting)} className="text-blue-500 hover:text-blue-700 font-bold mr-2">
-        <Edit size={20} />
-      </button>
-      <button onClick={() => handleMeetingDelete(meeting.id)} className="text-red-500 hover:text-red-700 font-bold">
-        <Trash2 size={20} />
-      </button>
-    </td>
-  </>
-)}
+  <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+    <table className="w-full border-collapse rounded-xl shadow-lg bg-white/80 backdrop-blur-md overflow-hidden transition-all duration-300 hover:shadow-2xl">
+
+
+    <thead className="bg-gradient-to-r from-gray-50 to-gray-200 border-b border-gray-300 shadow-md rounded-lg overflow-hidden">
+<tr className="text-gray-800 text-left text-sm font-bold uppercase tracking-wider">
+<th className="px-6 py-4 bg-opacity-50 backdrop-blur-lg">
+
+
+            Customer Name
+          </th>
+          <th className="px-6 py-4 bg-opacity-50 backdrop-blur-lg">
+
+            Email
+          </th>
+          <th className="px-6 py-4 bg-opacity-50 backdrop-blur-lg">
+
+            Service
+          </th>
+          <th className="px-6 py-4 bg-opacity-50 backdrop-blur-lg">
+
+            Hours Left
+          </th>
+          <th className="px-6 py-4 bg-opacity-50 backdrop-blur-lg">
+
+            Status
+          </th>
+          <th className="px-6 py-4 bg-opacity-50 backdrop-blur-lg">
+            Actions
+          </th>
         </tr>
-      ))}
-    </tbody>
-  </table>
+      </thead>
+      <tbody className="divide-y divide-gray-200">
+        {meetings[activeMeetingTab]
+          .filter(meeting => {
+            if (selectedFilter === 'paid') return meeting.paid === 'Yes';
+            if (selectedFilter === 'unpaid') return meeting.paid === 'No';
+            return true;
+          })
+          .filter(meeting => 
+            meeting.customerName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            meeting.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            meeting.service?.toLowerCase().includes(searchQuery.toLowerCase())
+          )
+          .map((meeting, index) => (
+            <tr className={`group transition-all duration-300 ${index % 2 === 0 ? "bg-white/80" : "bg-gray-50/80"} hover:bg-blue-100 hover:scale-[1.02] shadow-md hover:shadow-2xl backdrop-blur-lg rounded-xl`}>
+
+            
+
+              {editingId === meeting.id ? (
+                <>
+                  <td className="px-6 py-4">
+                    <input
+                      type="text"
+                      value={editData.customerName}
+                      onChange={(e) => handleEditChange(e, 'customerName')}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+
+                    />
+                  </td>
+                  <td className="px-6 py-4">
+                    <input
+                      type="email"
+                      value={editData.email}
+                      onChange={(e) => handleEditChange(e, 'email')}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+
+                    />
+                  </td>
+                  <td className="px-6 py-4">
+                    <input
+                      type="text"
+                      value={editData.service}
+                      onChange={(e) => handleEditChange(e, 'service')}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+
+                    />
+                  </td>
+                  <td className="px-6 py-4">
+                    <input
+                      type="text"
+                      value={editData.hours}
+                      onChange={(e) => handleEditChange(e, 'hours')}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+
+                    />
+                  </td>
+                  <td className="px-6 py-4">
+                    <select
+                      value={editData.paid}
+                      onChange={(e) => handleEditChange(e, 'paid')}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+
+                    >
+                      <option value="Yes">Paid</option>
+                      <option value="No">Unpaid</option>
+                    </select>
+                  </td>
+                  <td className="px-6 py-4 text-center">
+                    <button
+                      onClick={saveEdit}
+                      className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 mr-2"
+                    >
+                      Save
+                    </button>
+                    <button
+                      onClick={() => setEditingId(null)}
+                      className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
+                    >
+                      Cancel
+                    </button>
+                  </td>
+                </>
+              ) : (
+                <>
+                  <td className="px-6 py-4">
+                    <div className="text-sm font-medium text-gray-900">{meeting.customerName}</div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="text-sm text-gray-500">{meeting.email}</div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="text-sm text-gray-900">{meeting.service}</div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="text-sm text-gray-900">{meeting.hours}</div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <span className={`inline-flex px-3 py-1 rounded-full text-xs font-medium ${
+                      meeting.paid === 'Yes' 
+                        ? 'bg-green-100 text-green-800' 
+                        : 'bg-red-100 text-red-800'
+                    }`}>
+                      {meeting.paid === 'Yes' ? 'Paid' : 'Unpaid'}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 text-center">
+                  <div className="flex items-center space-x-3">
+                  <button
+  onClick={() => startEditing(meeting)}
+  className="p-2 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-all duration-200 shadow-lg ring-1 ring-blue-300 hover:scale-110"
+>
+  <Edit size={18} />
+</button>
+<button
+  onClick={() => handleMeetingDelete(meeting.id)}
+  className="p-2 rounded-full bg-red-500 text-white hover:bg-red-600 transition-all duration-200 shadow-lg ring-1 ring-red-300 hover:scale-110"
+>
+  <Trash2 size={18} />
+</button>
+
+</div>
+
+                  </td>
+                </>
+              )}
+            </tr>
+          ))}
+      </tbody>
+    </table>
+  </div>
 ) : (
-  <p className="text-gray-600 text-center py-4">No meetings available for this category.</p>
+  <div className="text-center py-16 bg-white bg-opacity-50 backdrop-blur-lg rounded-2xl shadow-xl">
+  <p className="text-gray-600 text-xl font-semibold">No customers found.</p>
+  <p className="text-gray-400 text-sm mt-2">Try selecting another category or add a new customer.</p>
+</div>
+
+
 )}
 
 
@@ -1224,6 +1212,7 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
                 <th className="py-3 px-4">Service</th>
                 <th className="py-3 px-4">Hours Left</th>
                 <th className="py-3 px-4">Paid?</th>
+                <th className="py-3 px-4">Add Customer</th>
               </tr>
             </thead>
             <tfoot>
@@ -1232,7 +1221,7 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
       <input
         type="text"
         placeholder="Enter customer name"
-        className="border p-2 w-full rounded-md"
+        className="border p-3 w-full rounded-lg bg-white/60 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
         value={meetingsdata.customerName}
         onChange={(e) => setmeetingsdata({ ...meetingsdata, customerName: e.target.value })}
         required
@@ -1242,7 +1231,7 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
       <input
         type="email"
         placeholder="Enter email"
-        className="border p-2 w-full rounded-md"
+        className="border p-3 w-full rounded-lg bg-white/60 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
         value={meetingsdata.email}
         onChange={(e) => setmeetingsdata({ ...meetingsdata, email: e.target.value })}
         required
@@ -1253,7 +1242,7 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
       <input
         type="text"
         placeholder="Enter service"
-        className="border p-2 w-full rounded-md"
+        className="border p-3 w-full rounded-lg bg-white/60 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
         value={meetingsdata.service}
         onChange={(e) => setmeetingsdata({ ...meetingsdata, service: e.target.value })}
         required
@@ -1264,7 +1253,7 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
       <input
         type="text"
         placeholder="Enter hours"
-        className="border p-2 w-full rounded-md"
+        className="border p-3 w-full rounded-lg bg-white/60 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
         value={meetingsdata.hours}
         onChange={(e) => setmeetingsdata({ ...meetingsdata, hours: e.target.value })}
         required
@@ -1272,7 +1261,7 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
     </td>
     <td className="py-2 px-4">
       <select
-        className="border p-2 w-full rounded-md"
+        className="border p-3 w-full rounded-lg bg-white/60 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
         value={meetingsdata.paid}
         onChange={(e) => setmeetingsdata({ ...meetingsdata, paid: e.target.value })}
       >
@@ -1281,12 +1270,16 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
       </select>
     </td>
     <td className="py-2 px-4 text-right">
-      <button
-        onClick={addMeeting}
-        className="mt-6 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-200"
-      >
-        Add Customer
-      </button>
+    <button
+  onClick={addMeeting}
+  className="relative px-6 py-3 font-semibold text-white transition-all duration-300 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 shadow-[0px_5px_15px_rgba(0,0,0,0.3)] hover:shadow-[0px_8px_20px_rgba(0,0,0,0.4)] active:translate-y-[2px] active:shadow-[0px_4px_10px_rgba(0,0,0,0.3)] before:absolute before:inset-0 before:rounded-lg before:bg-white/20 before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-100"
+>
+  + Add Customer
+</button>
+
+
+
+
     </td>
   </tr>
 </tfoot>
@@ -1307,31 +1300,34 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
     );
     
   } else {
-    return (
+    return(
+      
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <form onSubmit={handleLogin} className="bg-white p-8 rounded-lg shadow-lg w-96">
+        <form onSubmit={handleLogin} className="bg-white p-10 rounded-2xl shadow-xl w-96 border border-gray-200">
+
           <h2 className="text-2xl font-bold mb-4">Admin Login</h2>
           <input
             type="text"
             placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded mb-4"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg mb-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <input
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded mb-4"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg mb-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           {error && <p className="text-red-500 mb-4">{error}</p>}
           <button
-            type="submit"
-            className="w-full py-2 bg-black text-white rounded hover:bg-gray-800"
-          >
-            Login
-          </button>
+  type="submit"
+  className="w-full py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-all duration-200 active:scale-95 shadow-md"
+>
+  Login
+</button>
+
         </form>
       </div>
     );
