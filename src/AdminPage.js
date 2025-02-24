@@ -6,10 +6,12 @@ import { app } from "./firebase";
 import {Trash2, Edit } from "lucide-react";
 import { Timestamp } from "firebase/firestore";
 import GoogleFormEmbed from "./GoogleFormEmbed";
-import { motion } from "framer-motion";
+import {where} from "firebase/firestore";
 
 const AdminPage = () => {
   const [signupStatuses, setSignupStatuses] = useState({});
+  const [isEditingProgramDetails, setIsEditingProgramDetails] = useState(false);
+  const [activeProgramDetails, setActiveProgramDetails] = useState(null);
   const statusOptions = [
     "Contacted Us in some way shape or form",
     "Scheduled a Consultation Meeting",
@@ -50,7 +52,14 @@ const [sortOrder, setSortOrder] = useState("newest");
     service: "",
     subject: "",
     hours: "",
-    paid: "No"  // Set default value
+    paid: "No",
+    summerProgram: "",
+    extracurricularPrograms: "",
+    satActTutoring: "",
+    olympiadApTutoring: "",
+    guaranteedInternships: "",
+    generalGuidance: "",
+    resumePackage: ""
   }); ;
   const fetchData = async () => {
     try {
@@ -58,47 +67,50 @@ const [sortOrder, setSortOrder] = useState("newest");
       const questionCollection = collection(db, "contactus");
       const responsesCollection = collection(db, "arenaSignUps");
       const meetingsCollection = collection(db, "meetings");
-
-      //const questionorder = query(questionCollection, orderBy("createdAt", "asc"));
-      //const responsesOrder = query(responsesCollection,orderBy("createdAt", "asc")); 
-      const meetingsOrder = query(meetingsCollection, orderBy("date", "asc")); 
-      
+  
+      const meetingsOrder = query(meetingsCollection, orderBy("date", "asc"));
+  
       const contactQuestions = await getDocs(questionCollection);
       const signupResponses = await getDocs(responsesCollection);
-      const meetingsBooked = await getDocs(meetingsOrder); 
-      
+      const meetingsBooked = await getDocs(meetingsOrder);
+  
       const questionList = contactQuestions.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
-        createdAt: doc.data().createdAt?.toDate() || new Date() //make the thung into a javascript date to read out
+        createdAt: doc.data().createdAt?.toDate() || new Date()
       }));
-
-      const responsesList = signupResponses.docs.map((doc) => ({ 
-        id: doc.id, 
+  
+      const responsesList = signupResponses.docs.map((doc) => ({
+        id: doc.id,
         ...doc.data(),
         createdAt: doc.data().createdAt?.toDate() || new Date(),
-        status: doc.data().status || "" // ✅ Load status from Firestore
+        status: doc.data().status || ""
       }));
-      
-      // ✅ Set signupStatuses state with Firestore data
+  
       const statusMap = {};
       responsesList.forEach((response) => {
         statusMap[response.id] = response.status || "";
       });
-      
+  
       setSignupStatuses(statusMap);
-      
-      
-
+  
       const meetingsList = meetingsBooked.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
-        date: doc.data().date?.toDate() || new Date(), // Ensure date is a JavaScript Date
+        date: doc.data().date?.toDate() || new Date(),
         hosts: doc.data().hosts || "",
+        summerProgram: doc.data().summerProgram || "N/A",
+        extracurricularPrograms: doc.data().extracurricularPrograms || "N/A",
+        satActTutoring: doc.data().satActTutoring || "N/A",
+        olympiadApTutoring: doc.data().olympiadApTutoring || "N/A",
+        guaranteedInternships: doc.data().guaranteedInternships || "N/A",
+        generalGuidance: doc.data().generalGuidance || "N/A",
+        resumePackage: doc.data().resumePackage || "N/A"
       }));
-      
+  
       setQuestions(questionList);
       setResponses(responsesList);
+  
       const categorizedMeetings = {
         Tutoring: [],
         SummerProgram: [],
@@ -111,15 +123,15 @@ const [sortOrder, setSortOrder] = useState("newest");
         Advay: [],
         Ethan: [],
         Aryan: []
-    };
-      
+      };
+  
       setMeetings(categorizedMeetings);
       meetingsList.forEach(meeting => {
         const category = meeting.meetingType || 'Uncategorized';
         if (categorizedMeetings.hasOwnProperty(category)) {
-            categorizedMeetings[category].push(meeting);
+          categorizedMeetings[category].push(meeting);
         }
-    });
+      });
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
@@ -208,7 +220,28 @@ const handleMeetingDelete = async (id) => {
     status: "",
     notes: "",
   });
+  const saveProgramDetails = async () => {
+    try {
+      const db = getFirestore(app);
+      const meetingRef = doc(db, "meetings", activeProgramDetails.id);
   
+      await updateDoc(meetingRef, activeProgramDetails);
+  
+      // Update local state
+      setMeetings((prev) => ({
+        ...prev,
+        [activeMeetingTab]: prev[activeMeetingTab].map((meeting) =>
+          meeting.id === activeProgramDetails.id ? activeProgramDetails : meeting
+        ),
+      }));
+  
+      setIsEditingProgramDetails(false); // Exit edit mode
+      alert("Program details updated successfully!");
+    } catch (error) {
+      console.error("Error updating program details:", error);
+      alert("Error updating program details. Please try again.");
+    }
+  };
   const addSignup = async () => {
     if (!signupData.name || !signupData.status) {
       alert("Please fill in the required fields.");
@@ -265,53 +298,99 @@ const [editSignupData, setEditSignupData] = useState({
   // FIND the addMeeting function and REPLACE it with:
   const addMeeting = async () => {
     try {
-        // Check all required fields
-        if (!meetingsdata.customerName || !meetingsdata.email || !meetingsdata.service || !meetingsdata.hours) {
-            alert("Please fill in all required fields:\n- Customer Name\n- Email\n- Service\n- Hours");
-            return;
-        }
-
-        const db = getFirestore(app);
-        const meetingsCollection = collection(db, "meetings");
-
-        // Create the new meeting object
-        const newMeeting = {
-            customerName: meetingsdata.customerName,
-            email: meetingsdata.email,
-            service: meetingsdata.service,
-            subject: meetingsdata.subject || "N/A",
-            hours: meetingsdata.hours,
-            paid: meetingsdata.paid,
-            meetingType: activeMeetingTab,
-            date: Timestamp.fromDate(new Date())
+      if (!meetingsdata.customerName || !meetingsdata.email || !meetingsdata.service || !meetingsdata.hours) {
+        alert("Please fill in all required fields:\n- Customer Name\n- Email\n- Service\n- Hours");
+        return;
+      }
+  
+      const db = getFirestore(app);
+      const meetingsCollection = collection(db, "meetings");
+  
+      // Check if a customer with the same name already exists
+      const existingCustomerQuery = query(meetingsCollection, where("customerName", "==", meetingsdata.customerName));
+      const existingCustomerSnapshot = await getDocs(existingCustomerQuery);
+  
+      if (!existingCustomerSnapshot.empty) {
+        // Customer exists, update the existing record
+        const existingCustomerDoc = existingCustomerSnapshot.docs[0];
+        const existingCustomerData = existingCustomerDoc.data();
+  
+        const updatedCustomer = {
+          ...existingCustomerData,
+          service: meetingsdata.service,
+          hours: meetingsdata.hours,
+          paid: meetingsdata.paid,
+          summerProgram: meetingsdata.summerProgram || existingCustomerData.summerProgram || "N/A",
+          extracurricularPrograms: meetingsdata.extracurricularPrograms || existingCustomerData.extracurricularPrograms || "N/A",
+          satActTutoring: meetingsdata.satActTutoring || existingCustomerData.satActTutoring || "N/A",
+          olympiadApTutoring: meetingsdata.olympiadApTutoring || existingCustomerData.olympiadApTutoring || "N/A",
+          guaranteedInternships: meetingsdata.guaranteedInternships || existingCustomerData.guaranteedInternships || "N/A",
+          generalGuidance: meetingsdata.generalGuidance || existingCustomerData.generalGuidance || "N/A",
+          resumePackage: meetingsdata.resumePackage || existingCustomerData.resumePackage || "N/A"
         };
-
-        // Add to Firestore
-        const docRef = await addDoc(meetingsCollection, newMeeting);
-        
+  
+        await updateDoc(doc(db, "meetings", existingCustomerDoc.id), updatedCustomer);
+  
         // Update local state
         setMeetings(prev => ({
-            ...prev,
-            [activeMeetingTab]: [...(prev[activeMeetingTab] || []), { ...newMeeting, id: docRef.id }]
+          ...prev,
+          [activeMeetingTab]: prev[activeMeetingTab].map(meeting =>
+            meeting.id === existingCustomerDoc.id ? { ...meeting, ...updatedCustomer } : meeting
+          )
         }));
-
-        // Clear form
-        setmeetingsdata({
-            customerName: "",
-            email: "",
-            service: "",
-            subject: "",
-            hours: "",
-            paid: "No"
-        });
-
+  
+        alert("Customer details updated successfully!");
+      } else {
+        // Customer does not exist, create a new record
+        const newMeeting = {
+          customerName: meetingsdata.customerName,
+          email: meetingsdata.email,
+          service: meetingsdata.service,
+          subject: meetingsdata.subject || "N/A",
+          hours: meetingsdata.hours,
+          paid: meetingsdata.paid,
+          meetingType: activeMeetingTab,
+          date: Timestamp.fromDate(new Date()),
+          summerProgram: meetingsdata.summerProgram || "N/A",
+          extracurricularPrograms: meetingsdata.extracurricularPrograms || "N/A",
+          satActTutoring: meetingsdata.satActTutoring || "N/A",
+          olympiadApTutoring: meetingsdata.olympiadApTutoring || "N/A",
+          guaranteedInternships: meetingsdata.guaranteedInternships || "N/A",
+          generalGuidance: meetingsdata.generalGuidance || "N/A",
+          resumePackage: meetingsdata.resumePackage || "N/A"
+        };
+  
+        const docRef = await addDoc(meetingsCollection, newMeeting);
+  
+        setMeetings(prev => ({
+          ...prev,
+          [activeMeetingTab]: [...(prev[activeMeetingTab] || []), { ...newMeeting, id: docRef.id }]
+        }));
+  
         alert("Customer added successfully!");
-        
+      }
+  
+      // Reset the form
+      setmeetingsdata({
+        customerName: "",
+        email: "",
+        service: "",
+        subject: "",
+        hours: "",
+        paid: "No",
+        summerProgram: "",
+        extracurricularPrograms: "",
+        satActTutoring: "",
+        olympiadApTutoring: "",
+        guaranteedInternships: "",
+        generalGuidance: "",
+        resumePackage: ""
+      });
     } catch (error) {
-        console.error("Error adding customer:", error);
-        alert("Error adding customer. Please try again.");
+      console.error("Error adding/updating customer:", error);
+      alert("Error adding/updating customer. Please try again.");
     }
-};
+  };
   
   
   
@@ -413,7 +492,14 @@ const [editSignupData, setEditSignupData] = useState({
     service: "",
     subject: "",
     hours: "",
-    paid: "No"
+    paid: "No",
+    summerProgram: "",
+    extracurricularPrograms: "",
+    satActTutoring: "",
+    olympiadApTutoring: "",
+    guaranteedInternships: "",
+    generalGuidance: "",
+    resumePackage: ""
   });
   
   const updateMeeting = async (id, updatedData) => {
@@ -423,11 +509,13 @@ const [editSignupData, setEditSignupData] = useState({
   
       await updateDoc(meetingRef, updatedData);
   
-      setMeetings((prevMeetings) =>
-        prevMeetings.map((meeting) =>
+      // Update local state
+      setMeetings((prevMeetings) => ({
+        ...prevMeetings,
+        [activeMeetingTab]: prevMeetings[activeMeetingTab].map((meeting) =>
           meeting.id === id ? { ...meeting, ...updatedData } : meeting
         )
-      );
+      }));
   
       console.log("Meeting updated successfully!");
     } catch (error) {
@@ -438,7 +526,21 @@ const [editSignupData, setEditSignupData] = useState({
 
   const startEditing = (meeting) => {
     setEditingId(meeting.id);
-    setEditData(meeting);
+    setEditData({
+      customerName: meeting.customerName,
+      email: meeting.email,
+      service: meeting.service,
+      subject: meeting.subject || "N/A",
+      hours: meeting.hours,
+      paid: meeting.paid,
+      summerProgram: meeting.summerProgram || "N/A",
+      extracurricularPrograms: meeting.extracurricularPrograms || "N/A",
+      satActTutoring: meeting.satActTutoring || "N/A",
+      olympiadApTutoring: meeting.olympiadApTutoring || "N/A",
+      guaranteedInternships: meeting.guaranteedInternships || "N/A",
+      generalGuidance: meeting.generalGuidance || "N/A",
+      resumePackage: meeting.resumePackage || "N/A"
+    });
   };
 
   const handleEditChange = (e, field) => {
@@ -453,7 +555,6 @@ const [editSignupData, setEditSignupData] = useState({
   
       await updateDoc(meetingRef, editData);
   
-      // Fix: Ensure prevMeetings is treated as an array
       setMeetings((prev) => ({
         ...prev,
         [activeMeetingTab]: prev[activeMeetingTab]?.map((meeting) =>
@@ -1029,167 +1130,329 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
 
 ))}
 </div>
+{activeProgramDetails && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div className="bg-white rounded-lg shadow-lg p-6 w-11/12 max-w-4xl">
+      <h2 className="text-2xl font-bold mb-4">
+        Program Details for {activeProgramDetails.customerName}
+      </h2>
+      <div className="grid grid-cols-2 gap-4">
+        {/* Summer/Research Program */}
+        <div>
+          <h3 className="font-semibold">Summer/Research Program</h3>
+          {isEditingProgramDetails ? (
+            <input
+              type="text"
+              value={activeProgramDetails.summerProgram}
+              onChange={(e) =>
+                setActiveProgramDetails({
+                  ...activeProgramDetails,
+                  summerProgram: e.target.value,
+                })
+              }
+              className="border p-2 w-full rounded-lg"
+            />
+          ) : (
+            <p>{activeProgramDetails.summerProgram || "N/A"}</p>
+          )}
+        </div>
 
+        {/* Extracurricular Programs */}
+        <div>
+          <h3 className="font-semibold">Extracurricular Programs</h3>
+          {isEditingProgramDetails ? (
+            <input
+              type="text"
+              value={activeProgramDetails.extracurricularPrograms}
+              onChange={(e) =>
+                setActiveProgramDetails({
+                  ...activeProgramDetails,
+                  extracurricularPrograms: e.target.value,
+                })
+              }
+              className="border p-2 w-full rounded-lg"
+            />
+          ) : (
+            <p>{activeProgramDetails.extracurricularPrograms || "N/A"}</p>
+          )}
+        </div>
+
+        {/* SAT/ACT Tutoring */}
+        <div>
+          <h3 className="font-semibold">SAT/ACT Tutoring</h3>
+          {isEditingProgramDetails ? (
+            <input
+              type="text"
+              value={activeProgramDetails.satActTutoring}
+              onChange={(e) =>
+                setActiveProgramDetails({
+                  ...activeProgramDetails,
+                  satActTutoring: e.target.value,
+                })
+              }
+              className="border p-2 w-full rounded-lg"
+            />
+          ) : (
+            <p>{activeProgramDetails.satActTutoring || "N/A"}</p>
+          )}
+        </div>
+
+        {/* Olympiad/AP Class Tutoring */}
+        <div>
+          <h3 className="font-semibold">Olympiad/AP Class Tutoring</h3>
+          {isEditingProgramDetails ? (
+            <input
+              type="text"
+              value={activeProgramDetails.olympiadApTutoring}
+              onChange={(e) =>
+                setActiveProgramDetails({
+                  ...activeProgramDetails,
+                  olympiadApTutoring: e.target.value,
+                })
+              }
+              className="border p-2 w-full rounded-lg"
+            />
+          ) : (
+            <p>{activeProgramDetails.olympiadApTutoring || "N/A"}</p>
+          )}
+        </div>
+
+        {/* Guaranteed Internships */}
+        <div>
+          <h3 className="font-semibold">Guaranteed Internships</h3>
+          {isEditingProgramDetails ? (
+            <input
+              type="text"
+              value={activeProgramDetails.guaranteedInternships}
+              onChange={(e) =>
+                setActiveProgramDetails({
+                  ...activeProgramDetails,
+                  guaranteedInternships: e.target.value,
+                })
+              }
+              className="border p-2 w-full rounded-lg"
+            />
+          ) : (
+            <p>{activeProgramDetails.guaranteedInternships || "N/A"}</p>
+          )}
+        </div>
+
+        {/* General Guidance */}
+        <div>
+          <h3 className="font-semibold">General Guidance</h3>
+          {isEditingProgramDetails ? (
+            <input
+              type="text"
+              value={activeProgramDetails.generalGuidance}
+              onChange={(e) =>
+                setActiveProgramDetails({
+                  ...activeProgramDetails,
+                  generalGuidance: e.target.value,
+                })
+              }
+              className="border p-2 w-full rounded-lg"
+            />
+          ) : (
+            <p>{activeProgramDetails.generalGuidance || "N/A"}</p>
+          )}
+        </div>
+
+        {/* Resume Package */}
+        <div>
+          <h3 className="font-semibold">Resume Package</h3>
+          {isEditingProgramDetails ? (
+            <input
+              type="text"
+              value={activeProgramDetails.resumePackage}
+              onChange={(e) =>
+                setActiveProgramDetails({
+                  ...activeProgramDetails,
+                  resumePackage: e.target.value,
+                })
+              }
+              className="border p-2 w-full rounded-lg"
+            />
+          ) : (
+            <p>{activeProgramDetails.resumePackage || "N/A"}</p>
+          )}
+        </div>
+      </div>
+
+      {/* Action Buttons */}
+      <div className="mt-6 flex justify-end space-x-4">
+        {isEditingProgramDetails ? (
+          <>
+            <button
+              onClick={saveProgramDetails}
+              className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
+            >
+              Save Changes
+            </button>
+            <button
+              onClick={() => setIsEditingProgramDetails(false)}
+              className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600"
+            >
+              Cancel
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              onClick={() => setIsEditingProgramDetails(true)}
+              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+            >
+              Edit Details
+            </button>
+            <button
+              onClick={() => setActiveProgramDetails(null)}
+              className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+            >
+              Close
+            </button>
+          </>
+        )}
+      </div>
+    </div>
+  </div>
+)}
 {meetings[activeMeetingTab]?.length > 0 ? (
   <div className="bg-white rounded-lg shadow-lg overflow-hidden">
     <table className="w-full border-collapse rounded-xl shadow-lg bg-white/80 backdrop-blur-md overflow-hidden transition-all duration-300 hover:shadow-2xl">
 
 
     <thead className="bg-gradient-to-r from-gray-50 to-gray-200 border-b border-gray-300 shadow-md rounded-lg overflow-hidden">
-<tr className="text-gray-800 text-left text-sm font-bold uppercase tracking-wider">
-<th className="px-6 py-4 bg-opacity-50 backdrop-blur-lg">
-
-
-            Customer Name
-          </th>
-          <th className="px-6 py-4 bg-opacity-50 backdrop-blur-lg">
-
-            Email
-          </th>
-          <th className="px-6 py-4 bg-opacity-50 backdrop-blur-lg">
-
-            Service
-          </th>
-          <th className="px-6 py-4 bg-opacity-50 backdrop-blur-lg">
-
-            Hours Left
-          </th>
-          <th className="px-6 py-4 bg-opacity-50 backdrop-blur-lg">
-
-            Status
-          </th>
-          <th className="px-6 py-4 bg-opacity-50 backdrop-blur-lg">
-            Actions
-          </th>
-        </tr>
-      </thead>
-      <tbody className="divide-y divide-gray-200">
-        {meetings[activeMeetingTab]
-          .filter(meeting => {
-            if (selectedFilter === 'paid') return meeting.paid === 'Yes';
-            if (selectedFilter === 'unpaid') return meeting.paid === 'No';
-            return true;
-          })
-          .filter(meeting => 
-            meeting.customerName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            meeting.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            meeting.service?.toLowerCase().includes(searchQuery.toLowerCase())
-          )
-          .map((meeting, index) => (
-            <tr className={`group transition-all duration-300 ${index % 2 === 0 ? "bg-white/80" : "bg-gray-50/80"} hover:bg-blue-100 hover:scale-[1.02] shadow-md hover:shadow-2xl backdrop-blur-lg rounded-xl`}>
-
-            
-
-              {editingId === meeting.id ? (
-                <>
-                  <td className="px-6 py-4">
-                    <input
-                      type="text"
-                      value={editData.customerName}
-                      onChange={(e) => handleEditChange(e, 'customerName')}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
-
-                    />
-                  </td>
-                  <td className="px-6 py-4">
-                    <input
-                      type="email"
-                      value={editData.email}
-                      onChange={(e) => handleEditChange(e, 'email')}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
-
-                    />
-                  </td>
-                  <td className="px-6 py-4">
-                    <input
-                      type="text"
-                      value={editData.service}
-                      onChange={(e) => handleEditChange(e, 'service')}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
-
-                    />
-                  </td>
-                  <td className="px-6 py-4">
-                    <input
-                      type="text"
-                      value={editData.hours}
-                      onChange={(e) => handleEditChange(e, 'hours')}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
-
-                    />
-                  </td>
-                  <td className="px-6 py-4">
-                    <select
-                      value={editData.paid}
-                      onChange={(e) => handleEditChange(e, 'paid')}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
-
-                    >
-                      <option value="Yes">Paid</option>
-                      <option value="No">Unpaid</option>
-                    </select>
-                  </td>
-                  <td className="px-6 py-4 text-center">
-                    <button
-                      onClick={saveEdit}
-                      className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 mr-2"
-                    >
-                      Save
-                    </button>
-                    <button
-                      onClick={() => setEditingId(null)}
-                      className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
-                    >
-                      Cancel
-                    </button>
-                  </td>
-                </>
-              ) : (
-                <>
-                  <td className="px-6 py-4">
-                    <div className="text-sm font-medium text-gray-900">{meeting.customerName}</div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="text-sm text-gray-500">{meeting.email}</div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="text-sm text-gray-900">{meeting.service}</div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="text-sm text-gray-900">{meeting.hours}</div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className={`inline-flex px-3 py-1 rounded-full text-xs font-medium ${
-                      meeting.paid === 'Yes' 
-                        ? 'bg-green-100 text-green-800' 
-                        : 'bg-red-100 text-red-800'
-                    }`}>
-                      {meeting.paid === 'Yes' ? 'Paid' : 'Unpaid'}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-center">
-                  <div className="flex items-center space-x-3">
-                  <button
-  onClick={() => startEditing(meeting)}
-  className="p-2 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-all duration-200 shadow-lg ring-1 ring-blue-300 hover:scale-110"
->
-  <Edit size={18} />
-</button>
-<button
-  onClick={() => handleMeetingDelete(meeting.id)}
-  className="p-2 rounded-full bg-red-500 text-white hover:bg-red-600 transition-all duration-200 shadow-lg ring-1 ring-red-300 hover:scale-110"
->
-  <Trash2 size={18} />
-</button>
-
-</div>
-
-                  </td>
-                </>
-              )}
-            </tr>
-          ))}
-      </tbody>
+  <tr className="text-gray-800 text-left text-sm font-bold uppercase tracking-wider">
+    <th className="px-6 py-4 bg-opacity-50 backdrop-blur-lg">Customer Name</th>
+    <th className="px-6 py-4 bg-opacity-50 backdrop-blur-lg">Email</th>
+    <th className="px-6 py-4 bg-opacity-50 backdrop-blur-lg">Service</th>
+    <th className="px-6 py-4 bg-opacity-50 backdrop-blur-lg">Hours Left</th>
+    <th className="px-6 py-4 bg-opacity-50 backdrop-blur-lg">Status</th>
+    <th className="px-6 py-4 bg-opacity-50 backdrop-blur-lg">Actions</th>
+  </tr>
+</thead>
+<tbody className="divide-y divide-gray-200">
+  {meetings[activeMeetingTab]
+    .filter(meeting => {
+      if (selectedFilter === 'paid') return meeting.paid === 'Yes';
+      if (selectedFilter === 'unpaid') return meeting.paid === 'No';
+      return true;
+    })
+    .filter(meeting => 
+      meeting.customerName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      meeting.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      meeting.service?.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    .map((meeting, index) => (
+      <tr className={`group transition-all duration-300 ${index % 2 === 0 ? "bg-white/80" : "bg-gray-50/80"} hover:bg-blue-100 hover:scale-[1.02] shadow-md hover:shadow-2xl backdrop-blur-lg rounded-xl`}>
+        {editingId === meeting.id ? (
+          <>
+            <td className="px-6 py-4">
+              <input
+                type="text"
+                value={editData.customerName}
+                onChange={(e) => handleEditChange(e, 'customerName')}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+              />
+            </td>
+            <td className="px-6 py-4">
+              <input
+                type="email"
+                value={editData.email}
+                onChange={(e) => handleEditChange(e, 'email')}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+              />
+            </td>
+            <td className="px-6 py-4">
+              <input
+                type="text"
+                value={editData.service}
+                onChange={(e) => handleEditChange(e, 'service')}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+              />
+            </td>
+            <td className="px-6 py-4">
+              <input
+                type="text"
+                value={editData.hours}
+                onChange={(e) => handleEditChange(e, 'hours')}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+              />
+            </td>
+            <td className="px-6 py-4">
+              <select
+                value={editData.paid}
+                onChange={(e) => handleEditChange(e, 'paid')}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+              >
+                <option value="Yes">Paid</option>
+                <option value="No">Unpaid</option>
+              </select>
+            </td>
+            <td className="px-6 py-4 text-center">
+              <button
+                onClick={saveEdit}
+                className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 mr-2"
+              >
+                Save
+              </button>
+              <button
+                onClick={() => setEditingId(null)}
+                className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
+              >
+                Cancel
+              </button>
+            </td>
+          </>
+        ) : (
+          <>
+            <td className="px-6 py-4">
+              <div className="text-sm font-medium text-gray-900">{meeting.customerName}</div>
+            </td>
+            <td className="px-6 py-4">
+              <div className="text-sm text-gray-500">{meeting.email}</div>
+            </td>
+            <td className="px-6 py-4">
+              <div className="text-sm text-gray-900">{meeting.service}</div>
+            </td>
+            <td className="px-6 py-4">
+              <div className="text-sm text-gray-900">{meeting.hours}</div>
+            </td>
+            <td className="px-6 py-4">
+              <span className={`inline-flex px-3 py-1 rounded-full text-xs font-medium ${
+                meeting.paid === 'Yes' 
+                  ? 'bg-green-100 text-green-800' 
+                  : 'bg-red-100 text-red-800'
+              }`}>
+                {meeting.paid === 'Yes' ? 'Paid' : 'Unpaid'}
+              </span>
+            </td>
+            <td className="px-6 py-4 text-center">
+              <div className="flex items-center space-x-3">
+                <button
+                  onClick={() => startEditing(meeting)}
+                  className="p-2 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-all duration-200 shadow-lg ring-1 ring-blue-300 hover:scale-110"
+                >
+                  <Edit size={18} />
+                </button>
+                <button
+                  onClick={() => handleMeetingDelete(meeting.id)}
+                  className="p-2 rounded-full bg-red-500 text-white hover:bg-red-600 transition-all duration-200 shadow-lg ring-1 ring-red-300 hover:scale-110"
+                >
+                  <Trash2 size={18} />
+                </button>
+                <button
+                  onClick={() => setActiveProgramDetails(meeting)}
+                  className="p-2 rounded-full bg-green-500 text-white hover:bg-green-600 transition-all duration-200 shadow-lg ring-1 ring-green-300 hover:scale-110"
+                >
+                  View Details
+                </button>
+              </div>
+            </td>
+          </>
+        )}
+      </tr>
+    ))}
+</tbody>
     </table>
   </div>
 ) : (
@@ -1238,7 +1501,6 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
       />
     </td>
     <td className="py-2 px-4">
-
       <input
         type="text"
         placeholder="Enter service"
@@ -1249,7 +1511,6 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
       />
     </td>
     <td className="py-2 px-4">
-
       <input
         type="text"
         placeholder="Enter hours"
@@ -1270,16 +1531,12 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
       </select>
     </td>
     <td className="py-2 px-4 text-right">
-    <button
-  onClick={addMeeting}
-  className="relative px-6 py-3 font-semibold text-white transition-all duration-300 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 shadow-[0px_5px_15px_rgba(0,0,0,0.3)] hover:shadow-[0px_8px_20px_rgba(0,0,0,0.4)] active:translate-y-[2px] active:shadow-[0px_4px_10px_rgba(0,0,0,0.3)] before:absolute before:inset-0 before:rounded-lg before:bg-white/20 before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-100"
->
-  + Add Customer
-</button>
-
-
-
-
+      <button
+        onClick={addMeeting}
+        className="relative px-6 py-3 font-semibold text-white transition-all duration-300 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 shadow-[0px_5px_15px_rgba(0,0,0,0.3)] hover:shadow-[0px_8px_20px_rgba(0,0,0,0.4)] active:translate-y-[2px] active:shadow-[0px_4px_10px_rgba(0,0,0,0.3)] before:absolute before:inset-0 before:rounded-lg before:bg-white/20 before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-100"
+      >
+        + Add Customer
+      </button>
     </td>
   </tr>
 </tfoot>
