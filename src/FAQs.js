@@ -21,7 +21,7 @@ const FAQs = () => {
     },
     {
       question: "How much does the ARENA program cost?",
-      answer: "Our pricing structure depends on the service you are interested in. Please fill out the interest form and join a free 15-minute consultation meeting to discuss your interests and pricing.",
+      answer: "Our pricing structure depends on the service you are interested in. Please fill out the interest form and join a free 30-minute consultation meeting to discuss your interests and pricing.",
       category: "Pricing",
     },
     {
