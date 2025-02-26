@@ -306,69 +306,33 @@ const [editSignupData, setEditSignupData] = useState({
       const db = getFirestore(app);
       const meetingsCollection = collection(db, "meetings");
   
-      // Check if a customer with the same name already exists
-      const existingCustomerQuery = query(meetingsCollection, where("customerName", "==", meetingsdata.customerName));
-      const existingCustomerSnapshot = await getDocs(existingCustomerQuery);
+      // Create a new record without checking for existing names
+      const newMeeting = {
+        customerName: meetingsdata.customerName,
+        email: meetingsdata.email,
+        service: meetingsdata.service,
+        subject: meetingsdata.subject || "N/A",
+        hours: meetingsdata.hours,
+        paid: meetingsdata.paid,
+        meetingType: activeMeetingTab,
+        date: Timestamp.fromDate(new Date()),
+        summerProgram: meetingsdata.summerProgram || "N/A",
+        extracurricularPrograms: meetingsdata.extracurricularPrograms || "N/A",
+        satActTutoring: meetingsdata.satActTutoring || "N/A",
+        olympiadApTutoring: meetingsdata.olympiadApTutoring || "N/A",
+        guaranteedInternships: meetingsdata.guaranteedInternships || "N/A",
+        generalGuidance: meetingsdata.generalGuidance || "N/A",
+        resumePackage: meetingsdata.resumePackage || "N/A"
+      };
   
-      if (!existingCustomerSnapshot.empty) {
-        // Customer exists, update the existing record
-        const existingCustomerDoc = existingCustomerSnapshot.docs[0];
-        const existingCustomerData = existingCustomerDoc.data();
+      const docRef = await addDoc(meetingsCollection, newMeeting);
   
-        const updatedCustomer = {
-          ...existingCustomerData,
-          service: meetingsdata.service,
-          hours: meetingsdata.hours,
-          paid: meetingsdata.paid,
-          summerProgram: meetingsdata.summerProgram || existingCustomerData.summerProgram || "N/A",
-          extracurricularPrograms: meetingsdata.extracurricularPrograms || existingCustomerData.extracurricularPrograms || "N/A",
-          satActTutoring: meetingsdata.satActTutoring || existingCustomerData.satActTutoring || "N/A",
-          olympiadApTutoring: meetingsdata.olympiadApTutoring || existingCustomerData.olympiadApTutoring || "N/A",
-          guaranteedInternships: meetingsdata.guaranteedInternships || existingCustomerData.guaranteedInternships || "N/A",
-          generalGuidance: meetingsdata.generalGuidance || existingCustomerData.generalGuidance || "N/A",
-          resumePackage: meetingsdata.resumePackage || existingCustomerData.resumePackage || "N/A"
-        };
+      setMeetings(prev => ({
+        ...prev,
+        [activeMeetingTab]: [...(prev[activeMeetingTab] || []), { ...newMeeting, id: docRef.id }]
+      }));
   
-        await updateDoc(doc(db, "meetings", existingCustomerDoc.id), updatedCustomer);
-  
-        // Update local state
-        setMeetings(prev => ({
-          ...prev,
-          [activeMeetingTab]: prev[activeMeetingTab].map(meeting =>
-            meeting.id === existingCustomerDoc.id ? { ...meeting, ...updatedCustomer } : meeting
-          )
-        }));
-  
-        alert("Customer details updated successfully!");
-      } else {
-        // Customer does not exist, create a new record
-        const newMeeting = {
-          customerName: meetingsdata.customerName,
-          email: meetingsdata.email,
-          service: meetingsdata.service,
-          subject: meetingsdata.subject || "N/A",
-          hours: meetingsdata.hours,
-          paid: meetingsdata.paid,
-          meetingType: activeMeetingTab,
-          date: Timestamp.fromDate(new Date()),
-          summerProgram: meetingsdata.summerProgram || "N/A",
-          extracurricularPrograms: meetingsdata.extracurricularPrograms || "N/A",
-          satActTutoring: meetingsdata.satActTutoring || "N/A",
-          olympiadApTutoring: meetingsdata.olympiadApTutoring || "N/A",
-          guaranteedInternships: meetingsdata.guaranteedInternships || "N/A",
-          generalGuidance: meetingsdata.generalGuidance || "N/A",
-          resumePackage: meetingsdata.resumePackage || "N/A"
-        };
-  
-        const docRef = await addDoc(meetingsCollection, newMeeting);
-  
-        setMeetings(prev => ({
-          ...prev,
-          [activeMeetingTab]: [...(prev[activeMeetingTab] || []), { ...newMeeting, id: docRef.id }]
-        }));
-  
-        alert("Customer added successfully!");
-      }
+      alert("Customer added successfully!");
   
       // Reset the form
       setmeetingsdata({
@@ -387,8 +351,8 @@ const [editSignupData, setEditSignupData] = useState({
         resumePackage: ""
       });
     } catch (error) {
-      console.error("Error adding/updating customer:", error);
-      alert("Error adding/updating customer. Please try again.");
+      console.error("Error adding customer:", error);
+      alert("Error adding customer. Please try again.");
     }
   };
   
