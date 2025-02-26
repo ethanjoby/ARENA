@@ -1379,15 +1379,16 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
               />
             </td>
             <td className="px-6 py-4">
-              <select
-                value={editData.paid}
-                onChange={(e) => handleEditChange(e, 'paid')}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
-              >
-                <option value="Yes">Paid</option>
-                <option value="No">Unpaid</option>
-              </select>
-            </td>
+  <select
+    value={editData.paid}
+    onChange={(e) => handleEditChange(e, 'paid')}
+    className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+  >
+    <option value="Yes">Paid</option>
+    <option value="No">Unpaid</option>
+    <option value="Just Interested">Just Interested</option>
+  </select>
+</td>
             <td className="px-6 py-4 text-center">
               <button
                 onClick={saveEdit}
@@ -1418,14 +1419,16 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
               <div className="text-sm text-gray-900">{meeting.hours}</div>
             </td>
             <td className="px-6 py-4">
-              <span className={`inline-flex px-3 py-1 rounded-full text-xs font-medium ${
-                meeting.paid === 'Yes' 
-                  ? 'bg-green-100 text-green-800' 
-                  : 'bg-red-100 text-red-800'
-              }`}>
-                {meeting.paid === 'Yes' ? 'Paid' : 'Unpaid'}
-              </span>
-            </td>
+  <span className={`inline-flex px-3 py-1 rounded-full text-xs font-medium ${
+    meeting.paid === 'Yes' 
+      ? 'bg-green-100 text-green-800' 
+      : meeting.paid === 'No'
+        ? 'bg-red-100 text-red-800'
+        : 'bg-yellow-100 text-yellow-800'
+  }`}>
+    {meeting.paid === 'Yes' ? 'Paid' : meeting.paid === 'No' ? 'Unpaid' : 'Just Interested'}
+  </span>
+</td>
             <td className="px-6 py-4 text-center">
               <div className="flex items-center space-x-3">
                 <button
@@ -1521,15 +1524,16 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
       />
     </td>
     <td className="py-2 px-4">
-      <select
-        className="border p-3 w-full rounded-lg bg-white/60 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
-        value={meetingsdata.paid}
-        onChange={(e) => setmeetingsdata({ ...meetingsdata, paid: e.target.value })}
-      >
-        <option value="No">Not Paid</option>
-        <option value="Yes">Paid</option>
-      </select>
-    </td>
+  <select
+    className="border p-3 w-full rounded-lg bg-white/60 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+    value={meetingsdata.paid}
+    onChange={(e) => setmeetingsdata({ ...meetingsdata, paid: e.target.value })}
+  >
+    <option value="No">Not Paid</option>
+    <option value="Yes">Paid</option>
+    <option value="Just Interested">Just Interested</option>
+  </select>
+</td>
     <td className="py-2 px-4 text-right">
       <button
         onClick={addMeeting}
