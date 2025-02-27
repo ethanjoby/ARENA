@@ -36,26 +36,26 @@ const bootcampOfferings = [
     sessions: [
       {
         name: "Summer Intensive",
-        dates: "June 15 - July 12, 2025",
-        schedule: "Mon-Thu, 9:00 AM - 1:00 PM",
+        dates: "May 10 - May 31, 2025",
+        schedule: "Saturday, 9:00 AM - 1:00 PM",
         price: "$950",
-        spaces: "Limited to 8 students",
+        spaces: "Limited to 8 students per group",
         popularity: "High demand"
       },
       {
         name: "Fall Preparation",
-        dates: "Aug 17 - Sept 13, 2025",
-        schedule: "Mon-Thu, 4:00 PM - 8:00 PM",
+        dates: "Jul 26 - August 16, 2025",
+        schedule: "Saturday, 9:00 AM - 1:00 PM",
         price: "$950",
-        spaces: "Limited to 8 students",
+        spaces: "Limited to 8 students per group",
         popularity: "Filling quickly"
       },
       {
         name: "Winter Preperation",
-        dates: "Dec 15 - Jan 10, 2026",
-        schedule: "Mon-Thu, 10:00 AM - 2:00 PM",
+        dates: "Nov 8 - Nov 29, 2025",
+        schedule: "Saturday, 9:00 AM - 1:00 PM",
         price: "$950",
-        spaces: "Limited to 8 students",
+        spaces: "Limited to 8 students per group",
         popularity: "Early registration"
       }
     ]
@@ -367,7 +367,7 @@ useEffect(() => {
                 {/* Interior Navigation */}
                 <div className="border-b border-gray-200 flex justify-center">
   <div className="flex w-full">
-    {["Program Overview", "Curriculum Details", "Available Sessions"].map((tab, tabIndex) => (
+    {["Available Sessions", "Program Overview", "Curriculum Details"].map((tab, tabIndex) => (
       <button
         key={tabIndex}
         className={`py-6 px-8 w-full text-center font-medium text-lg relative focus:outline-none ${
@@ -389,7 +389,7 @@ useEffect(() => {
 
                 
                 {/* Tab Content - Overview */}
-                <div className={activeTabs[offeringIndex] === 0 ? "block" : "hidden"}>
+                <div className={activeTabs[offeringIndex] === 1 ? "block" : "hidden"}>
                   <div className="p-8">
                     <div className="mb-10">
                       <h3 className="text-xl font-semibold mb-6 flex items-center">
@@ -449,7 +449,7 @@ useEffect(() => {
                 </div>
                 
                 {/* Tab Content - Curriculum Details */}
-<div className={activeTabs[offeringIndex] === 1 ? "block" : "hidden"}>
+<div className={activeTabs[offeringIndex] === 2 ? "block" : "hidden"}>
   <div className="p-8">
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
       {offering.details.map((detail, i) => (
@@ -481,7 +481,7 @@ useEffect(() => {
 </div>
                 
                 {/* Tab Content - Available Sessions */}
-                <div className={activeTabs[offeringIndex] === 2 ? "block" : "hidden"}>
+                <div className={activeTabs[offeringIndex] === 0 ? "block" : "hidden"}>
                   <div className="p-8">
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                       {offering.sessions.map((session, i) => (
