@@ -186,7 +186,7 @@ const HeroSection = () => {
               className="relative z-10"
               style={{ color: hoverEffects.learnMore.opacity > 0 ? "white" : "black" }}
             >
-              Learn More →
+              Schedule a Free Consultation
             </span>
           </button>
         </div>
