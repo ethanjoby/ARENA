@@ -518,29 +518,14 @@ useEffect(() => {
                             </div>
                             
                             <div className="pt-4 border-t border-gray-100">
-                            <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Name:</label>
-                <input
-                  type="text"
-                  
-                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  placeholder="Enter your Name"
-                />
-              </div>
-              <div className="mb-4">
-                <label htmlFor={`email-${i}`} className="block text-sm font-medium text-gray-700">Email:</label>
-                <input
-                  type="email"
-                  id={`email-${i}`}
-                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  placeholder="Enter your email"
-                />
-              </div>
+                
               <div className="flex justify-between items-center">
                 <span className="text-xl font-bold text-blue-700">{session.price}</span>
-                <button className="bg-blue-700 hover:bg-blue-800 text-white font-medium py-2 px-4 rounded-md transition-colors duration-200 text-sm shadow-md">
-                  Reserve Seat
-                </button>
+                <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1dNqQ-a8w_pPG0V-0I7Goj3SsWO0qM23ORt4XRrbTf1MLcUQLL_V8vVpKJiLHwODmkN69BoZYW" target="_blank" rel="noopener noreferrer">
+      <button className="bg-blue-700 hover:bg-blue-800 text-white font-medium py-2 px-4 rounded-md transition-colors duration-200 text-sm shadow-md">
+        Reserve Seat
+      </button>
+    </a>
               </div>
             </div>
                           </div>
@@ -745,9 +730,11 @@ useEffect(() => {
                 and proven strategies can make in your academic journey.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1dNqQ-a8w_pPG0V-0I7Goj3SsWO0qM23ORt4XRrbTf1MLcUQLL_V8vVpKJiLHwODmkN69BoZYW" target="_blank" rel="noopener noreferrer">
   <button className="bg-white text-blue-700 hover:bg-blue-50 font-semibold py-3 px-8 rounded-md transition-colors duration-200 shadow-lg">
     Schedule a Consultation
   </button>
+</a>
   <button className="bg-transparent text-white border-2 border-white hover:bg-white hover:bg-opacity-10 font-semibold py-3 px-8 rounded-md transition-colors duration-200">
     View All Programs
   </button>
