@@ -41,8 +41,8 @@ const ContactUs = () => {
   };
 
   return (
-    <section className="bg-white text-black py-16 px-6 sm:px-8 lg:px-16">
-      <div className="max-w-3xl mx-auto">
+    <section className="bg-white text-black ">
+      <div className="max-w-8xl mx-auto">
         <h1 className="text-4xl font-bold text-center mb-8 relative inline-block">
           Contact Us
           <svg 
@@ -58,9 +58,9 @@ const ContactUs = () => {
             />
           </svg>
         </h1>
-        <div className="relative inline-flex group border border-gray-300 rounded-lg">
-          <div className="absolute inset-0 bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] rounded-lg blur-md opacity-100 group-hover:opacity-100 transition-all"></div>
-          <div className="relative bg-white shadow-2xl rounded-2xl p-8 backdrop-blur-lg border border-gray-300 transition-shadow duration-300 hover:shadow-3xl">
+        <div className="relative px-4 max-w-8xl">
+          <div className="absolute px-4 inset-0 bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] rounded-lg blur-md opacity-100 group-hover:opacity-100 transition-all"></div>
+          <div className="relative bg-white shadow-2xl rounded-lg p-8 backdrop-blur-lg border border-gray-300 transition-shadow duration-300 hover:shadow-3xl">
             <div className="mb-8">
               <h2 className="text-2xl font-semibold text-center">We'd Love to Hear From You</h2>
               <p className="text-center text-gray-500 mt-2">
@@ -77,7 +77,7 @@ const ContactUs = () => {
                   onChange={handleChange}
                   placeholder="Your Name"
                   required
-                  className="border border-gray-300 rounded-lg py-3 px-4 w-full bg-white text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-600 transition-transform duration-300 hover:scale-105"
+                  className="border border-gray-300 rounded-lg py-3 px-4 w-full bg-white text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-600 transition-transform duration-300 "
                 />
                 <input
                   type="email"
@@ -86,7 +86,7 @@ const ContactUs = () => {
                   onChange={handleChange}
                   placeholder="Your Email"
                   required
-                  className="border border-gray-300 rounded-lg py-3 px-4 w-full bg-white text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-600 transition-transform duration-300 hover:scale-105"
+                  className="border border-gray-300 rounded-lg py-3 px-4 w-full bg-white text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-600 transition-transform duration-300 "
                 />
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -97,7 +97,7 @@ const ContactUs = () => {
                   onChange={handleChange}
                   placeholder="Your Phone"
                   required
-                  className="border border-gray-300 rounded-lg py-3 px-4 w-full bg-white text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-600 transition-transform duration-300 hover:scale-105"
+                  className="border border-gray-300 rounded-lg py-3 px-4 w-full bg-white text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-600 transition-transform duration-300"
                 />
                 <input
                   type="text"
@@ -106,7 +106,7 @@ const ContactUs = () => {
                   onChange={handleChange}
                   placeholder="Your Grade"
                   required
-                  className="border border-gray-300 rounded-lg py-3 px-4 w-full bg-white text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-600 transition-transform duration-300 hover:scale-105"
+                  className="border border-gray-300 rounded-lg py-3 px-4 w-full bg-white text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-600 transition-transform duration-300 "
                 />
               </div>
               <textarea
@@ -115,12 +115,12 @@ const ContactUs = () => {
                 onChange={handleChange}
                 placeholder="Your Message"
                 required
-                className="border border-gray-300 rounded-lg py-3 px-4 w-full h-40 bg-white text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-600 transition-transform duration-300 hover:scale-105"
+                className="border border-gray-300 rounded-lg py-3 px-4 w-full h-40 bg-white text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-600 transition-transform duration-300 "
               ></textarea>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="bg-black text-white font-semibold py-3 px-6 rounded-lg w-full sm:w-auto hover:bg-gray-800 transition duration-300 shadow-lg transform hover:scale-110"
+                className="w-full py-3 bg-black text-white rounded-md hover:bg-white hover:text-black border border-black"
               >
                 {isSubmitting ? 'Sending...' : 'Send Message'}
               </button>
