@@ -268,19 +268,7 @@ const Webinars = () => {
         </motion.div>
       )}
 
-      {/* FAQ Note */}
-      <div className="mt-16 text-center">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-3">Have Questions?</h2>
-        <p className="text-gray-600 mb-6">
-          Can't find what you're looking for or need more information about our webinars?
-        </p>
-        <a
-          href="/faqs"
-          className="inline-flex items-center px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-md transition-colors"
-        >
-          View our FAQs
-        </a>
-      </div>
+     
     </div>
   );
 };
