@@ -735,9 +735,11 @@ useEffect(() => {
     Schedule a Consultation
   </button>
 </a>
+<a href="/"  rel="noopener noreferrer">
   <button className="bg-transparent text-white border-2 border-white hover:bg-white hover:bg-opacity-10 font-semibold py-3 px-8 rounded-md transition-colors duration-200">
     View All Programs
   </button>
+</a>
 </div>
             </div>
           </div>
