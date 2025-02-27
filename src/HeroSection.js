@@ -69,6 +69,9 @@ const HeroSection = () => {
           <button onClick={() => navigate("/essays")} className="underline-effect">
             Essays
           </button>
+          <button onClick={() => navigate("/bootcamp")} className="underline-effect">
+            Bootcamps
+          </button>
         </nav>
         <Link
           to="/sign-up"
