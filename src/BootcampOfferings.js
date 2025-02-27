@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import NAVBAR1 from "./navbar";
+import NAVBAR2 from "./navbar2";
 import HeroSectionSAT from "./HeroSectionSAT";
 
 const bootcampOfferings = [
@@ -267,7 +267,7 @@ useEffect(() => {
   return (
     <div className="bg-gray-50 text-gray-900 font-sans">
     
-    <NAVBAR1/>
+    <NAVBAR2/>
     <HeroSectionSAT />
       {/* Main Content */}
       <div className="max-w-6xl mx-auto px-4 py-16">
