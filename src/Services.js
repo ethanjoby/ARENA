@@ -164,16 +164,22 @@ const CollegeCounselingServices = () => {
         ))}
       </div>
       
-      <div className="mt-16 text-center">
-        <a 
-          href={consultationLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="bg-black text-white px-8 py-3 rounded-lg font-bold hover:bg-gray-800 transition-colors duration-300 shadow-lg inline-block"
-        >
-          Schedule a Free Consultation
-        </a>
-      </div>
+      <div className="mt-16 text-center flex justify-center gap-4">
+  <a 
+    href={consultationLink}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="bg-black text-white px-8 py-3 rounded-lg font-bold hover:bg-gray-800 transition-colors duration-300 shadow-lg inline-block"
+  >
+    Schedule a Free Consultation
+  </a>
+  <a 
+    href="/bootcamp"
+    className="bg-black text-white px-8 py-3 rounded-lg font-bold hover:bg-gray-800 transition-colors duration-300 shadow-lg inline-block"
+  >
+    Learn about SAT/ACT/AP Bootcamps
+  </a>
+</div>
     </section>
   );
 };
