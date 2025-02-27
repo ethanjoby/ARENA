@@ -15,7 +15,7 @@ export default function HeroSectionSAT() {
               {/* Stats + Download Section */}
               <div className="mt-6 bg-gray-100 p-6 rounded-xl flex flex-col md:flex-row justify-between items-center gap-4 shadow-md">
                 <div className="text-center">
-                  <h2 className="text-2xl font-bold">15,000+</h2>
+                  <h2 className="text-2xl font-bold">15+</h2>
                   <p className="text-gray-600">Students Trained</p>
                 </div>
     
@@ -34,9 +34,7 @@ export default function HeroSectionSAT() {
                 </button>
               </div>
     
-              <p className="text-sm text-gray-500 mt-4">
-                By enrolling, you agree to our <a href="#" className="text-blue-600">terms</a> and <a href="#" className="text-blue-600">privacy policy</a>.
-              </p>
+           
             </div>
     
             {/* Right Image - Matches left side height */}

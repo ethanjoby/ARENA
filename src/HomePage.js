@@ -6,6 +6,7 @@ import ContactUS from './ContactUs';
 import Footer from './Footer';
 import FAQs from './FAQs';
 import AboutUs from './AboutUs'; // Import AboutUs component
+import Webinars from './Webinars';
 
 function HomePage() {
   return (
@@ -23,6 +24,9 @@ function HomePage() {
       </div>
       <div id="testimonials">
         <Testimonials />
+      </div>
+      <div id="webinars">
+        <Webinars />
       </div>
       <div id="faq">
         <FAQs />

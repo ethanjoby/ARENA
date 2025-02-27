@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo from "./assets/logo123.webp";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -12,6 +12,16 @@ const scrollToSection = (sectionId) => {
 
 const HeroSection = () => {
   const navigate = useNavigate();
+  const [showNotification, setShowNotification] = useState(false);
+
+  // Show notification after a short delay for better user experience
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowNotification(true);
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const [hoverEffects, setHoverEffects] = useState({
     register: { x: 0, y: 0, size: 20, opacity: 0 },
@@ -43,8 +53,42 @@ const HeroSection = () => {
     }));
   };
 
+  const closeNotification = () => {
+    setShowNotification(false);
+  };
+
   return (
     <section className="hero-section bg-white text-black py-24 flex flex-col items-center justify-center">
+      {/* Bootcamp Notification Popup */}
+      {showNotification && (
+        <div className="fixed top-20 right-4 z-50 w-64 md:w-80 bg-white shadow-lg rounded-lg overflow-hidden transition-all duration-300 transform translate-x-0 opacity-100">
+          <div className="h-1 bg-gradient-to-r from-blue-500 to-purple-500"></div>
+          <div className="p-4">
+            <div className="flex justify-between items-start">
+              <div className="flex items-center">
+                <span className="text-lg mr-2">🚀</span>
+                <h3 className="font-bold text-gray-800">New Bootcamps!</h3>
+              </div>
+              <button 
+                onClick={closeNotification} 
+                className="text-gray-400 hover:text-gray-600"
+              >
+                ×
+              </button>
+            </div>
+            <p className="mt-2 text-sm text-gray-600">
+              We're now offering SAT/ACT and AP Bootcamps to help you excel!
+            </p>
+            <Link
+              to="/bootcamp"
+              className="mt-3 inline-block text-sm font-medium text-blue-600 hover:text-blue-800"
+            >
+              Learn More →
+            </Link>
+          </div>
+        </div>
+      )}
+
       <header className="absolute top-0 left-0 w-full p-4 flex justify-between items-center">
         <div className="logo flex items-center text-lg font-bold">
           <img src={logo} alt="Logo" className="h-8 mr-2" />
@@ -116,13 +160,12 @@ const HeroSection = () => {
           Let us help you make the best of your summer and make the best application possible!
         </p>
         <div className="relative inline-flex group mt-10">
-        <div
+          <div
             className="absolute transition-all duration-1000 opacity-70 -inset-px bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] rounded-full blur-md group-hover:opacity-100 group-hover:-inset-1 group-hover:duration-200 animate-tilt"
           ></div>
-          
           <button
             onClick={() => scrollToSection("services")}
-            className="relative inline-flex items-center bg-white justify-center px-6 py-3 text-md font-semibold  rounded-full overflow-hidden focus:outline-none"
+            className="relative inline-flex items-center bg-white justify-center px-6 py-3 text-md font-semibold rounded-full overflow-hidden focus:outline-none"
             onMouseMove={(e) => handleMouseMove(e, "learnMore")}
             onMouseEnter={() => handleMouseEnter("learnMore")}
             onMouseLeave={() => handleMouseLeave("learnMore")}

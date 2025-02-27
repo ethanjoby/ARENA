@@ -132,21 +132,72 @@ const testimonials = [
     author: "Michael T.",
     role: "SAT Bootcamp Graduate",
     initials: "MT",
-    score: "1530 SAT"
+    score: "1580 SAT",
+    rating: 5
   },
   {
-    quote: "The AP Calculus bootcamp was instrumental in helping me earn a 5 on the exam. The practice materials and instructor guidance were exceptional.",
+    quote: "The AP World History bootcamp was instrumental in helping me earn a 5 on the exam. The practice materials and instructor guidance were exceptional.",
     author: "Sarah L.",
-    role: "AP Calculus Student",
+    role: "AP World History Student",
     initials: "SL",
-    score: "5 on AP Calc BC"
+    score: "5 on AP World History",
+    rating: 5
   },
   {
     quote: "I tried other prep programs before, but this bootcamp was truly transformative. The personalized approach made all the difference in my ACT score.",
     author: "James K.",
     role: "ACT Bootcamp Graduate",
     initials: "JK",
-    score: "34 ACT"
+    score: "36 ACT",
+    rating: 5
+  },
+  {
+    quote: "As an international student, I was struggling with the TOEFL exam. This bootcamp helped me improve my score from 85 to 112 in just six weeks! The speaking practice sessions were particularly helpful.",
+    author: "Sophia C.",
+    role: "TOEFL Bootcamp Graduate",
+    initials: "SC",
+    score: "112 TOEFL",
+    rating: 5
+  },
+  {
+    quote: "The AP Calculus bootcamp condensed months of learning into a few intensive weeks. The practice problems were challenging but prepared me perfectly for the real exam.",
+    author: "David R.",
+    role: "AP Calculus BC Student",
+    initials: "DR",
+    score: "5 on AP Calculus BC",
+    rating: 5
+  },
+  {
+    quote: "I was averaging in the mid-160s on my LSAT practice tests before the bootcamp. The logical reasoning strategies I learned helped me break 170 on test day. Worth every penny!",
+    author: "Anika P.",
+    role: "LSAT Bootcamp Graduate",
+    initials: "AP",
+    score: "173 LSAT",
+    rating: 5
+  },
+  {
+    quote: "My GRE quant score went from the 70th to 93rd percentile after completing the bootcamp. The instructors made complex problems approachable with clear step-by-step methods.",
+    author: "Marcus J.",
+    role: "GRE Bootcamp Graduate",
+    initials: "MJ",
+    score: "167Q/165V GRE",
+    rating: 5
+  },
+  {
+    quote: "The SAT Essay bootcamp transformed my writing approach. I went from scoring 6/6/6 to 8/8/8 by implementing the structural techniques and analysis methods taught in the course.",
+    author: "Leila H.",
+    role: "SAT Essay Student",
+    initials: "LH",
+    score: "8/8/8 SAT Essay",
+    rating: 5
+  },
+  {
+    quote: "After struggling for months with MCAT prep on my own, the bootcamp helped me raise my score by 12 points. The CARS section strategies were especially helpful.",
+    author: "Ryan B.",
+    role: "MCAT Bootcamp Graduate",
+    initials: "RB",
+    score: "518 MCAT",
+    rating: 5
   }
 ];
 
@@ -503,73 +554,110 @@ useEffect(() => {
           ))}
         </div>
 
-        {/* Testimonial Carousel */}
-<div className="my-24">
-  <div className="max-w-6xl mx-auto ">
-    <h2 className="text-4xl font-bold text-center mb-10">Student Success Stories</h2>
-    <div className="relative bg-white rounded-2xl shadow-2xl p-10 overflow-hidden">
+        {/* Testimonial Carousel - Redesigned */}
+<div className="py-16 bg-gradient-to-b from-gray-50 to-white">
+  <div className="max-w-5xl mx-auto px-4 sm:px-6">
+    <div className="text-center mb-12">
+      <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Student Success Stories</h2>
+      <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto"></div>
+      <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">See how our students transformed their careers and achieved their goals.</p>
+    </div>
+    
+    <div className="relative bg-white rounded-2xl shadow-xl overflow-hidden">
       {/* Top Gradient Bar */}
-      <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500"></div>
+      <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600"></div>
       
-      {/* Testimonials Wrapper with Fixed Height */}
-      <div className="relative z-10 min-h-[300px] flex items-center justify-center">
-        {testimonials.map((testimonial, index) => (
-          <div 
-            key={index} 
-            className={`absolute top-0 left-0 w-full h-full flex flex-col justify-center px-8 transition-all duration-700 transform ${
-              activeTestimonial === index 
-                ? "opacity-100 translate-y-0 scale-100 z-20"
-                : "opacity-0 translate-y-5 scale-95 z-10 pointer-events-none"
-            }`}
-          >
-            <div className="flex flex-col items-center text-center">
-              <svg className="w-12 h-12 text-blue-300 mb-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-              </svg>
-              <p className="text-2xl text-gray-700 mb-8 leading-relaxed italic max-w-4xl mx-auto">
-                "{testimonial.quote}"
-              </p>
-              <div className="flex items-center">
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-xl font-bold text-blue-700 mr-4">
-                  {testimonial.initials}
+      {/* Card Content with Decorative Elements */}
+      <div className="relative p-8 md:p-12">
+        {/* Decorative Quotes */}
+        <div className="absolute top-6 left-6 text-gray-100 opacity-30">
+          <svg className="w-20 h-20" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+          </svg>
+        </div>
+        
+        {/* Testimonials Wrapper */}
+        <div className="relative z-10 min-h-[320px] flex items-center justify-center">
+          {testimonials.map((testimonial, index) => (
+            <div 
+              key={index} 
+              className={`absolute top-0 left-0 w-full h-full flex flex-col justify-center transition-all duration-700 ease-in-out ${
+                activeTestimonial === index 
+                  ? "opacity-100 translate-x-0 scale-100 z-20"
+                  : index < activeTestimonial
+                    ? "opacity-0 -translate-x-12 scale-95 z-10 pointer-events-none"
+                    : "opacity-0 translate-x-12 scale-95 z-10 pointer-events-none"
+              }`}
+            >
+              <div className="flex flex-col items-center text-center">
+                <div className="mb-8">
+                  <div className="flex items-center justify-center mb-2">
+                    {[...Array(5)].map((_, i) => (
+                      <svg 
+                        key={i} 
+                        className={`w-5 h-5 ${i < testimonial.rating ? "text-yellow-400" : "text-gray-300"}`} 
+                        fill="currentColor" 
+                        viewBox="0 0 20 20"
+                      >
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+                  {testimonial.score && (
+                    <span className="text-sm font-medium text-blue-600">{testimonial.score}</span>
+                  )}
                 </div>
-                <div className="text-left">
-                  <h4 className="font-semibold text-lg">{testimonial.author}</h4>
-                  <p className="text-gray-500 text-sm">{testimonial.role}</p>
-                  <p className="text-blue-600 text-sm font-semibold mt-1">{testimonial.score}</p>
+                
+                <p className="text-xl md:text-2xl text-gray-800 mb-8 leading-relaxed italic max-w-2xl mx-auto font-light">
+                  "{testimonial.quote}"
+                </p>
+                
+                <div className="flex items-center">
+                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-xl font-bold text-white shadow-md">
+                    {testimonial.initials}
+                  </div>
+                  <div className="text-left ml-4">
+                    <h4 className="font-semibold text-lg text-gray-900">{testimonial.author}</h4>
+                    <p className="text-gray-600">{testimonial.role}</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
+        
+        {/* Navigation Arrows - Redesigned */}
+        <div className="absolute inset-y-0 left-0 right-0 flex justify-between items-center px-4 md:px-2">
+          <button 
+            onClick={prevTestimonial}
+            className="bg-white w-10 h-10 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-x-1 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 flex items-center justify-center text-blue-600 hover:text-blue-700"
+            aria-label="Previous testimonial"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <button 
+            onClick={nextTestimonial}
+            className="bg-white w-10 h-10 rounded-full shadow-lg hover:shadow-xl transform hover:translate-x-1 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 flex items-center justify-center text-blue-600 hover:text-blue-700"
+            aria-label="Next testimonial"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
       </div>
-      <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4 z-30">
-  <button 
-    onClick={prevTestimonial}
-    className="bg-white rounded-full p-2 shadow-md hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
-    aria-label="Previous testimonial"
-  >
-    <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-    </svg>
-  </button>
-  <button 
-    onClick={nextTestimonial}
-    className="bg-white rounded-full p-2 shadow-md hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
-    aria-label="Next testimonial"
-  >
-    <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-    </svg>
-  </button>
-</div>
-      {/* Navigation Dots */}
-      <div className="absolute bottom-6 left-0 right-0 flex justify-center space-x-2">
+      
+      {/* Navigation Dots - Redesigned */}
+      <div className="bg-gray-50 py-4 flex justify-center space-x-2">
         {testimonials.map((_, index) => (
           <button
             key={index}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              activeTestimonial === index ? "bg-blue-600 w-5" : "bg-gray-300"
+            className={`transition-all duration-300 focus:outline-none ${
+              activeTestimonial === index 
+                ? "w-8 h-2 bg-blue-600 rounded-full" 
+                : "w-2 h-2 bg-gray-300 rounded-full hover:bg-gray-400"
             }`}
             onClick={() => setActiveTestimonial(index)}
             aria-label={`View testimonial ${index + 1}`}
