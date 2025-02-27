@@ -47,7 +47,7 @@ const Footer = () => {
               © Company 2025 ARENA. All rights reserved.
             </p>
             <Link
-              to="/sign-up"
+              to="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1dNqQ-a8w_pPG0V-0I7Goj3SsWO0qM23ORt4XRrbTf1MLcUQLL_V8vVpKJiLHwODmkN69BoZYW"
               className="relative inline-flex items-center gap-2 rounded-full border border-black px-8 py-3 font-medium transition-all duration-300 overflow-hidden"
               onMouseMove={handleMouseMove}
               onMouseEnter={handleMouseEnter}
