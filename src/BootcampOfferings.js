@@ -152,51 +152,51 @@ const testimonials = [
     rating: 5
   },
   {
-    quote: "As an international student, I was struggling with the TOEFL exam. This bootcamp helped me improve my score from 85 to 112 in just six weeks! The speaking practice sessions were particularly helpful.",
-    author: "Sophia C.",
-    role: "TOEFL Bootcamp Graduate",
-    initials: "SC",
-    score: "112 TOEFL",
+    quote: "The SAT Math bootcamp helped me overcome my anxiety with problem-solving. My score jumped from 620 to 780 after just three weeks of focused preparation.",
+    author: "Olivia M.",
+    role: "SAT Math Student",
+    initials: "OM",
+    score: "780 SAT Math",
     rating: 5
   },
   {
-    quote: "The AP Calculus bootcamp condensed months of learning into a few intensive weeks. The practice problems were challenging but prepared me perfectly for the real exam.",
-    author: "David R.",
-    role: "AP Calculus BC Student",
-    initials: "DR",
-    score: "5 on AP Calculus BC",
+    quote: "AP Biology seemed overwhelming until I joined the bootcamp. The practice exams and lab concept reviews made everything click. So grateful for my 5!",
+    author: "Daniel W.",
+    role: "AP Biology Student",
+    initials: "DW",
+    score: "5 on AP Biology",
     rating: 5
   },
   {
-    quote: "I was averaging in the mid-160s on my LSAT practice tests before the bootcamp. The logical reasoning strategies I learned helped me break 170 on test day. Worth every penny!",
-    author: "Anika P.",
-    role: "LSAT Bootcamp Graduate",
-    initials: "AP",
-    score: "173 LSAT",
+    quote: "My ACT score had plateaued at 29 despite months of studying. The bootcamp's targeted approach to the Science section finally pushed me over 30 points.",
+    author: "Emma R.",
+    role: "ACT Bootcamp Graduate",
+    initials: "ER",
+    score: "33 ACT",
     rating: 5
   },
   {
-    quote: "My GRE quant score went from the 70th to 93rd percentile after completing the bootcamp. The instructors made complex problems approachable with clear step-by-step methods.",
-    author: "Marcus J.",
-    role: "GRE Bootcamp Graduate",
-    initials: "MJ",
-    score: "167Q/165V GRE",
+    quote: "The SAT Reading bootcamp transformed my approach to complex passages. My score improved from 32 to 38 (out of 40) in just six sessions!",
+    author: "Jason T.",
+    role: "SAT Reading Student",
+    initials: "JT",
+    score: "760 SAT Reading",
     rating: 5
   },
   {
-    quote: "The SAT Essay bootcamp transformed my writing approach. I went from scoring 6/6/6 to 8/8/8 by implementing the structural techniques and analysis methods taught in the course.",
-    author: "Leila H.",
-    role: "SAT Essay Student",
-    initials: "LH",
-    score: "8/8/8 SAT Essay",
+    quote: "AP English Language seemed impossible until I took the bootcamp. The essay strategies and rhetorical analysis techniques were exactly what I needed for a 5.",
+    author: "Priya S.",
+    role: "AP English Language Student",
+    initials: "PS",
+    score: "5 on AP English Language",
     rating: 5
   },
   {
-    quote: "After struggling for months with MCAT prep on my own, the bootcamp helped me raise my score by 12 points. The CARS section strategies were especially helpful.",
-    author: "Ryan B.",
-    role: "MCAT Bootcamp Graduate",
-    initials: "RB",
-    score: "518 MCAT",
+    quote: "I was scoring in the mid-20s on ACT English before the bootcamp. The grammar rules and passage strategies helped me achieve a perfect 36 on that section!",
+    author: "Noah C.",
+    role: "ACT English Student",
+    initials: "NC",
+    score: "36 ACT English",
     rating: 5
   }
 ];
