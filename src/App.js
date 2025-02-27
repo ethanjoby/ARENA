@@ -6,7 +6,8 @@ import Essays from './Essays';
 import ThankYouPage from "./ThankYouPage";
 import ArenaSignUpForm from './ArenaSignUpForm';
 import AboutUs from './AboutUs';
-import Portal from './Portal'; 
+import Portal from './Portal';
+import BootcampOfferings from './BootcampOfferings';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/thank-you" element={<ThankYouPage />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/portal" element={<Portal />} />
+        <Route path="/bootcamp" element={<BootcampOfferings />} />
       </Routes>
     </Router>
   );

@@ -6,6 +6,7 @@ import ContactUS from './ContactUs';
 import Footer from './Footer';
 import FAQs from './FAQs';
 import AboutUs from './AboutUs'; // Import AboutUs component
+import BootcampOfferings from './BootcampOfferings';
 
 function HomePage() {
   return (
@@ -16,6 +17,9 @@ function HomePage() {
       </div>
       <div id="services">
         <Services />
+      </div>
+      <div id="boocamp">
+        <BootcampOfferings />
       </div>
       <div id="about-us">
         <AboutUs /> {/* Add AboutUs section */}
