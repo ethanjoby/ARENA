@@ -78,24 +78,8 @@ const CollegeCounselingServices = () => {
       <p className="text-xl text-center text-gray-600 mb-4 max-w-3xl mx-auto">
         Our comprehensive college counseling services are designed to maximize your chances of admission to top universities through strategic planning and personalized guidance.
       </p>
-      <div className="mb-12 text-center flex justify-center gap-4">
-  <a 
-    href={consultationLink}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="bg-black text-white px-8 py-3 rounded-lg font-bold hover:bg-gray-800 transition-colors duration-300 shadow-lg inline-block"
-  >
-    Schedule a Free Consultation
-  </a>
-  <a 
-    href="/bootcamp"
-    className="bg-black text-white px-8 py-3 rounded-lg font-bold hover:bg-gray-800 transition-colors duration-300 shadow-lg inline-block"
-  >
-    Learn about SAT/ACT/AP Bootcamps
-  </a>
-</div>
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full mt-12">
         {services.map((service, index) => (
           <div
             key={index}
@@ -177,10 +161,27 @@ const CollegeCounselingServices = () => {
                 {isExpanded(index) ? "Click to collapse" : "Click to expand"}
               </p>
             </div>
+            
           </div>
+          
         ))}
       </div>
-      
+      <div className="mb-12 mt-12 text-center flex justify-center gap-4">
+  <a 
+    href={consultationLink}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="bg-black text-white px-8 py-3 rounded-lg font-bold hover:bg-gray-800 transition-colors duration-300 shadow-lg inline-block"
+  >
+    Schedule a Free Consultation
+  </a>
+  <a 
+    href="/bootcamp"
+    className="bg-black text-white px-8 py-3 rounded-lg font-bold hover:bg-gray-800 transition-colors duration-300 shadow-lg inline-block"
+  >
+    Learn about SAT/ACT/AP Bootcamps
+  </a>
+</div>
       
     </section>
   );
