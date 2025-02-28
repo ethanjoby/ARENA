@@ -6,7 +6,7 @@ const bootcampOfferings = [
   {
     title: "SAT Intensive Bootcamp",
     icon: "📊",
-    description: "Our comprehensive 4-week SAT/ACT prep program is designed to maximize your score with targeted strategies and personalized coaching.",
+    description: "Our comprehensive 4-week SAT prep program is designed to maximize your score with targeted strategies and personalized coaching.",
     highlights: [
       "Small group sessions (max 8 students)",
       "16 hours of focused instruction",
