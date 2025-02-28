@@ -280,7 +280,7 @@ const faqData = [
   },
   {
     question: "Do you offer any guarantees?",
-    answer: "Yes! For our SAT/ACT bootcamps, we guarantee a minimum score improvement of 100 points (SAT) or 3 points (ACT). If you don't achieve this improvement, you'll receive free follow-up sessions until you reach your goal."
+    answer: "Yes! For our SAT/ACT bootcamps, we set a target score in our first meeting and if its not met, we refund 10% of the cost."
   },
   {
     question: "Are materials included in the price?",
