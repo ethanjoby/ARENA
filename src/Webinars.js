@@ -4,14 +4,15 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const Webinars = () => {
     const webinarData = [
-        {
+      {
           date: "Mar 6, 2025",
           time: "6:30 PM",
-          title: "College Decision Day: Insights from Foothill Seniors",
-          description: "Current Foothill seniors share their college application journeys and decision-making processes. Get firsthand advice on navigating acceptances, comparing financial aid packages, and making your final choice.",
-          category: "Student Experiences",
-          registration: "https://calendar.app.google/Ao5bqsR3VWJ3yacH6"
+          title: "Finding Physics at Foothill difficult? What's next?",
+          description: "Struggling with Physics at Foothill, especially with Mr. Hoch’s tough teaching style? Join us to explore practical strategies and next steps—you don’t have to just sit around!",
+          category: "School Options",
+          registration: "https://zoom.us/webinar/register/WN_newexample5"
         },
+        
         {
           date: "Mar 13, 2025",
           time: "6:30 PM",
@@ -39,24 +40,24 @@ const Webinars = () => {
         {
           date: "Apr 3, 2025",
           time: "6:30 PM",
-          title: "Finding Physics at Foothill difficult? What's next?",
-          description: "Struggling with Physics at Foothill, especially with Mr. Hoch’s tough teaching style? Join us to explore practical strategies and next steps—you don’t have to just sit around!",
-          category: "School Options",
-          registration: "https://zoom.us/webinar/register/WN_newexample5"
+          title: "College Decision Day: Insights from Foothill Seniors",
+          description: "Current Foothill seniors share their college application journeys and decision-making processes. Get firsthand advice on navigating acceptances, comparing financial aid packages, and making your final choice.",
+          category: "Student Experiences",
+          registration: "https://calendar.app.google/Ao5bqsR3VWJ3yacH6"
         },
         {
           date: "Apr 10, 2025",
           time: "6:30 PM",
-          title: "Scholarship Success: How Foothill Students Secured Financial Aid",
-          description: "Learn winning strategies from Foothill seniors who earned substantial scholarships. Get insider tips on local opportunities, essay approaches, and application techniques that helped them fund their education.",
+          title: "What is happening to the CS Job Market? Is it still THE field or should you explore other options?",
+          description: "Wondering what’s going on with the CS job market—booming industry or oversaturated field? Join us as we break down the trends, challenges, and whether it’s still the path to pursue!",
           category: "Financial Planning",
           registration: "https://zoom.us/webinar/register/WN_newexample6"
         },
         {
           date: "Apr 17, 2025",
           time: "6:30 PM",
-          title: "The Arts & Humanities Path: Portfolio Development and Audition Prep",
-          description: "Foothill seniors headed to arts programs share their experiences preparing portfolios, auditions, and supplemental materials. Learn what creative admissions committees are really looking for.",
+          title: "Honors English vs. Regular English: Which One is Right for You?",
+          description: "Debating between Honors English and Regular English? We’ll discuss the differences in workload, expectations, and benefits to help you make the best choice for your strengths and goals!",
           category: "Career Pathways",
           registration: "https://zoom.us/webinar/register/WN_newexample7"
         },
@@ -71,8 +72,8 @@ const Webinars = () => {
         {
           date: "May 1, 2025",
           time: "6:30 PM",
-          title: "Mental Health & Academic Success: Balancing the College Prep Journey",
-          description: "Foothill seniors and counselors discuss practical strategies for maintaining wellness while pursuing academic excellence. Learn techniques for stress management during the college application process.",
+          title: "Online Courses: Are UC Scout, BYU, and Others Worth It?",
+          description: "Thinking about taking an online course to get ahead or fulfill requirements? Join us as we explore the pros, cons, and best strategies for making the most of UC Scout, BYU, and other online options!",
           category: "Student Wellness",
           registration: "https://zoom.us/webinar/register/WN_newexample9"
         },
@@ -87,8 +88,8 @@ const Webinars = () => {
         {
           date: "May 15, 2025",
           time: "6:30 PM",
-          title: "First-Generation College Students: Navigating the Unknown",
-          description: "First-gen Foothill seniors share their unique challenges and triumphs throughout the college preparation process. Learn about resources and support systems that helped them succeed.",
+          title: "First-Generation Parents: What’s Your Role in the College Journey?",
+          description: "Navigating college as the child of first-generation parents comes with unique challenges and responsibilities. Join us to discuss how you can support your family while advocating for yourself in the college process!",
           category: "Student Experiences",
           registration: "https://zoom.us/webinar/register/WN_newexample11"
         },
