@@ -10,7 +10,7 @@ export default function HeroSectionSAT() {
     Ace the <span className="text-black">SAT/ACT & AP Exams</span> with Confidence
   </h1>
   <p className="text-gray-600 mt-4 text-lg">
-    Join our top-rated SAT & AP bootcamp to master strategies, boost your scores, and get expert guidance for success.
+    Join our top-rated SAT/ACT & AP bootcamp to master strategies, boost your scores, and get expert guidance for success.
   </p>
 
   {/* Highlighted Guarantee Offer */}
@@ -45,7 +45,7 @@ export default function HeroSectionSAT() {
             <div className="flex-1 flex justify-center items-center">
               <img 
                 src="https://www.drivecms.com/uploads/mcelroytutoring.com/Screen%20Shot%202022-04-08%20at%209.37.25%20AM.png" 
-                alt="SAT/ACT & AP Dashboard Preview" 
+                alt="SAT & AP Dashboard Preview" 
                 className="w-full h-full max-h-[500px] object-cover rounded-2xl shadow-lg"
               />
             </div>
