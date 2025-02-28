@@ -42,3 +42,18 @@
   color: transparent;
 }
 
+@keyframes moving-line {
+  0% {
+    background-position: -100% 0%;
+  }
+  100% {
+    background-position: 200% 0%;
+  }
+}
+
+.animate-moving-line {
+  background-size: 300% auto; /* Increase size to make the movement more noticeable */
+  animation: moving-line 2.5s linear infinite; /* Faster and more dynamic movement */
+  background-image: linear-gradient(to right, black, gray, white, gray, black); /* More contrast */
+  height: 4px; /* Make the line thicker for visibility */
+}

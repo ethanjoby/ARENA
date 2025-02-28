@@ -29,7 +29,7 @@ const HeroSection = () => {
     if (showNotification) {
       const closeButtonTimer = setTimeout(() => {
         setShowCloseButton(true);
-      }, 5000);
+      }, 10000);
 
       return () => clearTimeout(closeButtonTimer);
     }
@@ -75,31 +75,31 @@ const HeroSection = () => {
     <section className="hero-section bg-white text-black py-24 flex flex-col items-center justify-center">
       {/* Bootcamp Notification Popup */}
       {showNotification && (
-        <div className="fixed bottom-4 right-4 z-50 w-64 md:w-80 bg-white shadow-lg rounded-lg overflow-hidden transition-all duration-300 transform translate-x-0 opacity-100">
-          <div className="h-1 bg-gradient-to-r from-black via-gray-100 to-gray-400"></div>
-          <div className="p-4">
-            <div className="flex justify-between items-center">
-              <div className="flex">
-                <span className="text-lg mr-2">🚀</span>
-                <h3 className="font-bold text-gray-800">New Bootcamps!</h3>
-              </div>
-              {showCloseButton && (
-                <button onClick={closeNotification} className="text-gray-500 hover:text-black">✖</button>
-              )}
-            </div>
-            <p className="mt-2 text-sm text-gray-600 text-left">
-              We're now offering SAT/ACT and AP Bootcamps to help you excel!
-            </p>
-            <Link
-              to="/bootcamp"
-              className="block text-left mt-3 text-sm font-medium text-blue-600 hover:text-blue-800 text-left"
-            >
-              Learn More →
-            </Link>
+    <div className="fixed bottom-4 right-4 z-50 w-64 md:w-80 bg-white shadow-lg rounded-lg overflow-hidden transition-all duration-300 transform translate-x-0 opacity-100">
+      {/* More eye-catching animated line */}
+      <div className="h-2 bg-gradient-to-r from-black via-gray-100 to-gray-400 animate-moving-line"></div>
+      <div className="p-4">
+        <div className="flex justify-between items-center">
+          <div className="flex">
+            <span className="text-lg mr-2">🚀</span>
+            <h3 className="font-bold text-gray-800">New Bootcamps!</h3>
           </div>
+          {showCloseButton && (
+            <button onClick={closeNotification} className="text-gray-500 hover:text-black">✖</button>
+          )}
         </div>
-      )}
-
+        <p className="mt-2 text-sm text-gray-600 text-left">
+          We're now offering SAT/ACT and AP Bootcamps to help you excel!
+        </p>
+        <Link
+          to="/bootcamp"
+          className="block text-left mt-3 text-sm font-medium text-blue-600 hover:text-blue-800 text-left"
+        >
+          Learn More →
+        </Link>
+      </div>
+    </div>
+  )}
       <header className="absolute top-0 left-0 w-full p-4 flex justify-between items-center">
         <div className="logo flex items-center text-lg font-bold">
           <img src={logo} alt="Logo" className="h-8 mr-2" />
