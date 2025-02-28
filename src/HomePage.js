@@ -18,15 +18,14 @@ function HomePage() {
       <div id="services">
         <Services />
       </div>
-      
+      <div id="webinars">
+        <Webinars />
+      </div>
       <div id="about-us">
         <AboutUs /> {/* Add AboutUs section */}
       </div>
       <div id="testimonials">
         <Testimonials />
-      </div>
-      <div id="webinars">
-        <Webinars />
       </div>
       <div id="faq">
         <FAQs />
