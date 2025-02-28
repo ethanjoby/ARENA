@@ -243,7 +243,7 @@ const testimonials = [
     rating: 5
   },
   {
-    quote: "The SAT Reading bootcamp transformed my approach to complex passages. My score improved from 32 to 38 (out of 40) in just six sessions!",
+    quote: "The SAT Reading bootcamp transformed my approach to complex passages. My score improved from 720 to 760 in just six sessions!",
     author: "Jason T.",
     role: "SAT Reading Student",
     initials: "JT",
