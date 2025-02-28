@@ -7,19 +7,19 @@ const Webinars = () => {
       {
           date: "Mar 6, 2025",
           time: "6:30 PM",
-          title: "Finding Physics at Foothill difficult? What's next?",
-          description: "Struggling with Physics at Foothill, especially with Mr. Hoch’s tough teaching style? Join us to explore practical strategies and next steps—you don’t have to just sit around!",
-          category: "School Options",
-          registration: "https://zoom.us/webinar/register/WN_newexample5"
+          title: "Balancing AP Courses: Foothill Student Success Stories",
+          description: "Hear directly from Foothill seniors who have successfully managed rigorous AP course loads while maintaining extracurriculars and mental health. Learn time management strategies that actually work.",
+          category: "Academic Success",
+          registration: "https://calendar.app.google/1qx3bEh7jnHFny9cA"
         },
         
         {
           date: "Mar 13, 2025",
           time: "6:30 PM",
-          title: "Balancing AP Courses: Foothill Student Success Stories",
-          description: "Hear directly from Foothill seniors who have successfully managed rigorous AP course loads while maintaining extracurriculars and mental health. Learn time management strategies that actually work.",
-          category: "Academic Success",
-          registration: "https://calendar.app.google/W7nyfs5W4AWDis7LA"
+          title: "Finding Physics at Foothill difficult? What's next?",
+          description: "Struggling with Physics at Foothill? Join us to explore practical strategies and next steps—you don’t have to just sit around!",
+          category: "School Options",
+          registration: "https://calendar.app.google/vZPSNPwVgTJwezVk6"
         },
         {
           date: "Mar 20, 2025",
@@ -43,7 +43,7 @@ const Webinars = () => {
           title: "College Decision Day: Insights from Foothill Seniors",
           description: "Current Foothill seniors share their college application journeys and decision-making processes. Get firsthand advice on navigating acceptances, comparing financial aid packages, and making your final choice.",
           category: "Student Experiences",
-          registration: "https://calendar.app.google/Ao5bqsR3VWJ3yacH6"
+          registration: "https://calendar.app.google/8uUMjLfhWy49TN9v9"
         },
         {
           date: "Apr 10, 2025",
@@ -51,7 +51,7 @@ const Webinars = () => {
           title: "What is happening to the CS Job Market? Is it still THE field or should you explore other options?",
           description: "Wondering what’s going on with the CS job market—booming industry or oversaturated field? Join us as we break down the trends, challenges, and whether it’s still the path to pursue!",
           category: "Financial Planning",
-          registration: "https://zoom.us/webinar/register/WN_newexample6"
+          registration: "https://calendar.app.google/PAubCmX4rry3RJFQA"
         },
         {
           date: "Apr 17, 2025",
@@ -59,7 +59,7 @@ const Webinars = () => {
           title: "Honors English vs. Regular English: Which One is Right for You?",
           description: "Debating between Honors English and Regular English? We’ll discuss the differences in workload, expectations, and benefits to help you make the best choice for your strengths and goals!",
           category: "Career Pathways",
-          registration: "https://zoom.us/webinar/register/WN_newexample7"
+          registration: "https://calendar.app.google/j9QDuFK2vWvZ2dTn9"
         },
         {
           date: "Apr 24, 2025",
@@ -67,7 +67,7 @@ const Webinars = () => {
           title: "Summer Before College: Essential Preparations with Foothill Seniors",
           description: "Foothill Seniors return to share what they wish they'd known before starting college. Get practical advice on everything from roommate relationships to course selection and campus resources.",
           category: "College Transition",
-          registration: "https://zoom.us/webinar/register/WN_newexample8"
+          registration: "https://calendar.app.google/kLq2UVRbVz3Gqtc46"
         },
         {
           date: "May 1, 2025",
@@ -75,7 +75,7 @@ const Webinars = () => {
           title: "Online Courses: Are UC Scout, BYU, and Others Worth It?",
           description: "Thinking about taking an online course to get ahead or fulfill requirements? Join us as we explore the pros, cons, and best strategies for making the most of UC Scout, BYU, and other online options!",
           category: "Student Wellness",
-          registration: "https://zoom.us/webinar/register/WN_newexample9"
+          registration: "https://calendar.app.google/nydapett4nvwcQpS7"
         },
         {
           date: "May 8, 2025",
@@ -83,7 +83,7 @@ const Webinars = () => {
           title: "Authentic Essays That Worked: Foothill Seniors Share Their Stories",
           description: "Hear directly from Foothill students who crafted compelling personal statements that helped them gain admission to selective colleges. Learn about their writing process and revision strategies.",
           category: "College Planning",
-          registration: "https://zoom.us/webinar/register/WN_newexample10"
+          registration: "https://calendar.app.google/s7QZguMnCgfbq7ZCA"
         },
         {
           date: "May 15, 2025",
@@ -91,7 +91,7 @@ const Webinars = () => {
           title: "First-Generation Parents: What’s Your Role in the College Journey?",
           description: "Navigating college as the child of first-generation parents comes with unique challenges and responsibilities. Join us to discuss how you can support your family while advocating for yourself in the college process!",
           category: "Student Experiences",
-          registration: "https://zoom.us/webinar/register/WN_newexample11"
+          registration: "https://calendar.app.google/iTzqDaxAkth9qYLL9"
         },
         {
           date: "May 22, 2025",
@@ -99,7 +99,7 @@ const Webinars = () => {
           title: "Internships & Research: How Foothill Students Secured Valuable Experience",
           description: "Learn how current Foothill seniors found and secured competitive internships and research positions that strengthened their college applications and career preparation.",
           category: "Career Development",
-          registration: "https://zoom.us/webinar/register/WN_newexample12"
+          registration: "https://calendar.app.google/p75Ch2S5CeDrqCwX9"
         }
     ];
     
