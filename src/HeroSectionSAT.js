@@ -1,40 +1,45 @@
 export default function HeroSectionSAT() {
     return (
-        <section className="flex items-center justify-center min-h-screen px-8 py-16">
+      <section className="flex items-center justify-center px-8 mt-16 py-12 min-h-[70vh]">
+
           <div className="flex flex-col md:flex-row items-stretch justify-between max-w-6xl w-full mx-auto gap-8">
             
             {/* Left Content - Flexible width */}
-            <div className="flex-1 flex flex-col justify-center">
-              <h1 className="text-5xl font-bold text-gray-400 leading-tight">
-                Ace the <span className="text-black">SAT & AP Exams</span> with Confidence
-              </h1>
-              <p className="text-gray-600 mt-4 text-lg">
-                Join our top-rated SAT & AP bootcamp to master test strategies, boost your scores, and get expert guidance for your success.
-              </p>
-    
-              {/* Stats + Download Section */}
-              <div className="mt-6 bg-gray-100 p-6 rounded-xl flex flex-col md:flex-row justify-between items-center gap-4 shadow-md">
-    
-                <div className="text-center">
-                  <h2 className="text-2xl font-bold">98%</h2>
-                  <p className="text-gray-600">Score Improvement</p>
-                </div>
-    
-                <div className="text-center">
-                  <h2 className="text-2xl font-bold">Top 1%</h2>
-                  <p className="text-gray-600">Instructors Nationwide</p>
-                </div>
-    
-                <button 
-  className="bg-black hover:bg-white hover:text-black border border-black text-white px-4 py-2 rounded-lg transition duration-300"
-  onClick={() => window.open("https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1dNqQ-a8w_pPG0V-0I7Goj3SsWO0qM23ORt4XRrbTf1MLcUQLL_V8vVpKJiLHwODmkN69BoZYW", "_blank")}
->
-  Start Your Journey
-</button>
-              </div>
-    
-           
-            </div>
+<div className="flex-1 flex flex-col justify-center">
+  <h1 className="text-5xl font-bold text-gray-700 leading-tight">
+    Ace the <span className="text-black">SAT & AP Exams</span> with Confidence
+  </h1>
+  <p className="text-gray-600 mt-4 text-lg">
+    Join our top-rated SAT & AP bootcamp to master strategies, boost your scores, and get expert guidance for success.
+  </p>
+
+  {/* Highlighted Guarantee Offer */}
+  <div className="mt-6 bg-yellow-100 border-l-4 border-yellow-500 p-4 rounded-lg text-center shadow-md">
+    <h2 className="text-xl font-bold text-yellow-900">🎯 Guaranteed Target Score</h2>
+    <p className="text-sm text-yellow-800">Miss it? Get <span className="font-semibold">10% Back!</span></p>
+  </div>
+
+  {/* Stats + Download Section */}
+  <div className="mt-4 bg-gray-50 p-4 rounded-lg flex flex-wrap md:flex-nowrap justify-between items-center gap-4 shadow-md">
+    {/* Score Improvement Stat */}
+    <div className="text-center flex-1">
+      <h2 className="text-xl font-semibold text-black">98%</h2>
+      <p className="text-sm text-gray-600">Score Improvement</p>
+    </div>
+
+    {/* Divider */}
+    <div className="hidden md:block w-px bg-gray-300 h-8"></div>
+
+    {/* Nationwide Ranking Stat */}
+    <div className="text-center flex-1">
+      <h2 className="text-xl font-semibold text-black">Top 0.01%</h2>
+      <p className="text-sm text-gray-600">Test-Takers Nationwide</p>
+    </div>
+  </div>
+</div>
+
+
+
     
             {/* Right Image - Matches left side height */}
             <div className="flex-1 flex justify-center items-center">

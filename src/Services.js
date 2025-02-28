@@ -103,10 +103,11 @@ const CollegeCounselingServices = () => {
             
             {/* Card Content */}
             <div 
-              className={`relative bg-white hover:bg-gray-50 rounded-xl shadow-xl p-6 flex flex-col items-center h-full w-full ${
-                isExpanded(index) ? 'transform scale-105 z-10' : ''
-              } transition-all duration-300`}
-            >
+  className={`relative bg-white hover:bg-gray-50 rounded-xl shadow-xl p-6 flex flex-col items-center h-full w-full ${
+    isExpanded(index) ? 'transform scale-105 z-10 mb-4' : 'mb-0'
+  } transition-all duration-300`}
+>
+
               {/* Circled Number */}
               <div 
                 className="absolute -top-6 left-1/2 transform -translate-x-1/2 rounded-full w-12 h-12 flex items-center justify-center text-lg font-bold shadow-md bg-black text-white transition-colors duration-300"

@@ -8,8 +8,8 @@ const bootcampOfferings = [
     icon: "📊",
     description: "Our comprehensive 4-week SAT/ACT prep program is designed to maximize your score with targeted strategies and personalized coaching.",
     highlights: [
-      "Small group sessions (max 10 students)",
-      "4 hours of live instruction per weekend",
+      "Small group sessions (max 8 students)",
+      "16 hours of focused instruction",
       "Weekly practice tests with detailed analysis",
       "Personalized study plans for every student"
     ],
@@ -157,26 +157,29 @@ const bootcampOfferings = [
       {
         name: "Spring Break Intensive",
         dates: "March 22-23 & March 29-30, 2025",
-        schedule: "Sat & Sun, 9:00 AM - 1:00 PM",
-        price: "$795 per subject",
-        spaces: "Limited to 10 students per subject",
-        popularity: "Early Prep"
+        schedule: "Sat & Sun, 5:00 PM - 9:00 PM",
+        price: "$795/subject",
+        spaces: "Limited to 8 students per subject",
+        popularity: "Early Prep",
+        targetExam: "Targeting 2025 AP Exams"
       },
       {
         name: "April Crash Course",
         dates: "April 5-27, 2025",
-        schedule: "Saturday, 10:00 AM - 2:00 PM",
-        price: "$895 per subject",
-        spaces: "Limited to 10 students per subject",
-        popularity: "Deep Dive"
+        schedule: "Saturday, 5:00 PM - 9:00 PM",
+        price: "$895/subject",
+        spaces: "Limited to 8 students per subject",
+        popularity: "Deep Dive",
+        targetExam: "Targeting 2025 AP Exams"
       },
       {
         name: "Final Review Sessions",
         dates: "April 26-27 & May 3-4, 2025",
         schedule: "Sat & Sun, 5:00 PM - 9:00 PM",
-        price: "$995 per subject",
-        spaces: "Limited to 10 students per subject",
-        popularity: "Last-Minute"
+        price: "$995/subject",
+        spaces: "Limited to 8 students per subject",
+        popularity: "Last-Minute",
+        targetExam: "Targeting 2025 AP Exams"
       }
 ]
 
@@ -269,7 +272,7 @@ const testimonials = [
 const faqData = [
   {
     question: "How are your bootcamps different from other test prep programs?",
-    answer: "Our bootcamps feature small group sizes (maximum 8-10 students), personalized study plans, and instructors who scored in the top 1% on the tests they teach. We focus on proven strategies and techniques rather than generic content review, resulting in significantly higher score improvements compared to traditional programs."
+    answer: "Our bootcamps feature small group sizes (maximum 8 students), personalized study plans, and instructors who scored in the top 1% on the tests they teach. We focus on proven strategies and techniques rather than generic content review, resulting in significantly higher score improvements compared to traditional programs."
   },
   {
     question: "What if I can't attend all sessions?",
@@ -385,7 +388,7 @@ useEffect(() => {
     <NAVBAR2/>
     <HeroSectionSAT />
       {/* Main Content */}
-      <div className="max-w-6xl mx-auto px-4 py-16">
+      <div className="max-w-6xl mx-auto px-4">
         {/* Bootcamp Tabs */}
 <div className="flex flex-wrap justify-center mb-12 border-b border-gray-200">
   {bootcampOfferings.map((offering, index) => (
@@ -429,12 +432,12 @@ useEffect(() => {
 
                 
                 {/* Interior Navigation */}
-                <div className="border-b border-gray-200 flex justify-center">
-  <div className="flex w-full">
+<div className="border-b border-gray-200 flex overflow-x-auto no-scrollbar">
+  <div className="flex w-full max-w-full">
     {["Available Sessions", "Program Overview", "Curriculum Details"].map((tab, tabIndex) => (
       <button
         key={tabIndex}
-        className={`py-6 px-8 w-full text-center font-medium text-lg relative focus:outline-none ${
+        className={`py-4 px-6 flex-1 min-w-[33%] text-center font-medium text-base sm:text-lg relative focus:outline-none ${
           activeTabs[offeringIndex] === tabIndex
             ? "text-black bg-white"
             : "text-gray-500 hover:text-gray-700 bg-gray-50"
@@ -449,6 +452,7 @@ useEffect(() => {
     ))}
   </div>
 </div>
+
 
 
                 
@@ -547,7 +551,7 @@ useEffect(() => {
                 {/* Tab Content - Available Sessions */}
                 <div className={activeTabs[offeringIndex] === 0 ? "block" : "hidden"}>
                   <div className="p-8">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                       {offering.sessions.map((session, i) => (
                         <div key={i} className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">                        
                           <div className="bg-gray-100 py-3 px-4 border-b border-gray-200">
@@ -592,14 +596,20 @@ useEffect(() => {
                             
                             <div className="pt-4 border-t border-gray-100">
                 
-              <div className="flex justify-between items-center">
-                <span className="text-xl font-bold text-black">{session.price}</span>
-                <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1dNqQ-a8w_pPG0V-0I7Goj3SsWO0qM23ORt4XRrbTf1MLcUQLL_V8vVpKJiLHwODmkN69BoZYW" target="_blank" rel="noopener noreferrer">
-      <button className="bg-black hover:bg-white hover:text-black border border-black text-white font-medium py-2 px-4 rounded-md transition-colors duration-200 text-sm shadow-md">
-        Reserve Seat
-      </button>
-    </a>
-              </div>
+                            <div className="flex items-center justify-between w-full gap-4">
+  <span className="text-lg font-bold text-black">{session.price}</span>
+  <a 
+    href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1dNqQ-a8w_pPG0V-0I7Goj3SsWO0qM23ORt4XRrbTf1MLcUQLL_V8vVpKJiLHwODmkN69BoZYW" 
+    target="_blank" 
+    rel="noopener noreferrer"
+  >
+    <button className="bg-black text-white text-xs px-3 py-1.5 rounded-md border border-black transition duration-200 hover:bg-white hover:text-black shadow-sm">
+      Book Free Info Session
+    </button>
+  </a>
+</div>
+
+
             </div>
                           </div>
                         </div>
