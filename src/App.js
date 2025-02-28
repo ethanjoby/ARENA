@@ -7,6 +7,7 @@ import ThankYouPage from "./ThankYouPage";
 import ArenaSignUpForm from './ArenaSignUpForm';
 import AboutUs from './AboutUs';
 import Portal from './Portal';
+import Webinars from './Webinars';
 import BootcampOfferings from './BootcampOfferings';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/portal" element={<Portal />} />
         <Route path="/bootcamp" element={<BootcampOfferings />} />
+        <Route path="/webinars" element={<Webinars />} />
       </Routes>
     </Router>
   );
