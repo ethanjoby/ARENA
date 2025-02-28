@@ -4,12 +4,12 @@ import HeroSectionSAT from "./HeroSectionSAT";
 
 const bootcampOfferings = [
   {
-    title: "SAT/ACT Intensive Bootcamp",
+    title: "SAT Intensive Bootcamp",
     icon: "📊",
     description: "Our comprehensive 4-week SAT/ACT prep program is designed to maximize your score with targeted strategies and personalized coaching.",
     highlights: [
-      "Small group sessions (max 8 students)",
-      "16 hours of live instruction per week",
+      "Small group sessions (max 10 students)",
+      "4 hours of live instruction per weekend",
       "Weekly practice tests with detailed analysis",
       "Personalized study plans for every student"
     ],
@@ -40,7 +40,8 @@ const bootcampOfferings = [
         schedule: "Saturday, 9:00 AM - 1:00 PM",
         price: "$950",
         spaces: "Limited to 8 students per group",
-        popularity: "High demand"
+        popularity: "High demand",
+        targetExam: "Targeting June 7th SAT Exam"  // Add this line
       },
       {
         name: "Fall Preparation",
@@ -48,7 +49,8 @@ const bootcampOfferings = [
         schedule: "Saturday, 9:00 AM - 1:00 PM",
         price: "$950",
         spaces: "Limited to 8 students per group",
-        popularity: "Filling quickly"
+        popularity: "Filling quickly",
+        targetExam: "Targeting August 23rd SAT Exam"  // Add this line
       },
       {
         name: "Winter Preperation",
@@ -56,7 +58,68 @@ const bootcampOfferings = [
         schedule: "Saturday, 9:00 AM - 1:00 PM",
         price: "$950",
         spaces: "Limited to 8 students per group",
-        popularity: "Early registration"
+        popularity: "Early registration",
+        targetExam: "Targeting December 6th SAT Exam"  // Add this line
+      }
+    ]
+  },
+  {
+    title: "ACT Intensive Bootcamp",
+    icon: "📈",
+    description: "Our comprehensive 4-week ACT prep program is designed to maximize your score with targeted strategies and personalized coaching.",
+    highlights: [
+      "Small group sessions (max 8 students)",
+      "4 hours of live instruction per weekend",
+      "Weekly practice tests with detailed analysis",
+      "Personalized study plans for every student"
+    ],
+    details: [
+      {
+        heading: "Curriculum",
+        points: [
+          "English: Grammar rules & rhetorical skills",
+          "Mathematics: Problem-solving approaches & content review",
+          "Reading: Passage analysis & question patterns",
+          "Science: Data interpretation & scientific reasoning"
+        ]
+      },
+      {
+        heading: "Results",
+        points: [
+          "Average score improvement: 4+ points",
+          "93% of students exceed their target scores",
+          "Comprehensive materials included",
+          "Guaranteed results or free follow-up sessions"
+        ]
+      }
+    ],
+    sessions: [
+      {
+        name: "Summer Intensive",
+        dates: "May 17 - June 7, 2025",
+        schedule: "Saturday, 9:00 AM - 1:00 PM",
+        price: "$950",
+        spaces: "Limited to 8 students per group",
+        popularity: "High demand",
+        targetExam: "Targeting June 14th ACT Exam"
+      },
+      {
+        name: "Fall Preparation",
+        dates: "Aug 9 - Aug 30, 2025",
+        schedule: "Saturday, 9:00 AM - 1:00 PM",
+        price: "$950",
+        spaces: "Limited to 8 students per group",
+        popularity: "Filling quickly",
+        targetExam: "Targeting September 6th ACT Exam"
+      },
+      {
+        name: "Winter Preparation",
+        dates: "Nov 15 - Dec 6, 2025",
+        schedule: "Saturday, 9:00 AM - 1:00 PM",
+        price: "$950",
+        spaces: "Limited to 8 students per group",
+        popularity: "Early registration",
+        targetExam: "Targeting December 13th ACT Exam"
       }
     ]
   },
@@ -66,7 +129,7 @@ const bootcampOfferings = [
     description: "Comprehensive preparation for AP exams designed to strengthen your understanding of key concepts and develop effective test-taking strategies.",
     highlights: [
       "Subject-specific intensive review",
-      "12 hours of focused instruction per AP subject",
+      "16 hours of focused instruction per AP subject",
       "Practice with authentic AP questions",
       "Expert instruction from experienced AP teachers"
     ],
@@ -93,29 +156,30 @@ const bootcampOfferings = [
     sessions: [
       {
         name: "Spring Break Intensive",
-        dates: "March 21-28, 2025",
-        schedule: "Daily, 9:00 AM - 1:00 PM",
+        dates: "March 22-23 & March 29-30, 2025",
+        schedule: "Sat & Sun, 9:00 AM - 1:00 PM",
         price: "$795 per subject",
         spaces: "Limited to 10 students per subject",
-        popularity: "Popular choice"
+        popularity: "Early Prep"
       },
       {
-        name: "April Weekend Workshops",
-        dates: "April 5-26, 2025",
-        schedule: "Saturdays & Sundays, 10:00 AM - 4:00 PM",
-        price: "$795 per subject",
+        name: "April Crash Course",
+        dates: "April 5-27, 2025",
+        schedule: "Saturday, 10:00 AM - 2:00 PM",
+        price: "$895 per subject",
         spaces: "Limited to 10 students per subject",
-        popularity: "Recommended"
+        popularity: "Deep Dive"
       },
       {
         name: "Final Review Sessions",
-        dates: "2 weeks before each AP exam",
-        schedule: "3 days, 5:00 PM - 9:00 PM",
-        price: "$495 per subject",
+        dates: "April 26-27 & May 3-4, 2025",
+        schedule: "Sat & Sun, 5:00 PM - 9:00 PM",
+        price: "$995 per subject",
         spaces: "Limited to 10 students per subject",
-        popularity: "Last minute prep"
+        popularity: "Last-Minute"
       }
-    ]
+]
+
   }
 ];
 
@@ -496,26 +560,35 @@ useEffect(() => {
                           </div>
                           
                           <div className="p-5">
-                            <div className="space-y-3 mb-6">
-                              <p className="flex items-center text-gray-700 text-sm">
-                                <svg className="w-4 h-4 mr-2 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                </svg>
-                                {session.dates}
-                              </p>
-                              <p className="flex items-center text-gray-700 text-sm">
-                                <svg className="w-4 h-4 mr-2 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                {session.schedule}
-                              </p>
-                              <p className="flex items-center text-gray-700 text-sm">
-                                <svg className="w-4 h-4 mr-2 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                                </svg>
-                                {session.spaces}
-                              </p>
-                            </div>
+  <div className="space-y-3 mb-6">
+    <p className="flex items-center text-gray-700 text-sm">
+      <svg className="w-4 h-4 mr-2 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+      </svg>
+      {session.dates}
+    </p>
+    <p className="flex items-center text-gray-700 text-sm">
+      <svg className="w-4 h-4 mr-2 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      {session.schedule}
+    </p>
+    <p className="flex items-center text-gray-700 text-sm">
+      <svg className="w-4 h-4 mr-2 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+      </svg>
+      {session.spaces}
+    </p>
+    {/* Add this section for target exam */}
+    {session.targetExam && (
+      <p className="flex items-center text-gray-700 text-sm font-semibold bg-yellow-50 p-2 rounded border-l-2 border-yellow-400">
+        <svg className="w-4 h-4 mr-2 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+        </svg>
+        {session.targetExam}
+      </p>
+    )}
+  </div>
                             
                             <div className="pt-4 border-t border-gray-100">
                 

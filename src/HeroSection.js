@@ -69,13 +69,6 @@ const HeroSection = () => {
           <span className="text-lg mr-2">🚀</span>
           <h3 className="font-bold text-gray-800">New Bootcamps!</h3>
         </div>
-        {/* Close button */}
-        <button
-          onClick={() => setShowNotification(false)}
-          className="text-gray-500 hover:text-gray-800 text-lg font-bold focus:outline-none"
-        >
-          ×
-        </button>
       </div>
             <p className="mt-2 text-sm text-gray-600 text-left">
               We're now offering SAT/ACT and AP Bootcamps to help you excel!
