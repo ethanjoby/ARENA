@@ -145,10 +145,10 @@ const Webinars = () => {
       </div>
 
       {/* Email Signup */}
-      <div className="bg-blue-50 p-6 rounded-lg shadow-sm mb-12">
+      <div className="bg-gray-100 p-6 rounded-lg shadow-sm mb-12">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h2 className="text-xl font-semibold text-gray-800">Never Miss a Webinar</h2>
+            <h2 className="text-xl font-semibold text-gray-800 text-left">Never Miss a Webinar</h2>
             <p className="text-gray-600">Get reminders and updates about our upcoming sessions</p>
           </div>
           <form onSubmit={handleEmailSignup} className="flex flex-col sm:flex-row gap-2">
@@ -162,7 +162,7 @@ const Webinars = () => {
             />
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors flex items-center justify-center"
+              className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-100 hover:text-black border border-black transition-colors flex items-center justify-center"
             >
               <PlusCircle className="w-4 h-4 mr-2" />
               Subscribe
@@ -190,7 +190,7 @@ const Webinars = () => {
           <input
             type="text"
             placeholder="Search webinars by topic..."
-            className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all outline-none"
+            className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-200 focus:border-black focus:ring-2 focus:ring-gray-100 transition-all outline-none"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -203,7 +203,7 @@ const Webinars = () => {
               onClick={() => setSelectedCategory(category)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all
                 ${selectedCategory === category
-                  ? 'bg-blue-500 text-white'
+                  ? 'bg-black text-white'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                 }`}
             >
@@ -227,7 +227,7 @@ const Webinars = () => {
             >
               <div className="p-6 flex-grow">
                 <div className="mb-4">
-                  <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                  <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
                     {webinar.category}
                   </span>
                 </div>
@@ -246,7 +246,7 @@ const Webinars = () => {
                   href={webinar.registration}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white text-center rounded-md transition-colors flex items-center justify-center"
+                  className="block w-full py-2 px-4 bg-black hover:bg-white hover:text-black border border-black text-white text-center rounded-md transition-colors flex items-center justify-center"
                 >
                   <ExternalLink className="mr-2 w-4 h-4" />
                   Register Now

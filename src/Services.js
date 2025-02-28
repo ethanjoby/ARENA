@@ -166,22 +166,23 @@ const CollegeCounselingServices = () => {
           
         ))}
       </div>
-      <div className="mb-12 mt-12 text-center flex justify-center gap-4">
+      <div className=" mt-12 text-center flex justify-center gap-4">
   <a 
     href={consultationLink}
     target="_blank"
     rel="noopener noreferrer"
-    className="bg-black text-white px-8 py-3 rounded-lg font-bold hover:bg-gray-800 transition-colors duration-300 shadow-lg inline-block"
+    className="w-1/2 bg-black text-white px-8 py-3 rounded-lg font-bold border border-black hover:bg-white hover:text-black transition-colors duration-300 shadow-lg text-center"
   >
     Schedule a Free Consultation
   </a>
   <a 
     href="/bootcamp"
-    className="bg-black text-white px-8 py-3 rounded-lg font-bold hover:bg-gray-800 transition-colors duration-300 shadow-lg inline-block"
+    className="w-1/2 bg-black text-white px-8 py-3 rounded-lg font-bold border border-black hover:bg-white hover:text-black transition-colors duration-300 shadow-lg text-center"
   >
     Learn about SAT/ACT/AP Bootcamps
   </a>
 </div>
+
       
     </section>
   );

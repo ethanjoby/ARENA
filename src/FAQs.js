@@ -105,7 +105,7 @@ const FAQs = () => {
               onClick={() => setSelectedCategory(category)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all
                 ${selectedCategory === category
-                  ? 'bg-blue-500 text-white'
+                  ? 'bg-black text-white'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                 }`}
             >
