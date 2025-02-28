@@ -13,15 +13,27 @@ const scrollToSection = (sectionId) => {
 const HeroSection = () => {
   const navigate = useNavigate();
   const [showNotification, setShowNotification] = useState(false);
+  const [showCloseButton, setShowCloseButton] = useState(false);
 
   // Show notification after a short delay for better user experience
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const notificationTimer = setTimeout(() => {
       setShowNotification(true);
     }, 1500);
 
-    return () => clearTimeout(timer);
+    return () => clearTimeout(notificationTimer);
   }, []);
+
+  // Show close button after 5 seconds
+  useEffect(() => {
+    if (showNotification) {
+      const closeButtonTimer = setTimeout(() => {
+        setShowCloseButton(true);
+      }, 5000);
+
+      return () => clearTimeout(closeButtonTimer);
+    }
+  }, [showNotification]);
 
   const [hoverEffects, setHoverEffects] = useState({
     register: { x: 0, y: 0, size: 20, opacity: 0 },
@@ -54,7 +66,9 @@ const HeroSection = () => {
   };
 
   const closeNotification = () => {
-    setShowNotification(false);
+    if (showCloseButton) {
+      setShowNotification(false);
+    }
   };
 
   return (
@@ -64,18 +78,21 @@ const HeroSection = () => {
         <div className="fixed bottom-4 right-4 z-50 w-64 md:w-80 bg-white shadow-lg rounded-lg overflow-hidden transition-all duration-300 transform translate-x-0 opacity-100">
           <div className="h-1 bg-gradient-to-r from-black via-gray-100 to-gray-400"></div>
           <div className="p-4">
-          <div className="flex justify-between items-start">
-        <div className="flex">
-          <span className="text-lg mr-2">🚀</span>
-          <h3 className="font-bold text-gray-800">New Bootcamps!</h3>
-        </div>
-      </div>
+            <div className="flex justify-between items-center">
+              <div className="flex">
+                <span className="text-lg mr-2">🚀</span>
+                <h3 className="font-bold text-gray-800">New Bootcamps!</h3>
+              </div>
+              {showCloseButton && (
+                <button onClick={closeNotification} className="text-gray-500 hover:text-black">✖</button>
+              )}
+            </div>
             <p className="mt-2 text-sm text-gray-600 text-left">
               We're now offering SAT/ACT and AP Bootcamps to help you excel!
             </p>
             <Link
               to="/bootcamp"
-              className="block text-left mt-3 text-sm font-medium text-blue-600 hover:text-blue-800 text-left" 
+              className="block text-left mt-3 text-sm font-medium text-blue-600 hover:text-blue-800 text-left"
             >
               Learn More →
             </Link>
@@ -112,13 +129,13 @@ const HeroSection = () => {
           </button>
         </nav>
         <Link
-  to="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1dNqQ-a8w_pPG0V-0I7Goj3SsWO0qM23ORt4XRrbTf1MLcUQLL_V8vVpKJiLHwODmkN69BoZYW"
-  target = "_blank"
-  className="relative inline-flex items-center gap-2 rounded-full border border-black px-8 py-3 font-medium transition-all duration-300 overflow-hidden"
-  onMouseMove={(e) => handleMouseMove(e, "register")}
-  onMouseEnter={() => handleMouseEnter("register")}
-  onMouseLeave={() => handleMouseLeave("register")}
->
+          to="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1dNqQ-a8w_pPG0V-0I7Goj3SsWO0qM23ORt4XRrbTf1MLcUQLL_V8vVpKJiLHwODmkN69BoZYW"
+          target="_blank"
+          className="relative inline-flex items-center gap-2 rounded-full border border-black px-8 py-3 font-medium transition-all duration-300 overflow-hidden"
+          onMouseMove={(e) => handleMouseMove(e, "register")}
+          onMouseEnter={() => handleMouseEnter("register")}
+          onMouseLeave={() => handleMouseLeave("register")}
+        >
           <div
             style={{
               position: "absolute",

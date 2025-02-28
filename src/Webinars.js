@@ -133,7 +133,7 @@ const Webinars = () => {
   };
 
   return (
-    <div className="max-w-8xl mx-auto px-4 py-16 bg-white">
+    <div className="max-w-6xl mx-auto px-4 py-16 bg-white">
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-gray-800 mb-4">
           Free Webinars for Parents & Students
