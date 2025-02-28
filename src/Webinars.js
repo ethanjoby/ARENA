@@ -5,39 +5,39 @@ import { motion, AnimatePresence } from "framer-motion";
 const Webinars = () => {
     const webinarData = [
         {
-          date: "Mar 3, 2025",
+          date: "Mar 6, 2025",
           time: "6:30 PM",
           title: "College Decision Day: Insights from Foothill Seniors",
           description: "Current Foothill seniors share their college application journeys and decision-making processes. Get firsthand advice on navigating acceptances, comparing financial aid packages, and making your final choice.",
           category: "Student Experiences",
-          registration: "https://zoom.us/webinar/register/WN_newexample1"
+          registration: "https://calendar.app.google/Ao5bqsR3VWJ3yacH6"
         },
         {
-          date: "Mar 10, 2025",
+          date: "Mar 13, 2025",
           time: "6:30 PM",
           title: "Balancing AP Courses: Foothill Student Success Stories",
           description: "Hear directly from Foothill seniors who have successfully managed rigorous AP course loads while maintaining extracurriculars and mental health. Learn time management strategies that actually work.",
           category: "Academic Success",
-          registration: "https://zoom.us/webinar/register/WN_newexample2"
+          registration: "https://calendar.app.google/W7nyfs5W4AWDis7LA"
         },
         {
-          date: "Mar 17, 2025",
+          date: "Mar 20, 2025",
           time: "6:30 PM",
           title: "Beyond Test Scores: Building a Well-Rounded College Application",
           description: "Foothill seniors and counselors discuss how to develop a compelling personal profile that showcases your unique strengths beyond academics. Learn what actually impressed admission officers at top colleges.",
           category: "College Planning",
-          registration: "https://zoom.us/webinar/register/WN_newexample3"
+          registration: "https://calendar.app.google/94AR9pWmqru76jCE7"
         },
         {
-          date: "Mar 24, 2025",
+          date: "Mar 27, 2025",
           time: "6:30 PM",
           title: "Navigating STEM Pathways: From Foothill to Top Research Universities",
           description: "Meet Foothill seniors who've secured spots in competitive STEM programs. Learn about research opportunities, coursework preparation, and extracurriculars that helped them stand out to selective universities.",
           category: "Career Pathways",
-          registration: "https://zoom.us/webinar/register/WN_newexample4"
+          registration: "https://calendar.app.google/GGr6PrtNTfo2zxPe6"
         },
         {
-          date: "Mar 31, 2025",
+          date: "Apr 3, 2025",
           time: "6:30 PM",
           title: "Finding Your Fit: Community College, Gap Year or Four-Year University?",
           description: "Foothill seniors discuss their different post-graduation paths and the decision-making process behind each choice. Get honest perspectives on the benefits of various educational routes.",
@@ -45,7 +45,7 @@ const Webinars = () => {
           registration: "https://zoom.us/webinar/register/WN_newexample5"
         },
         {
-          date: "Apr 7, 2025",
+          date: "Apr 10, 2025",
           time: "6:30 PM",
           title: "Scholarship Success: How Foothill Students Secured Financial Aid",
           description: "Learn winning strategies from Foothill seniors who earned substantial scholarships. Get insider tips on local opportunities, essay approaches, and application techniques that helped them fund their education.",
@@ -53,7 +53,7 @@ const Webinars = () => {
           registration: "https://zoom.us/webinar/register/WN_newexample6"
         },
         {
-          date: "Apr 14, 2025",
+          date: "Apr 17, 2025",
           time: "6:30 PM",
           title: "The Arts & Humanities Path: Portfolio Development and Audition Prep",
           description: "Foothill seniors headed to arts programs share their experiences preparing portfolios, auditions, and supplemental materials. Learn what creative admissions committees are really looking for.",
@@ -61,7 +61,7 @@ const Webinars = () => {
           registration: "https://zoom.us/webinar/register/WN_newexample7"
         },
         {
-          date: "Apr 21, 2025",
+          date: "Apr 24, 2025",
           time: "6:30 PM",
           title: "Summer Before College: Essential Preparations with Foothill Seniors",
           description: "Foothill Seniors return to share what they wish they'd known before starting college. Get practical advice on everything from roommate relationships to course selection and campus resources.",
@@ -69,7 +69,7 @@ const Webinars = () => {
           registration: "https://zoom.us/webinar/register/WN_newexample8"
         },
         {
-          date: "Apr 28, 2025",
+          date: "May 1, 2025",
           time: "6:30 PM",
           title: "Mental Health & Academic Success: Balancing the College Prep Journey",
           description: "Foothill seniors and counselors discuss practical strategies for maintaining wellness while pursuing academic excellence. Learn techniques for stress management during the college application process.",
@@ -77,7 +77,7 @@ const Webinars = () => {
           registration: "https://zoom.us/webinar/register/WN_newexample9"
         },
         {
-          date: "May 5, 2025",
+          date: "May 8, 2025",
           time: "6:30 PM",
           title: "Authentic Essays That Worked: Foothill Seniors Share Their Stories",
           description: "Hear directly from Foothill students who crafted compelling personal statements that helped them gain admission to selective colleges. Learn about their writing process and revision strategies.",
@@ -85,7 +85,7 @@ const Webinars = () => {
           registration: "https://zoom.us/webinar/register/WN_newexample10"
         },
         {
-          date: "May 12, 2025",
+          date: "May 15, 2025",
           time: "6:30 PM",
           title: "First-Generation College Students: Navigating the Unknown",
           description: "First-gen Foothill seniors share their unique challenges and triumphs throughout the college preparation process. Learn about resources and support systems that helped them succeed.",
@@ -93,7 +93,7 @@ const Webinars = () => {
           registration: "https://zoom.us/webinar/register/WN_newexample11"
         },
         {
-          date: "May 19, 2025",
+          date: "May 22, 2025",
           time: "6:30 PM",
           title: "Internships & Research: How Foothill Students Secured Valuable Experience",
           description: "Learn how current Foothill seniors found and secured competitive internships and research positions that strengthened their college applications and career preparation.",
