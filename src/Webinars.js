@@ -39,8 +39,8 @@ const Webinars = () => {
         {
           date: "Apr 3, 2025",
           time: "6:30 PM",
-          title: "Finding Your Fit: Community College, Gap Year or Four-Year University?",
-          description: "Foothill seniors discuss their different post-graduation paths and the decision-making process behind each choice. Get honest perspectives on the benefits of various educational routes.",
+          title: "Finding Physics at Foothill difficult? What's next?",
+          description: "Struggling with Physics at Foothill, especially with Mr. Hoch’s tough teaching style? Join us to explore practical strategies and next steps—you don’t have to just sit around!",
           category: "School Options",
           registration: "https://zoom.us/webinar/register/WN_newexample5"
         },
