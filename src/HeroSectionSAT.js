@@ -45,7 +45,7 @@ export default function HeroSectionSAT() {
             <div className="flex-1 flex justify-center items-center">
               <img 
                 src="https://www.drivecms.com/uploads/mcelroytutoring.com/Screen%20Shot%202022-04-08%20at%209.37.25%20AM.png" 
-                alt="SAT & AP Dashboard Preview" 
+                alt="SAT/ACT & AP Dashboard Preview" 
                 className="w-full h-full max-h-[500px] object-cover rounded-2xl shadow-lg"
               />
             </div>
