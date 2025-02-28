@@ -61,22 +61,28 @@ const HeroSection = () => {
     <section className="hero-section bg-white text-black py-24 flex flex-col items-center justify-center">
       {/* Bootcamp Notification Popup */}
       {showNotification && (
-        <div className="fixed top-20 right-4 z-50 w-64 md:w-80 bg-white shadow-lg rounded-lg overflow-hidden transition-all duration-300 transform translate-x-0 opacity-100">
-          <div className="h-1 bg-gradient-to-r from-blue-500 to-purple-500"></div>
+        <div className="fixed bottom-4 right-4 z-50 w-64 md:w-80 bg-white shadow-lg rounded-lg overflow-hidden transition-all duration-300 transform translate-x-0 opacity-100">
+          <div className="h-1 bg-gradient-to-r from-black via-gray-100 to-gray-400"></div>
           <div className="p-4">
-            <div className="flex justify-between items-start">
-              <div className="flex items-center">
-                <span className="text-lg mr-2">🚀</span>
-                <h3 className="font-bold text-gray-800">New Bootcamps!</h3>
-              </div>
-              
-            </div>
-            <p className="mt-2 text-sm text-gray-600">
+          <div className="flex justify-between items-start">
+        <div className="flex">
+          <span className="text-lg mr-2">🚀</span>
+          <h3 className="font-bold text-gray-800">New Bootcamps!</h3>
+        </div>
+        {/* Close button */}
+        <button
+          onClick={() => setShowNotification(false)}
+          className="text-gray-500 hover:text-gray-800 text-lg font-bold focus:outline-none"
+        >
+          ×
+        </button>
+      </div>
+            <p className="mt-2 text-sm text-gray-600 text-left">
               We're now offering SAT/ACT and AP Bootcamps to help you excel!
             </p>
             <Link
               to="/bootcamp"
-              className="mt-3 inline-block text-sm font-medium text-blue-600 hover:text-blue-800"
+              className="block text-left mt-3 text-sm font-medium text-blue-600 hover:text-blue-800 text-left" 
             >
               Learn More →
             </Link>

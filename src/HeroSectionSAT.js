@@ -5,8 +5,8 @@ export default function HeroSectionSAT() {
             
             {/* Left Content - Flexible width */}
             <div className="flex-1 flex flex-col justify-center">
-              <h1 className="text-5xl font-bold text-gray-900 leading-tight">
-                Ace the <span className="text-blue-600">SAT & AP Exams</span> with Confidence
+              <h1 className="text-5xl font-bold text-gray-300 leading-tight">
+                Ace the <span className="text-black">SAT & AP Exams</span> with Confidence
               </h1>
               <p className="text-gray-600 mt-4 text-lg">
                 Join our top-rated SAT & AP bootcamp to master test strategies, boost your scores, and get expert guidance for your success.
@@ -29,7 +29,7 @@ export default function HeroSectionSAT() {
                   <p className="text-gray-600">Instructors Nationwide</p>
                 </div>
     
-                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300">
+                <button className="bg-black hover:bg-white hover:text-black border border-black text-white px-4 py-2 rounded-lg  transition duration-300">
                   Start Your Journey
                 </button>
               </div>

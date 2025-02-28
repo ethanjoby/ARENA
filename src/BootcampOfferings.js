@@ -316,7 +316,7 @@ useEffect(() => {
   };
 
   return (
-    <div className="bg-gray-50 text-gray-900 font-sans">
+    <div className="bg-white text-gray-900 font-sans">
     
     <NAVBAR2/>
     <HeroSectionSAT />
@@ -329,7 +329,7 @@ useEffect(() => {
       key={index}
       className={`py-4 px-4 md:px-6 text-lg font-semibold relative ${
         activeTab === index
-          ? "text-blue-700"
+          ? "text-black"
           : "text-gray-500 hover:text-gray-700"
       }`}
       onClick={() => setActiveTab(index)}
@@ -337,7 +337,7 @@ useEffect(() => {
       <span className="mr-2">{offering.icon}</span>
       {offering.title}
       {activeTab === index && (
-        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-700"></div>
+        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-black"></div>
       )}
     </button>
   ))}
@@ -345,7 +345,7 @@ useEffect(() => {
 
 
         {/* Bootcamp Offerings */}
-        <div className="space-y-24">
+        <div className="">
           {bootcampOfferings.map((offering, offeringIndex) => (
             <div 
               key={offeringIndex} 
@@ -355,11 +355,11 @@ useEffect(() => {
             >
               <div className="bg-white shadow-xl rounded-xl overflow-hidden border border-gray-100">
                 {/* Header */}
-                <div className="bg-gradient-to-r from-blue-700 to-indigo-800 text-white px-8 py-8 relative flex flex-col items-center text-center">
+                <div className="bg-gradient-to-r from-black to-gray-500 text-white px-8 py-8 relative flex flex-col items-center text-center">
   <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -mr-32 -mt-32"></div>
   <div className="relative">
     <h2 className="text-3xl font-bold mb-3">{offering.title}</h2>
-    <p className="text-blue-100 text-lg max-w-3xl">{offering.description}</p>
+    <p className="text-gray-100 text-lg max-w-3xl">{offering.description}</p>
   </div>
 </div>
 
@@ -372,14 +372,14 @@ useEffect(() => {
         key={tabIndex}
         className={`py-6 px-8 w-full text-center font-medium text-lg relative focus:outline-none ${
           activeTabs[offeringIndex] === tabIndex
-            ? "text-blue-700 bg-white"
+            ? "text-black bg-white"
             : "text-gray-500 hover:text-gray-700 bg-gray-50"
         }`}
         onClick={() => setActiveTabFor(offeringIndex, tabIndex)}
       >
         {tab}
         {activeTabs[offeringIndex] === tabIndex && (
-          <div className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-700"></div>
+          <div className="absolute bottom-0 left-0 w-full h-0.5 bg-black"></div>
         )}
       </button>
     ))}
@@ -393,17 +393,17 @@ useEffect(() => {
                   <div className="p-8">
                     <div className="mb-10">
                       <h3 className="text-xl font-semibold mb-6 flex items-center">
-                        <svg className="w-5 h-5 mr-2 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg className="w-5 h-5 mr-2 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                         </svg>
                         Program Highlights
                       </h3>
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
   {offering.highlights.map((highlight, i) => (
-    <div key={i} className="bg-blue-50 p-6 rounded-lg shadow-sm">
+    <div key={i} className="bg-gray-100 p-6 rounded-lg shadow-sm">
       <div className="flex items-center mb-4">
-        <div className="h-2 w-8 bg-blue-500 rounded-full mr-2"></div>
-        <div className="h-2 w-2 bg-blue-700 rounded-full"></div>
+        <div className="h-2 w-8 bg-gray-700 rounded-full mr-2"></div>
+        <div className="h-2 w-2 bg-black rounded-full"></div>
       </div>
       <p className="text-gray-700">{highlight}</p>
     </div>
@@ -412,7 +412,7 @@ useEffect(() => {
                     </div>
                     
                     <div className="p-6 bg-gray-50 rounded-lg border border-gray-100">
-                      <h3 className="text-lg font-semibold mb-4 text-blue-700">Why Choose This Program</h3>
+                      <h3 className="text-lg font-semibold mb-4 text-black">Why Choose This Program</h3>
                       <p className="text-gray-700 mb-4">
                         Our bootcamps are designed with precision to maximize your potential and ensure exceptional results.
                         With industry-leading methodologies and exceptional instructors, we've established a proven track record 
@@ -420,28 +420,28 @@ useEffect(() => {
                       </p>
                       <div className="grid md:grid-cols-3 gap-4 mt-6">
                         <div className="flex items-center">
-                          <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
-                            <svg className="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center mr-3">
+                            <svg className="w-5 h-5 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                             </svg>
                           </div>
-                          <span className="text-gray-700">Exceptional results</span>
+                          <span className="text-black">Exceptional results</span>
                         </div>
                         <div className="flex items-center">
-                          <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
-                            <svg className="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center mr-3">
+                            <svg className="w-5 h-5 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                           </div>
-                          <span className="text-gray-700">Efficient preparation</span>
+                          <span className="text-black">Efficient preparation</span>
                         </div>
                         <div className="flex items-center">
-                          <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
-                            <svg className="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center mr-3">
+                            <svg className="w-5 h-5 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                             </svg>
                           </div>
-                          <span className="text-gray-700">Strategic approach</span>
+                          <span className="text-black">Strategic approach</span>
                         </div>
                       </div>
                     </div>
@@ -455,12 +455,12 @@ useEffect(() => {
       {offering.details.map((detail, i) => (
         <div key={i} className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
           <div className="flex items-center mb-4">
-            <div className="bg-blue-100 text-blue-700 rounded-md px-3 py-1 text-sm font-semibold">{detail.heading}</div>
+            <div className="bg-gray-300 text-black rounded-md px-3 py-1 text-sm font-semibold">{detail.heading}</div>
           </div>
           <ul className="space-y-4">
             {detail.points.map((point, j) => (
-              <li key={j} className="flex items-start bg-gray-50 p-3 rounded border-l-4 border-blue-500">
-                <span className="text-blue-700 mt-0.5 mr-2">→</span>
+              <li key={j} className="flex items-start bg-gray-50 p-3 rounded border-l-4 border-gray-500">
+                <span className="text-gray-700 mt-0.5 mr-2">→</span>
                 <span className="text-gray-700">{point}</span>
               </li>
             ))}
@@ -469,9 +469,9 @@ useEffect(() => {
       ))}
     </div>
     
-    <div className="mt-8 bg-indigo-50 p-6 rounded-lg border border-indigo-100">
-      <h3 className="text-lg font-semibold mb-4 text-indigo-700">Comprehensive Methodology</h3>
-      <p className="text-gray-700">
+    <div className="mt-8 bg-gray-100 p-6 rounded-lg border border-gray-100">
+      <h3 className="text-lg font-semibold mb-4 text-black">Comprehensive Methodology</h3>
+      <p className="text-gray-500">
         Our curriculum is meticulously designed to address all aspects of test preparation. We combine content mastery, 
         strategic approaches, and extensive practice to ensure comprehensive preparation. Each component of our program 
         works in concert to maximize your potential and deliver exceptional results.
@@ -486,10 +486,10 @@ useEffect(() => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                       {offering.sessions.map((session, i) => (
                         <div key={i} className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">                        
-                          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 py-3 px-4 border-b border-gray-200">
+                          <div className="bg-gray-100 py-3 px-4 border-b border-gray-200">
                             <div className="flex justify-between items-center">
-                              <h4 className="text-lg font-bold text-blue-800">{session.name}</h4>
-                              <div className="bg-blue-700 text-white text-xs py-1 px-2 rounded-full">
+                              <h4 className="text-lg font-bold text-black">{session.name}</h4>
+                              <div className="bg-black text-white text-xs py-1 px-2 rounded-full">
                                 {session.popularity}
                               </div>
                             </div>
@@ -498,19 +498,19 @@ useEffect(() => {
                           <div className="p-5">
                             <div className="space-y-3 mb-6">
                               <p className="flex items-center text-gray-700 text-sm">
-                                <svg className="w-4 h-4 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg className="w-4 h-4 mr-2 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                 </svg>
                                 {session.dates}
                               </p>
                               <p className="flex items-center text-gray-700 text-sm">
-                                <svg className="w-4 h-4 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg className="w-4 h-4 mr-2 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                                 {session.schedule}
                               </p>
                               <p className="flex items-center text-gray-700 text-sm">
-                                <svg className="w-4 h-4 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg className="w-4 h-4 mr-2 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                                 </svg>
                                 {session.spaces}
@@ -520,9 +520,9 @@ useEffect(() => {
                             <div className="pt-4 border-t border-gray-100">
                 
               <div className="flex justify-between items-center">
-                <span className="text-xl font-bold text-blue-700">{session.price}</span>
+                <span className="text-xl font-bold text-black">{session.price}</span>
                 <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1dNqQ-a8w_pPG0V-0I7Goj3SsWO0qM23ORt4XRrbTf1MLcUQLL_V8vVpKJiLHwODmkN69BoZYW" target="_blank" rel="noopener noreferrer">
-      <button className="bg-blue-700 hover:bg-blue-800 text-white font-medium py-2 px-4 rounded-md transition-colors duration-200 text-sm shadow-md">
+      <button className="bg-black hover:bg-white hover:text-black border border-black text-white font-medium py-2 px-4 rounded-md transition-colors duration-200 text-sm shadow-md">
         Reserve Seat
       </button>
     </a>
@@ -561,13 +561,13 @@ useEffect(() => {
   <div className="max-w-5xl mx-auto px-4 sm:px-6">
     <div className="text-center mb-12">
       <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Student Success Stories</h2>
-      <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto"></div>
+      <div className="w-24 h-1 bg-gradient-to-r from-black via-gray-100 to-gray-400 mx-auto"></div>
       <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">See how our students transformed their careers and achieved their goals.</p>
     </div>
     
     <div className="relative bg-white rounded-2xl shadow-xl overflow-hidden">
       {/* Top Gradient Bar */}
-      <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600"></div>
+      <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-black via-gray-100 to-gray-400"></div>
       
       {/* Card Content with Decorative Elements */}
       <div className="relative p-8 md:p-12">
@@ -606,7 +606,7 @@ useEffect(() => {
                     ))}
                   </div>
                   {testimonial.score && (
-                    <span className="text-sm font-medium text-blue-600">{testimonial.score}</span>
+                    <span className="text-sm font-medium text-black">{testimonial.score}</span>
                   )}
                 </div>
                 
@@ -615,7 +615,7 @@ useEffect(() => {
                 </p>
                 
                 <div className="flex items-center">
-                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-xl font-bold text-white shadow-md">
+                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-black to-gray-400 flex items-center justify-center text-xl font-bold text-white shadow-md">
                     {testimonial.initials}
                   </div>
                   <div className="text-left ml-4">
@@ -632,7 +632,7 @@ useEffect(() => {
         <div className="absolute inset-y-0 left-0 right-0 flex justify-between items-center px-4 md:px-2">
           <button 
             onClick={prevTestimonial}
-            className="bg-white w-10 h-10 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-x-1 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 flex items-center justify-center text-blue-600 hover:text-blue-700"
+            className="bg-white w-10 h-10 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-x-1 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 flex items-center justify-center text-black hover:text-black"
             aria-label="Previous testimonial"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -641,7 +641,7 @@ useEffect(() => {
           </button>
           <button 
             onClick={nextTestimonial}
-            className="bg-white w-10 h-10 rounded-full shadow-lg hover:shadow-xl transform hover:translate-x-1 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 flex items-center justify-center text-blue-600 hover:text-blue-700"
+            className="bg-white w-10 h-10 rounded-full shadow-lg hover:shadow-xl transform hover:translate-x-1 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 flex items-center justify-center text-black hover:text-black"
             aria-label="Next testimonial"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -658,7 +658,7 @@ useEffect(() => {
             key={index}
             className={`transition-all duration-300 focus:outline-none ${
               activeTestimonial === index 
-                ? "w-8 h-2 bg-blue-600 rounded-full" 
+                ? "w-8 h-2 bg-gray-700 rounded-full" 
                 : "w-2 h-2 bg-gray-300 rounded-full hover:bg-gray-400"
             }`}
             onClick={() => setActiveTestimonial(index)}
@@ -684,12 +684,12 @@ useEffect(() => {
           onClick={() => toggleFaq(index)}
         >
           <div className="flex justify-between items-center">
-            <h3 className={`font-semibold text-base md:text-lg ${activeFaq === index ? "text-blue-700" : "text-gray-700"}`}>
+            <h3 className={`font-semibold text-base md:text-lg ${activeFaq === index ? "text-black" : "text-gray-600"}`}>
               {faq.question}
             </h3>
             <svg
               className={`w-5 h-5 flex-shrink-0 ml-2 transition-transform duration-300 ${
-                activeFaq === index ? "transform rotate-180 text-blue-700" : "text-gray-500"
+                activeFaq === index ? "transform rotate-180 text-black" : "text-gray-500"
               }`}
               fill="none"
               viewBox="0 0 24 24"
@@ -705,7 +705,7 @@ useEffect(() => {
           }`}
         >
           <div className="px-6 pb-5 text-gray-600">
-            <div className="bg-gray-50 p-4 rounded-lg border-l-4 border-blue-500">
+            <div className="bg-gray-50 p-4 rounded-lg border-l-4 border-black">
               {faq.answer}
             </div>
           </div>
@@ -716,7 +716,7 @@ useEffect(() => {
 </div>
         
         {/* Call to Action */}
-        <div className="mt-20 mb-12 bg-gradient-to-r from-blue-700 to-indigo-800 rounded-2xl shadow-xl overflow-hidden">
+        <div className="mt-20 mb-12 bg-gradient-to-r from-black  to-gray-600 rounded-2xl shadow-xl overflow-hidden">
           <div className="px-8 py-12 md:py-16 relative">
             <div className="absolute inset-0 opacity-10">
               <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full -mr-48 -mt-48"></div>
@@ -725,13 +725,13 @@ useEffect(() => {
             
             <div className="relative z-10 max-w-3xl mx-auto text-center">
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Elevate Your Academic Performance?</h2>
-              <p className="text-blue-100 text-lg mb-8">
+              <p className="text-gray-100 text-lg mb-8">
                 Join our transformative bootcamps and experience the difference personalized instruction 
                 and proven strategies can make in your academic journey.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1dNqQ-a8w_pPG0V-0I7Goj3SsWO0qM23ORt4XRrbTf1MLcUQLL_V8vVpKJiLHwODmkN69BoZYW" target="_blank" rel="noopener noreferrer">
-  <button className="bg-white text-blue-700 hover:bg-blue-50 font-semibold py-3 px-8 rounded-md transition-colors duration-200 shadow-lg">
+  <button className="bg-white text-black hover:text-gray-700 font-semibold py-3 px-8 rounded-md transition-colors duration-200 shadow-lg">
     Schedule a Consultation
   </button>
 </a>
