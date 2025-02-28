@@ -272,7 +272,7 @@ const testimonials = [
 const faqData = [
   {
     question: "How are your bootcamps different from other test prep programs?",
-    answer: "Our bootcamps feature small group sizes (maximum 8 students), personalized study plans, and instructors who scored in the top 1% on the tests they teach. We focus on proven strategies and techniques rather than generic content review, resulting in significantly higher score improvements compared to traditional programs."
+    answer: "Our bootcamps feature small group sizes (maximum 8 students), personalized study plans, and instructors who scored in the top 0.01% on the tests they teach. We focus on proven strategies and techniques rather than generic content review, resulting in significantly higher score improvements compared to traditional programs."
   },
   {
     question: "What if I can't attend all sessions?",
