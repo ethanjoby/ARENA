@@ -9,6 +9,7 @@ import AboutUs from './AboutUs';
 import Portal from './Portal';
 import Webinars from './Webinars';
 import BootcampOfferings from './BootcampOfferings';
+import Checkout from './Checkout';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/portal" element={<Portal />} />
         <Route path="/bootcamp" element={<BootcampOfferings />} />
         <Route path="/webinars" element={<Webinars />} />
+        <Route path="/checkout" element={<Checkout />} />
       </Routes>
     </Router>
   );

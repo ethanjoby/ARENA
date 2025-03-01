@@ -191,7 +191,24 @@ const statistics = [
   { label: "Average Score Improvement", target: 170, suffix: " points" },
   { label: "Student Satisfaction", target: 98, suffix: "%" }
 ];
-
+const handleCheckout = (offeringTitle, sessionName, price) => {
+  // Remove $ and convert to number
+  const priceValue = parseFloat(price.replace('$', ''));
+  
+  // Create checkout object
+  const checkoutData = {
+    program: offeringTitle,
+    session: sessionName,
+    price: priceValue,
+    date: new Date().toISOString()
+  };
+  
+  // Save checkout data to localStorage
+  localStorage.setItem('checkout_data', JSON.stringify(checkoutData));
+  
+  // Redirect to checkout page
+  window.location.href = 'https://www.paypal.com/ncp/payment/7MJN5YEC3MQ6G';
+};
 // Testimonials
 const testimonials = [
   {
@@ -596,17 +613,30 @@ useEffect(() => {
                             
                             <div className="pt-4 border-t border-gray-100">
                 
-                            <div className="flex items-center justify-between w-full gap-4">
-  <span className="text-lg font-bold text-black">{session.price}</span>
-  <a 
-    href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1dNqQ-a8w_pPG0V-0I7Goj3SsWO0qM23ORt4XRrbTf1MLcUQLL_V8vVpKJiLHwODmkN69BoZYW" 
-    target="_blank" 
-    rel="noopener noreferrer"
-  >
-    <button className="bg-black text-white text-xs px-3 py-1.5 rounded-md border border-black transition duration-200 hover:bg-white hover:text-black shadow-sm">
-      Book Free Info Session
-    </button>
-  </a>
+                            <div className="flex flex-col gap-3 pt-2">
+  <div className="flex items-center justify-between w-full">
+    <span className="text-lg font-bold text-black">{session.price}</span>
+    <span className="bg-gray-100 text-black text-xs px-2 py-1 rounded-sm">
+      16 hours total
+    </span>
+  </div>
+  
+  <div className="grid grid-cols-2 gap-2 mt-2">
+  <button 
+  onClick={() => handleCheckout(offering.title, session.name, session.price)}
+  className="bg-black text-white text-xs px-3 py-2 rounded-md border border-black transition duration-200 hover:bg-gray-800 text-center font-medium shadow-sm"
+>
+  Reserve Spot Now
+</button>
+    <a 
+      href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1dNqQ-a8w_pPG0V-0I7Goj3SsWO0qM23ORt4XRrbTf1MLcUQLL_V8vVpKJiLHwODmkN69BoZYW" 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className="bg-white text-black text-xs px-3 py-2 rounded-md border border-gray-300 transition duration-200 hover:bg-gray-50 text-center font-medium"
+    >
+      Free Consultation
+    </a>
+  </div>
 </div>
 
 
@@ -751,53 +781,7 @@ useEffect(() => {
       </div>
     </div>
   </div>
-</div>
-
-
-
-       {/* FAQ Section */}
-<div className="my-20">
-  <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
-  
-  <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
-    {faqData.map((faq, index) => (
-      <div key={index} className="border-b border-gray-100 last:border-b-0">
-        <button
-          className="w-full px-6 py-5 text-left focus:outline-none"
-          onClick={() => toggleFaq(index)}
-        >
-          <div className="flex justify-between items-center">
-            <h3 className={`font-semibold text-base md:text-lg ${activeFaq === index ? "text-black" : "text-gray-600"}`}>
-              {faq.question}
-            </h3>
-            <svg
-              className={`w-5 h-5 flex-shrink-0 ml-2 transition-transform duration-300 ${
-                activeFaq === index ? "transform rotate-180 text-black" : "text-gray-500"
-              }`}
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
-        </button>
-        <div
-          className={`transition-all duration-300 overflow-hidden ${
-            activeFaq === index ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-          }`}
-        >
-          <div className="px-6 pb-5 text-gray-600">
-            <div className="bg-gray-50 p-4 rounded-lg border-l-4 border-black">
-              {faq.answer}
-            </div>
-          </div>
-        </div>
-      </div>
-    ))}
-  </div>
-</div>
-        
+</div>        
         {/* Call to Action */}
         <div className="mt-20 mb-12 bg-gradient-to-r from-black  to-gray-600 rounded-2xl shadow-xl overflow-hidden">
           <div className="px-8 py-12 md:py-16 relative">
@@ -812,17 +796,38 @@ useEffect(() => {
                 Join our transformative bootcamps and experience the difference personalized instruction 
                 and proven strategies can make in your academic journey.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1dNqQ-a8w_pPG0V-0I7Goj3SsWO0qM23ORt4XRrbTf1MLcUQLL_V8vVpKJiLHwODmkN69BoZYW" target="_blank" rel="noopener noreferrer">
-  <button className="bg-white text-black hover:text-gray-700 font-semibold py-3 px-8 rounded-md transition-colors duration-200 shadow-lg">
-    Schedule a Consultation
+              <div className="flex flex-col max-w-3xl mx-auto">
+  <div className="grid md:grid-cols-2 gap-6 mb-8">
+    <div className="bg-white bg-opacity-10 p-6 rounded-lg border border-white border-opacity-20 text-left">
+      <h3 className="text-white text-xl font-semibold mb-3">Ready to Start?</h3>
+      <p className="text-gray-100 mb-4">Secure your spot now with our easy enrollment process. Limited seats available!</p>
+      <a href="#bootcamp-offerings" className="block w-full">
+  <button className="w-full bg-white text-black hover:bg-gray-100 font-semibold py-3 px-6 rounded-md transition-colors duration-200 shadow-lg flex items-center justify-center">
+    <span>Enroll Now</span>
+    <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+    </svg>
   </button>
 </a>
-<a href="/"  rel="noopener noreferrer">
-  <button className="bg-transparent text-white border-2 border-white hover:bg-white hover:bg-opacity-10 font-semibold py-3 px-8 rounded-md transition-colors duration-200">
-    View All Programs
-  </button>
-</a>
+    </div>
+    
+    <div className="bg-white bg-opacity-10 p-6 rounded-lg border border-white border-opacity-20 text-left">
+      <h3 className="text-white text-xl font-semibold mb-3">Have Questions?</h3>
+      <p className="text-gray-100 mb-4">Book a free consultation with our experts to learn more about our programs.</p>
+      <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1dNqQ-a8w_pPG0V-0I7Goj3SsWO0qM23ORt4XRrbTf1MLcUQLL_V8vVpKJiLHwODmkN69BoZYW" target="_blank" rel="noopener noreferrer" className="block w-full">
+        <button className="w-full bg-transparent text-white border-2 border-white hover:bg-white hover:bg-opacity-10 font-semibold py-3 px-6 rounded-md transition-colors duration-200 flex items-center justify-center">
+          <span>Free Consultation</span>
+          <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+        </button>
+      </a>
+    </div>
+  </div>
+  
+  <p className="text-sm text-gray-300 text-center">
+    100% satisfaction guarantee • Secure payment • Flexible scheduling options
+  </p>
 </div>
             </div>
           </div>
@@ -841,6 +846,17 @@ useEffect(() => {
        </div>
      </div>
    </footer>
+   {/* Floating Action Button */}
+<div className="fixed bottom-6 right-6 z-50 flex space-x-3">
+  <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1dNqQ-a8w_pPG0V-0I7Goj3SsWO0qM23ORt4XRrbTf1MLcUQLL_V8vVpKJiLHwODmkN69BoZYW" 
+     target="_blank" 
+     rel="noopener noreferrer"
+     className="bg-white text-black border border-gray-200 rounded-full shadow-lg p-4 transition-transform hover:scale-105">
+    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+    </svg>
+  </a>
+</div>
     </div>
   );
 };
