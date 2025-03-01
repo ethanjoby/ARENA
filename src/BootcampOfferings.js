@@ -232,7 +232,7 @@ const testimonials = [
     author: "James K.",
     role: "ACT Bootcamp Graduate",
     initials: "JK",
-    score: "36 ACT",
+    score: "35 ACT",
     rating: 5
   },
   {
@@ -499,10 +499,10 @@ useEffect(() => {
                     <div className="p-6 bg-gray-50 rounded-lg border border-gray-100">
                       <h3 className="text-lg font-semibold mb-4 text-black">Why Choose This Program</h3>
                       <p className="text-gray-700 mb-4">
-                        Our bootcamps are designed with precision to maximize your potential and ensure exceptional results.
-                        With industry-leading methodologies and exceptional instructors, we've established a proven track record 
-                        of helping students achieve remarkable score improvements and academic success.
-                      </p>
+  Join a community of successful students who have transformed their academic journey with our tailored bootcamps.
+  Our expert instructors and proven strategies ensure you achieve your highest potential. 
+  Sign up today and take the first step towards your success!
+</p>
                       <div className="grid md:grid-cols-3 gap-4 mt-6">
                         <div className="flex items-center">
                           <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center mr-3">
@@ -803,7 +803,7 @@ useEffect(() => {
       <p className="text-gray-100 mb-4">Secure your spot now with our easy enrollment process. Limited seats available!</p>
       <a href="#bootcamp-offerings" className="block w-full">
   <button className="w-full bg-white text-black hover:bg-gray-100 font-semibold py-3 px-6 rounded-md transition-colors duration-200 shadow-lg flex items-center justify-center">
-    <span>Enroll Now</span>
+  <span className="font-bold text-lg">Enroll Now</span>
     <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
     </svg>
