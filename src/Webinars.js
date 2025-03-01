@@ -141,12 +141,12 @@ const Webinars = () => {
               className="border border-gray-200 rounded-lg overflow-hidden bg-white hover:shadow-lg transition-all flex flex-col h-full"
             >
               <div className="p-6 flex-grow">
-                <div className="mb-4">
+                <div className="mb-4 text-center">
                   <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
                     {webinar.category}
                   </span>
                 </div>
-                <h3 className="text-xl font-semibold mb-3 text-gray-800">{webinar.title}</h3>
+                <h3 className="text-xl font-semibold mb-3 text-gray-800 text-center">{webinar.title}</h3>
                 <div className="flex items-center justify-center mb-4 text-gray-600">
                   <Calendar className="mr-2 w-4 h-4" />
                   <span className="mr-4">{webinar.date}</span>
