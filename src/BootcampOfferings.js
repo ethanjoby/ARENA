@@ -6,29 +6,29 @@ const bootcampOfferings = [
   {
     title: "SAT Intensive Bootcamp",
     icon: "📊",
-    description: "Our comprehensive 4-week SAT prep program is designed to maximize your score with targeted strategies and personalized coaching.",
+    description: "Crush the SAT with our last-minute intensive bootcamp! Designed for students who need a quick score boost, this program focuses on high-impact strategies and targeted practice to maximize your results in just 4 weeks.",
     highlights: [
-      "Small group sessions (max 8 students)",
-      "16 hours of focused instruction",
-      "Weekly practice tests with detailed analysis",
-      "Personalized study plans for every student"
+      "Small group sessions (max 8 students) for personalized attention",
+      "16 hours of focused, high-yield instruction",
+      "Weekly practice tests with detailed analysis to track progress",
+      "Targeted strategies for quick score improvement"
     ],
     details: [
       {
         heading: "Curriculum",
         points: [
-          "Critical Reading: Passage analysis & question patterns",
-          "Mathematics: Problem-solving approaches & content review",
-          "Writing & Language: Grammar rules & essay structure",
-          "Test-specific strategies & time management techniques"
+          "Critical Reading: Quick strategies for passage analysis & question patterns",
+          "Mathematics: Fast-track problem-solving approaches & content review",
+          "Writing & Language: Rapid grammar rules & essay structure techniques",
+          "Test-specific strategies & time management hacks"
         ]
       },
       {
         heading: "Results",
         points: [
-          "Average score improvement: 150+ points (SAT) / 4+ points (ACT)",
-          "93% of students exceed their target scores",
-          "Comprehensive materials included",
+          "Average score improvement: 150+ points (SAT) / 4+ points (ACT) in just 4 weeks!",
+          "93% of students exceed their target scores with our last-minute strategies",
+          "Comprehensive materials included for immediate use",
           "Guaranteed results or free follow-up sessions"
         ]
       }
@@ -41,7 +41,8 @@ const bootcampOfferings = [
         price: "$950",
         spaces: "Limited to 8 students per group",
         popularity: "High demand",
-        targetExam: "Targeting June 7th SAT Exam"  // Add this line
+        targetExam: "Targeting June 7th SAT Exam",
+        urgencyNote: "Last chance to boost your score before the June SAT!"
       },
       {
         name: "Fall Preparation",
@@ -50,7 +51,8 @@ const bootcampOfferings = [
         price: "$950",
         spaces: "Limited to 8 students per group",
         popularity: "Filling quickly",
-        targetExam: "Targeting August 23rd SAT Exam"  // Add this line
+        targetExam: "Targeting August 23rd SAT Exam",
+        urgencyNote: "Don't miss this final opportunity to prepare for the August SAT!"
       },
       {
         name: "Winter Preperation",
@@ -66,29 +68,29 @@ const bootcampOfferings = [
   {
     title: "ACT Intensive Bootcamp",
     icon: "📈",
-    description: "Our comprehensive 4-week ACT prep program is designed to maximize your score with targeted strategies and personalized coaching.",
+    description: "Ace the ACT with our last-minute crash course! This intensive 4-week program is perfect for students looking to quickly improve their scores with focused, high-impact strategies and personalized coaching.",
     highlights: [
-      "Small group sessions (max 8 students)",
-      "16 hours of focused instruction",
-      "Weekly practice tests with detailed analysis",
-      "Personalized study plans for every student"
+      "Small group sessions (max 8 students) for maximum focus",
+      "16 hours of concentrated, high-yield instruction",
+      "Weekly practice tests with detailed feedback",
+      "Quick-score strategies tailored to your needs"
     ],
     details: [
       {
         heading: "Curriculum",
         points: [
-          "English: Grammar rules & rhetorical skills",
-          "Mathematics: Problem-solving approaches & content review",
-          "Reading: Passage analysis & question patterns",
-          "Science: Data interpretation & scientific reasoning"
+          "Critical Reading: Quick strategies for passage analysis & question patterns",
+          "Mathematics: Fast-track problem-solving approaches & content review",
+          "Writing & Language: Rapid grammar rules & essay structure techniques",
+          "Test-specific strategies & time management hacks"
         ]
       },
       {
         heading: "Results",
         points: [
-          "Average score improvement: 4+ points",
-          "93% of students exceed their target scores",
-          "Comprehensive materials included",
+          "Average score improvement: 150+ points (SAT) / 4+ points (ACT) in just 4 weeks!",
+          "93% of students exceed their target scores with our last-minute strategies",
+          "Comprehensive materials included for immediate use",
           "Guaranteed results or free follow-up sessions"
         ]
       }
@@ -223,11 +225,19 @@ const handleCheckout = (offeringTitle, sessionName, price) => {
 // Testimonials
 const testimonials = [
   {
-    quote: "After attending the SAT bootcamp, my score improved by 210 points! The instructors identified my weak areas and gave me targeted strategies that made a huge difference.",
+    quote: "I joined the SAT bootcamp just 3 weeks before my exam and my score improved by 210 points! The last-minute strategies were exactly what I needed.",
     author: "Michael T.",
     role: "SAT Bootcamp Graduate",
     initials: "MT",
     score: "1580 SAT",
+    rating: 5
+  },
+  {
+    quote: "The ACT bootcamp helped me improve my score by 4 points in just 4 weeks. The quick, targeted strategies made all the difference!",
+    author: "Emma R.",
+    role: "ACT Bootcamp Graduate",
+    initials: "ER",
+    score: "33 ACT",
     rating: 5
   },
   {
@@ -263,14 +273,6 @@ const testimonials = [
     rating: 5
   },
   {
-    quote: "My ACT score had plateaued at 29 despite months of studying. The bootcamp's targeted approach to the Science section finally pushed me over 30 points.",
-    author: "Emma R.",
-    role: "ACT Bootcamp Graduate",
-    initials: "ER",
-    score: "33 ACT",
-    rating: 5
-  },
-  {
     quote: "The SAT Reading bootcamp transformed my approach to complex passages. My score improved from 720 to 760 in just six sessions!",
     author: "Jason T.",
     role: "SAT Reading Student",
@@ -298,6 +300,14 @@ const testimonials = [
 
 // FAQ data
 const faqData = [
+  {
+    question: "Is it too late to improve my SAT/ACT score?",
+    answer: "Not at all! Our last-minute bootcamps are specifically designed to help students make significant score improvements in a short amount of time. With targeted strategies and focused practice, you can still achieve your goal score."
+  },
+  {
+    question: "What if I only have a few weeks before my exam?",
+    answer: "Our bootcamps are perfect for last-minute preparation. We focus on high-yield strategies and quick wins that can make a big difference in your score, even with limited time."
+  },
   {
     question: "How are your bootcamps different from other test prep programs?",
     answer: "Our bootcamps feature small group sizes (maximum 8 students), personalized study plans, and instructors who scored in the top 0.01% on the tests they teach. We focus on proven strategies and techniques rather than generic content review, resulting in significantly higher score improvements compared to traditional programs."
@@ -381,7 +391,7 @@ const competitorPricing = {
     { name: "Kaplan Tutoring", price: "$4,420", features: ["$170/hour", "1-on-1 coaching", "2 Practice Tests"] },
   ],
   ACT: [
-    { name: "Focus on Learning 20-Hour ACT Prep Boot Camp", price: "$10,000", features: ["$500/hr", "Live instruction", "Weekly tests"] },
+    { name: "Aydin's ACT Prep", price: "$6,400", features: ["$213/hr", "Live instruction", "Weekly tests"] },
     { name: "PrepScholar ACT Prep", price: "$5,590", features: ["$310/hr", "18 hours", "1-on-1 coaching"] },
     { name: "Private Tutoring-Princeton Review", price: "$5,250", features: ["$175/hr", "1-on-1 coaching", "30 hours"] }
   ],
@@ -863,41 +873,40 @@ useEffect(() => {
 </div>        
         {/* Call to Action */}
         <div className="mt-20 mb-12 bg-gradient-to-r from-black  to-gray-600 rounded-2xl shadow-xl overflow-hidden">
-          <div className="px-8 py-12 md:py-16 relative">
-            <div className="absolute inset-0 opacity-10">
-              <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full -mr-48 -mt-48"></div>
-              <div className="absolute bottom-0 left-0 w-96 h-96 bg-white rounded-full -ml-48 -mb-48"></div>
-            </div>
-            
-            <div className="relative z-10 max-w-3xl mx-auto text-center">
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Elevate Your Academic Performance?</h2>
-              <p className="text-gray-100 text-lg mb-8">
-                Join our transformative bootcamps and experience the difference personalized instruction 
-                and proven strategies can make in your academic journey.
-              </p>
-              <div className="flex flex-col max-w-3xl mx-auto">
-  <div className="grid md:grid-cols-1 gap-6 mb-8">
-    <div className="bg-white bg-opacity-10 p-6 rounded-lg border border-white border-opacity-20 text-left">
-      <h3 className="text-white text-xl font-semibold mb-3 text-center">Have Questions?</h3>
-      <p className="text-gray-100 mb-4 text-center">Book a free consultation with our experts to learn more about our programs.</p>
-      <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1dNqQ-a8w_pPG0V-0I7Goj3SsWO0qM23ORt4XRrbTf1MLcUQLL_V8vVpKJiLHwODmkN69BoZYW" target="_blank" rel="noopener noreferrer" className="block w-full">
-        <button className="w-full bg-transparent text-white border-2 border-white hover:bg-white hover:bg-opacity-10 font-semibold py-3 px-6 rounded-md transition-colors duration-200 flex items-center justify-center">
-          <span>Free Consultation</span>
-          <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-          </svg>
-        </button>
-      </a>
+  <div className="px-8 py-12 md:py-16 relative">
+    <div className="absolute inset-0 opacity-10">
+      <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full -mr-48 -mt-48"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-white rounded-full -ml-48 -mb-48"></div>
     </div>
-  </div>
-  
-  <p className="text-sm text-gray-300 text-center">
-    100% satisfaction guarantee • Secure payment • Flexible scheduling options
-  </p>
-</div>
-            </div>
+    
+    <div className="relative z-10 max-w-3xl mx-auto text-center">
+      <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Last Chance to Boost Your SAT/ACT Score!</h2>
+      <p className="text-gray-100 text-lg mb-8">
+        Time is running out! Join our last-minute bootcamp and get the strategies you need to ace your upcoming SAT/ACT exam. Limited spots available—don't miss out!
+      </p>
+      <div className="flex flex-col max-w-3xl mx-auto">
+        <div className="grid md:grid-cols-1 gap-6 mb-8">
+          <div className="bg-white bg-opacity-10 p-6 rounded-lg border border-white border-opacity-20 text-left">
+            <h3 className="text-white text-xl font-semibold mb-3 text-center">Secure Your Spot Now!</h3>
+            <p className="text-gray-100 mb-4 text-center">Don't wait—our last-minute bootcamps fill up fast. Reserve your spot today!</p>
+            <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1dNqQ-a8w_pPG0V-0I7Goj3SsWO0qM23ORt4XRrbTf1MLcUQLL_V8vVpKJiLHwODmkN69BoZYW" target="_blank" rel="noopener noreferrer" className="block w-full">
+              <button className="w-full bg-transparent text-white border-2 border-white hover:bg-white hover:bg-opacity-10 font-semibold py-3 px-6 rounded-md transition-colors duration-200 flex items-center justify-center">
+                <span>Reserve Your Spot</span>
+                <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </button>
+            </a>
           </div>
         </div>
+        
+        <p className="text-sm text-gray-300 text-center">
+          100% satisfaction guarantee • Secure payment • Limited spots available
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
       </div>
       
       <footer className="bg-white dark:bg-white">
