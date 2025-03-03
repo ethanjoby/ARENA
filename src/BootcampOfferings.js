@@ -194,7 +194,17 @@ const statistics = [
 const handleCheckout = (offeringTitle, sessionName, price) => {
   // Remove $ and convert to number
   const priceValue = parseFloat(price.replace('$', ''));
-  
+
+  // Determine the payment link based on the offering title
+  let paymentLink = '';
+  if (offeringTitle.includes("SAT")) {
+    paymentLink = "https://www.paypal.com/ncp/payment/U89XS9CLFZ5BQ";
+  } else if (offeringTitle.includes("ACT")) {
+    paymentLink = "https://www.paypal.com/ncp/payment/2J8CYWVABXYMU";
+  } else if (offeringTitle.includes("AP")) {
+    paymentLink = "https://www.paypal.com/ncp/payment/7N9W9SBDGQ3XL";
+  }
+
   // Create checkout object
   const checkoutData = {
     program: offeringTitle,
@@ -202,12 +212,12 @@ const handleCheckout = (offeringTitle, sessionName, price) => {
     price: priceValue,
     date: new Date().toISOString()
   };
-  
+
   // Save checkout data to localStorage
   localStorage.setItem('checkout_data', JSON.stringify(checkoutData));
-  
-  // Redirect to checkout page
-  window.location.href = 'https://www.paypal.com/ncp/payment/7MJN5YEC3MQ6G';
+
+  // Redirect to the appropriate payment link
+  window.location.href = paymentLink;
 };
 // Testimonials
 const testimonials = [
