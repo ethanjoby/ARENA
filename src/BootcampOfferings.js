@@ -463,27 +463,45 @@ useEffect(() => {
     <HeroSectionSAT />
       {/* Main Content */}
       <div className="max-w-6xl mx-auto px-4">
-        {/* Bootcamp Tabs - Enhanced for Visibility */}
+        {/* Bootcamp Tabs - Enhanced for Visibility with Distinct Colors */}
 <div className="py-6 px-4 bg-gray-50 rounded-lg shadow-sm mb-12">
   <h2 className="text-2xl font-bold text-center mb-6">Our Test Prep Bootcamps</h2>
   <div className="flex flex-wrap justify-center gap-4">
-    {bootcampOfferings.map((offering, index) => (
-      <button
-        key={index}
-        className={`py-5 px-6 md:px-8 text-lg font-bold rounded-lg transition-all duration-300 shadow-sm ${
-          activeTab === index
-            ? "bg-black text-white transform scale-105"
-            : "bg-white text-gray-700 hover:bg-gray-100 hover:transform hover:scale-105"
-        }`}
-        onClick={() => setActiveTab(index)}
-      >
-        <span className="mr-2 inline-block">{offering.icon}</span>
-        {offering.title}
-        {activeTab === index && (
-          <div className="mt-2 h-1 w-12 bg-white mx-auto rounded-full"></div>
-        )}
-      </button>
-    ))}
+    {bootcampOfferings.map((offering, index) => {
+      // Create distinct color schemes for each tab
+      let activeColors, inactiveColors;
+      if (index === 0) {
+        // SAT - Blue theme
+        activeColors = "bg-blue-600 text-white";
+        inactiveColors = "bg-blue-50 text-blue-800 hover:bg-blue-100";
+      } else if (index === 1) {
+        // ACT - Green theme
+        activeColors = "bg-green-600 text-white";
+        inactiveColors = "bg-green-50 text-green-800 hover:bg-green-100";
+      } else {
+        // AP - Purple theme
+        activeColors = "bg-purple-600 text-white";
+        inactiveColors = "bg-purple-50 text-purple-800 hover:bg-purple-100";
+      }
+      
+      return (
+        <button
+          key={index}
+          className={`py-5 px-6 md:px-8 text-lg font-bold rounded-lg transition-all duration-300 shadow-sm ${
+            activeTab === index
+              ? `${activeColors} transform scale-105`
+              : `${inactiveColors} hover:transform hover:scale-105`
+          }`}
+          onClick={() => setActiveTab(index)}
+        >
+          <span className="mr-2 inline-block">{offering.icon}</span>
+          {offering.title}
+          {activeTab === index && (
+            <div className="mt-2 h-1 w-12 bg-white mx-auto rounded-full"></div>
+          )}
+        </button>
+      );
+    })}
   </div>
 </div>
 
