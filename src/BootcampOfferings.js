@@ -711,11 +711,13 @@ useEffect(() => {
     </a>
   </div>
   <button 
-    onClick={() => handleCompetitorPricingClick(offering.title)}
-    className="bg-white text-black text-xs px-3 py-2 rounded-md border border-gray-300 transition duration-200 hover:bg-gray-50 text-center font-medium"
-  >
-    Compare Competitor Pricing
-  </button>
+  onClick={() => handleCompetitorPricingClick(offering.title)}
+  className="bg-blue-500 text-white text-xs px-3 py-2 rounded-md border border-blue-500 transition duration-300 ease-in-out hover:bg-red-500 hover:border-red-500 text-center font-medium"
+>
+  Compare Competitor Pricing
+</button>
+
+
 </div>
 
 
