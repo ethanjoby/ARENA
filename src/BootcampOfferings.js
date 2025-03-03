@@ -219,6 +219,9 @@ const handleCheckout = (offeringTitle, sessionName, price) => {
   // Redirect to the appropriate payment link
   window.location.href = paymentLink;
 };
+
+
+
 // Testimonials
 const testimonials = [
   {
@@ -371,6 +374,35 @@ const BootcampOfferings = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [activeTabs, setActiveTabs] = useState({});
   const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [showCompetitorPricing, setShowCompetitorPricing] = useState(false);
+const [currentCompetitorPricing, setCurrentCompetitorPricing] = useState([]);
+const competitorPricing = {
+  SAT: [
+    { name: "Competitor A", price: "$1200", features: ["16 hours", "Group sessions", "Practice tests"] },
+    { name: "Competitor B", price: "$1100", features: ["12 hours", "1-on-1 coaching", "Guaranteed improvement"] },
+    { name: "Competitor C", price: "$1300", features: ["20 hours", "Small groups", "Personalized plans"] }
+  ],
+  ACT: [
+    { name: "Competitor X", price: "$1150", features: ["14 hours", "Live instruction", "Weekly tests"] },
+    { name: "Competitor Y", price: "$1050", features: ["10 hours", "Online access", "Flexible schedule"] },
+    { name: "Competitor Z", price: "$1250", features: ["18 hours", "Expert tutors", "Guaranteed results"] }
+  ],
+  AP: [
+    { name: "Competitor P", price: "$850", features: ["12 hours", "Subject-specific", "Practice exams"] },
+    { name: "Competitor Q", price: "$900", features: ["16 hours", "Experienced teachers", "Comprehensive materials"] },
+    { name: "Competitor R", price: "$950", features: ["20 hours", "Crash course", "Targeted strategies"] }
+  ]
+};
+const handleCompetitorPricingClick = (offeringTitle) => {
+  if (offeringTitle.includes("SAT")) {
+    setCurrentCompetitorPricing(competitorPricing.SAT);
+  } else if (offeringTitle.includes("ACT")) {
+    setCurrentCompetitorPricing(competitorPricing.ACT);
+  } else if (offeringTitle.includes("AP")) {
+    setCurrentCompetitorPricing(competitorPricing.AP);
+  }
+  setShowCompetitorPricing(true);
+};
 
   const toggleFaq = (index) => {
     if (activeFaq === index) {
@@ -408,7 +440,38 @@ useEffect(() => {
   const prevTestimonial = () => {
     setActiveTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
-
+  const CompetitorPricingModal = () => (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-2xl">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-xl font-bold">Competitor Pricing</h3>
+          <button 
+            onClick={() => setShowCompetitorPricing(false)}
+            className="text-gray-500 hover:text-gray-700"
+          >
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div className="space-y-4">
+          {currentCompetitorPricing.map((competitor, index) => (
+            <div key={index} className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+              <div className="flex justify-between items-center">
+                <h4 className="font-semibold text-gray-800">{competitor.name}</h4>
+                <span className="text-lg font-bold text-black">{competitor.price}</span>
+              </div>
+              <ul className="mt-2 space-y-1">
+                {competitor.features.map((feature, i) => (
+                  <li key={i} className="text-sm text-gray-600">• {feature}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
   return (
     <div className="bg-white text-gray-900 font-sans">
     
@@ -647,6 +710,12 @@ useEffect(() => {
       Free Consultation
     </a>
   </div>
+  <button 
+    onClick={() => handleCompetitorPricingClick(offering.title)}
+    className="bg-white text-black text-xs px-3 py-2 rounded-md border border-gray-300 transition duration-200 hover:bg-gray-50 text-center font-medium"
+  >
+    Compare Competitor Pricing
+  </button>
 </div>
 
 
@@ -867,6 +936,7 @@ useEffect(() => {
     </svg>
   </a>
 </div>
+{showCompetitorPricing && <CompetitorPricingModal />}
     </div>
   );
 };
