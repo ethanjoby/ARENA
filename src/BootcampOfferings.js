@@ -702,7 +702,7 @@ useEffect(() => {
   <div className="grid grid-cols-2 gap-2 mt-2">
   <button 
     onClick={() => handleCheckout(offering.title, session.name, session.price)}
-    className="bg-black text-white text-xs px-3 py-2 rounded-md border border-black transition duration-200 hover:bg-gray-800 text-center font-medium shadow-sm transform hover:scale-105 hover:shadow-lg"
+    className="bg-green-600 text-white text-xs px-3 py-2 rounded-md border border-green-600 transition duration-200 hover:bg-green-700 text-center font-medium shadow-sm transform hover:scale-105 hover:shadow-lg"
   >
     Reserve Spot Now
   </button>
