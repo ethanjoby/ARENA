@@ -378,14 +378,14 @@ const BootcampOfferings = () => {
 const [currentCompetitorPricing, setCurrentCompetitorPricing] = useState([]);
 const competitorPricing = {
   SAT: [
-    { name: "Competitor A", price: "$1200", features: ["16 hours", "Group sessions", "Practice tests"] },
-    { name: "Competitor B", price: "$1100", features: ["12 hours", "1-on-1 coaching", "Guaranteed improvement"] },
-    { name: "Competitor C", price: "$1300", features: ["20 hours", "Small groups", "Personalized plans"] }
+    { name: "Elite Prep", price: "$2,800", features: ["4 weeks", "Group sessions", "Weekly Practice Test"] },
+    { name: "Princeton Review SAT 1500+ Tutoring", price: "$6,560", features: ["18 hours", "1-on-1 coaching", "$278 per hour"] },
+    { name: "Testive SAT Coaching Plus Course", price: "$2,796", features: ["$699 per month", "4 months", "Personalized plans"] }
   ],
   ACT: [
-    { name: "Competitor X", price: "$1150", features: ["14 hours", "Live instruction", "Weekly tests"] },
-    { name: "Competitor Y", price: "$1050", features: ["10 hours", "Online access", "Flexible schedule"] },
-    { name: "Competitor Z", price: "$1250", features: ["18 hours", "Expert tutors", "Guaranteed results"] }
+    { name: "Focus on Learning 20-Hour ACT Prep Boot Camp", price: "$10,000", features: ["Group lessons", "Live instruction", "Weekly tests"] },
+    { name: "PrepScholar ACT Prep", price: "$5,590", features: ["1-on-1 coaching", "18 hours", "Flexible schedule"] },
+    { name: "Private Tutoring-Princeton Review", price: "$5,250", features: ["$175/hr", "1-on-1 coaching", "30 hours"] }
   ],
   AP: [
     { name: "Competitor P", price: "$850", features: ["12 hours", "Subject-specific", "Practice exams"] },
