@@ -241,14 +241,6 @@ const testimonials = [
     rating: 5
   },
   {
-    quote: "The AP World History bootcamp was instrumental in helping me earn a 5 on the exam. The practice materials and instructor guidance were exceptional.",
-    author: "Sarah L.",
-    role: "AP World History Student",
-    initials: "SL",
-    score: "5 on AP World History",
-    rating: 5
-  },
-  {
     quote: "I tried other prep programs before, but this bootcamp was truly transformative. The personalized approach made all the difference in my ACT score.",
     author: "James K.",
     role: "ACT Bootcamp Graduate",
@@ -265,27 +257,11 @@ const testimonials = [
     rating: 5
   },
   {
-    quote: "AP Biology seemed overwhelming until I joined the bootcamp. The practice exams and lab concept reviews made everything click. So grateful for my 5!",
-    author: "Daniel W.",
-    role: "AP Biology Student",
-    initials: "DW",
-    score: "5 on AP Biology",
-    rating: 5
-  },
-  {
     quote: "The SAT Reading bootcamp transformed my approach to complex passages. My score improved from 720 to 760 in just six sessions!",
     author: "Jason T.",
     role: "SAT Reading Student",
     initials: "JT",
     score: "760 SAT Reading",
-    rating: 5
-  },
-  {
-    quote: "AP English Language seemed impossible until I took the bootcamp. The essay strategies and rhetorical analysis techniques were exactly what I needed for a 5.",
-    author: "Priya S.",
-    role: "AP English Language Student",
-    initials: "PS",
-    score: "5 on AP English Language",
     rating: 5
   },
   {
