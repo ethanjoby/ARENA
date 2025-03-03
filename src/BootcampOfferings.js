@@ -463,25 +463,28 @@ useEffect(() => {
     <HeroSectionSAT />
       {/* Main Content */}
       <div className="max-w-6xl mx-auto px-4">
-        {/* Bootcamp Tabs */}
-<div className="flex flex-wrap justify-center mb-12 border-b border-gray-200">
-  {bootcampOfferings.map((offering, index) => (
-    <button
-      key={index}
-      className={`py-4 px-4 md:px-6 text-lg font-semibold relative ${
-        activeTab === index
-          ? "text-black"
-          : "text-gray-500 hover:text-gray-700"
-      }`}
-      onClick={() => setActiveTab(index)}
-    >
-      <span className="mr-2">{offering.icon}</span>
-      {offering.title}
-      {activeTab === index && (
-        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-black"></div>
-      )}
-    </button>
-  ))}
+        {/* Bootcamp Tabs - Enhanced for Visibility */}
+<div className="py-6 px-4 bg-gray-50 rounded-lg shadow-sm mb-12">
+  <h2 className="text-2xl font-bold text-center mb-6">Our Test Prep Bootcamps</h2>
+  <div className="flex flex-wrap justify-center gap-4">
+    {bootcampOfferings.map((offering, index) => (
+      <button
+        key={index}
+        className={`py-5 px-6 md:px-8 text-lg font-bold rounded-lg transition-all duration-300 shadow-sm ${
+          activeTab === index
+            ? "bg-black text-white transform scale-105"
+            : "bg-white text-gray-700 hover:bg-gray-100 hover:transform hover:scale-105"
+        }`}
+        onClick={() => setActiveTab(index)}
+      >
+        <span className="mr-2 inline-block">{offering.icon}</span>
+        {offering.title}
+        {activeTab === index && (
+          <div className="mt-2 h-1 w-12 bg-white mx-auto rounded-full"></div>
+        )}
+      </button>
+    ))}
+  </div>
 </div>
 
 
