@@ -69,7 +69,7 @@ const bootcampOfferings = [
     description: "Our comprehensive 4-week ACT prep program is designed to maximize your score with targeted strategies and personalized coaching.",
     highlights: [
       "Small group sessions (max 8 students)",
-      "4 hours of live instruction per weekend",
+      "16 hours of focused instruction",
       "Weekly practice tests with detailed analysis",
       "Personalized study plans for every student"
     ],
