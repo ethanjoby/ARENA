@@ -878,23 +878,10 @@ useEffect(() => {
                 and proven strategies can make in your academic journey.
               </p>
               <div className="flex flex-col max-w-3xl mx-auto">
-  <div className="grid md:grid-cols-2 gap-6 mb-8">
+  <div className="grid md:grid-cols-1 gap-6 mb-8">
     <div className="bg-white bg-opacity-10 p-6 rounded-lg border border-white border-opacity-20 text-left">
-      <h3 className="text-white text-xl font-semibold mb-3">Ready to Start?</h3>
-      <p className="text-gray-100 mb-4">Secure your spot now with our easy enrollment process. Limited seats available!</p>
-      <a href="#bootcamp-offerings" className="block w-full">
-  <button className="w-full bg-white text-black hover:bg-gray-100 font-semibold py-3 px-6 rounded-md transition-colors duration-200 shadow-lg flex items-center justify-center">
-  <span className="font-bold text-lg">Enroll Now</span>
-    <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-    </svg>
-  </button>
-</a>
-    </div>
-    
-    <div className="bg-white bg-opacity-10 p-6 rounded-lg border border-white border-opacity-20 text-left">
-      <h3 className="text-white text-xl font-semibold mb-3">Have Questions?</h3>
-      <p className="text-gray-100 mb-4">Book a free consultation with our experts to learn more about our programs.</p>
+      <h3 className="text-white text-xl font-semibold mb-3 text-center">Have Questions?</h3>
+      <p className="text-gray-100 mb-4 text-center">Book a free consultation with our experts to learn more about our programs.</p>
       <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1dNqQ-a8w_pPG0V-0I7Goj3SsWO0qM23ORt4XRrbTf1MLcUQLL_V8vVpKJiLHwODmkN69BoZYW" target="_blank" rel="noopener noreferrer" className="block w-full">
         <button className="w-full bg-transparent text-white border-2 border-white hover:bg-white hover:bg-opacity-10 font-semibold py-3 px-6 rounded-md transition-colors duration-200 flex items-center justify-center">
           <span>Free Consultation</span>
@@ -927,17 +914,49 @@ useEffect(() => {
        </div>
      </div>
    </footer>
-   {/* Floating Action Button */}
+  {/* Floating Action Button */}
 <div className="fixed bottom-6 right-6 z-50 flex space-x-3">
   <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1dNqQ-a8w_pPG0V-0I7Goj3SsWO0qM23ORt4XRrbTf1MLcUQLL_V8vVpKJiLHwODmkN69BoZYW" 
      target="_blank" 
      rel="noopener noreferrer"
-     className="bg-white text-black border border-gray-200 rounded-full shadow-lg p-4 transition-transform hover:scale-105">
+     className="bg-gradient-to-r from-teal-400 via-indigo-500 to-purple-600 text-white border border-transparent rounded-full shadow-lg p-4 transition-transform hover:scale-105 animate-gradient">
     <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
     </svg>
   </a>
 </div>
+
+<style jsx>{`
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+      background-color: #00bcd4; /* Teal */
+    }
+    25% {
+      background-position: 50% 50%;
+      background-color: #3f51b5; /* Indigo */
+    }
+    50% {
+      background-position: 100% 50%;
+      background-color: #673ab7; /* Deep Purple */
+    }
+    75% {
+      background-position: 50% 50%;
+      background-color: #9c27b0; /* Purple */
+    }
+    100% {
+      background-position: 0% 50%;
+      background-color: #e91e63; /* Pink */
+    }
+  }
+
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient 6s ease infinite;
+  }
+`}</style>
+
+
 {showCompetitorPricing && <CompetitorPricingModal />}
     </div>
   );
