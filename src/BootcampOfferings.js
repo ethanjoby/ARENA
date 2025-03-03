@@ -376,9 +376,9 @@ const BootcampOfferings = () => {
 const [currentCompetitorPricing, setCurrentCompetitorPricing] = useState([]);
 const competitorPricing = {
   SAT: [
-    { name: "Elite Prep", price: "$2,800", features: ["4 weeks", "Group sessions", "Weekly Practice Test"] },
+    { name: "Huntington Learning Center", price: "$3,200", features: ["$100/hr", "Group sessions", "Weekly Practice Test"] },
     { name: "Princeton Review SAT 1500+ Tutoring", price: "$6,560", features: ["$278/hour", "1-on-1 coaching", "18 hours"] },
-    { name: "Testive SAT Coaching Plus Course", price: "$2,796", features: ["$699/month", "4 months", "Personalized plans"] }
+    { name: "Kaplan Tutoring", price: "$4,420", features: ["$170/hour", "1-on-1 coaching", "2 Practice Tests"] },
   ],
   ACT: [
     { name: "Focus on Learning 20-Hour ACT Prep Boot Camp", price: "$10,000", features: ["$500/hr", "Live instruction", "Weekly tests"] },
