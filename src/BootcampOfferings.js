@@ -680,23 +680,29 @@ useEffect(() => {
   
   <div className="grid grid-cols-2 gap-2 mt-2">
   <button 
-  onClick={() => handleCheckout(offering.title, session.name, session.price)}
-  className="bg-black text-white text-xs px-3 py-2 rounded-md border border-black transition duration-200 hover:bg-gray-800 text-center font-medium shadow-sm"
+    onClick={() => handleCheckout(offering.title, session.name, session.price)}
+    className="bg-black text-white text-xs px-3 py-2 rounded-md border border-black transition duration-200 hover:bg-gray-800 text-center font-medium shadow-sm transform hover:scale-105 hover:shadow-lg"
+  >
+    Reserve Spot Now
+  </button>
+  <a 
+    href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1dNqQ-a8w_pPG0V-0I7Goj3SsWO0qM23ORt4XRrbTf1MLcUQLL_V8vVpKJiLHwODmkN69BoZYW" 
+    target="_blank" 
+    rel="noopener noreferrer"
+    className="bg-white text-black text-xs px-3 py-2 rounded-md border border-gray-300 transition duration-200 hover:bg-gray-50 text-center font-medium shadow-sm transform hover:scale-105 hover:shadow-lg"
+  >
+    Free Consultation
+  </a>
+</div>
+<button 
+  onClick={() => setActiveTabFor(offeringIndex, 1)}
+  className="bg-yellow-100 text-black text-xs px-3 py-2 rounded-md transition duration-300 ease-in-out hover:bg-yellow-400 text-center font-medium shadow-md hover:shadow-lg mt-2 transform hover:scale-105"
 >
-  Reserve Spot Now
+  View Program Details
 </button>
-    <a 
-      href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1dNqQ-a8w_pPG0V-0I7Goj3SsWO0qM23ORt4XRrbTf1MLcUQLL_V8vVpKJiLHwODmkN69BoZYW" 
-      target="_blank" 
-      rel="noopener noreferrer"
-      className="bg-white text-black text-xs px-3 py-2 rounded-md border border-gray-300 transition duration-200 hover:bg-gray-50 text-center font-medium"
-    >
-      Free Consultation
-    </a>
-  </div>
-  <button 
+<button 
   onClick={() => handleCompetitorPricingClick(offering.title)}
-  className="bg-blue-500 text-white text-xs px-3 py-2 rounded-md border border-blue-500 transition duration-300 ease-in-out hover:bg-red-500 hover:border-red-500 text-center font-medium"
+  className="bg-red-400 text-black text-xs px-3 py-2 rounded-md transition duration-300 ease-in-out hover:bg-red-500 text-center font-medium shadow-md hover:shadow-lg mt-2 transform hover:scale-105"
 >
   Compare Competitor Pricing
 </button>
@@ -706,6 +712,7 @@ useEffect(() => {
 
 
             </div>
+            
                           </div>
                         </div>
                       ))}
@@ -863,11 +870,11 @@ useEffect(() => {
       <div className="flex flex-col max-w-3xl mx-auto">
         <div className="grid md:grid-cols-1 gap-6 mb-8">
           <div className="bg-white bg-opacity-10 p-6 rounded-lg border border-white border-opacity-20 text-left">
-            <h3 className="text-white text-xl font-semibold mb-3 text-center">Secure Your Spot Now!</h3>
-            <p className="text-gray-100 mb-4 text-center">Don't wait—our last-minute bootcamps fill up fast. Reserve your spot today!</p>
+            <h3 className="text-white text-xl font-semibold mb-3 text-center">Have Questions?</h3>
+            <p className="text-gray-100 mb-4 text-center">Don't wait—our last-minute bootcamps fill up fast!</p>
             <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1dNqQ-a8w_pPG0V-0I7Goj3SsWO0qM23ORt4XRrbTf1MLcUQLL_V8vVpKJiLHwODmkN69BoZYW" target="_blank" rel="noopener noreferrer" className="block w-full">
               <button className="w-full bg-transparent text-white border-2 border-white hover:bg-white hover:bg-opacity-10 font-semibold py-3 px-6 rounded-md transition-colors duration-200 flex items-center justify-center">
-                <span>Reserve Your Spot</span>
+                <span>Book a Free Consultation</span>
                 <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
