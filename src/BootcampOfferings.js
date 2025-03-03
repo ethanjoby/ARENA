@@ -165,7 +165,7 @@ const bootcampOfferings = [
       },
       {
         name: "April Crash Course",
-        dates: "April 5-27, 2025",
+        dates: "April 5-26, 2025",
         schedule: "Saturday, 5:00 PM - 9:00 PM",
         price: "$895/subject",
         spaces: "Limited to 8 students per subject",
