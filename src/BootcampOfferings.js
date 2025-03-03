@@ -379,18 +379,18 @@ const [currentCompetitorPricing, setCurrentCompetitorPricing] = useState([]);
 const competitorPricing = {
   SAT: [
     { name: "Elite Prep", price: "$2,800", features: ["4 weeks", "Group sessions", "Weekly Practice Test"] },
-    { name: "Princeton Review SAT 1500+ Tutoring", price: "$6,560", features: ["18 hours", "1-on-1 coaching", "$278 per hour"] },
-    { name: "Testive SAT Coaching Plus Course", price: "$2,796", features: ["$699 per month", "4 months", "Personalized plans"] }
+    { name: "Princeton Review SAT 1500+ Tutoring", price: "$6,560", features: ["$278/hour", "1-on-1 coaching", "18 hours"] },
+    { name: "Testive SAT Coaching Plus Course", price: "$2,796", features: ["$699/month", "4 months", "Personalized plans"] }
   ],
   ACT: [
-    { name: "Focus on Learning 20-Hour ACT Prep Boot Camp", price: "$10,000", features: ["Group lessons", "Live instruction", "Weekly tests"] },
-    { name: "PrepScholar ACT Prep", price: "$5,590", features: ["1-on-1 coaching", "18 hours", "Flexible schedule"] },
+    { name: "Focus on Learning 20-Hour ACT Prep Boot Camp", price: "$10,000", features: ["$500/hr", "Live instruction", "Weekly tests"] },
+    { name: "PrepScholar ACT Prep", price: "$5,590", features: ["$310/hr", "18 hours", "1-on-1 coaching"] },
     { name: "Private Tutoring-Princeton Review", price: "$5,250", features: ["$175/hr", "1-on-1 coaching", "30 hours"] }
   ],
   AP: [
     { name: "Wyzant-Kubrat D.", price: "$5,250", features: ["$175/hr", "Subject-specific", "30 hours"] },
     { name: "Prep Scholar AP Prep", price: "$3,200", features: ["$100/hr", "Prep for up to four AP subjects", "32 hours"] },
-    { name: "C2 Education", price: "$8,000", features: ["80 hours", "$100/hr", "Group Classes"] }
+    { name: "C2 Education", price: "$8,000", features: ["$100/hr", "80 hours", "Group Classes"] }
   ]
 };
 const handleCompetitorPricingClick = (offeringTitle) => {
