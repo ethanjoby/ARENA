@@ -388,9 +388,9 @@ const competitorPricing = {
     { name: "Private Tutoring-Princeton Review", price: "$5,250", features: ["$175/hr", "1-on-1 coaching", "30 hours"] }
   ],
   AP: [
-    { name: "Competitor P", price: "$850", features: ["12 hours", "Subject-specific", "Practice exams"] },
-    { name: "Competitor Q", price: "$900", features: ["16 hours", "Experienced teachers", "Comprehensive materials"] },
-    { name: "Competitor R", price: "$950", features: ["20 hours", "Crash course", "Targeted strategies"] }
+    { name: "Wyzant-Kubrat D.", price: "$5,250", features: ["$175/hr", "Subject-specific", "30 hours"] },
+    { name: "Prep Scholar AP Prep", price: "$3,200", features: ["$100/hr", "Prep for up to four AP subjects", "32 hours"] },
+    { name: "C2 Education", price: "$8,000", features: ["80 hours", "$100/hr", "Group Classes"] }
   ]
 };
 const handleCompetitorPricingClick = (offeringTitle) => {
