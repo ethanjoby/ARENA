@@ -137,10 +137,9 @@ const bootcampOfferings = [
       {
         heading: "Subjects Offered",
         points: [
-          "AP Biology, Chemistry, Physics",
-          "AP Calculus AB/BC, Statistics",
-          "AP English Language, English Literature",
-          "AP US History, World History, European History"
+          "AP Biology",
+          "AP World History",
+          "AP CSA",
         ]
       },
       {
@@ -149,7 +148,6 @@ const bootcampOfferings = [
           "Content mastery & gap identification",
           "Targeted strategies for free-response questions",
           "Complete review of course material",
-          "AP-specific timing and exam strategies"
         ]
       }
     ],
