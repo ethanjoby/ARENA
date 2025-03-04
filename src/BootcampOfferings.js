@@ -8,7 +8,7 @@ const bootcampOfferings = [
     icon: "📊",
     description: "Crush the SAT with our last-minute intensive bootcamp! Designed for students who need a quick score boost, this program focuses on high-impact strategies and targeted practice to maximize your results in just 4 weeks.",
     highlights: [
-      "Small group sessions (max 8 students) for personalized attention",
+      "Small group sessions for personalized attention",
       "16 hours of focused, high-yield instruction",
       "Weekly practice tests with detailed analysis to track progress",
       "Targeted strategies for quick score improvement"
@@ -39,7 +39,7 @@ const bootcampOfferings = [
         dates: "May 10 - May 31, 2025",
         schedule: "Saturday, 9:00 AM - 1:00 PM",
         price: "$950",
-        spaces: "Limited to 50 students (split up into groups)",
+        spaces: "Limited Spots",
         popularity: "High demand",
         targetExam: "Targeting June 7th SAT Exam",
         urgencyNote: "Last chance to boost your score before the June SAT!"
@@ -49,7 +49,7 @@ const bootcampOfferings = [
         dates: "Jul 26 - August 16, 2025",
         schedule: "Saturday, 9:00 AM - 1:00 PM",
         price: "$950",
-        spaces: "Limited to 50 students (split up into groups)",
+        spaces: "Limited Spots",
         popularity: "Filling quickly",
         targetExam: "Targeting August 23rd SAT Exam",
         urgencyNote: "Don't miss this final opportunity to prepare for the August SAT!"
@@ -59,7 +59,7 @@ const bootcampOfferings = [
         dates: "Nov 8 - Nov 29, 2025",
         schedule: "Saturday, 9:00 AM - 1:00 PM",
         price: "$950",
-        spaces: "Limited to 50 students (split up into groups)",
+        spaces: "Limited Spots",
         popularity: "Early registration",
         targetExam: "Targeting December 6th SAT Exam"  // Add this line
       }
@@ -70,7 +70,7 @@ const bootcampOfferings = [
     icon: "📈",
     description: "Ace the ACT with our last-minute crash course! This intensive 4-week program is perfect for students looking to quickly improve their scores with focused, high-impact strategies and personalized coaching.",
     highlights: [
-      "Small group sessions (max 8 students) for maximum focus",
+      "Small group sessions for maximum focus",
       "16 hours of concentrated, high-yield instruction",
       "Weekly practice tests with detailed feedback",
       "Quick-score strategies tailored to your needs"
@@ -101,7 +101,7 @@ const bootcampOfferings = [
         dates: "May 17 - June 7, 2025",
         schedule: "Saturday, 9:00 AM - 1:00 PM",
         price: "$950",
-        spaces: "Limited to 8 students per group",
+        spaces: "Limited Spots",
         popularity: "High demand",
         targetExam: "Targeting June 14th ACT Exam"
       },
@@ -110,7 +110,7 @@ const bootcampOfferings = [
         dates: "Aug 9 - Aug 30, 2025",
         schedule: "Saturday, 9:00 AM - 1:00 PM",
         price: "$950",
-        spaces: "Limited to 8 students per group",
+        spaces: "Limited Spots",
         popularity: "Filling quickly",
         targetExam: "Targeting September 6th ACT Exam"
       },
@@ -119,7 +119,7 @@ const bootcampOfferings = [
         dates: "Nov 15 - Dec 6, 2025",
         schedule: "Saturday, 9:00 AM - 1:00 PM",
         price: "$950",
-        spaces: "Limited to 8 students per group",
+        spaces: "Limited Spots",
         popularity: "Early registration",
         targetExam: "Targeting December 13th ACT Exam"
       }
@@ -159,7 +159,7 @@ const bootcampOfferings = [
         dates: "March 22-23 & March 29-30, 2025",
         schedule: "Sat & Sun, 5:00 PM - 9:00 PM",
         price: "$795/subject",
-        spaces: "Limited to 8 students per subject",
+        spaces: "Limited Spots",
         popularity: "Early Prep",
         targetExam: "Targeting 2025 AP Exams"
       },
@@ -168,7 +168,7 @@ const bootcampOfferings = [
         dates: "April 5-26, 2025",
         schedule: "Saturday, 5:00 PM - 9:00 PM",
         price: "$895/subject",
-        spaces: "Limited to 8 students per subject",
+        spaces: "Limited Spots",
         popularity: "Deep Dive",
         targetExam: "Targeting 2025 AP Exams"
       },
@@ -177,7 +177,7 @@ const bootcampOfferings = [
         dates: "April 26-27 & May 3-4, 2025",
         schedule: "Sat & Sun, 5:00 PM - 9:00 PM",
         price: "$995/subject",
-        spaces: "Limited to 8 students per subject",
+        spaces: "Limited Spots",
         popularity: "Last-Minute",
         targetExam: "Targeting 2025 AP Exams"
       }
