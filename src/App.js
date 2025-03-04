@@ -10,6 +10,7 @@ import Portal from './Portal';
 import Webinars from './Webinars';
 import BootcampOfferings from './BootcampOfferings';
 import Checkout from './Checkout';
+import CollegePrepFlyer from './CollegePrepFlyer';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/bootcamp" element={<BootcampOfferings />} />
         <Route path="/webinars" element={<Webinars />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/collegeprepflyer" element={<CollegePrepFlyer />} />
       </Routes>
     </Router>
   );

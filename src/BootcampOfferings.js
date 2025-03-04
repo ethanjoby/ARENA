@@ -39,7 +39,7 @@ const bootcampOfferings = [
         dates: "May 10 - May 31, 2025",
         schedule: "Saturday, 9:00 AM - 1:00 PM",
         price: "$950",
-        spaces: "Limited to 8 students per group",
+        spaces: "Limited to 50 students (split up into groups)",
         popularity: "High demand",
         targetExam: "Targeting June 7th SAT Exam",
         urgencyNote: "Last chance to boost your score before the June SAT!"
@@ -49,7 +49,7 @@ const bootcampOfferings = [
         dates: "Jul 26 - August 16, 2025",
         schedule: "Saturday, 9:00 AM - 1:00 PM",
         price: "$950",
-        spaces: "Limited to 8 students per group",
+        spaces: "Limited to 50 students (split up into groups)",
         popularity: "Filling quickly",
         targetExam: "Targeting August 23rd SAT Exam",
         urgencyNote: "Don't miss this final opportunity to prepare for the August SAT!"
@@ -59,7 +59,7 @@ const bootcampOfferings = [
         dates: "Nov 8 - Nov 29, 2025",
         schedule: "Saturday, 9:00 AM - 1:00 PM",
         price: "$950",
-        spaces: "Limited to 8 students per group",
+        spaces: "Limited to 50 students (split up into groups)",
         popularity: "Early registration",
         targetExam: "Targeting December 6th SAT Exam"  // Add this line
       }
