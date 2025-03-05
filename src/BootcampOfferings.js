@@ -35,6 +35,15 @@ const bootcampOfferings = [
     ],
     sessions: [
       {
+        name: "Winter Preparation",
+        dates: "Feb 8 - Mar 1, 2025",
+        schedule: "Saturday, 9:00 AM - 1:00 PM",
+        price: "$950",
+        spaces: "Limited Spots",
+        popularity: "Complete",
+        targetExam: "Targeting March 8th Sat Exam"
+      },
+      {
         name: "Summer Intensive",
         dates: "May 10 - May 31, 2025",
         schedule: "Saturday, 9:00 AM - 1:00 PM",
@@ -54,15 +63,6 @@ const bootcampOfferings = [
         targetExam: "Targeting August 23rd SAT Exam",
         urgencyNote: "Don't miss this final opportunity to prepare for the August SAT!"
       },
-      {
-        name: "Winter Preperation",
-        dates: "Nov 8 - Nov 29, 2025",
-        schedule: "Saturday, 9:00 AM - 1:00 PM",
-        price: "$950",
-        spaces: "Limited Spots",
-        popularity: "Early registration",
-        targetExam: "Targeting December 6th SAT Exam"  // Add this line
-      }
     ]
   },
   {
@@ -116,13 +116,13 @@ const bootcampOfferings = [
       },
       {
         name: "Winter Preparation",
-        dates: "Nov 15 - Dec 6, 2025",
+        dates: "TBD, 2025",
         schedule: "Saturday, 9:00 AM - 1:00 PM",
         price: "$950",
         spaces: "Limited Spots",
         popularity: "Early registration",
         targetExam: "Targeting December 13th ACT Exam"
-      }
+      },
     ]
   },
   {
@@ -218,7 +218,6 @@ const handleCheckout = (offeringTitle, sessionName, price) => {
 
   // Redirect to the appropriate payment link
   window.open(paymentLink, '_blank');
-
 };
 
 
@@ -648,96 +647,119 @@ useEffect(() => {
                 <div className={activeTabs[offeringIndex] === 0 ? "block" : "hidden"}>
                   <div className="p-8">
                   <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                      {offering.sessions.map((session, i) => (
-                        <div key={i} className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">                        
-                          <div className="bg-gray-100 py-3 px-4 border-b border-gray-200">
-                            <div className="flex justify-between items-center">
-                              <h4 className="text-lg font-bold text-black">{session.name}</h4>
-                              <div className="bg-black text-white text-xs py-1 px-2 rounded-full">
-                                {session.popularity}
-                              </div>
-                            </div>
-                          </div>
-                          
-                          <div className="p-5">
-  <div className="space-y-3 mb-6">
-    <p className="flex items-center text-gray-700 text-sm">
-      <svg className="w-4 h-4 mr-2 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-      </svg>
-      {session.dates}
-    </p>
-    <p className="flex items-center text-gray-700 text-sm">
-      <svg className="w-4 h-4 mr-2 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-      {session.schedule}
-    </p>
-    <p className="flex items-center text-gray-700 text-sm">
-      <svg className="w-4 h-4 mr-2 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-      </svg>
-      {session.spaces}
-    </p>
-    {/* Add this section for target exam */}
-    {session.targetExam && (
-      <p className="flex items-center text-gray-700 text-sm font-semibold bg-yellow-50 p-2 rounded border-l-2 border-yellow-400">
-        <svg className="w-4 h-4 mr-2 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-        </svg>
-        {session.targetExam}
-      </p>
-    )}
-  </div>
-                            
-                            <div className="pt-4 border-t border-gray-100">
-                
-                            <div className="flex flex-col gap-3 pt-2">
-  <div className="flex items-center justify-between w-full">
-    <span className="text-lg font-bold text-black">{session.price}</span>
-    <span className="bg-gray-100 text-black text-xs px-2 py-1 rounded-sm">
-      16 hours total
-    </span>
-  </div>
-  
-  <div className="grid grid-cols-2 gap-2 mt-2">
-  <button 
-    onClick={() => handleCheckout(offering.title, session.name, session.price)}
-    className="bg-green-600 text-white text-xs px-3 py-2 rounded-md border border-green-600 transition duration-200 hover:bg-green-700 text-center font-medium shadow-sm transform hover:scale-105 hover:shadow-lg"
+                  {offering.sessions.map((session, i) => (
+  <div 
+    key={i} 
+    className={`rounded-lg shadow-md overflow-hidden border transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
+      session.popularity === "Complete"
+        ? "bg-gray-100 border-gray-200 opacity-80 cursor-not-allowed" // Styling for "Complete" sessions
+        : "bg-white border-gray-200" // Default styling for other sessions
+    }`}
   >
-    Reserve Spot Now
-  </button>
-  <a 
-    href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1dNqQ-a8w_pPG0V-0I7Goj3SsWO0qM23ORt4XRrbTf1MLcUQLL_V8vVpKJiLHwODmkN69BoZYW" 
-    target="_blank" 
-    rel="noopener noreferrer"
-    className="bg-white text-black text-xs px-3 py-2 rounded-md border border-gray-300 transition duration-200 hover:bg-gray-50 text-center font-medium shadow-sm transform hover:scale-105 hover:shadow-lg"
-  >
-    Free Consultation
-  </a>
-</div>
-<button 
-  onClick={() => setActiveTabFor(offeringIndex, 1)}
-  className="bg-yellow-100 text-black text-xs px-3 py-2 rounded-md transition duration-300 ease-in-out hover:bg-yellow-400 text-center font-medium shadow-md hover:shadow-lg mt-2 transform hover:scale-105"
->
-  View Program Details
-</button>
-<button 
-  onClick={() => handleCompetitorPricingClick(offering.title)}
-  className="bg-red-400 text-black text-xs px-3 py-2 rounded-md transition duration-300 ease-in-out hover:bg-red-500 text-center font-medium shadow-md hover:shadow-lg mt-2 transform hover:scale-105"
->
-  Compare Competitor Pricing
-</button>
+    {/* Card Header */}
+    <div className={`py-3 px-4 border-b ${
+      session.popularity === "Complete"
+        ? "bg-gray-200 border-gray-300" // Header styling for "Complete" sessions
+        : "bg-gray-100 border-gray-200" // Default header styling
+    }`}>
+      <div className="flex justify-between items-center">
+        <h4 className="text-lg font-bold text-black">{session.name}</h4>
+        <div className={`text-xs py-1 px-2 rounded-full ${
+          session.popularity === "Complete"
+            ? "bg-red-100 text-red-800 border border-red-200" // Badge styling for "Complete"
+            : "bg-black text-white" // Default badge styling
+        }`}>
+          {session.popularity}
+        </div>
+      </div>
+    </div>
 
+    {/* Card Body */}
+    <div className={`p-5 ${
+      session.popularity === "Complete"
+        ? "opacity-80" // Slightly fade the content for "Complete" sessions
+        : ""
+    }`}>
+      <div className="space-y-3 mb-6">
+        <p className="flex items-center text-gray-700 text-sm">
+          <svg className="w-4 h-4 mr-2 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          {session.dates}
+        </p>
+        <p className="flex items-center text-gray-700 text-sm">
+          <svg className="w-4 h-4 mr-2 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          {session.schedule}
+        </p>
+        <p className="flex items-center text-gray-700 text-sm">
+          <svg className="w-4 h-4 mr-2 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          {session.spaces}
+        </p>
+        {session.targetExam && (
+          <p className="flex items-center text-gray-700 text-sm font-semibold bg-yellow-50 p-2 rounded border-l-2 border-yellow-400">
+            <svg className="w-4 h-4 mr-2 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            </svg>
+            {session.targetExam}
+          </p>
+        )}
+      </div>
 
-</div>
+      {/* Card Footer */}
+      <div className="pt-4 border-t border-gray-100">
+        <div className="flex flex-col gap-3 pt-2">
+          <div className="flex items-center justify-between w-full">
+            <span className="text-lg font-bold text-black">{session.price}</span>
+            <span className="bg-gray-100 text-black text-xs px-2 py-1 rounded-sm">
+              16 hours total
+            </span>
+          </div>
 
+          {/* Buttons */}
+          <div className="grid grid-cols-2 gap-2 mt-2">
+            <button 
+              onClick={() => handleCheckout(offering.title, session.name, session.price)}
+              className={`${
+                session.popularity === "Complete"
+                  ? "bg-gray-300 text-gray-600 cursor-not-allowed" // Disabled button for "Complete"
+                  : "bg-green-600 text-white hover:bg-green-700" // Default button styling
+              } text-xs px-3 py-2 rounded-md border transition duration-200 text-center font-medium shadow-sm transform hover:scale-105 hover:shadow-lg`}
+              disabled={session.popularity === "Complete"}
+            >
+              {session.popularity === "Complete" ? "Fully Booked" : "Reserve Spot Now"}
+            </button>
+            <a 
+              href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1dNqQ-a8w_pPG0V-0I7Goj3SsWO0qM23ORt4XRrbTf1MLcUQLL_V8vVpKJiLHwODmkN69BoZYW" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="bg-white text-black text-xs px-3 py-2 rounded-md border border-gray-300 transition duration-200 hover:bg-gray-50 text-center font-medium shadow-sm transform hover:scale-105 hover:shadow-lg"
+            >
+              Free Consultation
+            </a>
+          </div>
 
-            </div>
-            
-                          </div>
-                        </div>
-                      ))}
+          {/* Additional Buttons */}
+          <button 
+            onClick={() => setActiveTabFor(offeringIndex, 1)}
+            className="bg-yellow-100 text-black text-xs px-3 py-2 rounded-md transition duration-300 ease-in-out hover:bg-yellow-400 text-center font-medium shadow-md hover:shadow-lg mt-2 transform hover:scale-105"
+          >
+            View Program Details
+          </button>
+          <button 
+            onClick={() => handleCompetitorPricingClick(offering.title)}
+            className="bg-red-400 text-black text-xs px-3 py-2 rounded-md transition duration-300 ease-in-out hover:bg-red-500 text-center font-medium shadow-md hover:shadow-lg mt-2 transform hover:scale-105"
+          >
+            Compare Competitor Pricing
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+))}
                     </div>
                     
                     <div className="mt-8 bg-yellow-50 p-6 rounded-lg border border-yellow-100">
