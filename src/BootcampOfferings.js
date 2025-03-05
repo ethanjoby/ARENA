@@ -469,52 +469,56 @@ useEffect(() => {
   <div className="flex flex-wrap justify-center gap-4">
     {bootcampOfferings.map((offering, index) => {
       // Create distinct color schemes for each tab
-      let activeColors, inactiveColors;
+      let tabColors;
       if (index === 0) {
         // SAT - Blue theme
-        activeColors = "bg-blue-600 text-white";
-        inactiveColors = "bg-blue-50 text-blue-800 hover:bg-blue-100";
+        tabColors = "bg-blue-50 text-blue-800";
       } else if (index === 1) {
         // ACT - Green theme
-        activeColors = "bg-green-600 text-white";
-        inactiveColors = "bg-green-50 text-green-800 hover:bg-green-100";
+        tabColors = "bg-green-50 text-green-800";
       } else {
         // AP - Purple theme
-        activeColors = "bg-purple-600 text-white";
-        inactiveColors = "bg-purple-50 text-purple-800 hover:bg-purple-100";
+        tabColors = "bg-purple-50 text-purple-800";
       }
       
       return (
-        <button
+        <div
           key={index}
-          className={`py-5 px-6 md:px-8 text-lg font-bold rounded-lg transition-all duration-300 shadow-sm ${
-            activeTab === index
-              ? `${activeColors} transform scale-105`
-              : `${inactiveColors} hover:transform hover:scale-105`
-          }`}
-          onClick={() => setActiveTab(index)}
+          className={`py-5 px-6 md:px-8 text-lg font-bold rounded-lg shadow-sm ${tabColors}`}
         >
           <span className="mr-2 inline-block">{offering.icon}</span>
           {offering.title}
-          {activeTab === index && (
-            <div className="mt-2 h-1 w-12 bg-white mx-auto rounded-full"></div>
-          )}
-        </button>
+        </div>
       );
     })}
   </div>
 </div>
 
 
+<div className="mt-8 bg-yellow-50 p-6 rounded-lg border border-yellow-100">
+                      <div className="flex items-start">
+                        <div className="flex-shrink-0 bg-yellow-100 rounded-md p-2 mr-4">
+                          <svg className="w-6 h-6 text-yellow-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <h3 className="text-lg font-semibold mb-2 text-yellow-800">Limited Availability</h3>
+                          <p className="text-gray-700">
+                            Our sessions fill up quickly due to limited class sizes designed to ensure personalized attention. 
+                            We recommend securing your spot early to avoid disappointment.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    
         {/* Bootcamp Offerings */}
-        <div className="">
-          {bootcampOfferings.map((offering, offeringIndex) => (
-            <div 
-              key={offeringIndex} 
-              className={`transition-all duration-500 ${
-                activeTab === offeringIndex ? "opacity-100 block" : "opacity-0 hidden"
-              }`}
-            >
+        <div className="mt-16">
+        {bootcampOfferings.map((offering, offeringIndex) => (
+  <div 
+    key={offeringIndex} 
+    className="mb-16"
+  >
               <div className="bg-white shadow-xl rounded-xl overflow-hidden border border-gray-100">
                 {/* Header */}
                 <div className="bg-gradient-to-r from-black to-gray-500 text-white px-8 py-8 relative flex flex-col items-center text-center">
@@ -760,23 +764,6 @@ useEffect(() => {
     </div>
   </div>
 ))}
-                    </div>
-                    
-                    <div className="mt-8 bg-yellow-50 p-6 rounded-lg border border-yellow-100">
-                      <div className="flex items-start">
-                        <div className="flex-shrink-0 bg-yellow-100 rounded-md p-2 mr-4">
-                          <svg className="w-6 h-6 text-yellow-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                          </svg>
-                        </div>
-                        <div>
-                          <h3 className="text-lg font-semibold mb-2 text-yellow-800">Limited Availability</h3>
-                          <p className="text-gray-700">
-                            Our sessions fill up quickly due to limited class sizes designed to ensure personalized attention. 
-                            We recommend securing your spot early to avoid disappointment.
-                          </p>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
