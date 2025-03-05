@@ -647,7 +647,7 @@ useEffect(() => {
                 <div className={activeTabs[offeringIndex] === 0 ? "block" : "hidden"}>
                   <div className="p-8">
                   <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  {offering.sessions.map((session, i) => (
+                      {offering.sessions.map((session, i) => (
   <div 
     key={i} 
     className={`rounded-lg shadow-md overflow-hidden border transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${

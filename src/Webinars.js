@@ -23,7 +23,7 @@ const Webinars = () => {
         {
           date: "Mar 20, 2025",
           time: "6:30 PM",
-          title: "Beyond Test Scores: Building a Well-Rounded College Application",
+          title: "Test Scores and Beyond: Building a Well-Rounded College Application",
           description: "Seniors and counselors discuss how to develop a compelling personal profile that showcases your unique strengths beyond academics. Learn what actually impressed admission officers at top colleges.",
           category: "College Planning",
           registration: "https://calendar.app.google/94AR9pWmqru76jCE7"
