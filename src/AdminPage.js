@@ -61,6 +61,37 @@ const [sortOrder, setSortOrder] = useState("newest");
     generalGuidance: "",
     resumePackage: ""
   }); ;
+  const parseNextContactDate = (hoursLeft) => {
+    console.log("Hours Left:", hoursLeft); // Debugging log
+    const nextContactMatch = hoursLeft?.match(/Next Contact (\d{1,2}\/\d{1,2}\/\d{2,4})/);
+    if (nextContactMatch) {
+        const [_, dateStr] = nextContactMatch;
+        console.log("Extracted Date String:", dateStr); // Debugging log
+        let [month, day, year] = dateStr.split('/').map(Number);
+
+        // Handle two-digit year cases
+        if (year < 100) {
+            year += year < 50 ? 2000 : 1900; // Assume years below 50 are 2000+, otherwise 1900+
+        }
+
+        const date = new Date(year, month - 1, day);
+        console.log("Parsed Date:", date); // Debugging log
+        return date;
+    }
+    return null;
+};
+
+const isToday = (date) => {
+    const today = new Date();
+    console.log("Today's Date:", today); // Debugging log
+    console.log("Next Contact Date:", date); // Debugging log
+    return (
+        date.getDate() === today.getDate() &&
+        date.getMonth() === today.getMonth() &&
+        date.getFullYear() === today.getFullYear()
+    );
+};
+
   const fetchData = async () => {
     try {
       const db = getFirestore(app);
@@ -945,119 +976,135 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
       meeting.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       meeting.service?.toLowerCase().includes(searchQuery.toLowerCase())
     )
-    .map((meeting, index) => (
-      <tr className={`group transition-all duration-300 ${index % 2 === 0 ? "bg-white/80" : "bg-gray-50/80"} hover:bg-blue-100 hover:scale-[1.02] shadow-md hover:shadow-2xl backdrop-blur-lg rounded-xl`}>
-        {editingId === meeting.id ? (
-          <>
-            <td className="px-6 py-4">
-              <input
-                type="text"
-                value={editData.customerName}
-                onChange={(e) => handleEditChange(e, 'customerName')}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
-              />
-            </td>
-            <td className="px-6 py-4">
-              <input
-                type="email"
-                value={editData.email}
-                onChange={(e) => handleEditChange(e, 'email')}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
-              />
-            </td>
-            <td className="px-6 py-4">
-              <input
-                type="text"
-                value={editData.service}
-                onChange={(e) => handleEditChange(e, 'service')}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
-              />
-            </td>
-            <td className="px-6 py-4">
-              <input
-                type="text"
-                value={editData.hours}
-                onChange={(e) => handleEditChange(e, 'hours')}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
-              />
-            </td>
-            <td className="px-6 py-4">
-  <select
-    value={editData.paid}
-    onChange={(e) => handleEditChange(e, 'paid')}
-    className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
-  >
-    <option value="Yes">Paid</option>
-    <option value="No">Unpaid</option>
-    <option value="Just Interested">Just Interested</option>
-  </select>
-</td>
-            <td className="px-6 py-4 text-center">
-              <button
-                onClick={saveEdit}
-                className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 mr-2"
-              >
-                Save
-              </button>
-              <button
-                onClick={() => setEditingId(null)}
-                className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
-              >
-                Cancel
-              </button>
-            </td>
-          </>
-        ) : (
-          <>
-            <td className="px-6 py-4">
-              <div className="text-sm font-medium text-gray-900">{meeting.customerName}</div>
-            </td>
-            <td className="px-6 py-4">
-              <div className="text-sm text-gray-500">{meeting.email}</div>
-            </td>
-            <td className="px-6 py-4">
-              <div className="text-sm text-gray-900">{meeting.service}</div>
-            </td>
-            <td className="px-6 py-4">
-              <div className="text-sm text-gray-900">{meeting.hours}</div>
-            </td>
-            <td className="px-6 py-4">
-  <span className={`inline-flex px-3 py-1 rounded-full text-xs font-medium ${
-    meeting.paid === 'Yes' 
-      ? 'bg-green-100 text-green-800' 
-      : meeting.paid === 'No'
-        ? 'bg-red-100 text-red-800'
-        : 'bg-yellow-100 text-yellow-800'
-  }`}>
-    {meeting.paid === 'Yes' ? 'Paid' : meeting.paid === 'No' ? 'Unpaid' : 'Just Interested'}
-  </span>
-</td>
-            <td className="px-6 py-4 text-center">
-              <div className="flex items-center space-x-3">
-                <button
-                  onClick={() => startEditing(meeting)}
-                  className="p-2 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-all duration-200 shadow-lg ring-1 ring-blue-300 hover:scale-110"
+    .map((meeting, index) => {
+      const nextContactDate = parseNextContactDate(meeting.hours);
+      const showReminder = nextContactDate && isToday(nextContactDate);
+
+      return (
+        <tr key={meeting.id} className={`group transition-all duration-300 ${index % 2 === 0 ? "bg-white/80" : "bg-gray-50/80"} hover:bg-blue-100 hover:scale-[1.02] shadow-md hover:shadow-2xl backdrop-blur-lg rounded-xl`}>
+          {editingId === meeting.id ? (
+            <>
+              <td className="px-6 py-4">
+                <input
+                  type="text"
+                  value={editData.customerName}
+                  onChange={(e) => handleEditChange(e, 'customerName')}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+                />
+              </td>
+              <td className="px-6 py-4">
+                <input
+                  type="email"
+                  value={editData.email}
+                  onChange={(e) => handleEditChange(e, 'email')}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+                />
+              </td>
+              <td className="px-6 py-4">
+                <input
+                  type="text"
+                  value={editData.service}
+                  onChange={(e) => handleEditChange(e, 'service')}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+                />
+              </td>
+              <td className="px-6 py-4">
+                <input
+                  type="text"
+                  value={editData.hours}
+                  onChange={(e) => handleEditChange(e, 'hours')}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+                />
+              </td>
+              <td className="px-6 py-4">
+                <select
+                  value={editData.paid}
+                  onChange={(e) => handleEditChange(e, 'paid')}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 backdrop-blur-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
                 >
-                  <Edit size={18} />
+                  <option value="Yes">Paid</option>
+                  <option value="No">Unpaid</option>
+                  <option value="Just Interested">Just Interested</option>
+                </select>
+              </td>
+              <td className="px-6 py-4 text-center">
+                <button
+                  onClick={saveEdit}
+                  className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 mr-2"
+                >
+                  Save
                 </button>
                 <button
-                  onClick={() => handleMeetingDelete(meeting.id)}
-                  className="p-2 rounded-full bg-red-500 text-white hover:bg-red-600 transition-all duration-200 shadow-lg ring-1 ring-red-300 hover:scale-110"
+                  onClick={() => setEditingId(null)}
+                  className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
                 >
-                  <Trash2 size={18} />
+                  Cancel
                 </button>
-                <button
-                  onClick={() => setActiveProgramDetails(meeting)}
-                  className="p-2 rounded-full bg-green-500 text-white hover:bg-green-600 transition-all duration-200 shadow-lg ring-1 ring-green-300 hover:scale-110"
-                >
-                  View Details
-                </button>
-              </div>
-            </td>
-          </>
-        )}
-      </tr>
-    ))}
+              </td>
+            </>
+          ) : (
+            <>
+              <td className="px-6 py-4">
+                <div className="text-sm font-medium text-gray-900">{meeting.customerName}</div>
+              </td>
+              <td className="px-6 py-4">
+                <div className="text-sm text-gray-500">{meeting.email}</div>
+              </td>
+              <td className="px-6 py-4">
+                <div className="text-sm text-gray-900">{meeting.service}</div>
+              </td>
+              <td className="px-6 py-4">
+                <div className="text-sm text-gray-900">
+                  {meeting.hours}
+                  {showReminder && (
+  <div className="inline-flex items-center px-3 py-1 rounded-full bg-red-100 border border-red-200 shadow-sm">
+    <svg className="w-4 h-4 mr-1 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+    <p>Contact Today!</p>
+  </div>
+)}
+
+                </div>
+              </td>
+              <td className="px-6 py-4">
+                <span className={`inline-flex px-3 py-1 rounded-full text-xs font-medium ${
+                  meeting.paid === 'Yes' 
+                    ? 'bg-green-100 text-green-800' 
+                    : meeting.paid === 'No'
+                      ? 'bg-red-100 text-red-800'
+                      : 'bg-yellow-100 text-yellow-800'
+                }`}>
+                  {meeting.paid === 'Yes' ? 'Paid' : meeting.paid === 'No' ? 'Unpaid' : 'Just Interested'}
+                </span>
+              </td>
+              <td className="px-6 py-4 text-center">
+                <div className="flex items-center space-x-3">
+                  <button
+                    onClick={() => startEditing(meeting)}
+                    className="p-2 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-all duration-200 shadow-lg ring-1 ring-blue-300 hover:scale-110"
+                  >
+                    <Edit size={18} />
+                  </button>
+                  <button
+                    onClick={() => handleMeetingDelete(meeting.id)}
+                    className="p-2 rounded-full bg-red-500 text-white hover:bg-red-600 transition-all duration-200 shadow-lg ring-1 ring-red-300 hover:scale-110"
+                  >
+                    <Trash2 size={18} />
+                  </button>
+                  <button
+                    onClick={() => setActiveProgramDetails(meeting)}
+                    className="p-2 rounded-full bg-green-500 text-white hover:bg-green-600 transition-all duration-200 shadow-lg ring-1 ring-green-300 hover:scale-110"
+                  >
+                    View Details
+                  </button>
+                </div>
+              </td>
+            </>
+          )}
+        </tr>
+      );
+    })}
 </tbody>
     </table>
   </div>
