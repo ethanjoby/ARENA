@@ -92,6 +92,11 @@ const isToday = (date) => {
     );
 };
 
+const isPastDate = (date) => {
+    const today = new Date();
+    return date < today.setHours(0, 0, 0, 0);
+};
+
   const fetchData = async () => {
     try {
       const db = getFirestore(app);
@@ -1062,6 +1067,15 @@ const inactiveTabStyles = "bg-white text-gray-600 hover:bg-gray-50";
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
     <p>Contact Today!</p>
+  </div>
+)}
+
+{nextContactDate && isPastDate(nextContactDate) && (
+  <div className="inline-flex items-center px-3 py-1 rounded-full bg-purple-100 border border-purple-200 shadow-sm">
+    <svg className="w-4 h-4 mr-1 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+    <p>Next Contact Date Passed!</p>
   </div>
 )}
 
