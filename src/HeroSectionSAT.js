@@ -57,7 +57,7 @@ const CountdownTimer = ({ targetDate }) => {
 };
 
 export default function HeroSectionSAT() {
-  const nextExamDate = new Date("2025-03-22"); // Replace with the next SAT exam date
+  const nextExamDate = new Date("2025-05-10"); // Replace with the next SAT exam date
 
   return (
     <section className="flex items-center justify-center px-8 mt-16 py-12 min-h-[70vh]">
